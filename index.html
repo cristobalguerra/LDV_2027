@@ -418,6 +418,86 @@ body {
   .view { overflow-x:auto; }
 }
 
+/* ===== TABLET ===== */
+@media (max-width:1024px) {
+  .header-top { padding:16px 20px 0; flex-wrap:wrap; gap:12px; }
+  .logo-area { gap:10px; }
+  .program-name { font-size:1.2rem; }
+  .filters-bar { padding:10px 20px; gap:8px; }
+  .view { padding:20px 20px 40px; }
+  .certs-grid { grid-template-columns:1fr; gap:16px; }
+  .legend { padding:12px 20px; flex-wrap:wrap; gap:12px; }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:768px) {
+  .header-top {
+    padding:14px 16px 0; flex-direction:column; align-items:flex-start; gap:10px;
+  }
+  .logo-area { flex-wrap:wrap; gap:8px; }
+  .logo { font-size:0.6rem; }
+  .program-name { font-size:1rem; }
+  .credits-badge { font-size:0.65rem; padding:3px 8px; }
+  .header-actions { width:100%; justify-content:space-between; }
+  .nav-tabs { flex:1; }
+  .nav-tab { padding:8px 16px; font-size:0.7rem; }
+  .filters-bar {
+    padding:10px 16px; gap:6px; overflow-x:auto;
+    -webkit-overflow-scrolling:touch; flex-wrap:nowrap;
+  }
+  .filter-pill { font-size:0.65rem; padding:4px 10px; white-space:nowrap; }
+  .filter-label { font-size:0.58rem; white-space:nowrap; }
+  .filter-separator { margin:0 4px; }
+
+  /* Phases row: horizontal scroll */
+  .phases-row {
+    grid-template-columns: repeat(9, 140px);
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+    padding-bottom:8px; gap:6px;
+  }
+
+  /* Semesters: horizontal scroll cards */
+  .view { padding:16px 16px 40px; overflow-x:auto; }
+  .semesters-grid {
+    grid-template-columns: repeat(9, 260px);
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+    padding-bottom:16px; gap:6px;
+    scroll-snap-type:x mandatory;
+  }
+  .semester-col { scroll-snap-align:start; min-width:260px; }
+  .course-card { min-height:90px; }
+
+  /* Modal full screen on mobile */
+  .modal-panel { width:100vw; }
+  .modal-header { padding:20px 16px 14px; }
+  .modal-course-name { font-size:1rem; }
+  .modal-body { padding:14px 16px 24px; }
+  .modal-footer { padding:12px 16px; }
+  .modal-field { font-size:0.78rem; min-height:48px; padding:10px 12px; }
+  .comp-item { padding:6px 10px; gap:8px; }
+  .comp-label { font-size:0.72rem; }
+  .file-zone { padding:16px; }
+
+  /* Certs */
+  .certs-intro { margin-bottom:24px; }
+  .certs-intro p { font-size:0.88rem; }
+  .cert-card { padding:24px 20px; }
+  .cert-title { font-size:1rem; }
+
+  /* Legend */
+  .legend { padding:12px 16px; flex-wrap:wrap; gap:8px; }
+  .legend-item { font-size:0.65rem; }
+}
+
+/* ===== SMALL PHONES ===== */
+@media (max-width:400px) {
+  .header-top { padding:10px 12px 0; }
+  .program-name { font-size:0.88rem; }
+  .semesters-grid { grid-template-columns: repeat(9, 230px); }
+  .semester-col { min-width:230px; }
+  .nav-tab { padding:6px 12px; font-size:0.65rem; }
+}
+
 /* ===== ANIMATIONS ===== */
 @keyframes fadeIn {
   from { opacity:0; transform:translateY(8px); }
