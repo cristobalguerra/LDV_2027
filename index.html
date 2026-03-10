@@ -977,11 +977,17 @@ body {
 // ===== FIREBASE + STORAGE =====
 let db = null;
 try {
-  const firebaseConfig = window.FIREBASE_CONFIG || null;
-  if (firebaseConfig) {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.database();
-  }
+  const firebaseConfig = {
+    apiKey: "AIzaSyBBL_4-qLh8HIwyS_nHE42mIF63UNnp5Kc",
+    authDomain: "ldgd-udem.firebaseapp.com",
+    databaseURL: "https://ldgd-udem-default-rtdb.firebaseio.com",
+    projectId: "ldgd-udem",
+    storageBucket: "ldgd-udem.firebasestorage.app",
+    messagingSenderId: "260800156279",
+    appId: "1:260800156279:web:de3218454fe72b8fc46c72"
+  };
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
 } catch(e) { console.log('Firebase not configured, using localStorage'); }
 
 const LS_PLANS = 'ldgd-plan-analitico';
