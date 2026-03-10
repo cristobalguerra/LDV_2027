@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 <style>
 :root {
   --bg: #0a0a0b;
@@ -204,10 +207,13 @@ body {
   border-radius:10px;
   background:var(--surface);
   border:1px solid var(--border);
-  cursor:default;
+  cursor:pointer;
   transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
   position:relative;
   overflow:hidden;
+  min-height:105px;
+  display:flex;
+  flex-direction:column;
 }
 .course-card::before {
   content:''; position:absolute; top:0; left:0;
@@ -250,6 +256,7 @@ body {
   font-size:0.78rem; font-weight:600;
   line-height:1.35; color:var(--text);
   margin-bottom:8px;
+  flex:1;
 }
 .card-footer {
   display:flex; align-items:center; justify-content:space-between;
@@ -432,6 +439,208 @@ body {
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--surface-3); border-radius:3px; }
 ::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,0.15); }
+
+/* ===== MODAL / PLAN ANALÍTICO ===== */
+.modal-overlay {
+  position:fixed; inset:0; z-index:200;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(8px);
+  opacity:0; pointer-events:none;
+  transition:opacity 0.3s;
+}
+.modal-overlay.active { opacity:1; pointer-events:auto; }
+.modal-panel {
+  position:absolute; top:0; right:0; bottom:0;
+  width:min(580px, 92vw);
+  background:var(--bg);
+  border-left:1px solid var(--border);
+  transform:translateX(100%);
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  display:flex; flex-direction:column;
+}
+.modal-overlay.active .modal-panel { transform:translateX(0); }
+.modal-header {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:28px 28px 20px; border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.modal-header-info { flex:1; min-width:0; }
+.modal-close {
+  width:32px; height:32px; border:1px solid var(--border);
+  border-radius:8px; background:transparent; color:var(--text-secondary);
+  font-size:1.1rem; cursor:pointer; display:flex;
+  align-items:center; justify-content:center;
+  transition:all 0.2s; flex-shrink:0; margin-left:12px;
+}
+.modal-close:hover { background:var(--surface-2); color:var(--text); }
+.modal-course-name {
+  font-size:1.2rem; font-weight:800; letter-spacing:-0.02em;
+  line-height:1.3; margin-top:6px;
+}
+.modal-meta {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem; font-weight:500;
+  color:var(--text-tertiary); margin-top:6px;
+}
+.modal-body { flex:1; overflow-y:auto; padding:20px 28px 32px; }
+.modal-section { margin-bottom:20px; }
+.modal-section-label {
+  font-size:0.58rem; font-weight:700;
+  letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--text-tertiary); margin-bottom:8px;
+}
+.modal-field {
+  min-height:56px; padding:12px 14px; border-radius:8px;
+  background:var(--surface); border:1px solid var(--border);
+  font:inherit; font-size:0.82rem; line-height:1.6;
+  color:var(--text-secondary); outline:none;
+  transition:border-color 0.2s, color 0.2s;
+  white-space:pre-wrap;
+}
+.modal-field:focus { border-color:rgba(200,255,0,0.4); color:var(--text); }
+.modal-field:empty::before {
+  content:attr(data-placeholder);
+  color:var(--text-tertiary);
+}
+.modal-footer {
+  padding:14px 28px; border-top:1px solid var(--border);
+  display:flex; gap:8px; flex-shrink:0;
+}
+.btn-action {
+  padding:9px 18px; border-radius:8px;
+  font:inherit; font-size:0.7rem; font-weight:600;
+  letter-spacing:0.04em; text-transform:uppercase;
+  cursor:pointer; transition:all 0.2s;
+  border:1px solid var(--border);
+  background:var(--surface); color:var(--text-secondary);
+  display:flex; align-items:center; gap:6px;
+}
+.btn-action:hover { background:var(--surface-2); color:var(--text); border-color:var(--border-hover); }
+.btn-action.primary { background:var(--accent); color:var(--bg); border-color:var(--accent); }
+.btn-action.primary:hover { background:#d4ff33; }
+.btn-action svg { width:14px; height:14px; }
+
+/* ===== CERT SELECTION ===== */
+.cert-card { cursor:pointer; user-select:none; }
+.cert-card.selected {
+  border-color:var(--accent) !important;
+  box-shadow:0 0 0 1px var(--accent), 0 12px 48px rgba(200,255,0,0.08);
+}
+.cert-check {
+  position:absolute; top:16px; right:16px;
+  width:24px; height:24px; border-radius:6px;
+  border:1px solid var(--border); background:var(--surface-2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.65rem; font-weight:800;
+  color:transparent; transition:all 0.2s;
+}
+.cert-card.selected .cert-check {
+  background:var(--accent); border-color:var(--accent); color:var(--bg);
+}
+
+/* ===== HEADER ACTIONS ===== */
+.header-actions {
+  display:flex; align-items:center; gap:12px;
+}
+.btn-header {
+  padding:8px 14px; border-radius:8px;
+  font:inherit; font-size:0.68rem; font-weight:600;
+  letter-spacing:0.04em; text-transform:uppercase;
+  cursor:pointer; transition:all 0.2s;
+  border:1px solid var(--border);
+  background:transparent; color:var(--text-secondary);
+  display:flex; align-items:center; gap:6px;
+}
+.btn-header:hover { background:var(--surface); color:var(--text); border-color:var(--border-hover); }
+.btn-header svg { width:14px; height:14px; }
+
+/* Cert slot highlight */
+.course-card.cert-filled { border-color:rgba(200,255,0,0.15); }
+
+/* ===== COMPETENCIAS CHECKBOXES ===== */
+.comp-list { display:flex; flex-direction:column; gap:4px; }
+.comp-item {
+  display:flex; align-items:center; gap:10px;
+  padding:8px 12px; border-radius:8px;
+  background:var(--surface); border:1px solid var(--border);
+  cursor:pointer; user-select:none; transition:all 0.2s;
+}
+.comp-item:hover { border-color:var(--border-hover); }
+.comp-item.checked { border-color:rgba(200,255,0,0.25); background:rgba(200,255,0,0.04); }
+.comp-check-box {
+  width:18px; height:18px; border-radius:5px; flex-shrink:0;
+  border:1.5px solid var(--border-hover); background:transparent;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.6rem; color:transparent; transition:all 0.2s;
+}
+.comp-item.checked .comp-check-box {
+  background:var(--accent); border-color:var(--accent); color:var(--bg);
+}
+.comp-id {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem;
+  font-weight:700; color:var(--text-tertiary); width:28px; flex-shrink:0;
+}
+.comp-label { font-size:0.78rem; color:var(--text-secondary); line-height:1.3; }
+.comp-item.checked .comp-label { color:var(--text); }
+
+/* ===== BIBLIOGRAFÍA + ARCHIVOS ===== */
+.biblio-list { display:flex; flex-direction:column; gap:6px; }
+.biblio-entry {
+  display:flex; gap:8px; align-items:center;
+}
+.biblio-input {
+  flex:1; padding:8px 12px; border-radius:8px;
+  background:var(--surface); border:1px solid var(--border);
+  font:inherit; font-size:0.82rem; color:var(--text-secondary);
+  outline:none; transition:border-color 0.2s;
+}
+.biblio-input:focus { border-color:rgba(200,255,0,0.4); color:var(--text); }
+.biblio-input::placeholder { color:var(--text-tertiary); }
+.biblio-remove {
+  width:28px; height:28px; border-radius:6px; flex-shrink:0;
+  border:1px solid var(--border); background:transparent;
+  color:var(--text-tertiary); font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s;
+}
+.biblio-remove:hover { background:rgba(232,126,126,0.1); color:var(--produccion); border-color:var(--produccion); }
+.biblio-add {
+  padding:6px 14px; border-radius:8px; border:1px dashed var(--border);
+  background:transparent; color:var(--text-tertiary);
+  font:inherit; font-size:0.72rem; font-weight:600; cursor:pointer;
+  transition:all 0.2s; align-self:flex-start; margin-top:4px;
+}
+.biblio-add:hover { border-color:var(--accent); color:var(--accent); }
+
+/* File upload area */
+.file-zone {
+  margin-top:12px; padding:20px; border-radius:10px;
+  border:2px dashed var(--border); text-align:center;
+  transition:all 0.2s; cursor:pointer;
+}
+.file-zone:hover, .file-zone.drag-over {
+  border-color:var(--accent); background:rgba(200,255,0,0.03);
+}
+.file-zone-label {
+  font-size:0.75rem; color:var(--text-tertiary); line-height:1.5;
+}
+.file-zone-label strong { color:var(--accent); }
+.file-list { margin-top:8px; display:flex; flex-direction:column; gap:4px; }
+.file-item {
+  display:flex; align-items:center; gap:8px;
+  padding:6px 10px; border-radius:6px; background:var(--surface);
+  border:1px solid var(--border); font-size:0.72rem;
+}
+.file-item-name { flex:1; color:var(--text-secondary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.file-item-size { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--text-tertiary); }
+
+/* ===== DRAG & DROP ===== */
+.course-card[draggable="true"] { cursor:grab; }
+.course-card.dragging { opacity:0.4; cursor:grabbing; }
+.semester-col.drag-over { background:var(--accent-dim); border-radius:12px; transition:background 0.2s; }
+
+/* ===== SAVE BUTTON STATES ===== */
+.btn-action.saved { background:#4ade80; color:var(--bg); border-color:#4ade80; pointer-events:none; }
 </style>
 </head>
 <body>
@@ -439,13 +648,19 @@ body {
 <div class="header">
   <div class="header-top">
     <div class="logo-area">
-      <div class="logo"><span>UDEM</span> · CRGS</div>
-      <div class="program-name">Dirección y Gestión de Diseño</div>
+      <div class="logo"><span>UDEM</span></div>
+      <div class="program-name">Licenciatura en Dirección y Gestión de Diseño LDGD</div>
       <div class="credits-badge">Plan 2027 · 342 CR</div>
     </div>
-    <div class="nav-tabs">
-      <button class="nav-tab active" data-view="mapa">Mapa</button>
-      <button class="nav-tab" data-view="certificados">Certificados</button>
+    <div class="header-actions">
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-view="mapa">Mapa</button>
+        <button class="nav-tab" data-view="certificados">Certificados</button>
+      </div>
+      <button class="btn-header" id="btnDownloadMap" title="Descargar mapa curricular PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        PDF
+      </button>
     </div>
   </div>
   <div class="filters-bar" id="filtersBar">
@@ -565,6 +780,7 @@ body {
       </div>
       <div class="course-card is-estudio eje-sistemas" data-axes="sistemas,lenguaje,experiencia" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Sistemas de Identidad III</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot lenguaje"></span><span class="card-dot experiencia"></span></div></div></div>
       <div class="course-card eje-direccion" data-axes="direccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SIII — Diseño de Futuros</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Certificado</div><div class="card-name">Materia de certificado</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
@@ -646,7 +862,8 @@ body {
 
   <div class="certs-grid">
     <!-- CERT A -->
-    <div class="cert-card cert-a">
+    <div class="cert-card cert-a" data-cert="a">
+      <div class="cert-check">&#10003;</div>
       <div class="cert-badge">Certificado A</div>
       <div class="cert-title">Dirección de Marca y Dirección de Arte</div>
       <div class="cert-subtitle">"Dominio visual avanzado + implementación profesional"</div>
@@ -666,7 +883,8 @@ body {
     </div>
 
     <!-- CERT B -->
-    <div class="cert-card cert-b">
+    <div class="cert-card cert-b" data-cert="b">
+      <div class="cert-check">&#10003;</div>
       <div class="cert-badge">Certificado B</div>
       <div class="cert-title">Producto Digital y Sistemas Interactivos</div>
       <div class="cert-subtitle">"Perfil UX/Product"</div>
@@ -685,7 +903,8 @@ body {
     </div>
 
     <!-- CERT C -->
-    <div class="cert-card cert-c">
+    <div class="cert-card cert-c" data-cert="c">
+      <div class="cert-check">&#10003;</div>
       <div class="cert-badge">Certificado C</div>
       <div class="cert-title">Gestión Estratégica de Servicios y Transformación Organizacional</div>
       <div class="cert-subtitle">"Perfil estratégico con enfoque consultivo"</div>
@@ -705,30 +924,128 @@ body {
   </div>
 </div>
 
+<!-- ===== MODAL / PLAN ANALÍTICO ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <div class="modal-header-info">
+        <div class="card-type" id="modalBadge"></div>
+        <h2 class="modal-course-name" id="modalCourseName"></h2>
+        <div class="modal-meta" id="modalMeta"></div>
+      </div>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="modal-section"><div class="modal-section-label">Objetivo General</div><div class="modal-field" id="field-objetivo" contenteditable="true" data-placeholder="Describe el objetivo general de la materia..."></div></div>
+      <div class="modal-section"><div class="modal-section-label">Objetivos Específicos</div><div class="modal-field" id="field-objetivosEspecificos" contenteditable="true" data-placeholder="1. ...  2. ...  3. ..."></div></div>
+      <div class="modal-section">
+        <div class="modal-section-label">Competencias del Perfil de Egreso</div>
+        <div class="comp-list" id="compList"></div>
+      </div>
+      <div class="modal-section"><div class="modal-section-label">Contenido Temático</div><div class="modal-field" id="field-contenido" contenteditable="true" data-placeholder="Unidad 1: ...  Unidad 2: ...  Unidad 3: ..."></div></div>
+      <div class="modal-section"><div class="modal-section-label">Metodología de Enseñanza</div><div class="modal-field" id="field-metodologia" contenteditable="true" data-placeholder="Estrategias didácticas, actividades de aprendizaje..."></div></div>
+      <div class="modal-section"><div class="modal-section-label">Criterios de Evaluación</div><div class="modal-field" id="field-evaluacion" contenteditable="true" data-placeholder="Proyectos: 40%  Exámenes: 30%  Participación: 30%"></div></div>
+      <div class="modal-section">
+        <div class="modal-section-label">Bibliografía</div>
+        <div class="biblio-list" id="biblioList"></div>
+        <button class="biblio-add" id="biblioAdd">+ Agregar referencia</button>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Archivos</div>
+        <div class="file-zone" id="fileZone">
+          <div class="file-zone-label">Arrastra archivos aquí o <strong>haz clic</strong><br><span style="font-size:0.65rem">Máx. 5 MB por archivo</span></div>
+          <input type="file" id="fileInput" multiple style="display:none">
+        </div>
+        <div class="file-list" id="fileList"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-action primary" id="btnSave">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Grabar
+      </button>
+      <button class="btn-action" id="btnDownloadPlan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        PDF
+      </button>
+      <button class="btn-action" id="btnCloseModal">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <script>
-// Tab switching
+// ===== FIREBASE + STORAGE =====
+let db = null;
+try {
+  const firebaseConfig = window.FIREBASE_CONFIG || null;
+  if (firebaseConfig) {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+  }
+} catch(e) { console.log('Firebase not configured, using localStorage'); }
+
+const LS_PLANS = 'ldgd-plan-analitico';
+const LS_CERTS = 'ldgd-selected-certs';
+const LS_LAYOUT = 'ldgd-layout';
+
+function loadLocal(key) { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } }
+function saveLocal(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) { console.warn('localStorage full'); } }
+
+async function dbGet(path) {
+  if (db) { const snap = await db.ref('ldgd/' + path).once('value'); return snap.val(); }
+  return loadLocal('ldgd-' + path.replace(/\//g,'-'));
+}
+async function dbSet(path, val) {
+  if (db) { await db.ref('ldgd/' + path).set(val); }
+  saveLocal('ldgd-' + path.replace(/\//g,'-'), val);
+}
+
+function getCourseId(card) {
+  return card.dataset.id || '';
+}
+
+// ===== ASSIGN UNIQUE IDs TO CARDS =====
+(function assignCardIds() {
+  const counts = {};
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
+    const name = card.querySelector('.card-name').textContent.trim();
+    const slug = name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi, '-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+    counts[slug] = (counts[slug] || 0) + 1;
+    card.dataset.id = counts[slug] > 1 ? slug + '-' + counts[slug] : slug;
+  });
+})();
+
+// ===== COMPETENCIAS DATA =====
+const COMPETENCIAS = [
+  { id:'C1', label:'Dominio del lenguaje visual y comunicación gráfica' },
+  { id:'C2', label:'Diseño y gestión de sistemas de identidad' },
+  { id:'C3', label:'Diseño de experiencias e interacción digital' },
+  { id:'C4', label:'Dirección estratégica de proyectos de diseño' },
+  { id:'C5', label:'Gestión de producción y recursos' },
+  { id:'C6', label:'Pensamiento crítico y de investigación' },
+  { id:'C7', label:'Innovación y desarrollo creativo' },
+  { id:'C8', label:'Liderazgo y trabajo interdisciplinario' },
+  { id:'C9', label:'Comunicación efectiva y argumentación' },
+  { id:'C10', label:'Ética profesional y responsabilidad social' },
+  { id:'C11', label:'Uso estratégico de tecnología digital' },
+  { id:'C12', label:'Emprendimiento y visión de negocios' }
+];
+
+// ===== TAB SWITCHING =====
 document.querySelectorAll('.nav-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     tab.classList.add('active');
     document.getElementById('view-' + tab.dataset.view).classList.add('active');
-    // Hide filters on certificados
-    document.getElementById('filtersBar').style.display =
-      tab.dataset.view === 'mapa' ? 'flex' : 'none';
+    document.getElementById('filtersBar').style.display = tab.dataset.view === 'mapa' ? 'flex' : 'none';
   });
 });
 
-// Eje filters
-const ejeFilters = document.querySelectorAll('.filter-pill[data-filter]');
-ejeFilters.forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('active');
-    applyFilters();
-  });
+// ===== EJE FILTERS =====
+document.querySelectorAll('.filter-pill[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => { btn.classList.toggle('active'); applyFilters(); });
 });
-
-// Type filters
 const typeFilters = document.querySelectorAll('.filter-pill[data-type]');
 typeFilters.forEach(btn => {
   btn.addEventListener('click', () => {
@@ -737,30 +1054,393 @@ typeFilters.forEach(btn => {
     applyFilters();
   });
 });
-
 function applyFilters() {
-  const activeEjes = [...document.querySelectorAll('.filter-pill[data-filter].active')]
-    .map(b => b.dataset.filter);
+  const activeEjes = [...document.querySelectorAll('.filter-pill[data-filter].active')].map(b => b.dataset.filter);
   const activeType = document.querySelector('.filter-pill[data-type].active')?.dataset.type || 'all';
-
-  document.querySelectorAll('.course-card').forEach(card => {
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
     const cardAxes = (card.dataset.axes || '').split(',').filter(Boolean);
     const cardType = card.dataset.type;
-
-    const matchesEje = cardAxes.length === 0 || cardAxes.some(a => activeEjes.includes(a));
-    const matchesType = activeType === 'all' || cardType === activeType;
-
-    if (matchesEje && matchesType) {
-      card.style.opacity = '1';
-      card.style.transform = 'scale(1)';
-      card.style.pointerEvents = 'auto';
-    } else {
-      card.style.opacity = '0.12';
-      card.style.transform = 'scale(0.98)';
-      card.style.pointerEvents = 'none';
-    }
+    const matchEje = cardAxes.length === 0 || cardAxes.some(a => activeEjes.includes(a));
+    const matchType = activeType === 'all' || cardType === activeType;
+    card.style.opacity = matchEje && matchType ? '1' : '0.12';
+    card.style.transform = matchEje && matchType ? 'scale(1)' : 'scale(0.98)';
+    card.style.pointerEvents = matchEje && matchType ? 'auto' : 'none';
   });
 }
+
+// ===== MODAL / PLAN ANALÍTICO =====
+const overlay = document.getElementById('modalOverlay');
+const modalName = document.getElementById('modalCourseName');
+const modalBadge = document.getElementById('modalBadge');
+const modalMeta = document.getElementById('modalMeta');
+const compList = document.getElementById('compList');
+const biblioList = document.getElementById('biblioList');
+const fileListEl = document.getElementById('fileList');
+let currentCourseId = null;
+let currentFiles = [];
+
+const textFields = ['objetivo','objetivosEspecificos','contenido','metodologia','evaluacion'];
+
+function renderCompetencias(checked) {
+  compList.innerHTML = '';
+  COMPETENCIAS.forEach(c => {
+    const item = document.createElement('div');
+    item.className = 'comp-item' + (checked.includes(c.id) ? ' checked' : '');
+    item.innerHTML = `<div class="comp-check-box">&#10003;</div><span class="comp-id">${c.id}</span><span class="comp-label">${c.label}</span>`;
+    item.addEventListener('click', () => item.classList.toggle('checked'));
+    compList.appendChild(item);
+  });
+}
+function getCheckedComps() {
+  return [...compList.querySelectorAll('.comp-item.checked')].map(el => el.querySelector('.comp-id').textContent);
+}
+
+function renderBiblio(refs) {
+  biblioList.innerHTML = '';
+  (refs.length ? refs : ['']).forEach((r, i) => addBiblioEntry(r));
+}
+function addBiblioEntry(val) {
+  const entry = document.createElement('div');
+  entry.className = 'biblio-entry';
+  entry.innerHTML = `<input class="biblio-input" type="text" placeholder="Autor (Año). Título. Editorial." value="${(val||'').replace(/"/g,'&quot;')}"><button class="biblio-remove">&times;</button>`;
+  entry.querySelector('.biblio-remove').addEventListener('click', () => {
+    if (biblioList.children.length > 1) entry.remove();
+    else entry.querySelector('.biblio-input').value = '';
+  });
+  biblioList.appendChild(entry);
+}
+function getBiblioRefs() {
+  return [...biblioList.querySelectorAll('.biblio-input')].map(i => i.value.trim()).filter(Boolean);
+}
+
+function renderFiles(files) {
+  currentFiles = files || [];
+  fileListEl.innerHTML = '';
+  currentFiles.forEach((f, i) => {
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    const sizeKB = f.size ? (f.size / 1024).toFixed(0) + ' KB' : '';
+    item.innerHTML = `<span class="file-item-name">${f.name}</span><span class="file-item-size">${sizeKB}</span><button class="biblio-remove">&times;</button>`;
+    item.querySelector('.biblio-remove').addEventListener('click', () => { currentFiles.splice(i, 1); renderFiles(currentFiles); });
+    fileListEl.appendChild(item);
+  });
+}
+
+// File upload handlers
+const fileZone = document.getElementById('fileZone');
+const fileInput = document.getElementById('fileInput');
+fileZone.addEventListener('click', () => fileInput.click());
+fileZone.addEventListener('dragover', e => { e.preventDefault(); fileZone.classList.add('drag-over'); });
+fileZone.addEventListener('dragleave', () => fileZone.classList.remove('drag-over'));
+fileZone.addEventListener('drop', e => { e.preventDefault(); fileZone.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', () => { handleFiles(fileInput.files); fileInput.value = ''; });
+
+function handleFiles(filesList) {
+  [...filesList].forEach(file => {
+    if (file.size > 5 * 1024 * 1024) { alert('Archivo "' + file.name + '" excede 5 MB'); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      currentFiles.push({ name: file.name, size: file.size, type: file.type, data: reader.result });
+      renderFiles(currentFiles);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+document.getElementById('biblioAdd').addEventListener('click', () => addBiblioEntry(''));
+
+async function openModal(card) {
+  const name = card.querySelector('.card-name').textContent;
+  const type = card.querySelector('.card-type')?.textContent || '';
+  const credits = card.querySelector('.card-credits')?.textContent || '';
+  currentCourseId = getCourseId(card);
+  modalName.textContent = name;
+  modalBadge.textContent = type;
+  modalBadge.className = 'card-type ' + type.toLowerCase();
+  modalMeta.textContent = credits + ' · Plan 2027';
+
+  const plans = (await dbGet('plans')) || {};
+  const plan = plans[currentCourseId] || {};
+  textFields.forEach(k => {
+    const el = document.getElementById('field-' + k);
+    if (el) el.textContent = plan[k] || '';
+  });
+  renderCompetencias(plan.competencias || []);
+  renderBiblio(plan.bibliografia || []);
+  renderFiles(plan.archivos || []);
+
+  // Reset save button
+  const saveBtn = document.getElementById('btnSave');
+  saveBtn.textContent = 'Grabar'; saveBtn.classList.remove('saved');
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+  currentCourseId = null;
+  currentFiles = [];
+}
+
+function gatherPlanData() {
+  const plan = {};
+  textFields.forEach(k => {
+    const el = document.getElementById('field-' + k);
+    if (el) plan[k] = el.textContent.trim();
+  });
+  plan.competencias = getCheckedComps();
+  plan.bibliografia = getBiblioRefs();
+  plan.archivos = currentFiles;
+  return plan;
+}
+
+async function savePlan() {
+  if (!currentCourseId) return;
+  const plans = (await dbGet('plans')) || {};
+  const plan = gatherPlanData();
+  const hasContent = textFields.some(k => plan[k]) || plan.competencias.length || plan.bibliografia.length || plan.archivos.length;
+  if (hasContent) { plans[currentCourseId] = plan; } else { delete plans[currentCourseId]; }
+  await dbSet('plans', plans);
+  const btn = document.getElementById('btnSave');
+  btn.innerHTML = '&#10003; Guardado'; btn.classList.add('saved');
+  setTimeout(() => { btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Grabar'; btn.classList.remove('saved'); }, 2000);
+}
+
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('btnCloseModal').addEventListener('click', closeModal);
+document.getElementById('btnSave').addEventListener('click', savePlan);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal(); });
+
+// ===== DRAG & DROP =====
+let draggedCard = null;
+
+document.querySelectorAll('#semGrid .course-card').forEach(card => {
+  card.setAttribute('draggable', 'true');
+  card.addEventListener('click', e => {
+    if (card._wasDragged) { card._wasDragged = false; return; }
+    openModal(card);
+  });
+  card.addEventListener('dragstart', e => {
+    draggedCard = card;
+    card.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', card.dataset.id);
+  });
+  card.addEventListener('dragend', () => {
+    card.classList.remove('dragging');
+    document.querySelectorAll('.semester-col.drag-over').forEach(c => c.classList.remove('drag-over'));
+    if (draggedCard && draggedCard._didDrop) { draggedCard._wasDragged = true; }
+    draggedCard._didDrop = false;
+    draggedCard = null;
+  });
+});
+
+document.querySelectorAll('.semester-col').forEach(col => {
+  col.addEventListener('dragover', e => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    col.classList.add('drag-over');
+  });
+  col.addEventListener('dragleave', e => {
+    if (!col.contains(e.relatedTarget)) col.classList.remove('drag-over');
+  });
+  col.addEventListener('drop', e => {
+    e.preventDefault();
+    col.classList.remove('drag-over');
+    if (!draggedCard) return;
+    // Insert before the closest card, or append at end
+    const afterElement = getDragAfterElement(col, e.clientY);
+    if (afterElement) {
+      col.insertBefore(draggedCard, afterElement);
+    } else {
+      col.appendChild(draggedCard);
+    }
+    draggedCard._didDrop = true;
+    recalcCredits();
+    saveLayout();
+  });
+});
+
+function getDragAfterElement(col, y) {
+  const cards = [...col.querySelectorAll('.course-card:not(.dragging)')];
+  let closest = null, closestOffset = Number.NEGATIVE_INFINITY;
+  cards.forEach(card => {
+    const box = card.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > closestOffset) { closestOffset = offset; closest = card; }
+  });
+  return closest;
+}
+
+// ===== CREDIT RECALCULATION =====
+function recalcCredits() {
+  let total = 0;
+  document.querySelectorAll('.semester-col').forEach(col => {
+    let semTotal = 0;
+    col.querySelectorAll('.course-card').forEach(card => {
+      const crText = card.querySelector('.card-credits')?.textContent || '';
+      const cr = parseInt(crText) || 0;
+      semTotal += cr;
+    });
+    total += semTotal;
+    const semCrEl = col.querySelector('.sem-cr');
+    if (semCrEl) semCrEl.textContent = semTotal;
+  });
+  const badge = document.querySelector('.credits-badge');
+  if (badge) badge.textContent = 'Plan 2027 · ' + total + ' CR';
+}
+
+// ===== LAYOUT SAVE/LOAD =====
+async function saveLayout() {
+  const layout = {};
+  document.querySelectorAll('.semester-col').forEach((col, i) => {
+    layout['sem' + (i + 1)] = [...col.querySelectorAll('.course-card')].map(c => c.dataset.id);
+  });
+  await dbSet('layout', layout);
+}
+
+async function loadLayout() {
+  const layout = await dbGet('layout');
+  if (!layout) return;
+  const cardMap = {};
+  document.querySelectorAll('#semGrid .course-card').forEach(c => { cardMap[c.dataset.id] = c; });
+  document.querySelectorAll('.semester-col').forEach((col, i) => {
+    const ids = layout['sem' + (i + 1)];
+    if (!ids) return;
+    ids.forEach(id => {
+      if (cardMap[id]) col.appendChild(cardMap[id]);
+    });
+  });
+  recalcCredits();
+}
+
+// ===== CERTIFICATE SELECTION =====
+const certMaterias = {
+  a: ['Motion y Sistemas de Contenido', 'Producción Visual Avanzada', 'Gestión Estratégica de Marca y Portafolio'],
+  b: ['Sistemas de Diseño Avanzados', 'Analítica y Métricas de Producto Digital', 'Accesibilidad y Experiencia Inclusiva'],
+  c: ['Diseño de Workshops Estratégicos', 'Modelos de Innovación y Desarrollo Organizacional', 'Gestión del Cambio y Cultura de Diseño']
+};
+let selectedCerts = [];
+
+async function loadCerts() {
+  selectedCerts = (await dbGet('certs')) || [];
+  syncCertUI();
+}
+async function saveCertsDB() { await dbSet('certs', selectedCerts); }
+
+function syncCertUI() {
+  document.querySelectorAll('.cert-card').forEach(card => {
+    card.classList.toggle('selected', selectedCerts.includes(card.dataset.cert));
+  });
+  const slots = document.querySelectorAll('#semGrid .course-card[data-type="certificado"]');
+  const materias = [];
+  selectedCerts.forEach(c => (certMaterias[c] || []).forEach(m => materias.push(m)));
+  slots.forEach((slot, i) => {
+    const nameEl = slot.querySelector('.card-name');
+    if (i < materias.length) { nameEl.textContent = materias[i]; slot.classList.add('cert-filled'); }
+    else { nameEl.textContent = 'Materia de certificado'; slot.classList.remove('cert-filled'); }
+  });
+}
+
+document.querySelectorAll('.cert-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const id = card.dataset.cert;
+    if (selectedCerts.includes(id)) { selectedCerts = selectedCerts.filter(c => c !== id); }
+    else if (selectedCerts.length < 2) { selectedCerts.push(id); }
+    else { selectedCerts.shift(); selectedCerts.push(id); }
+    saveCertsDB();
+    syncCertUI();
+  });
+});
+
+// ===== PDF GENERATION =====
+document.getElementById('btnDownloadMap').addEventListener('click', generateMapPDF);
+document.getElementById('btnDownloadPlan').addEventListener('click', generatePlanPDF);
+
+function generateMapPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('l', 'mm', 'a3');
+  const pw = doc.internal.pageSize.getWidth();
+  const ph = doc.internal.pageSize.getHeight();
+  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS', 15, 15);
+  doc.setFontSize(18); doc.setTextColor(30); doc.text('LDG+D · Dirección y Gestión de Diseño', 15, 24);
+  doc.setFontSize(10); doc.setTextColor(100); doc.text('Plan 2027 · ' + document.querySelector('.credits-badge').textContent.split('·').pop().trim(), 15, 31);
+  if (selectedCerts.length) {
+    const cn = { a:'Cert A: Dirección de Marca', b:'Cert B: Producto Digital', c:'Cert C: Gestión Estratégica' };
+    doc.text('Certificados: ' + selectedCerts.map(c => cn[c]).join(' + '), 15, 37);
+  }
+  const startY = 44; const colW = (pw - 30) / 9;
+  document.querySelectorAll('.semester-col').forEach((col, i) => {
+    const x = 15 + i * colW; let y = startY;
+    const semNum = col.querySelector('.sem-num')?.textContent || '';
+    const semCr = col.querySelector('.sem-cr')?.textContent || '';
+    doc.setFillColor(240,240,240); doc.rect(x, y, colW - 2, 12, 'F');
+    doc.setFontSize(7); doc.setTextColor(100); doc.text(semNum, x + 3, y + 5);
+    doc.setFontSize(10); doc.setTextColor(30); doc.text(semCr + ' cr', x + 3, y + 10);
+    y += 15;
+    col.querySelectorAll('.course-card').forEach(card => {
+      const name = card.querySelector('.card-name')?.textContent || '';
+      const type = card.querySelector('.card-type')?.textContent || '';
+      const cr = card.querySelector('.card-credits')?.textContent || '';
+      const lines = doc.splitTextToSize(name, colW - 8);
+      const cardH = Math.max(14, 8 + lines.length * 4);
+      doc.setFillColor(248,248,248); doc.setDrawColor(220); doc.rect(x, y, colW - 2, cardH, 'FD');
+      doc.setFontSize(5); doc.setTextColor(140); doc.text(type.toUpperCase(), x + 3, y + 4);
+      doc.setFontSize(6.5); doc.setTextColor(40); doc.text(lines, x + 3, y + 8);
+      doc.setFontSize(5); doc.setTextColor(140); doc.text(cr, x + 3, y + cardH - 2);
+      y += cardH + 2;
+    });
+  });
+  doc.setFontSize(6); doc.setTextColor(170);
+  doc.text('LDG+D Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 15, ph - 8);
+  doc.save('LDGD_Plan2027_MapaCurricular.pdf');
+}
+
+async function generatePlanPDF() {
+  if (!currentCourseId) return;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('p', 'mm', 'letter');
+  const pw = doc.internal.pageSize.getWidth();
+  const name = modalName.textContent;
+  const meta = modalMeta.textContent;
+  const plan = gatherPlanData();
+  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · LDG+D · PLAN ANALÍTICO', 20, 18);
+  doc.setFontSize(16); doc.setTextColor(30);
+  const tl = doc.splitTextToSize(name, pw - 40); doc.text(tl, 20, 28);
+  doc.setFontSize(9); doc.setTextColor(120); doc.text(meta, 20, 28 + tl.length * 7);
+  let y = 35 + tl.length * 7;
+  doc.setDrawColor(200); doc.line(20, y, pw - 20, y); y += 8;
+
+  const sections = [
+    ['Objetivo General', plan.objetivo],
+    ['Objetivos Específicos', plan.objetivosEspecificos],
+    ['Competencias del Perfil de Egreso', plan.competencias.map(id => { const c = COMPETENCIAS.find(x => x.id === id); return c ? c.id + ' — ' + c.label : id; }).join('\n') || '(Sin competencias)'],
+    ['Contenido Temático', plan.contenido],
+    ['Metodología de Enseñanza', plan.metodologia],
+    ['Criterios de Evaluación', plan.evaluacion],
+    ['Bibliografía', plan.bibliografia.join('\n') || '(Sin bibliografía)']
+  ];
+  sections.forEach(([label, content]) => {
+    content = content || '(Sin contenido)';
+    if (y > 250) { doc.addPage(); y = 20; }
+    doc.setFontSize(7); doc.setTextColor(140); doc.text(label.toUpperCase(), 20, y); y += 5;
+    doc.setFontSize(9.5); doc.setTextColor(50);
+    const lines = doc.splitTextToSize(content, pw - 40); doc.text(lines, 20, y); y += lines.length * 4.5 + 8;
+  });
+  doc.setFontSize(6); doc.setTextColor(170);
+  doc.text('LDG+D Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 20, 272);
+  doc.save('LDGD_PlanAnalitico_' + currentCourseId + '.pdf');
+}
+
+// ===== INIT =====
+(async function init() {
+  await loadLayout();
+  await loadCerts();
+  recalcCredits();
+})();
 </script>
 </body>
 </html>
