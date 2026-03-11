@@ -1379,17 +1379,20 @@ function recalcCredits() {
   if (badge) badge.textContent = 'Plan 2027 · ' + total + ' CR';
 }
 
-// ===== LAYOUT SAVE/LOAD =====
+// ===== LAYOUT SAVE/LOAD (REAL-TIME SYNC) =====
+let _layoutSaving = false; // prevent echo when we just saved
+
 async function saveLayout() {
   const layout = {};
   document.querySelectorAll('.semester-col').forEach((col, i) => {
     layout['sem' + (i + 1)] = [...col.querySelectorAll('.course-card')].map(c => c.dataset.id);
   });
+  _layoutSaving = true;
   await dbSet('layout', layout);
+  setTimeout(() => { _layoutSaving = false; }, 500);
 }
 
-async function loadLayout() {
-  const layout = await dbGet('layout');
+function applyLayout(layout) {
   if (!layout) return;
   const cardMap = {};
   document.querySelectorAll('#semGrid .course-card').forEach(c => { cardMap[c.dataset.id] = c; });
@@ -1403,6 +1406,17 @@ async function loadLayout() {
   recalcCredits();
 }
 
+async function loadLayout() {
+  if (db) {
+    db.ref('ldgd/layout').on('value', snap => {
+      if (_layoutSaving) return; // skip echo from our own save
+      applyLayout(snap.val());
+    });
+  } else {
+    applyLayout(loadLocal(LS_LAYOUT));
+  }
+}
+
 // ===== CERTIFICATE SELECTION =====
 const certMaterias = {
   a: ['Motion y Sistemas de Contenido', 'Producción Visual Avanzada', 'Gestión Estratégica de Marca y Portafolio'],
@@ -1410,12 +1424,25 @@ const certMaterias = {
   c: ['Diseño de Workshops Estratégicos', 'Modelos de Innovación y Desarrollo Organizacional', 'Gestión del Cambio y Cultura de Diseño']
 };
 let selectedCerts = [];
+let _certsSaving = false;
 
 async function loadCerts() {
-  selectedCerts = (await dbGet('certs')) || [];
-  syncCertUI();
+  if (db) {
+    db.ref('ldgd/certs').on('value', snap => {
+      if (_certsSaving) return;
+      selectedCerts = snap.val() || [];
+      syncCertUI();
+    });
+  } else {
+    selectedCerts = loadLocal(LS_CERTS) || [];
+    syncCertUI();
+  }
 }
-async function saveCertsDB() { await dbSet('certs', selectedCerts); }
+async function saveCertsDB() {
+  _certsSaving = true;
+  await dbSet('certs', selectedCerts);
+  setTimeout(() => { _certsSaving = false; }, 500);
+}
 
 function syncCertUI() {
   document.querySelectorAll('.cert-card').forEach(card => {
