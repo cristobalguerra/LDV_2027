@@ -520,6 +520,40 @@ body {
 ::-webkit-scrollbar-thumb { background:var(--surface-3); border-radius:3px; }
 ::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,0.15); }
 
+/* ===== COMPETENCIAS DASHBOARD ===== */
+.comp-dashboard { max-width:100%; }
+.comp-dash-title { font-size:1.3rem; font-weight:700; margin-bottom:4px; }
+.comp-dash-subtitle { font-size:0.8rem; color:var(--text-secondary); margin-bottom:16px; }
+.comp-dash-legend { display:flex; gap:16px; margin-bottom:20px; font-size:0.75rem; }
+.comp-dash-legend-item { display:flex; align-items:center; gap:5px; color:var(--text-secondary); }
+.comp-dash-legend-dot { width:24px; height:18px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.6rem; font-weight:800; color:#fff; }
+.comp-dash-legend-dot.l-I { background:#a855f7; }
+.comp-dash-legend-dot.l-D { background:#f59e0b; }
+.comp-dash-legend-dot.l-M { background:var(--accent); color:var(--bg); }
+.comp-matrix-wrap { overflow-x:auto; border-radius:12px; border:1px solid var(--border); }
+.comp-matrix { width:100%; border-collapse:collapse; font-size:0.7rem; }
+.comp-matrix th, .comp-matrix td { padding:6px 4px; text-align:center; border:1px solid var(--border); }
+.comp-matrix th { background:var(--surface-2); font-weight:700; color:var(--text-secondary); position:sticky; top:0; z-index:1; }
+.comp-matrix th.sem-header { font-size:0.6rem; min-width:28px; }
+.comp-matrix td.comp-cell { font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:800; width:28px; }
+.comp-matrix td.comp-name-cell { text-align:left; padding-left:10px; font-size:0.72rem; color:var(--text); white-space:nowrap; background:var(--surface); position:sticky; left:0; z-index:1; }
+.comp-matrix tr.sem-divider td { background:var(--surface-2); padding:3px 10px; font-weight:700; color:var(--text-tertiary); font-size:0.65rem; text-transform:uppercase; letter-spacing:0.08em; }
+.comp-cell-I { background:rgba(168,85,247,0.2); color:#c084fc; }
+.comp-cell-D { background:rgba(245,158,11,0.2); color:#fbbf24; }
+.comp-cell-M { background:rgba(200,255,0,0.15); color:var(--accent); }
+.comp-cell-empty { color:var(--border); }
+.comp-dash-summary { margin-top:20px; display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:10px; }
+.comp-summary-card { padding:12px; border-radius:10px; background:var(--surface); border:1px solid var(--border); }
+.comp-summary-id { font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:700; color:var(--accent); }
+.comp-summary-label { font-size:0.75rem; color:var(--text-secondary); margin:2px 0 8px; }
+.comp-summary-progress { display:flex; gap:3px; }
+.comp-summary-dot { width:8px; height:8px; border-radius:2px; }
+.comp-summary-dot.filled-I { background:#a855f7; }
+.comp-summary-dot.filled-D { background:#f59e0b; }
+.comp-summary-dot.filled-M { background:var(--accent); }
+.comp-summary-dot.empty { background:var(--surface-3); }
+.comp-summary-status { font-size:0.65rem; margin-top:6px; color:var(--text-tertiary); }
+
 /* ===== MODAL / PLAN ANALÍTICO ===== */
 .modal-overlay {
   position:fixed; inset:0; z-index:200;
@@ -637,35 +671,43 @@ body {
 /* Cert slot highlight */
 .course-card.cert-filled { border-color:rgba(200,255,0,0.15); }
 
-/* ===== COMPETENCIAS CHECKBOXES ===== */
+/* ===== COMPETENCIAS I-D-M ===== */
 .comp-list { display:flex; flex-direction:column; gap:4px; }
 .comp-item {
   display:flex; align-items:center; gap:10px;
   padding:8px 12px; border-radius:8px;
   background:var(--surface); border:1px solid var(--border);
-  cursor:pointer; user-select:none; transition:all 0.2s;
+  user-select:none; transition:all 0.2s;
 }
 .comp-item:hover { border-color:var(--border-hover); }
-.comp-item.checked { border-color:rgba(200,255,0,0.25); background:rgba(200,255,0,0.04); }
-.comp-check-box {
-  width:18px; height:18px; border-radius:5px; flex-shrink:0;
-  border:1.5px solid var(--border-hover); background:transparent;
-  display:flex; align-items:center; justify-content:center;
-  font-size:0.6rem; color:transparent; transition:all 0.2s;
-}
-.comp-item.checked .comp-check-box {
-  background:var(--accent); border-color:var(--accent); color:var(--bg);
-}
+.comp-item.has-level { border-color:rgba(200,255,0,0.25); background:rgba(200,255,0,0.04); }
 .comp-id {
   font-family:'JetBrains Mono',monospace; font-size:0.62rem;
   font-weight:700; color:var(--text-tertiary); width:28px; flex-shrink:0;
 }
-.comp-label { font-size:0.78rem; color:var(--text-secondary); line-height:1.3; }
-.comp-item.checked .comp-label { color:var(--text); }
+.comp-label { font-size:0.78rem; color:var(--text-secondary); line-height:1.3; flex:1; }
+.comp-item.has-level .comp-label { color:var(--text); }
+.comp-level-btns { display:flex; gap:3px; margin-left:auto; flex-shrink:0; }
+.comp-level-btn {
+  width:28px; height:24px; border-radius:5px; border:1.5px solid var(--border-hover);
+  background:transparent; color:var(--text-tertiary); cursor:pointer;
+  font-family:'JetBrains Mono',monospace; font-size:0.6rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center; transition:all 0.2s;
+}
+.comp-level-btn:hover { border-color:var(--text-secondary); color:var(--text); }
+.comp-level-btn.active-I { background:#a855f7; border-color:#a855f7; color:#fff; }
+.comp-level-btn.active-D { background:#f59e0b; border-color:#f59e0b; color:#fff; }
+.comp-level-btn.active-M { background:var(--accent); border-color:var(--accent); color:var(--bg); }
 .comp-item.suggested { border-left:2px solid var(--accent); }
-.comp-suggested-badge { color:var(--accent); font-size:0.7rem; margin-left:auto; flex-shrink:0; }
+.comp-suggested-badge { color:var(--accent); font-size:0.7rem; flex-shrink:0; margin-right:4px; }
 .comp-suggestion-note { font-size:0.75rem; color:var(--text-tertiary); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
 .comp-suggestion-note span { color:var(--accent); }
+.comp-legend { display:flex; gap:12px; margin-bottom:10px; font-size:0.7rem; color:var(--text-tertiary); }
+.comp-legend-item { display:flex; align-items:center; gap:4px; }
+.comp-legend-dot { width:10px; height:10px; border-radius:3px; }
+.comp-legend-dot.l-I { background:#a855f7; }
+.comp-legend-dot.l-D { background:#f59e0b; }
+.comp-legend-dot.l-M { background:var(--accent); }
 
 /* ===== BIBLIOGRAFÍA + ARCHIVOS ===== */
 .biblio-list { display:flex; flex-direction:column; gap:6px; }
@@ -725,6 +767,9 @@ body {
 
 /* ===== SAVE BUTTON STATES ===== */
 .btn-action.saved { background:#4ade80; color:var(--bg); border-color:#4ade80; pointer-events:none; }
+.btn-action.unsaved { border-color:var(--accent); }
+.btn-action.unsaved::after { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); display:inline-block; margin-left:6px; animation:pulse-dot 1.5s ease infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
 /* ===== LOGIN OVERLAY ===== */
 .login-overlay {
@@ -834,6 +879,7 @@ body {
       <div class="nav-tabs">
         <button class="nav-tab active" data-view="mapa">Mapa</button>
         <button class="nav-tab" data-view="certificados">Certificados</button>
+        <button class="nav-tab" data-view="competencias">Competencias</button>
       </div>
       <button class="btn-header" id="btnDownloadMap" title="Descargar mapa curricular PDF">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
@@ -1102,6 +1148,21 @@ body {
   </div>
 </div>
 
+<!-- ===== COMPETENCIAS DASHBOARD ===== -->
+<div class="view" id="view-competencias">
+  <div class="comp-dashboard">
+    <h2 class="comp-dash-title">Matriz Curricular de Competencias</h2>
+    <p class="comp-dash-subtitle">Progresión de competencias del perfil de egreso a lo largo del plan de estudios.</p>
+    <div class="comp-dash-legend">
+      <div class="comp-dash-legend-item"><div class="comp-dash-legend-dot l-I">I</div> Introduce</div>
+      <div class="comp-dash-legend-item"><div class="comp-dash-legend-dot l-D">D</div> Desarrolla</div>
+      <div class="comp-dash-legend-item"><div class="comp-dash-legend-dot l-M">M</div> Domina</div>
+    </div>
+    <div class="comp-matrix-wrap" id="compMatrixWrap"></div>
+    <div class="comp-dash-summary" id="compDashSummary"></div>
+  </div>
+</div>
+
 <!-- ===== MODAL / PLAN ANALÍTICO ===== -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-panel">
@@ -1118,7 +1179,12 @@ body {
       <div class="modal-section"><div class="modal-section-label">Objetivos Específicos</div><div class="modal-field" id="field-objetivosEspecificos" contenteditable="true" data-placeholder="1. ...  2. ...  3. ..."></div></div>
       <div class="modal-section">
         <div class="modal-section-label">Competencias del Perfil de Egreso</div>
-        <div class="comp-suggestion-note" id="compSuggestionNote"><span>★</span> Sugerencia de competencias que contempla esta asignatura</div>
+        <div class="comp-legend">
+          <div class="comp-legend-item"><div class="comp-legend-dot l-I"></div> Introduce</div>
+          <div class="comp-legend-item"><div class="comp-legend-dot l-D"></div> Desarrolla</div>
+          <div class="comp-legend-item"><div class="comp-legend-dot l-M"></div> Domina</div>
+        </div>
+        <div class="comp-suggestion-note" id="compSuggestionNote"><span>★</span> Nivel sugerido para esta asignatura</div>
         <div class="comp-list" id="compList"></div>
       </div>
       <div class="modal-section"><div class="modal-section-label">Contenido Temático</div><div class="modal-field" id="field-contenido" contenteditable="true" data-placeholder="Unidad 1: ...  Unidad 2: ...  Unidad 3: ..."></div></div>
@@ -1257,49 +1323,49 @@ const COMPETENCIAS = [
 ];
 
 const SUGGESTED_COMPS = {
-  // SEM 1
-  'fundamentos-del-diseño-i':['C1','C7','C9'],
-  'pensamiento-visual-y-representación-sistémica':['C1','C6','C7'],
-  'historia-cultura-y-ética-del-diseño':['C6','C10'],
-  'si-herramientas-digitales-para-el-diseño':['C5','C11'],
-  'formación-udem':['C10'],
-  // SEM 2
-  'fundamentos-del-diseño-ii':['C1','C7','C9'],
-  'tipografía-i':['C1'],
-  'producción-i':['C5','C11'],
-  'ilustración':['C1','C7'],
-  'semiótica':['C1','C6','C9'],
-  // SEM 3
-  'sistemas-de-identidad-i':['C1','C2','C7'],
-  'diseño-de-información-i':['C2','C3','C6'],
-  'fotografía-i':['C1','C5'],
-  'tipografía-ii':['C1','C2'],
-  'sii-dirección-creativa-para-medios-audiovisuales-e-interactivos':['C1','C5','C7','C11'],
-  // SEM 4
-  'sistemas-de-identidad-ii-narrativa-visual-estratégica':['C1','C2','C4','C9'],
-  'diseño-de-información-ii-sistemas-de-información':['C2','C3','C6','C11'],
-  'fotografía-ii-dirección-de-arte':['C1','C4','C5'],
-  'estrategia-de-marca':['C2','C4','C12'],
-  'producción-ii-gestión-de-producción':['C5','C11'],
-  // SEM 5
-  'sistemas-de-identidad-iii':['C1','C2','C3','C7'],
-  'siii-diseño-de-futuros':['C4','C6','C7'],
-  // SEM 6
-  'interacción':['C3','C7','C11'],
-  'experiencia':['C3','C6'],
-  'prototipado-interactivo':['C3','C7','C11'],
-  'siv-producción-artística-interdisciplinaria':['C5','C7','C8'],
-  // SEM 7
-  'diseño-de-servicios':['C3','C4','C8','C12'],
-  'liderazgo-y-gestión-de-diseño':['C4','C5','C8','C12'],
-  'sv-investigación-para-el-diseño':['C4','C6'],
-  'prácticas-profesionales':['C5','C8','C10'],
-  // SEM 8
-  'estudio-integral-de-diseño':['C1','C2','C3','C4','C7'],
-  'proyecto-de-evaluación-final-i':['C4','C6','C9'],
-  'svi-estrategia-de-negocios-para-el-diseño':['C4','C12'],
-  // SEM 9
-  'proyecto-de-evaluación-final-ii':['C4','C6','C7','C9'],
+  // SEM 1 — mayormente Introduce
+  'fundamentos-del-diseño-i':{C1:'I',C7:'I',C9:'I'},
+  'pensamiento-visual-y-representación-sistémica':{C1:'I',C6:'I',C7:'I'},
+  'historia-cultura-y-ética-del-diseño':{C6:'I',C10:'I'},
+  'si-herramientas-digitales-para-el-diseño':{C5:'I',C11:'I'},
+  'formación-udem':{C10:'I'},
+  // SEM 2 — Introduce + primeros Develop
+  'fundamentos-del-diseño-ii':{C1:'D',C7:'I',C9:'I'},
+  'tipografía-i':{C1:'I'},
+  'producción-i':{C5:'I',C11:'I'},
+  'ilustración':{C1:'I',C7:'I'},
+  'semiótica':{C1:'I',C6:'I',C9:'I'},
+  // SEM 3 — Develop
+  'sistemas-de-identidad-i':{C1:'D',C2:'I',C7:'D'},
+  'diseño-de-información-i':{C2:'I',C3:'I',C6:'D'},
+  'fotografía-i':{C1:'D',C5:'I'},
+  'tipografía-ii':{C1:'D',C2:'I'},
+  'sii-dirección-creativa-para-medios-audiovisuales-e-interactivos':{C1:'D',C5:'I',C7:'D',C11:'D'},
+  // SEM 4 — Develop
+  'sistemas-de-identidad-ii-narrativa-visual-estratégica':{C1:'D',C2:'D',C4:'I',C9:'D'},
+  'diseño-de-información-ii-sistemas-de-información':{C2:'D',C3:'D',C6:'D',C11:'D'},
+  'fotografía-ii-dirección-de-arte':{C1:'D',C4:'I',C5:'D'},
+  'estrategia-de-marca':{C2:'D',C4:'I',C12:'I'},
+  'producción-ii-gestión-de-producción':{C5:'D',C11:'D'},
+  // SEM 5 — Develop → Master
+  'sistemas-de-identidad-iii':{C1:'M',C2:'D',C3:'D',C7:'D'},
+  'siii-diseño-de-futuros':{C4:'D',C6:'D',C7:'D'},
+  // SEM 6 — Develop → Master
+  'interacción':{C3:'D',C7:'D',C11:'D'},
+  'experiencia':{C3:'D',C6:'D'},
+  'prototipado-interactivo':{C3:'D',C7:'D',C11:'D'},
+  'siv-producción-artística-interdisciplinaria':{C5:'D',C7:'M',C8:'D'},
+  // SEM 7 — Master
+  'diseño-de-servicios':{C3:'M',C4:'D',C8:'D',C12:'D'},
+  'liderazgo-y-gestión-de-diseño':{C4:'D',C5:'M',C8:'D',C12:'D'},
+  'sv-investigación-para-el-diseño':{C4:'D',C6:'M'},
+  'prácticas-profesionales':{C5:'M',C8:'M',C10:'M'},
+  // SEM 8 — Master
+  'estudio-integral-de-diseño':{C1:'M',C2:'M',C3:'M',C4:'M',C7:'M'},
+  'proyecto-de-evaluación-final-i':{C4:'M',C6:'M',C9:'M'},
+  'svi-estrategia-de-negocios-para-el-diseño':{C4:'M',C12:'M'},
+  // SEM 9 — Master
+  'proyecto-de-evaluación-final-ii':{C4:'M',C6:'M',C7:'M',C9:'M'},
 };
 
 // ===== TAB SWITCHING =====
@@ -1310,6 +1376,7 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
     tab.classList.add('active');
     document.getElementById('view-' + tab.dataset.view).classList.add('active');
     document.getElementById('filtersBar').style.display = tab.dataset.view === 'mapa' ? 'flex' : 'none';
+    if (tab.dataset.view === 'competencias') buildCompDashboard();
   });
 });
 
@@ -1349,23 +1416,61 @@ const biblioList = document.getElementById('biblioList');
 const fileListEl = document.getElementById('fileList');
 let currentCourseId = null;
 let currentFiles = [];
+let _savedSnapshot = null;
 
 const textFields = ['objetivo','objetivosEspecificos','contenido','metodologia','evaluacion'];
 
+function markUnsaved() {
+  if (userRole !== 'admin') return;
+  const btn = document.getElementById('btnSave');
+  if (!btn.classList.contains('saved')) btn.classList.add('unsaved');
+}
+function snapshotPlan() { _savedSnapshot = JSON.stringify(gatherPlanData()); }
+function hasChanges() { return _savedSnapshot !== JSON.stringify(gatherPlanData()); }
+
+// checked = {C1:'I', C3:'D'} or ['C1','C3'] (legacy), suggested = {C1:'I', C7:'D'} or []
 function renderCompetencias(checked, suggested) {
-  suggested = suggested || [];
+  // Normalize legacy array format to object
+  if (Array.isArray(checked)) { const obj = {}; checked.forEach(id => { obj[id] = 'I'; }); checked = obj; }
+  suggested = suggested || {};
+  if (Array.isArray(suggested)) { const obj = {}; suggested.forEach(id => { obj[id] = 'I'; }); suggested = obj; }
   compList.innerHTML = '';
+  const levels = ['I','D','M'];
   COMPETENCIAS.forEach(c => {
-    const isSuggested = suggested.includes(c.id);
+    const isSuggested = !!suggested[c.id];
+    const currentLevel = checked[c.id] || null;
     const item = document.createElement('div');
-    item.className = 'comp-item' + (checked.includes(c.id) ? ' checked' : '') + (isSuggested ? ' suggested' : '');
-    item.innerHTML = `<div class="comp-check-box">&#10003;</div><span class="comp-id">${c.id}</span><span class="comp-label">${c.label}</span>` + (isSuggested ? '<span class="comp-suggested-badge">★</span>' : '');
-    item.addEventListener('click', () => item.classList.toggle('checked'));
+    item.className = 'comp-item' + (currentLevel ? ' has-level' : '') + (isSuggested ? ' suggested' : '');
+    item.dataset.compId = c.id;
+    item.dataset.level = currentLevel || '';
+    let btnsHtml = levels.map(l =>
+      `<button class="comp-level-btn${currentLevel === l ? ' active-' + l : ''}" data-level="${l}">${l}</button>`
+    ).join('');
+    item.innerHTML = `<span class="comp-id">${c.id}</span><span class="comp-label">${c.label}</span>` +
+      (isSuggested ? `<span class="comp-suggested-badge" title="Sugerido: ${suggested[c.id]}">★${suggested[c.id]}</span>` : '') +
+      `<div class="comp-level-btns">${btnsHtml}</div>`;
+    item.querySelectorAll('.comp-level-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const lvl = btn.dataset.level;
+        const isActive = btn.classList.contains('active-' + lvl);
+        item.querySelectorAll('.comp-level-btn').forEach(b => b.className = 'comp-level-btn');
+        if (isActive) { item.dataset.level = ''; item.classList.remove('has-level'); }
+        else { btn.classList.add('active-' + lvl); item.dataset.level = lvl; item.classList.add('has-level'); }
+        markUnsaved();
+      });
+    });
+    if (userRole === 'viewer') item.querySelectorAll('.comp-level-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; });
     compList.appendChild(item);
   });
 }
 function getCheckedComps() {
-  return [...compList.querySelectorAll('.comp-item.checked')].map(el => el.querySelector('.comp-id').textContent);
+  const result = {};
+  compList.querySelectorAll('.comp-item').forEach(el => {
+    const lvl = el.dataset.level;
+    if (lvl) result[el.dataset.compId] = lvl;
+  });
+  return result;
 }
 
 function renderBiblio(refs) {
@@ -1438,18 +1543,20 @@ async function openModal(card) {
     const el = document.getElementById('field-' + k);
     if (el) el.textContent = plan[k] || '';
   });
-  const suggested = SUGGESTED_COMPS[currentCourseId] || [];
+  const suggested = SUGGESTED_COMPS[currentCourseId] || {};
   renderCompetencias(plan.competencias || suggested, suggested);
-  document.getElementById('compSuggestionNote').style.display = suggested.length ? '' : 'none';
+  document.getElementById('compSuggestionNote').style.display = Object.keys(suggested).length ? '' : 'none';
   renderBiblio(plan.bibliografia || []);
   renderFiles(plan.archivos || []);
 
   // Reset save button
   const saveBtn = document.getElementById('btnSave');
-  saveBtn.textContent = 'Grabar'; saveBtn.classList.remove('saved');
+  saveBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Grabar';
+  saveBtn.classList.remove('saved', 'unsaved');
 
   overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
+  snapshotPlan();
 }
 
 function closeModal() {
@@ -1475,11 +1582,12 @@ async function savePlan() {
   if (!currentCourseId) return;
   const plans = (await dbGet('plans')) || {};
   const plan = gatherPlanData();
-  const hasContent = textFields.some(k => plan[k]) || plan.competencias.length || plan.bibliografia.length || plan.archivos.length;
+  const hasContent = textFields.some(k => plan[k]) || Object.keys(plan.competencias).length || plan.bibliografia.length || plan.archivos.length;
   if (hasContent) { plans[currentCourseId] = plan; } else { delete plans[currentCourseId]; }
   await dbSet('plans', plans);
   const btn = document.getElementById('btnSave');
-  btn.innerHTML = '&#10003; Guardado'; btn.classList.add('saved');
+  btn.innerHTML = '&#10003; Guardado'; btn.classList.remove('unsaved'); btn.classList.add('saved');
+  snapshotPlan();
   setTimeout(() => { btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Grabar'; btn.classList.remove('saved'); }, 2000);
 }
 
@@ -1488,6 +1596,7 @@ document.getElementById('modalClose').addEventListener('click', closeModal);
 document.getElementById('btnCloseModal').addEventListener('click', closeModal);
 document.getElementById('btnSave').addEventListener('click', savePlan);
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal(); });
+document.querySelector('.modal-body').addEventListener('input', markUnsaved);
 
 // ===== DRAG & DROP =====
 let draggedCard = null;
@@ -1571,15 +1680,19 @@ function recalcCredits() {
 // ===== LAYOUT SAVE/LOAD (REAL-TIME SYNC) =====
 let _layoutSaving = false; // prevent echo when we just saved
 
-async function saveLayout() {
+let _layoutTimer = null;
+function saveLayout() {
   if (userRole === 'viewer') return;
-  const layout = {};
-  document.querySelectorAll('.semester-col').forEach((col, i) => {
-    layout['sem' + (i + 1)] = [...col.querySelectorAll('.course-card')].map(c => c.dataset.id);
-  });
-  _layoutSaving = true;
-  await dbSet('layout', layout);
-  setTimeout(() => { _layoutSaving = false; }, 500);
+  clearTimeout(_layoutTimer);
+  _layoutTimer = setTimeout(async () => {
+    const layout = {};
+    document.querySelectorAll('.semester-col').forEach((col, i) => {
+      layout['sem' + (i + 1)] = [...col.querySelectorAll('.course-card')].map(c => c.dataset.id);
+    });
+    _layoutSaving = true;
+    await dbSet('layout', layout);
+    setTimeout(() => { _layoutSaving = false; }, 500);
+  }, 1500);
 }
 
 function applyLayout(layout) {
@@ -1664,19 +1777,20 @@ document.querySelectorAll('.cert-card').forEach(card => {
 document.getElementById('btnDownloadMap').addEventListener('click', generateMapPDF);
 document.getElementById('btnDownloadPlan').addEventListener('click', generatePlanPDF);
 
-function generateMapPDF() {
+async function generateMapPDF() {
   if (!window.jspdf) { alert('La librería PDF aún no carga. Espera unos segundos e intenta de nuevo.'); return; }
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF('l', 'mm', 'a3');
   const pw = doc.internal.pageSize.getWidth();
   const ph = doc.internal.pageSize.getHeight();
+  const footer = () => { doc.setFontSize(6); doc.setTextColor(170); doc.text('LDG+D Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 15, ph - 8); };
+  const certNames = { a:'Cert A: Dirección de Marca y Dirección de Arte', b:'Cert B: Producto Digital y Sistemas Interactivos', c:'Cert C: Gestión Estratégica de Servicios' };
+
+  // ===== PAGE 1: MAPA CURRICULAR =====
   doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS', 15, 15);
   doc.setFontSize(18); doc.setTextColor(30); doc.text('LDG+D · Dirección y Gestión de Diseño', 15, 24);
   doc.setFontSize(10); doc.setTextColor(100); doc.text('Plan 2027 · ' + document.querySelector('.credits-badge').textContent.split('·').pop().trim(), 15, 31);
-  if (selectedCerts.length) {
-    const cn = { a:'Cert A: Dirección de Marca', b:'Cert B: Producto Digital', c:'Cert C: Gestión Estratégica' };
-    doc.text('Certificados: ' + selectedCerts.map(c => cn[c]).join(' + '), 15, 37);
-  }
+  if (selectedCerts.length) { doc.text('Certificados: ' + selectedCerts.map(c => certNames[c]).join(' + '), 15, 37); }
   const startY = 44; const colW = (pw - 30) / 9;
   document.querySelectorAll('.semester-col').forEach((col, i) => {
     const x = 15 + i * colW; let y = startY;
@@ -1699,9 +1813,96 @@ function generateMapPDF() {
       y += cardH + 2;
     });
   });
-  doc.setFontSize(6); doc.setTextColor(170);
-  doc.text('LDG+D Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 15, ph - 8);
-  doc.save('LDGD_Plan2027_MapaCurricular.pdf');
+  footer();
+
+  // ===== PAGE 2: CERTIFICADOS =====
+  if (selectedCerts.length) {
+    doc.addPage('a3', 'l');
+    doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS · LDG+D Plan 2027', 15, 15);
+    doc.setFontSize(16); doc.setTextColor(30); doc.text('Certificados Profesionales Seleccionados', 15, 25);
+    let cy = 38;
+    selectedCerts.forEach(certKey => {
+      doc.setFontSize(12); doc.setTextColor(50); doc.text(certNames[certKey], 15, cy); cy += 8;
+      const materias = certMaterias[certKey] || [];
+      const certCard = document.querySelector(`.cert-card[data-cert="${certKey}"]`);
+      // Roles
+      const roles = certCard ? [...certCard.querySelectorAll('.cert-roles li')].map(li => li.textContent) : [];
+      if (roles.length) {
+        doc.setFontSize(8); doc.setTextColor(100); doc.text('Roles de egreso:', 20, cy); cy += 5;
+        roles.forEach(r => { doc.setFontSize(8); doc.setTextColor(60); doc.text('• ' + r, 25, cy); cy += 4.5; });
+        cy += 3;
+      }
+      // Materias
+      doc.setFontSize(8); doc.setTextColor(100); doc.text('Materias del certificado:', 20, cy); cy += 5;
+      materias.forEach(m => { doc.setFontSize(9); doc.setTextColor(40); doc.text('• ' + m, 25, cy); cy += 5; });
+      cy += 10;
+    });
+    footer();
+  }
+
+  // ===== PAGE 3: MATRIZ DE COMPETENCIAS =====
+  doc.addPage('a3', 'l');
+  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS · LDG+D Plan 2027', 15, 15);
+  doc.setFontSize(16); doc.setTextColor(30); doc.text('Matriz Curricular de Competencias', 15, 25);
+  doc.setFontSize(7); doc.setTextColor(120); doc.text('I = Introduce   D = Desarrolla   M = Domina', 15, 31);
+  const plans = (await dbGet('plans')) || {};
+  const nameColW = 85; const cellW = (pw - 30 - nameColW) / 12;
+  let my = 38;
+  // Header
+  doc.setFillColor(230,230,230); doc.rect(15, my, nameColW, 7, 'F');
+  doc.setFontSize(6); doc.setTextColor(80); doc.text('MATERIA', 17, my + 5);
+  COMPETENCIAS.forEach((c, ci) => {
+    const cx = 15 + nameColW + ci * cellW;
+    doc.rect(cx, my, cellW, 7, 'F');
+    doc.text(c.id, cx + cellW / 2, my + 5, { align: 'center' });
+  });
+  my += 9;
+  // Rows by semester
+  const lvlColors = { I:[235,220,255], D:[255,243,220], M:[240,255,210] };
+  const lvlTextColors = { I:[120,50,200], D:[180,120,10], M:[80,130,0] };
+  document.querySelectorAll('.semester-col').forEach((col, si) => {
+    if (my > ph - 20) { doc.addPage('a3', 'l'); my = 15; }
+    // Sem divider
+    doc.setFillColor(245,245,245); doc.rect(15, my, pw - 30, 6, 'F');
+    doc.setFontSize(6); doc.setTextColor(130); doc.text('SEMESTRE ' + (si + 1), 17, my + 4);
+    my += 7;
+    col.querySelectorAll('.course-card').forEach(card => {
+      if (my > ph - 15) { doc.addPage('a3', 'l'); my = 15; }
+      const id = card.dataset.id;
+      const name = card.querySelector('.card-name')?.textContent || '';
+      const plan = plans[id];
+      let comps = plan?.competencias || SUGGESTED_COMPS[id] || {};
+      if (Array.isArray(comps)) { const obj = {}; comps.forEach(cid => { obj[cid] = 'I'; }); comps = obj; }
+      // Name cell
+      doc.setDrawColor(230); doc.rect(15, my, nameColW, 6, 'S');
+      doc.setFontSize(5.5); doc.setTextColor(40);
+      const tName = doc.splitTextToSize(name, nameColW - 4);
+      doc.text(tName[0], 17, my + 4);
+      // Comp cells
+      COMPETENCIAS.forEach((c, ci) => {
+        const cx = 15 + nameColW + ci * cellW;
+        const lvl = comps[c.id];
+        if (lvl) {
+          const bg = lvlColors[lvl] || [248,248,248]; doc.setFillColor(bg[0], bg[1], bg[2]); doc.rect(cx, my, cellW, 6, 'FD');
+          const tc = lvlTextColors[lvl] || [40,40,40]; doc.setTextColor(tc[0], tc[1], tc[2]);
+          doc.setFontSize(7); doc.setFont(undefined, 'bold'); doc.text(lvl, cx + cellW / 2, my + 4.5, { align: 'center' }); doc.setFont(undefined, 'normal');
+        } else {
+          doc.setDrawColor(240); doc.rect(cx, my, cellW, 6, 'S');
+        }
+      });
+      my += 7;
+    });
+  });
+  // Competencias legend
+  if (my > ph - 45) { doc.addPage('a3', 'l'); my = 15; }
+  my += 5;
+  doc.setFontSize(9); doc.setTextColor(30); doc.text('Competencias del Perfil de Egreso', 15, my); my += 6;
+  COMPETENCIAS.forEach(c => {
+    doc.setFontSize(6.5); doc.setTextColor(80); doc.text(c.id + ' — ' + c.label, 15, my); my += 4;
+  });
+  footer();
+
+  doc.save('LDGD_Plan2027_Completo.pdf');
 }
 
 async function generatePlanPDF() {
@@ -1723,7 +1924,7 @@ async function generatePlanPDF() {
   const sections = [
     ['Objetivo General', plan.objetivo],
     ['Objetivos Específicos', plan.objetivosEspecificos],
-    ['Competencias del Perfil de Egreso', plan.competencias.map(id => { const c = COMPETENCIAS.find(x => x.id === id); return c ? c.id + ' — ' + c.label : id; }).join('\n') || '(Sin competencias)'],
+    ['Competencias del Perfil de Egreso', (() => { const comps = plan.competencias || {}; if (Array.isArray(comps)) return comps.map(id => { const c = COMPETENCIAS.find(x => x.id === id); return c ? c.id + ' — ' + c.label : id; }).join('\n') || '(Sin competencias)'; const entries = Object.entries(comps); if (!entries.length) return '(Sin competencias)'; const labels = {I:'Introduce', D:'Desarrolla', M:'Domina'}; return entries.map(([id, lvl]) => { const c = COMPETENCIAS.find(x => x.id === id); return `[${lvl}] ${id} — ${c ? c.label : id} (${labels[lvl]})`; }).join('\n'); })()],
     ['Contenido Temático', plan.contenido],
     ['Metodología de Enseñanza', plan.metodologia],
     ['Criterios de Evaluación', plan.evaluacion],
@@ -1741,11 +1942,79 @@ async function generatePlanPDF() {
   doc.save('LDGD_PlanAnalitico_' + currentCourseId + '.pdf');
 }
 
+// ===== COMPETENCIAS DASHBOARD =====
+async function buildCompDashboard() {
+  const plans = (await dbGet('plans')) || {};
+  // Group courses by semester
+  const semCols = document.querySelectorAll('.semester-col');
+  const semesters = [];
+  semCols.forEach((col, i) => {
+    const cards = [...col.querySelectorAll('.course-card')];
+    cards.forEach(card => {
+      const id = card.dataset.id;
+      const name = card.querySelector('.card-name').textContent;
+      const plan = plans[id];
+      let comps = plan?.competencias || SUGGESTED_COMPS[id] || {};
+      // Legacy array format
+      if (Array.isArray(comps)) { const obj = {}; comps.forEach(cid => { obj[cid] = 'I'; }); comps = obj; }
+      semesters.push({ id, name, sem: i + 1, comps });
+    });
+  });
+  // Build matrix table: rows = courses (grouped by sem), cols = C1-C12
+  const wrap = document.getElementById('compMatrixWrap');
+  let html = '<table class="comp-matrix"><thead><tr><th style="text-align:left;padding-left:10px;">Materia</th>';
+  COMPETENCIAS.forEach(c => { html += `<th class="sem-header">${c.id}</th>`; });
+  html += '</tr></thead><tbody>';
+  let currentSem = 0;
+  semesters.forEach(course => {
+    if (course.sem !== currentSem) {
+      currentSem = course.sem;
+      html += `<tr class="sem-divider"><td colspan="${COMPETENCIAS.length + 1}">Semestre ${currentSem}</td></tr>`;
+    }
+    html += `<tr><td class="comp-name-cell">${course.name}</td>`;
+    COMPETENCIAS.forEach(c => {
+      const lvl = course.comps[c.id];
+      if (lvl) html += `<td class="comp-cell comp-cell-${lvl}">${lvl}</td>`;
+      else html += `<td class="comp-cell comp-cell-empty">·</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  wrap.innerHTML = html;
+  // Summary cards per competencia
+  const summary = document.getElementById('compDashSummary');
+  summary.innerHTML = '';
+  COMPETENCIAS.forEach(c => {
+    let hasI = false, hasD = false, hasM = false;
+    let count = 0;
+    semesters.forEach(course => {
+      const lvl = course.comps[c.id];
+      if (lvl) { count++; if (lvl === 'I') hasI = true; if (lvl === 'D') hasD = true; if (lvl === 'M') hasM = true; }
+    });
+    let status = '';
+    if (hasI && hasD && hasM) status = 'Progresión completa: I → D → M';
+    else if (hasI && hasD) status = 'Falta Dominio (M)';
+    else if (hasI) status = 'Solo Introduce — falta desarrollo';
+    else if (count === 0) status = 'Sin asignar';
+    else status = `${count} materia${count > 1 ? 's' : ''}`;
+    const card = document.createElement('div');
+    card.className = 'comp-summary-card';
+    card.innerHTML = `<div class="comp-summary-id">${c.id}</div><div class="comp-summary-label">${c.label}</div>` +
+      `<div class="comp-summary-progress">` +
+      `<div class="comp-summary-dot ${hasI ? 'filled-I' : 'empty'}" title="Introduce"></div>` +
+      `<div class="comp-summary-dot ${hasD ? 'filled-D' : 'empty'}" title="Desarrolla"></div>` +
+      `<div class="comp-summary-dot ${hasM ? 'filled-M' : 'empty'}" title="Domina"></div>` +
+      `</div><div class="comp-summary-status">${status}</div>`;
+    summary.appendChild(card);
+  });
+}
+
 // ===== INIT =====
 async function initApp() {
   await loadLayout();
   await loadCerts();
   recalcCredits();
+  buildCompDashboard();
   // Re-apply role restrictions after layout loaded (cards may have been re-added)
   if (userRole === 'viewer') {
     document.querySelectorAll('#semGrid .course-card').forEach(card => {
