@@ -2288,8 +2288,15 @@ function applyNameTypeChange() {
   typeEl.textContent = TYPE_LABELS[newType] || newType;
   typeEl.className = 'card-type ' + newType;
   currentCard.dataset.type = newType;
-  if (newType === 'estudio') { currentCard.classList.add('is-estudio'); }
-  else { currentCard.classList.remove('is-estudio'); }
+  if (newType === 'estudio') {
+    currentCard.classList.add('is-estudio');
+    currentCard.querySelector('.card-credits').textContent = '12 cr';
+  } else {
+    currentCard.classList.remove('is-estudio');
+    if (currentCard.querySelector('.card-credits').textContent === '12 cr') {
+      currentCard.querySelector('.card-credits').textContent = '6 cr';
+    }
+  }
   // Update badge in modal
   modalBadge.textContent = TYPE_LABELS[newType] || newType;
   modalBadge.className = 'card-type ' + newType;
@@ -2298,7 +2305,11 @@ function applyNameTypeChange() {
   const oldId = currentCard.dataset.id;
   currentCard.dataset.id = slug;
   currentCourseId = slug;
+  // Update modal meta with new credits
+  const newCredits = currentCard.querySelector('.card-credits').textContent;
+  modalMeta.textContent = newCredits + ' · Plan 2027';
   // Persist customizations
+  recalcCredits();
   saveCustomizations();
   saveLayout();
 }
@@ -2326,6 +2337,7 @@ async function loadCustomizations() {
     const c = customs[id];
     if (!c) return;
     card.querySelector('.card-name').textContent = c.name;
+    if (c.credits) card.querySelector('.card-credits').textContent = c.credits;
     const typeEl = card.querySelector('.card-type');
     typeEl.textContent = TYPE_LABELS[c.type] || c.type;
     typeEl.className = 'card-type ' + c.type;
