@@ -772,6 +772,59 @@ body {
 .btn-action.unsaved::after { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); display:inline-block; margin-left:6px; animation:pulse-dot 1.5s ease infinite; }
 @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
+/* ===== BANCO DE MATERIAS ===== */
+.bank-empty { text-align:center; padding:60px 20px; color:var(--text-tertiary); }
+.bank-empty svg { width:48px; height:48px; margin-bottom:12px; opacity:0.3; }
+.bank-list { display:flex; flex-direction:column; gap:10px; max-width:800px; }
+.bank-item {
+  padding:16px 20px; border-radius:12px;
+  background:var(--surface); border:1px solid var(--border);
+  display:flex; gap:16px; align-items:flex-start;
+  transition:border-color 0.2s;
+}
+.bank-item:hover { border-color:var(--border-hover); }
+.bank-item-info { flex:1; min-width:0; }
+.bank-item-name { font-weight:700; font-size:0.95rem; margin-bottom:4px; }
+.bank-item-meta { font-size:0.72rem; color:var(--text-secondary); display:flex; gap:12px; flex-wrap:wrap; }
+.bank-item-meta span { display:flex; align-items:center; gap:4px; }
+.bank-item-note {
+  margin-top:8px; padding:8px 12px; border-radius:8px;
+  background:var(--surface-2); border:1px solid var(--border);
+  font-size:0.8rem; color:var(--text-secondary); line-height:1.4;
+  font-style:italic;
+}
+.bank-item-note::before { content:'"'; }
+.bank-item-note::after { content:'"'; }
+.bank-item-actions { display:flex; gap:6px; flex-shrink:0; }
+.bank-btn {
+  padding:6px 14px; border-radius:8px; font:inherit; font-size:0.72rem;
+  font-weight:600; cursor:pointer; border:1px solid var(--border);
+  background:transparent; color:var(--text-secondary); transition:all 0.2s;
+}
+.bank-btn:hover { border-color:var(--border-hover); color:var(--text); }
+.bank-btn.restore { border-color:rgba(200,255,0,0.3); color:var(--accent); }
+.bank-btn.restore:hover { background:var(--accent-dim); }
+.bank-btn.delete { border-color:rgba(239,68,68,0.3); color:#ef4444; }
+.bank-btn.delete:hover { background:rgba(239,68,68,0.1); }
+
+/* Context menu */
+.ctx-menu {
+  position:fixed; z-index:9999; min-width:180px;
+  background:var(--surface-2); border:1px solid var(--border-hover);
+  border-radius:10px; padding:4px; display:none;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+}
+.ctx-menu.show { display:block; }
+.ctx-menu-item {
+  display:flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:8px; border:none;
+  background:transparent; color:var(--text); font:inherit;
+  font-size:0.8rem; cursor:pointer; width:100%; text-align:left;
+}
+.ctx-menu-item:hover { background:var(--surface-3); }
+.ctx-menu-item.danger { color:#ef4444; }
+.ctx-menu-item svg { width:16px; height:16px; flex-shrink:0; }
+
 /* ===== LOGIN OVERLAY ===== */
 .login-overlay {
   position:fixed; inset:0; z-index:999;
@@ -881,6 +934,7 @@ body {
         <button class="nav-tab active" data-view="mapa">Mapa</button>
         <button class="nav-tab" data-view="certificados">Certificados</button>
         <button class="nav-tab" data-view="competencias">Competencias</button>
+        <button class="nav-tab" data-view="banco">Banco</button>
       </div>
       <button class="btn-header" id="btnDownloadMap" title="Descargar mapa curricular PDF">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
@@ -1166,6 +1220,25 @@ body {
   </div>
 </div>
 
+<div class="view" id="view-banco">
+  <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:4px;">Banco de Materias Descartadas</h2>
+  <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:24px;">Materias removidas del plan curricular. Puedes restaurarlas o eliminarlas permanentemente.</p>
+  <div class="bank-list" id="bankList">
+    <div class="bank-empty" id="bankEmpty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7H4a1 1 0 00-1 1v10a2 2 0 002 2h14a2 2 0 002-2V8a1 1 0 00-1-1z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+      <p>No hay materias descartadas</p>
+    </div>
+  </div>
+</div>
+
+<!-- Context menu -->
+<div class="ctx-menu" id="ctxMenu">
+  <button class="ctx-menu-item" id="ctxSendBank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a1 1 0 00-1 1v10a2 2 0 002 2h14a2 2 0 002-2V8a1 1 0 00-1-1z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+    Enviar al Banco
+  </button>
+</div>
+
 <!-- ===== MODAL / PLAN ANALÍTICO ===== -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-panel">
@@ -1380,6 +1453,7 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
     document.getElementById('view-' + tab.dataset.view).classList.add('active');
     document.getElementById('filtersBar').style.display = tab.dataset.view === 'mapa' ? 'flex' : 'none';
     if (tab.dataset.view === 'competencias') buildCompDashboard();
+    if (tab.dataset.view === 'banco') renderBank();
   });
 });
 
@@ -1943,6 +2017,144 @@ async function generatePlanPDF() {
   doc.setFontSize(6); doc.setTextColor(170);
   doc.text('LDG+D Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 20, 272);
   doc.save('LDGD_PlanAnalitico_' + currentCourseId + '.pdf');
+}
+
+// ===== BANCO DE MATERIAS =====
+const ctxMenu = document.getElementById('ctxMenu');
+let ctxTarget = null;
+
+document.querySelectorAll('#semGrid .course-card').forEach(card => {
+  card.addEventListener('contextmenu', e => {
+    if (userRole !== 'admin') return;
+    e.preventDefault();
+    ctxTarget = card;
+    ctxMenu.style.left = e.clientX + 'px';
+    ctxMenu.style.top = e.clientY + 'px';
+    ctxMenu.classList.add('show');
+  });
+});
+document.addEventListener('click', () => ctxMenu.classList.remove('show'));
+document.addEventListener('contextmenu', e => {
+  if (!e.target.closest('.course-card')) ctxMenu.classList.remove('show');
+});
+
+document.getElementById('ctxSendBank').addEventListener('click', async () => {
+  if (!ctxTarget) return;
+  const name = ctxTarget.querySelector('.card-name').textContent;
+  const note = prompt('¿Por qué se descarta "' + name + '"?\n(Opcional — deja vacío si no quieres agregar nota)');
+  if (note === null) return; // cancelled
+
+  const cardId = getCourseId(ctxTarget);
+  const bank = (await dbGet('bank')) || [];
+  bank.push({
+    id: cardId,
+    name: name,
+    type: ctxTarget.querySelector('.card-type')?.textContent || '',
+    credits: ctxTarget.querySelector('.card-credits')?.textContent || '',
+    axes: ctxTarget.dataset.axes || '',
+    html: ctxTarget.outerHTML,
+    note: note || '',
+    date: new Date().toISOString().slice(0, 10)
+  });
+  await dbSet('bank', bank);
+
+  ctxTarget.remove();
+  recalcCredits();
+  saveLayout();
+  ctxTarget = null;
+});
+
+async function renderBank() {
+  const bankList = document.getElementById('bankList');
+  const bankEmpty = document.getElementById('bankEmpty');
+  const bank = (await dbGet('bank')) || [];
+
+  // Clear all except empty message
+  bankList.querySelectorAll('.bank-item').forEach(el => el.remove());
+  bankEmpty.style.display = bank.length ? 'none' : '';
+
+  bank.forEach((item, idx) => {
+    const el = document.createElement('div');
+    el.className = 'bank-item';
+    el.innerHTML = `
+      <div class="bank-item-info">
+        <div class="bank-item-name">${item.name}</div>
+        <div class="bank-item-meta">
+          <span>${item.type || 'Materia'}</span>
+          <span>${item.credits || ''}</span>
+          <span>Descartada: ${item.date || '—'}</span>
+        </div>
+        ${item.note ? '<div class="bank-item-note">' + item.note + '</div>' : ''}
+      </div>
+      <div class="bank-item-actions">
+        ${userRole === 'admin' ? `
+          <button class="bank-btn restore" data-idx="${idx}" title="Restaurar al mapa">Restaurar</button>
+          <button class="bank-btn delete" data-idx="${idx}" title="Eliminar permanentemente">Eliminar</button>
+        ` : ''}
+      </div>`;
+    el.querySelector('.bank-btn.restore')?.addEventListener('click', () => restoreFromBank(idx));
+    el.querySelector('.bank-btn.delete')?.addEventListener('click', () => deleteFromBank(idx));
+    bankList.appendChild(el);
+  });
+}
+
+async function restoreFromBank(idx) {
+  const bank = (await dbGet('bank')) || [];
+  const item = bank[idx];
+  if (!item) return;
+
+  // Re-create the card in the last semester column
+  const temp = document.createElement('div');
+  temp.innerHTML = item.html;
+  const card = temp.firstElementChild;
+
+  // Re-attach events to restored card
+  card.setAttribute('draggable', 'true');
+  card.addEventListener('click', e => {
+    if (card._wasDragged) { card._wasDragged = false; return; }
+    openModal(card);
+  });
+  card.addEventListener('dragstart', e => {
+    draggedCard = card;
+    card.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', card.dataset.id);
+  });
+  card.addEventListener('dragend', () => {
+    card.classList.remove('dragging');
+    document.querySelectorAll('.semester-col.drag-over').forEach(c => c.classList.remove('drag-over'));
+    if (draggedCard && draggedCard._didDrop) { draggedCard._wasDragged = true; }
+    draggedCard._didDrop = false;
+    draggedCard = null;
+  });
+  card.addEventListener('contextmenu', e => {
+    if (userRole !== 'admin') return;
+    e.preventDefault();
+    ctxTarget = card;
+    ctxMenu.style.left = e.clientX + 'px';
+    ctxMenu.style.top = e.clientY + 'px';
+    ctxMenu.classList.add('show');
+  });
+
+  // Append to first semester (user can drag it where they want)
+  const firstCol = document.querySelector('.semester-col');
+  firstCol.appendChild(card);
+
+  bank.splice(idx, 1);
+  await dbSet('bank', bank);
+  recalcCredits();
+  saveLayout();
+  renderBank();
+}
+
+async function deleteFromBank(idx) {
+  const bank = (await dbGet('bank')) || [];
+  const item = bank[idx];
+  if (!item) return;
+  if (!confirm('¿Eliminar "' + item.name + '" permanentemente?\nEsta acción no se puede deshacer.')) return;
+  bank.splice(idx, 1);
+  await dbSet('bank', bank);
+  renderBank();
 }
 
 // ===== COMPETENCIAS DASHBOARD =====
