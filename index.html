@@ -1455,14 +1455,15 @@ function getCourseId(card) {
 
 // ===== PREREQUISITE / SERIACIÓN CHAINS =====
 const PREREQ_CHAINS = [
-  ['Fundamentos del Diseño I', 'Fundamentos del Diseño II'],
+  // Cadena principal de Estudios (cada estudio requiere el anterior)
+  ['Fundamentos del Diseño I', 'Fundamentos del Diseño II', 'Sistemas de Identidad I',
+   'Diseño de Información II: Sistemas de Información', 'Sistemas de Identidad III',
+   'Estudio de Interacción', 'Diseño de Servicios', 'Estudio Integral de Diseño'],
+  // Seriaciones disciplinares
   ['Tipografía I', 'Tipografía II'],
-  ['Sistemas de Identidad I', 'Sistemas de Identidad III'],
   ['Fotografía I', 'Fotografía II: Dirección de Arte'],
   ['Producción I', 'Producción II: Gestión de Producción'],
   ['Diseño de Información I', 'Diseño de Información II: Sistemas de Información'],
-  ['Estudio de Interacción', 'Prototipado Interactivo'],
-  ['Diseño de Experiencia', 'Diseño de Servicios'],
   ['Proyecto de Evaluación Final I', 'Proyecto de Evaluación Final II'],
 ];
 
