@@ -138,83 +138,109 @@ body {
 }
 
 /* ===== MAPA VIEW ===== */
-.view { display:none; padding:32px 40px 60px; }
+.view { display:none; padding:20px 24px 40px; }
 .view.active { display:block; }
 
 /* Phase headers */
-.phases-row {
-  display:grid;
-  grid-template-columns: repeat(9, 1fr);
-  gap:8px; margin-bottom:8px;
+/* Phase layout — wraps semester columns */
+.phase-layout {
+  display:flex; gap:6px; align-items:stretch;
 }
-.phase-group {
-  text-align:center; padding:12px 8px;
-  border-radius:12px;
+.phase-wrap {
+  display:flex; flex-direction:column;
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  background:var(--surface);
+  transition: border-color 0.3s;
 }
-.phase-label {
-  font-size:0.6rem; font-weight:700;
-  letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--text-tertiary); margin-bottom:4px;
-}
-.phase-name {
-  font-size:0.7rem; font-weight:600;
-  color:var(--text-secondary); line-height:1.3;
-}
+/* Flex grow proportional to number of semesters */
+.pw-1 { flex:2; } /* 2 sems */
+.pw-2 { flex:3; } /* 3 sems */
+.pw-3 { flex:1; } /* 1 sem */
+.pw-4 { flex:2; } /* 2 sems */
+.pw-5 { flex:1; } /* 1 sem */
+.phase-wrap:hover { border-color: var(--border-hover); }
+.phase-wrap.pw-1 { border-color: color-mix(in srgb, var(--phase-1) 35%, transparent); }
+.phase-wrap.pw-2 { border-color: color-mix(in srgb, var(--phase-2) 35%, transparent); }
+.phase-wrap.pw-3 { border-color: color-mix(in srgb, var(--phase-3) 35%, transparent); }
+.phase-wrap.pw-4 { border-color: color-mix(in srgb, var(--phase-4) 35%, transparent); }
+.phase-wrap.pw-5 { border-color: color-mix(in srgb, var(--phase-5) 35%, transparent); }
+.phase-wrap:hover.pw-1 { border-color: color-mix(in srgb, var(--phase-1) 60%, transparent); }
+.phase-wrap:hover.pw-2 { border-color: color-mix(in srgb, var(--phase-2) 60%, transparent); }
+.phase-wrap:hover.pw-3 { border-color: color-mix(in srgb, var(--phase-3) 60%, transparent); }
+.phase-wrap:hover.pw-4 { border-color: color-mix(in srgb, var(--phase-4) 60%, transparent); }
+.phase-wrap:hover.pw-5 { border-color: color-mix(in srgb, var(--phase-5) 60%, transparent); }
 
-/* Semester grid */
-.semesters-grid {
-  display:grid;
-  grid-template-columns: repeat(9, 1fr);
-  gap:8px; align-items:start;
+.phase-head {
+  display:flex; align-items:center; justify-content:center;
+  padding:10px 12px;
+  position:relative;
 }
-.semester-col { display:flex; flex-direction:column; gap:6px; }
+.phase-head::after {
+  content:''; position:absolute; bottom:0; left:12px; right:12px;
+  height:1px; background:var(--border);
+}
+.phase-head-name {
+  font-family:'Raleway',sans-serif;
+  font-size:0.78rem; font-weight:700;
+  letter-spacing:0.04em;
+  line-height:1.2;
+}
+.pw-1 .phase-head-name { color:var(--phase-1); }
+.pw-2 .phase-head-name { color:var(--phase-2); }
+.pw-3 .phase-head-name { color:var(--phase-3); }
+.pw-4 .phase-head-name { color:var(--phase-4); }
+.pw-5 .phase-head-name { color:var(--phase-5); }
+
+.phase-semesters {
+  display:grid; gap:6px; padding:6px;
+  flex:1; align-items:start;
+}
+.pw-1 .phase-semesters { grid-template-columns: repeat(2, 1fr); }
+.pw-2 .phase-semesters { grid-template-columns: repeat(3, 1fr); }
+.pw-3 .phase-semesters { grid-template-columns: 1fr; }
+.pw-4 .phase-semesters { grid-template-columns: repeat(2, 1fr); }
+.pw-5 .phase-semesters { grid-template-columns: 1fr; }
+
+.semester-col { display:flex; flex-direction:column; gap:4px; min-width:0; }
 
 /* Semester header */
 .sem-header {
-  padding:16px 12px;
-  border-radius:12px;
+  padding:8px 6px;
+  border-radius:6px;
   text-align:center;
-  position:relative;
-  overflow:hidden;
+  background:var(--surface-2);
 }
-.sem-header::before {
-  content:''; position:absolute; top:0; left:0; right:0;
-  height:2px;
-}
-.sem-header.phase-1::before { background:var(--phase-1); }
-.sem-header.phase-2::before { background:var(--phase-2); }
-.sem-header.phase-3::before { background:var(--phase-3); }
-.sem-header.phase-4::before { background:var(--phase-4); }
-.sem-header.phase-5::before { background:var(--phase-5); }
 
 .sem-header .sem-num {
   font-family:'JetBrains Mono',monospace;
-  font-size:0.65rem; font-weight:600;
+  font-size:0.58rem; font-weight:600;
   letter-spacing:0.1em; text-transform:uppercase;
   color:var(--text-secondary);
 }
 .sem-header .sem-cr {
   font-family:'JetBrains Mono',monospace;
-  font-size:1.4rem; font-weight:800;
-  color:var(--text); margin-top:2px;
+  font-size:1.1rem; font-weight:800;
+  color:var(--text); margin-top:1px;
   letter-spacing:-0.02em;
 }
 .sem-header .sem-cr-label {
-  font-size:0.6rem; font-weight:500;
+  font-size:0.52rem; font-weight:500;
   color:var(--text-tertiary); letter-spacing:0.08em;
 }
 
 /* Course cards */
 .course-card {
-  padding:14px 12px;
-  border-radius:10px;
+  padding:10px 8px;
+  border-radius:8px;
   background:var(--surface);
   border:1px solid var(--border);
   cursor:pointer;
   transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
   position:relative;
   overflow:hidden;
-  min-height:105px;
+  min-height:72px;
   display:flex;
   flex-direction:column;
 }
@@ -241,10 +267,10 @@ body {
 
 /* Card type badge */
 .card-type {
-  display:inline-block; font-size:0.58rem; font-weight:700;
-  letter-spacing:0.1em; text-transform:uppercase;
-  padding:2px 8px; border-radius:4px;
-  margin-bottom:6px;
+  display:inline-block; font-size:0.5rem; font-weight:700;
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:2px 6px; border-radius:3px;
+  margin-bottom:4px;
 }
 .card-type.estudio { background:rgba(255,245,0,0.12); color:var(--accent); }
 .card-type.disciplinar { background:rgba(255,255,255,0.06); color:var(--text-secondary); }
@@ -256,9 +282,9 @@ body {
 .card-type.formacion { background:rgba(255,255,255,0.04); color:var(--text-tertiary); }
 
 .card-name {
-  font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:600;
-  line-height:1.35; color:var(--text);
-  margin-bottom:8px;
+  font-family:'Raleway',sans-serif; font-size:0.68rem; font-weight:600;
+  line-height:1.3; color:var(--text);
+  margin-bottom:4px;
   flex:1;
 }
 .card-footer {
@@ -266,7 +292,7 @@ body {
 }
 .card-credits {
   font-family:'JetBrains Mono',monospace;
-  font-size:0.7rem; font-weight:600;
+  font-size:0.58rem; font-weight:600;
   color:var(--text-tertiary);
 }
 .card-dots {
@@ -414,10 +440,8 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width:1400px) {
-  .semesters-grid, .phases-row {
-    grid-template-columns: repeat(9, minmax(120px, 1fr));
-    overflow-x:auto;
-  }
+  .phase-layout { overflow-x:auto; }
+  .phase-wrap { min-width:0; }
   .view { overflow-x:auto; }
 }
 
@@ -452,22 +476,15 @@ body {
   .filter-label { font-size:0.58rem; white-space:nowrap; }
   .filter-separator { margin:0 4px; }
 
-  /* Phases row: horizontal scroll */
-  .phases-row {
-    grid-template-columns: repeat(9, 140px);
-    overflow-x:auto; -webkit-overflow-scrolling:touch;
-    padding-bottom:8px; gap:6px;
-  }
-
-  /* Semesters: horizontal scroll cards */
-  .view { padding:16px 16px 40px; overflow-x:auto; }
-  .semesters-grid {
-    grid-template-columns: repeat(9, 260px);
+  /* Phase layout: horizontal scroll */
+  .phase-layout {
     overflow-x:auto; -webkit-overflow-scrolling:touch;
     padding-bottom:16px; gap:6px;
     scroll-snap-type:x mandatory;
   }
-  .semester-col { scroll-snap-align:start; min-width:260px; }
+  .phase-wrap { scroll-snap-align:start; min-width:280px; }
+  .view { padding:16px 16px 40px; overflow-x:auto; }
+  .semester-col { min-width:140px; }
   .course-card { min-height:90px; }
 
   /* Modal full screen on mobile */
@@ -496,7 +513,7 @@ body {
 @media (max-width:400px) {
   .header-top { padding:10px 12px 0; }
   .program-name { font-size:0.88rem; }
-  .semesters-grid { grid-template-columns: repeat(9, 230px); }
+  .phase-wrap { min-width:240px; }
   .semester-col { min-width:230px; }
   .nav-tab { padding:6px 12px; font-size:0.65rem; }
 }
@@ -1060,30 +1077,15 @@ body.role-admin #modalBadge { display:none; }
 <!-- ===== MAPA VIEW ===== -->
 <div class="view active" id="view-mapa">
 
-  <div class="phases-row">
-    <div class="phase-group" style="grid-column:1/3">
-      <div class="phase-label" style="color:var(--phase-1)">Sems. 1–2</div>
-      <div class="phase-name">Fundamentos</div>
-    </div>
-    <div class="phase-group" style="grid-column:3/6">
-      <div class="phase-label" style="color:var(--phase-2)">Sems. 3–5</div>
-      <div class="phase-name">Sistemas de Identidad y Comunicación</div>
-    </div>
-    <div class="phase-group" style="grid-column:6/7">
-      <div class="phase-label" style="color:var(--phase-3)">Sem. 6</div>
-      <div class="phase-name">Experiencia e Interacción</div>
-    </div>
-    <div class="phase-group" style="grid-column:7/9">
-      <div class="phase-label" style="color:var(--phase-4)">Sems. 7–8</div>
-      <div class="phase-name">Dirección Estratégica</div>
-    </div>
-    <div class="phase-group" style="grid-column:9/10">
-      <div class="phase-label" style="color:var(--phase-5)">Sem. 9</div>
-      <div class="phase-name">Proyecto Profesional</div>
-    </div>
-  </div>
+  <div class="phase-layout" id="semGrid">
 
-  <div class="semesters-grid" id="semGrid">
+    <!-- PHASE 1: Fundamentos -->
+    <div class="phase-wrap pw-1">
+      <div class="phase-head">
+        <span class="phase-head-name">Fundamentos</span>
+      </div>
+      <div class="phase-semesters">
+
     <!-- SEM 1 -->
     <div class="semester-col">
       <div class="sem-header phase-1">
@@ -1112,6 +1114,16 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-neutral" data-axes="lenguaje" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Semiótica</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
+
+      </div><!-- /phase-semesters -->
+    </div><!-- /phase-wrap pw-1 -->
+
+    <!-- PHASE 2: Sistemas de Identidad y Comunicación -->
+    <div class="phase-wrap pw-2">
+      <div class="phase-head">
+        <span class="phase-head-name">Sistemas de Identidad y Comunicación</span>
+      </div>
+      <div class="phase-semesters">
 
     <!-- SEM 3 -->
     <div class="semester-col">
@@ -1158,6 +1170,16 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
 
+      </div><!-- /phase-semesters -->
+    </div><!-- /phase-wrap pw-2 -->
+
+    <!-- PHASE 3: Experiencia e Interacción -->
+    <div class="phase-wrap pw-3">
+      <div class="phase-head">
+        <span class="phase-head-name">Experiencia e Interacción</span>
+      </div>
+      <div class="phase-semesters">
+
     <!-- SEM 6 -->
     <div class="semester-col">
       <div class="sem-header phase-3">
@@ -1172,6 +1194,16 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-direccion" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">Materia de concentración</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
+
+      </div><!-- /phase-semesters -->
+    </div><!-- /phase-wrap pw-3 -->
+
+    <!-- PHASE 4: Dirección Estratégica -->
+    <div class="phase-wrap pw-4">
+      <div class="phase-head">
+        <span class="phase-head-name">Dirección Estratégica</span>
+      </div>
+      <div class="phase-semesters">
 
     <!-- SEM 7 -->
     <div class="semester-col">
@@ -1203,6 +1235,16 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
 
+      </div><!-- /phase-semesters -->
+    </div><!-- /phase-wrap pw-4 -->
+
+    <!-- PHASE 5: Proyecto Profesional -->
+    <div class="phase-wrap pw-5">
+      <div class="phase-head">
+        <span class="phase-head-name">Proyecto Profesional</span>
+      </div>
+      <div class="phase-semesters">
+
     <!-- SEM 9 -->
     <div class="semester-col">
       <div class="sem-header phase-5">
@@ -1213,7 +1255,10 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card is-estudio eje-multi" data-axes="lenguaje,sistemas,experiencia,direccion,produccion" data-type="proyecto"><div class="card-type proyecto">Proyecto Terminal</div><div class="card-name">Proyecto de Evaluación Final II</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span><span class="card-dot sistemas"></span><span class="card-dot experiencia"></span><span class="card-dot direccion"></span><span class="card-dot produccion"></span></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
-  </div>
+      </div><!-- /phase-semesters -->
+    </div><!-- /phase-wrap pw-5 -->
+
+  </div><!-- /phase-layout -->
 
   <!-- Legend -->
   <div class="legend">
