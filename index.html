@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LDG+D · Plan 2027 · Mapa Curricular</title>
+<title>LDV · Plan 2027 · Mapa Curricular</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -925,7 +925,7 @@ body.role-admin #modalBadge { display:none; }
 <div class="login-overlay" id="loginOverlay">
   <div class="login-card">
     <div class="login-logo"><span>UDEM</span> · CRGS</div>
-    <div class="login-title">LDG+D · Plan 2027</div>
+    <div class="login-title">LDV · Plan 2027</div>
     <div class="login-subtitle">Mapa Curricular</div>
     <button class="login-btn primary" id="btnViewProgram">Ver Programa</button>
     <div class="login-divider">Administrador</div>
@@ -941,7 +941,7 @@ body.role-admin #modalBadge { display:none; }
   <div class="header-top">
     <div class="logo-area">
       <div class="logo"><span>UDEM</span></div>
-      <div class="program-name">Licenciatura en Dirección y Gestión de Diseño LDGD</div>
+      <div class="program-name">Licenciatura en Diseño Visual LDV</div>
       <div class="credits-badge">Plan 2027 · 342 CR</div>
     </div>
     <div class="header-actions">
@@ -1903,12 +1903,12 @@ async function generateMapPDF() {
   const doc = new jsPDF('l', 'mm', 'a3');
   const pw = doc.internal.pageSize.getWidth();
   const ph = doc.internal.pageSize.getHeight();
-  const footer = () => { doc.setFontSize(6); doc.setTextColor(170); doc.text('LDG+D Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 15, ph - 8); };
+  const footer = () => { doc.setFontSize(6); doc.setTextColor(170); doc.text('LDV Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 15, ph - 8); };
   const certNames = { a:'Concentración A: Dirección de Marca y Dirección de Arte', b:'Concentración B: Producto Digital y Sistemas Interactivos', c:'Concentración C: Gestión Estratégica de Servicios' };
 
   // ===== PAGE 1: MAPA CURRICULAR =====
   doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS', 15, 15);
-  doc.setFontSize(18); doc.setTextColor(30); doc.text('LDG+D · Dirección y Gestión de Diseño', 15, 24);
+  doc.setFontSize(18); doc.setTextColor(30); doc.text('LDV · Licenciatura en Diseño Visual', 15, 24);
   doc.setFontSize(10); doc.setTextColor(100); doc.text('Plan 2027 · ' + document.querySelector('.credits-badge').textContent.split('·').pop().trim(), 15, 31);
   if (selectedCerts.length) { doc.text('Concentraciones: ' + selectedCerts.map(c => certNames[c]).join(' + '), 15, 37); }
   const startY = 44; const colW = (pw - 30) / 9;
@@ -1938,7 +1938,7 @@ async function generateMapPDF() {
   // ===== PAGE 2: CONCENTRACIONES =====
   if (selectedCerts.length) {
     doc.addPage('a3', 'l');
-    doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS · LDG+D Plan 2027', 15, 15);
+    doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS · LDV Plan 2027', 15, 15);
     doc.setFontSize(16); doc.setTextColor(30); doc.text('Concentraciones Profesionales Seleccionadas', 15, 25);
     let cy = 38;
     selectedCerts.forEach(certKey => {
@@ -1962,7 +1962,7 @@ async function generateMapPDF() {
 
   // ===== PAGE 3: MATRIZ DE COMPETENCIAS =====
   doc.addPage('a3', 'l');
-  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS · LDG+D Plan 2027', 15, 15);
+  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS · LDV Plan 2027', 15, 15);
   doc.setFontSize(16); doc.setTextColor(30); doc.text('Matriz Curricular de Competencias', 15, 25);
   doc.setFontSize(7); doc.setTextColor(120); doc.text('I = Introduce   D = Desarrolla   M = Domina', 15, 31);
   const plans = (await dbGet('plans')) || {};
@@ -2022,7 +2022,7 @@ async function generateMapPDF() {
   });
   footer();
 
-  doc.save('LDGD_Plan2027_Completo.pdf');
+  doc.save('LDV_Plan2027_Completo.pdf');
 }
 
 async function generatePlanPDF() {
@@ -2034,7 +2034,7 @@ async function generatePlanPDF() {
   const name = modalName.textContent;
   const meta = modalMeta.textContent;
   const plan = gatherPlanData();
-  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · LDG+D · PLAN ANALÍTICO', 20, 18);
+  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · LDV · PLAN ANALÍTICO', 20, 18);
   doc.setFontSize(16); doc.setTextColor(30);
   const tl = doc.splitTextToSize(name, pw - 40); doc.text(tl, 20, 28);
   doc.setFontSize(9); doc.setTextColor(120); doc.text(meta, 20, 28 + tl.length * 7);
@@ -2058,8 +2058,8 @@ async function generatePlanPDF() {
     const lines = doc.splitTextToSize(content, pw - 40); doc.text(lines, 20, y); y += lines.length * 4.5 + 8;
   });
   doc.setFontSize(6); doc.setTextColor(170);
-  doc.text('LDG+D Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 20, 272);
-  doc.save('LDGD_PlanAnalitico_' + currentCourseId + '.pdf');
+  doc.text('LDV Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 20, 272);
+  doc.save('LDV_PlanAnalitico_' + currentCourseId + '.pdf');
 }
 
 // ===== BANCO DE MATERIAS =====
