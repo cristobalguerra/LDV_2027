@@ -166,6 +166,7 @@ body {
   display:grid;
   grid-template-columns: repeat(9, 1fr);
   gap:8px; align-items:start;
+  position:relative;
 }
 .semester-col { display:flex; flex-direction:column; gap:6px; }
 
@@ -522,6 +523,28 @@ body {
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--surface-3); border-radius:3px; }
 ::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,0.15); }
+
+/* ===== PREREQUISITE / SERIACIÓN LINES ===== */
+#prereqSvg {
+  position:absolute; top:0; left:0;
+  pointer-events:none; z-index:5;
+  overflow:visible;
+}
+#prereqSvg path.prereq-arrow {
+  fill:none; stroke-width:2; opacity:0.55;
+  transition: opacity 0.3s, stroke-width 0.3s;
+  pointer-events:stroke;
+}
+#prereqSvg path.prereq-arrow:hover {
+  opacity:0.9; stroke-width:3;
+}
+.course-card.prereq-highlight {
+  border-color:rgba(255,245,0,0.45) !important;
+  box-shadow:0 0 14px rgba(255,245,0,0.12);
+  z-index:6;
+}
+.filter-pill.seriacion-pill { border-color:var(--text-tertiary); color:var(--text-secondary); }
+.filter-pill.seriacion-pill.active { border-color:var(--accent); color:var(--accent); background:var(--accent-dim); }
 
 /* ===== COMPETENCIAS DASHBOARD ===== */
 .comp-dashboard { max-width:100%; }
@@ -988,6 +1011,10 @@ body.role-admin #modalBadge { display:none; }
       <button class="filter-pill" data-type="sinergia">Sinergia</button>
       <button class="filter-pill" data-type="certificado">Concentración</button>
     </div>
+    <div class="filter-separator"></div>
+    <div class="filter-group">
+      <button class="filter-pill seriacion-pill active" id="btnPrereqs" onclick="togglePrereqLines()">⤳ Seriación</button>
+    </div>
   </div>
 </div>
 
@@ -1018,6 +1045,13 @@ body.role-admin #modalBadge { display:none; }
   </div>
 
   <div class="semesters-grid" id="semGrid">
+    <svg id="prereqSvg" xmlns="http://www.w3.org/2000/svg" style="grid-column:1/-1;grid-row:1/-1;">
+      <defs>
+        <marker id="arrowhead" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <polygon points="0 0, 7 2.5, 0 5" fill="currentColor" opacity="0.6"/>
+        </marker>
+      </defs>
+    </svg>
     <!-- SEM 1 -->
     <div class="semester-col">
       <div class="sem-header phase-1">
@@ -1431,6 +1465,112 @@ function getCourseId(card) {
   });
 })();
 
+// ===== PREREQUISITE / SERIACIÓN CHAINS =====
+const PREREQ_CHAINS = [
+  ['Fundamentos del Diseño I', 'Fundamentos del Diseño II'],
+  ['Tipografía I', 'Tipografía II'],
+  ['Sistemas de Identidad I', 'Sistemas de Identidad III'],
+  ['Fotografía I', 'Fotografía II: Dirección de Arte'],
+  ['Producción I', 'Producción II: Gestión de Producción'],
+  ['Diseño de Información I', 'Diseño de Información II: Sistemas de Información'],
+  ['Estudio de Interacción', 'Prototipado Interactivo'],
+  ['Diseño de Experiencia', 'Diseño de Servicios'],
+  ['Proyecto de Evaluación Final I', 'Proyecto de Evaluación Final II'],
+];
+
+const PREREQ_EJE_COLORS = {
+  'eje-lenguaje':'var(--lenguaje)', 'eje-sistemas':'var(--sistemas)',
+  'eje-experiencia':'var(--experiencia)', 'eje-direccion':'var(--direccion)',
+  'eje-produccion':'var(--produccion)'
+};
+
+let prereqLinesVisible = true;
+
+function togglePrereqLines() {
+  prereqLinesVisible = !prereqLinesVisible;
+  document.getElementById('prereqSvg').style.display = prereqLinesVisible ? '' : 'none';
+  document.getElementById('btnPrereqs').classList.toggle('active', prereqLinesVisible);
+}
+
+function drawPrereqLines() {
+  const svg = document.getElementById('prereqSvg');
+  if (!svg || !prereqLinesVisible) return;
+  const grid = document.getElementById('semGrid');
+  const gridRect = grid.getBoundingClientRect();
+
+  // Size SVG to full scrollable area
+  svg.setAttribute('width', grid.scrollWidth);
+  svg.setAttribute('height', grid.scrollHeight);
+
+  // Clear old paths
+  svg.querySelectorAll('path.prereq-arrow').forEach(p => p.remove());
+
+  // Build name→card map (match by current displayed name)
+  const cardsByName = new Map();
+  grid.querySelectorAll('.course-card').forEach(card => {
+    const name = card.querySelector('.card-name')?.textContent.trim();
+    if (name) cardsByName.set(name, card);
+  });
+
+  function getEjeColor(card) {
+    for (const [cls, color] of Object.entries(PREREQ_EJE_COLORS)) {
+      if (card.classList.contains(cls)) return color;
+    }
+    return 'var(--text-secondary)';
+  }
+
+  for (const chain of PREREQ_CHAINS) {
+    for (let i = 0; i < chain.length - 1; i++) {
+      const srcCard = cardsByName.get(chain[i]);
+      const tgtCard = cardsByName.get(chain[i + 1]);
+      if (!srcCard || !tgtCard) continue; // card may be banked
+
+      const srcRect = srcCard.getBoundingClientRect();
+      const tgtRect = tgtCard.getBoundingClientRect();
+
+      // Convert to grid-relative coords
+      const scrollL = grid.scrollLeft, scrollT = grid.scrollTop;
+      const x1 = srcRect.right  - gridRect.left + scrollL;
+      const y1 = srcRect.top + srcRect.height / 2 - gridRect.top + scrollT;
+      const x2 = tgtRect.left   - gridRect.left + scrollL;
+      const y2 = tgtRect.top + tgtRect.height / 2 - gridRect.top + scrollT;
+
+      const dx = Math.abs(x2 - x1);
+      const cpX = Math.max(dx * 0.4, 25);
+
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', `M${x1},${y1} C${x1+cpX},${y1} ${x2-cpX},${y2} ${x2},${y2}`);
+      const color = getEjeColor(srcCard);
+      path.setAttribute('stroke', color);
+      path.style.color = color; // for marker fill currentColor
+      path.setAttribute('marker-end', 'url(#arrowhead)');
+      path.classList.add('prereq-arrow');
+
+      // Hover highlighting
+      path.addEventListener('mouseenter', () => {
+        srcCard.classList.add('prereq-highlight');
+        tgtCard.classList.add('prereq-highlight');
+        path.style.opacity = '0.85';
+        path.style.strokeWidth = '2.5';
+      });
+      path.addEventListener('mouseleave', () => {
+        srcCard.classList.remove('prereq-highlight');
+        tgtCard.classList.remove('prereq-highlight');
+        path.style.opacity = '';
+        path.style.strokeWidth = '';
+      });
+
+      svg.appendChild(path);
+    }
+  }
+}
+
+let _prereqTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(_prereqTimer);
+  _prereqTimer = setTimeout(drawPrereqLines, 200);
+});
+
 // ===== COMPETENCIAS DATA =====
 const COMPETENCIAS = [
   { id:'C1', label:'Dominio del lenguaje visual y comunicación gráfica' },
@@ -1775,6 +1915,7 @@ document.querySelectorAll('.semester-col').forEach(col => {
     draggedCard._didDrop = true;
     recalcCredits();
     saveLayout();
+    drawPrereqLines();
   });
 });
 
@@ -1845,6 +1986,7 @@ function applyLayout(layout) {
     });
   });
   recalcCredits();
+  drawPrereqLines();
 }
 
 async function loadLayout() {
@@ -2206,6 +2348,7 @@ async function restoreFromBank(idx) {
   recalcCredits();
   saveLayout();
   renderBank();
+  drawPrereqLines();
 }
 
 async function deleteFromBank(idx) {
@@ -2395,6 +2538,7 @@ document.getElementById('btnToBanco').addEventListener('click', async () => {
   recalcCredits();
   saveLayout();
   renderBank();
+  drawPrereqLines();
 });
 
 // ===== APPLY BANK (remove banked cards from DOM on load) =====
@@ -2419,6 +2563,7 @@ async function initApp() {
   recalcCredits();
   buildCompDashboard();
   renderBank();
+  setTimeout(drawPrereqLines, 100); // draw after DOM settles
   // Re-apply role restrictions after layout loaded (cards may have been re-added)
   if (userRole === 'viewer') {
     document.querySelectorAll('#semGrid .course-card').forEach(card => {
