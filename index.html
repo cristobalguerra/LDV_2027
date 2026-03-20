@@ -2117,8 +2117,12 @@ function applyLayout(layout) {
   if (!layout) return;
   const cardMap = {};
   document.querySelectorAll('#semGrid .course-card').forEach(c => {
-    cardMap[c.dataset.origId || c.dataset.id] = c;
+    const oid = c.dataset.origId || c.dataset.id;
+    cardMap[oid] = c;
     if (c.dataset.id !== c.dataset.origId) cardMap[c.dataset.id] = c;
+    // Also map by base slug (without --s*p* suffix) for backward compat
+    const base = oid.replace(/--s\d+p\d+$/, '');
+    if (base !== oid && !cardMap[base]) cardMap[base] = c;
   });
   document.querySelectorAll('.semester-col').forEach((col, i) => {
     const ids = layout['sem' + (i + 1)];
@@ -2633,11 +2637,15 @@ async function saveCustomizations() {
   const customs = {};
   document.querySelectorAll('#semGrid .course-card').forEach(card => {
     const key = card.dataset.origId || card.dataset.id;
-    customs[key] = {
+    const data = {
       name: card.querySelector('.card-name').textContent.trim(),
       type: card.dataset.type || 'disciplinar',
       credits: card.querySelector('.card-credits')?.textContent || '6 cr'
     };
+    customs[key] = data;
+    // Also save by base slug for backward compat with bank-restored cards
+    const base = key.replace(/--s\d+p\d+$/, '');
+    if (base !== key) customs[base] = data;
   });
   await dbSet('customizations', customs);
 }
@@ -2647,7 +2655,8 @@ async function loadCustomizations() {
   if (!customs) return;
   document.querySelectorAll('#semGrid .course-card').forEach(card => {
     const key = card.dataset.origId || card.dataset.id;
-    const c = customs[key];
+    const baseSlug = key.replace(/--s\d+p\d+$/, '');
+    const c = customs[key] || customs[baseSlug];
     if (!c) return;
     card.querySelector('.card-name').textContent = c.name;
     if (c.credits) card.querySelector('.card-credits').textContent = c.credits;
