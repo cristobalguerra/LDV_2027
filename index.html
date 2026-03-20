@@ -1419,14 +1419,15 @@ function getCourseId(card) {
 
 // ===== ASSIGN UNIQUE IDs TO CARDS =====
 (function assignCardIds() {
-  const counts = {};
-  document.querySelectorAll('#semGrid .course-card').forEach(card => {
-    const name = card.querySelector('.card-name').textContent.trim();
-    const slug = name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi, '-').replace(/-+/g,'-').replace(/^-|-$/g,'');
-    counts[slug] = (counts[slug] || 0) + 1;
-    const id = counts[slug] > 1 ? slug + '-' + counts[slug] : slug;
-    card.dataset.id = id;
-    card.dataset.origId = id; // preserve original HTML id for customizations lookup
+  document.querySelectorAll('.semester-col').forEach((col, semIdx) => {
+    col.querySelectorAll('.course-card').forEach((card, cardIdx) => {
+      const name = card.querySelector('.card-name').textContent.trim();
+      const slug = name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi, '-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+      // Use semester + position for stable, unique IDs
+      const id = slug + '--s' + (semIdx + 1) + 'p' + cardIdx;
+      card.dataset.id = id;
+      card.dataset.origId = id;
+    });
   });
 })();
 
@@ -1829,14 +1830,18 @@ function applyLayout(layout) {
   const cardMap = {};
   document.querySelectorAll('#semGrid .course-card').forEach(c => {
     cardMap[c.dataset.origId || c.dataset.id] = c;
-    // Also index by current id for backward compat with old layout data
     if (c.dataset.id !== c.dataset.origId) cardMap[c.dataset.id] = c;
   });
   document.querySelectorAll('.semester-col').forEach((col, i) => {
     const ids = layout['sem' + (i + 1)];
     if (!ids) return;
+    const moved = new Set();
     ids.forEach(id => {
-      if (cardMap[id]) col.appendChild(cardMap[id]);
+      if (cardMap[id]) { col.appendChild(cardMap[id]); moved.add(cardMap[id]); }
+    });
+    // Append any unmatched cards at the END (not left floating at top)
+    [...col.querySelectorAll('.course-card')].forEach(card => {
+      if (!moved.has(card)) col.appendChild(card);
     });
   });
   recalcCredits();
@@ -2375,7 +2380,7 @@ document.getElementById('btnToBanco').addEventListener('click', async () => {
   if (note === null) return; // cancelled
   const bank = (await dbGet('bank')) || [];
   bank.push({
-    id: currentCard.dataset.origId || getCourseId(currentCard),
+    id: (currentCard.dataset.origId || getCourseId(currentCard)).replace(/--s\d+p\d+$/, ''),
     name: name,
     type: currentCard.querySelector('.card-type')?.textContent || '',
     credits: currentCard.querySelector('.card-credits')?.textContent || '',
@@ -2398,7 +2403,10 @@ async function applyBank() {
   if (!bank.length) return;
   const bankedIds = new Set(bank.map(b => b.id));
   document.querySelectorAll('#semGrid .course-card').forEach(card => {
-    if (bankedIds.has(card.dataset.origId || card.dataset.id)) card.remove();
+    const origId = card.dataset.origId || card.dataset.id;
+    // Match by origId, or by base slug (strip --s*p* suffix) for backward compat
+    const baseSlug = origId.replace(/--s\d+p\d+$/, '');
+    if (bankedIds.has(origId) || bankedIds.has(baseSlug)) card.remove();
   });
 }
 
