@@ -1411,7 +1411,9 @@ function getCourseId(card) {
     const name = card.querySelector('.card-name').textContent.trim();
     const slug = name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi, '-').replace(/-+/g,'-').replace(/^-|-$/g,'');
     counts[slug] = (counts[slug] || 0) + 1;
-    card.dataset.id = counts[slug] > 1 ? slug + '-' + counts[slug] : slug;
+    const id = counts[slug] > 1 ? slug + '-' + counts[slug] : slug;
+    card.dataset.id = id;
+    card.dataset.origId = id; // preserve original HTML id for customizations lookup
   });
 })();
 
@@ -2320,7 +2322,8 @@ modalName.addEventListener('blur', applyNameTypeChange);
 async function saveCustomizations() {
   const customs = {};
   document.querySelectorAll('#semGrid .course-card').forEach(card => {
-    customs[card.dataset.id] = {
+    const key = card.dataset.origId || card.dataset.id;
+    customs[key] = {
       name: card.querySelector('.card-name').textContent.trim(),
       type: card.dataset.type || 'disciplinar',
       credits: card.querySelector('.card-credits')?.textContent || '6 cr'
@@ -2333,8 +2336,8 @@ async function loadCustomizations() {
   const customs = await dbGet('customizations');
   if (!customs) return;
   document.querySelectorAll('#semGrid .course-card').forEach(card => {
-    const id = card.dataset.id;
-    const c = customs[id];
+    const key = card.dataset.origId || card.dataset.id;
+    const c = customs[key];
     if (!c) return;
     card.querySelector('.card-name').textContent = c.name;
     if (c.credits) card.querySelector('.card-credits').textContent = c.credits;
@@ -2344,6 +2347,9 @@ async function loadCustomizations() {
     card.dataset.type = c.type;
     if (c.type === 'estudio') card.classList.add('is-estudio');
     else card.classList.remove('is-estudio');
+    // Update the current dataset.id to match new name slug
+    const slug = c.name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+    card.dataset.id = slug;
   });
 }
 
@@ -2355,7 +2361,7 @@ document.getElementById('btnToBanco').addEventListener('click', async () => {
   if (note === null) return; // cancelled
   const bank = (await dbGet('bank')) || [];
   bank.push({
-    id: getCourseId(currentCard),
+    id: currentCard.dataset.origId || getCourseId(currentCard),
     name: name,
     type: currentCard.querySelector('.card-type')?.textContent || '',
     credits: currentCard.querySelector('.card-credits')?.textContent || '',
@@ -2378,7 +2384,7 @@ async function applyBank() {
   if (!bank.length) return;
   const bankedIds = new Set(bank.map(b => b.id));
   document.querySelectorAll('#semGrid .course-card').forEach(card => {
-    if (bankedIds.has(card.dataset.id)) card.remove();
+    if (bankedIds.has(card.dataset.origId || card.dataset.id)) card.remove();
   });
 }
 
