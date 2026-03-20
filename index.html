@@ -2351,9 +2351,6 @@ async function loadCustomizations() {
     card.dataset.type = c.type;
     if (c.type === 'estudio') card.classList.add('is-estudio');
     else card.classList.remove('is-estudio');
-    // Update the current dataset.id to match new name slug
-    const slug = c.name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
-    card.dataset.id = slug;
   });
 }
 
