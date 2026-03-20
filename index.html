@@ -6,50 +6,50 @@
 <title>LDV · Plan 2027 · Mapa Curricular</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 <style>
 :root {
-  --bg: #0a0a0b;
-  --surface: #141416;
-  --surface-2: #1c1c1f;
-  --surface-3: #242428;
-  --border: rgba(255,255,255,0.06);
-  --border-hover: rgba(255,255,255,0.12);
+  --bg: #1c1c1c;
+  --surface: #232323;
+  --surface-2: #2e2e2e;
+  --surface-3: #393938;
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.15);
   --text: #f0efe9;
   --text-secondary: rgba(240,239,233,0.55);
   --text-tertiary: rgba(240,239,233,0.3);
 
-  /* Refined palette */
-  --lenguaje: #e8a0bf;
-  --lenguaje-bg: rgba(232,160,191,0.08);
-  --sistemas: #7ecba1;
-  --sistemas-bg: rgba(126,203,161,0.08);
-  --experiencia: #7ec8e3;
-  --experiencia-bg: rgba(126,200,227,0.08);
-  --direccion: #e8b87e;
-  --direccion-bg: rgba(232,184,126,0.08);
-  --produccion: #e87e7e;
-  --produccion-bg: rgba(232,126,126,0.08);
+  /* Ejes — paleta institucional + EAD */
+  --lenguaje: #FFF500;
+  --lenguaje-bg: rgba(255,245,0,0.08);
+  --sistemas: #3D8C82;
+  --sistemas-bg: rgba(61,140,130,0.10);
+  --experiencia: #7174B2;
+  --experiencia-bg: rgba(113,116,178,0.10);
+  --direccion: #fac31b;
+  --direccion-bg: rgba(250,195,27,0.08);
+  --produccion: #f6ab17;
+  --produccion-bg: rgba(246,171,23,0.08);
 
-  /* Accent */
-  --accent: #c8ff00;
-  --accent-dim: rgba(200,255,0,0.15);
+  /* Accent — Amarillo institucional UDEM */
+  --accent: #FFF500;
+  --accent-dim: rgba(255,245,0,0.15);
 
-  /* Phase colors */
-  --phase-1: #6366f1;
-  --phase-2: #7ecba1;
-  --phase-3: #7ec8e3;
-  --phase-4: #e8b87e;
-  --phase-5: #c8ff00;
+  /* Phase colors — institucional + EAD */
+  --phase-1: #363363;
+  --phase-2: #3D8C82;
+  --phase-3: #7174B2;
+  --phase-4: #fac31b;
+  --phase-5: #FFF500;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
 html { font-size:14px; -webkit-font-smoothing:antialiased; }
 body {
-  font-family:'Inter',system-ui,sans-serif;
+  font-family:'DM Sans',system-ui,sans-serif;
   background:var(--bg);
   color:var(--text);
   min-height:100vh;
@@ -67,14 +67,22 @@ body {
   display:flex; align-items:center; justify-content:space-between;
   padding:20px 40px 0;
 }
-.logo-area { display:flex; align-items:baseline; gap:16px; }
-.logo {
-  font-size:0.7rem; font-weight:700; letter-spacing:0.15em;
-  text-transform:uppercase; color:var(--text-secondary);
+.logo-area { display:flex; align-items:center; gap:14px; }
+.header-pleca {
+  display:inline-flex; align-items:center; background:var(--accent);
+  padding:3px 10px; border-radius:2px; flex-shrink:0;
 }
-.logo span { color:var(--accent); }
+.header-pleca span {
+  font-family:'Raleway',sans-serif; font-size:0.72rem; font-weight:900;
+  letter-spacing:0.16em; color:#333333; text-transform:uppercase;
+}
+.header-school {
+  font-family:'DM Sans',sans-serif; font-size:0.58rem; font-weight:500;
+  letter-spacing:0.08em; text-transform:uppercase; color:var(--text-tertiary);
+  line-height:1.2;
+}
 .program-name {
-  font-size:1.6rem; font-weight:800; letter-spacing:-0.03em;
+  font-family:'Raleway',sans-serif; font-size:1.6rem; font-weight:800; letter-spacing:-0.02em;
   background:linear-gradient(135deg, var(--text) 0%, rgba(240,239,233,0.7) 100%);
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
@@ -243,17 +251,17 @@ body {
   padding:2px 8px; border-radius:4px;
   margin-bottom:6px;
 }
-.card-type.estudio { background:rgba(200,255,0,0.12); color:var(--accent); }
+.card-type.estudio { background:rgba(255,245,0,0.12); color:var(--accent); }
 .card-type.disciplinar { background:rgba(255,255,255,0.06); color:var(--text-secondary); }
 .card-type.sinergia { background:rgba(126,200,227,0.1); color:var(--experiencia); }
 .card-type.certificado { background:rgba(232,184,126,0.1); color:var(--direccion); }
 .card-type.practicas { background:rgba(232,126,126,0.1); color:var(--produccion); }
-.card-type.proyecto { background:rgba(200,255,0,0.12); color:var(--accent); }
+.card-type.proyecto { background:rgba(255,245,0,0.12); color:var(--accent); }
 .card-type.general { background:rgba(255,255,255,0.04); color:var(--text-tertiary); }
 .card-type.formacion { background:rgba(255,255,255,0.04); color:var(--text-tertiary); }
 
 .card-name {
-  font-size:0.78rem; font-weight:600;
+  font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:600;
   line-height:1.35; color:var(--text);
   margin-bottom:8px;
   flex:1;
@@ -292,7 +300,7 @@ body {
   max-width:640px; margin-bottom:40px;
 }
 .certs-intro h2 {
-  font-size:0.65rem; font-weight:700;
+  font-family:'Raleway',sans-serif; font-size:0.65rem; font-weight:700;
   letter-spacing:0.14em; text-transform:uppercase;
   color:var(--accent); margin-bottom:12px;
 }
@@ -339,7 +347,7 @@ body {
 .cert-c .cert-badge { color:var(--direccion); }
 
 .cert-title {
-  font-size:1.2rem; font-weight:800;
+  font-family:'Raleway',sans-serif; font-size:1.2rem; font-weight:800;
   letter-spacing:-0.02em; line-height:1.25;
   margin-bottom:8px;
 }
@@ -435,7 +443,7 @@ body {
     padding:14px 16px 0; flex-direction:column; align-items:flex-start; gap:10px;
   }
   .logo-area { flex-wrap:wrap; gap:8px; }
-  .logo { font-size:0.6rem; }
+  .header-pleca span { font-size:0.6rem; }
   .program-name { font-size:1rem; }
   .credits-badge { font-size:0.65rem; padding:3px 8px; }
   .header-actions { width:100%; justify-content:space-between; }
@@ -522,13 +530,13 @@ body {
 
 /* ===== COMPETENCIAS DASHBOARD ===== */
 .comp-dashboard { max-width:100%; }
-.comp-dash-title { font-size:1.3rem; font-weight:700; margin-bottom:4px; }
+.comp-dash-title { font-family:'Raleway',sans-serif; font-size:1.3rem; font-weight:700; margin-bottom:4px; }
 .comp-dash-subtitle { font-size:0.8rem; color:var(--text-secondary); margin-bottom:16px; }
 .comp-dash-legend { display:flex; gap:16px; margin-bottom:20px; font-size:0.75rem; }
 .comp-dash-legend-item { display:flex; align-items:center; gap:5px; color:var(--text-secondary); }
 .comp-dash-legend-dot { width:24px; height:18px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.6rem; font-weight:800; color:#fff; }
-.comp-dash-legend-dot.l-I { background:#a855f7; }
-.comp-dash-legend-dot.l-D { background:#f59e0b; }
+.comp-dash-legend-dot.l-I { background:#7174B2; }
+.comp-dash-legend-dot.l-D { background:#fac31b; }
 .comp-dash-legend-dot.l-M { background:var(--accent); color:var(--bg); }
 .comp-dash-layout { display:flex; gap:20px; align-items:flex-start; }
 .comp-matrix-wrap { overflow-x:auto; border-radius:12px; border:1px solid var(--border); flex-shrink:0; }
@@ -539,9 +547,9 @@ body {
 .comp-matrix td.comp-cell { font-family:'JetBrains Mono',monospace; font-size:0.8rem; font-weight:800; width:36px; }
 .comp-matrix td.comp-name-cell { text-align:left; padding-left:10px; font-size:0.88rem; color:var(--text); white-space:nowrap; background:var(--surface); position:sticky; left:0; z-index:1; }
 .comp-matrix tr.sem-divider td { background:var(--surface-2); padding:4px 10px; font-weight:700; color:var(--text-tertiary); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; }
-.comp-cell-I { background:rgba(168,85,247,0.2); color:#c084fc; }
-.comp-cell-D { background:rgba(245,158,11,0.2); color:#fbbf24; }
-.comp-cell-M { background:rgba(200,255,0,0.15); color:var(--accent); }
+.comp-cell-I { background:rgba(113,116,178,0.25); color:#9597cc; }
+.comp-cell-D { background:rgba(250,195,27,0.2); color:#fad900; }
+.comp-cell-M { background:rgba(255,245,0,0.15); color:var(--accent); }
 .comp-cell-empty { color:var(--border); }
 .comp-dash-summary { display:flex; flex-direction:column; gap:8px; min-width:220px; max-width:280px; }
 .comp-summary-card { padding:12px; border-radius:10px; background:var(--surface); border:1px solid var(--border); }
@@ -549,8 +557,8 @@ body {
 .comp-summary-label { font-size:0.75rem; color:var(--text-secondary); margin:2px 0 8px; }
 .comp-summary-progress { display:flex; gap:3px; }
 .comp-summary-dot { width:8px; height:8px; border-radius:2px; }
-.comp-summary-dot.filled-I { background:#a855f7; }
-.comp-summary-dot.filled-D { background:#f59e0b; }
+.comp-summary-dot.filled-I { background:#7174B2; }
+.comp-summary-dot.filled-D { background:#fac31b; }
 .comp-summary-dot.filled-M { background:var(--accent); }
 .comp-summary-dot.empty { background:var(--surface-3); }
 .comp-summary-status { font-size:0.65rem; margin-top:6px; color:var(--text-tertiary); }
@@ -589,7 +597,7 @@ body {
 }
 .modal-close:hover { background:var(--surface-2); color:var(--text); }
 .modal-course-name {
-  font-size:1.2rem; font-weight:800; letter-spacing:-0.02em;
+  font-family:'Raleway',sans-serif; font-size:1.2rem; font-weight:800; letter-spacing:-0.02em;
   line-height:1.3; margin-top:6px;
 }
 .modal-meta {
@@ -612,7 +620,7 @@ body {
   transition:border-color 0.2s, color 0.2s;
   white-space:pre-wrap;
 }
-.modal-field:focus { border-color:rgba(200,255,0,0.4); color:var(--text); }
+.modal-field:focus { border-color:rgba(255,245,0,0.4); color:var(--text); }
 .modal-field:empty::before {
   content:attr(data-placeholder);
   color:var(--text-tertiary);
@@ -646,7 +654,7 @@ body {
   background:var(--surface); border:1px solid var(--border); color:var(--text-secondary);
   cursor:pointer; outline:none;
 }
-.modal-type-select:focus { border-color:rgba(200,255,0,0.4); }
+.modal-type-select:focus { border-color:rgba(255,245,0,0.4); }
 body.role-admin .modal-type-select { display:block; }
 body.role-admin #modalBadge { display:none; }
 
@@ -654,7 +662,7 @@ body.role-admin #modalBadge { display:none; }
 .cert-card { cursor:pointer; user-select:none; }
 .cert-card.selected {
   border-color:var(--accent) !important;
-  box-shadow:0 0 0 1px var(--accent), 0 12px 48px rgba(200,255,0,0.08);
+  box-shadow:0 0 0 1px var(--accent), 0 12px 48px rgba(255,245,0,0.08);
 }
 .cert-check {
   position:absolute; top:16px; right:16px;
@@ -685,7 +693,7 @@ body.role-admin #modalBadge { display:none; }
 .btn-header svg { width:14px; height:14px; }
 
 /* Cert slot highlight */
-.course-card.cert-filled { border-color:rgba(200,255,0,0.15); }
+.course-card.cert-filled { border-color:rgba(255,245,0,0.15); }
 
 /* ===== COMPETENCIAS I-D-M ===== */
 .comp-list { display:flex; flex-direction:column; gap:4px; }
@@ -696,7 +704,7 @@ body.role-admin #modalBadge { display:none; }
   user-select:none; transition:all 0.2s;
 }
 .comp-item:hover { border-color:var(--border-hover); }
-.comp-item.has-level { border-color:rgba(200,255,0,0.25); background:rgba(200,255,0,0.04); }
+.comp-item.has-level { border-color:rgba(255,245,0,0.25); background:rgba(255,245,0,0.04); }
 .comp-id {
   font-family:'JetBrains Mono',monospace; font-size:0.75rem;
   font-weight:700; color:var(--text-tertiary); width:30px; flex-shrink:0;
@@ -711,8 +719,8 @@ body.role-admin #modalBadge { display:none; }
   display:flex; align-items:center; justify-content:center; transition:all 0.2s;
 }
 .comp-level-btn:hover { border-color:var(--text-secondary); color:var(--text); }
-.comp-level-btn.active-I { background:#a855f7; border-color:#a855f7; color:#fff; }
-.comp-level-btn.active-D { background:#f59e0b; border-color:#f59e0b; color:#fff; }
+.comp-level-btn.active-I { background:#7174B2; border-color:#7174B2; color:#fff; }
+.comp-level-btn.active-D { background:#fac31b; border-color:#fac31b; color:#fff; }
 .comp-level-btn.active-M { background:var(--accent); border-color:var(--accent); color:var(--bg); }
 .comp-item.suggested { border-left:2px solid var(--accent); }
 .comp-suggested-badge { color:var(--accent); font-size:0.7rem; flex-shrink:0; margin-right:4px; }
@@ -721,8 +729,8 @@ body.role-admin #modalBadge { display:none; }
 .comp-legend { display:flex; gap:12px; margin-bottom:10px; font-size:0.7rem; color:var(--text-tertiary); }
 .comp-legend-item { display:flex; align-items:center; gap:4px; }
 .comp-legend-dot { width:10px; height:10px; border-radius:3px; }
-.comp-legend-dot.l-I { background:#a855f7; }
-.comp-legend-dot.l-D { background:#f59e0b; }
+.comp-legend-dot.l-I { background:#7174B2; }
+.comp-legend-dot.l-D { background:#fac31b; }
 .comp-legend-dot.l-M { background:var(--accent); }
 
 /* ===== BIBLIOGRAFÍA + ARCHIVOS ===== */
@@ -736,7 +744,7 @@ body.role-admin #modalBadge { display:none; }
   font:inherit; font-size:0.82rem; color:var(--text-secondary);
   outline:none; transition:border-color 0.2s;
 }
-.biblio-input:focus { border-color:rgba(200,255,0,0.4); color:var(--text); }
+.biblio-input:focus { border-color:rgba(255,245,0,0.4); color:var(--text); }
 .biblio-input::placeholder { color:var(--text-tertiary); }
 .biblio-remove {
   width:28px; height:28px; border-radius:6px; flex-shrink:0;
@@ -761,7 +769,7 @@ body.role-admin #modalBadge { display:none; }
   transition:all 0.2s; cursor:pointer;
 }
 .file-zone:hover, .file-zone.drag-over {
-  border-color:var(--accent); background:rgba(200,255,0,0.03);
+  border-color:var(--accent); background:rgba(255,245,0,0.03);
 }
 .file-zone-label {
   font-size:0.75rem; color:var(--text-tertiary); line-height:1.5;
@@ -817,7 +825,7 @@ body.role-admin #modalBadge { display:none; }
   background:transparent; color:var(--text-secondary); transition:all 0.2s;
 }
 .bank-btn:hover { border-color:var(--border-hover); color:var(--text); }
-.bank-btn.restore { border-color:rgba(200,255,0,0.3); color:var(--accent); }
+.bank-btn.restore { border-color:rgba(255,245,0,0.3); color:var(--accent); }
 .bank-btn.restore:hover { background:var(--accent-dim); }
 .bank-btn.delete { border-color:rgba(239,68,68,0.3); color:#ef4444; }
 .bank-btn.delete:hover { background:rgba(239,68,68,0.1); }
@@ -857,14 +865,27 @@ body.role-admin #modalBadge { display:none; }
   text-align:center;
 }
 .login-logo {
-  font-size:0.65rem; font-weight:700;
-  letter-spacing:0.15em; text-transform:uppercase;
-  color:var(--text-secondary); margin-bottom:8px;
+  display:flex; flex-direction:column; align-items:center; gap:10px; margin-bottom:16px;
 }
-.login-logo span { color:var(--accent); }
+.login-logo .udem-pleca {
+  display:inline-flex; align-items:center; background:var(--accent);
+  padding:5px 14px; border-radius:3px;
+}
+.login-logo .udem-pleca span {
+  font-family:'Raleway',sans-serif; font-size:1.1rem; font-weight:900;
+  letter-spacing:0.18em; color:#333333; text-transform:uppercase;
+}
+.login-school {
+  font-family:'DM Sans',sans-serif; font-size:0.65rem; font-weight:500;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--text-secondary);
+}
+.login-program-badge {
+  font-family:'Raleway',sans-serif; font-size:0.72rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase; color:var(--text-tertiary);
+}
 .login-title {
-  font-size:1.5rem; font-weight:800;
-  letter-spacing:-0.03em; margin-bottom:6px;
+  font-family:'Raleway',sans-serif; font-size:1.5rem; font-weight:800;
+  letter-spacing:-0.02em; margin-bottom:6px;
   background:linear-gradient(135deg, var(--text) 0%, rgba(240,239,233,0.7) 100%);
   -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
@@ -924,8 +945,12 @@ body.role-admin #modalBadge { display:none; }
 <!-- ===== LOGIN OVERLAY ===== -->
 <div class="login-overlay" id="loginOverlay">
   <div class="login-card">
-    <div class="login-logo"><span>UDEM</span> · CRGS</div>
-    <div class="login-title">LDV · Plan 2027</div>
+    <div class="login-logo">
+      <div class="udem-pleca"><span>UDEM</span></div>
+      <div class="login-school">CRGS · Escuela de Arte y Diseño</div>
+      <div class="login-program-badge">Licenciatura en Diseño Visual</div>
+    </div>
+    <div class="login-title">Plan 2027</div>
     <div class="login-subtitle">Mapa Curricular</div>
     <button class="login-btn primary" id="btnViewProgram">Ver Programa</button>
     <div class="login-divider">Administrador</div>
@@ -940,8 +965,11 @@ body.role-admin #modalBadge { display:none; }
 <div class="header">
   <div class="header-top">
     <div class="logo-area">
-      <div class="logo"><span>UDEM</span></div>
-      <div class="program-name">Licenciatura en Diseño Visual LDV</div>
+      <div class="header-pleca"><span>UDEM</span></div>
+      <div style="display:flex;flex-direction:column;gap:1px;">
+        <div class="program-name">Licenciatura en Diseño Visual</div>
+        <div class="header-school">CRGS · Escuela de Arte y Diseño</div>
+      </div>
       <div class="credits-badge">Plan 2027 · 342 CR</div>
     </div>
     <div class="header-actions">
