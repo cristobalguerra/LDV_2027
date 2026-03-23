@@ -1560,6 +1560,34 @@ function getCourseId(card) {
   });
 })();
 
+// ===== SORT CARDS BY TYPE (retícula) =====
+const TYPE_ORDER = {
+  'estudio': 0,
+  'sinergia': 1,
+  'disciplinar': 2,
+  'proyecto': 3,
+  'practicas': 4,
+  'certificado': 5,
+  'formacion': 6,
+  'general': 7
+};
+
+function sortCardsByType() {
+  document.querySelectorAll('.semester-col').forEach(col => {
+    const header = col.querySelector('.sem-header');
+    const cards = [...col.querySelectorAll('.course-card')];
+    cards.sort((a, b) => {
+      const ta = TYPE_ORDER[a.dataset.type] ?? 99;
+      const tb = TYPE_ORDER[b.dataset.type] ?? 99;
+      return ta - tb;
+    });
+    cards.forEach(c => col.appendChild(c));
+  });
+}
+
+// Apply default sort on load (before any saved layout overrides)
+sortCardsByType();
+
 // ===== PREREQUISITE / SERIACIÓN SYSTEM =====
 // Default chains (used if no custom prereqs saved in Firebase)
 const DEFAULT_PREREQS = {
