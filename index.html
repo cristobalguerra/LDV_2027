@@ -455,15 +455,18 @@ body {
 /* Empty concentration slot */
 .course-card.conc-slot-empty {
   background:transparent;
-  border:1px dashed rgba(255,255,255,0.12);
-  opacity:0.4;
+  border:1px dashed rgba(255,255,255,0.15);
+  opacity:0.35;
+  cursor:default;
+  pointer-events:none;
 }
 .course-card.conc-slot-empty .card-name {
-  color:var(--text-tertiary); font-style:italic;
+  color:var(--text-tertiary); font-style:italic; font-size:0.55rem;
 }
 .course-card.conc-slot-empty .card-type {
   background:transparent; border:1px dashed rgba(255,255,255,0.2); color:var(--text-tertiary);
 }
+.course-card.conc-slot-empty .card-footer { display:none; }
 
 .cert-note {
   margin-top:16px; padding-top:12px;
@@ -1780,12 +1783,12 @@ function applyReticula() {
     });
   });
 
-  // Phase 2: measure tallest card per grid-row across ALL semesters
+  // Phase 2: measure tallest card per grid-row across ALL semesters (skip empty slots)
   const rowHeights = {};
   document.querySelectorAll('#semGrid .course-card').forEach(card => {
     const r = card.style.gridRow;
     if (!r) return;
-    // Temporarily clear fixed height to measure natural height
+    if (card.classList.contains('conc-slot-empty')) return; // don't measure empties
     card.style.height = 'auto';
     const h = card.scrollHeight;
     rowHeights[r] = Math.max(rowHeights[r] || 0, h);
@@ -2352,6 +2355,7 @@ document.querySelectorAll('.semester-col').forEach(col => {
     e.preventDefault();
     col.classList.remove('drag-over');
     if (!draggedCard) return;
+    const srcCol = draggedCard.parentElement;
     // Insert before the closest card, or append at end
     const afterElement = getDragAfterElement(col, e.clientY);
     if (afterElement) {
@@ -2359,7 +2363,26 @@ document.querySelectorAll('.semester-col').forEach(col => {
     } else {
       col.appendChild(draggedCard);
     }
+    // If concentration card was dropped, manage empty slots
+    if (draggedCard.dataset.type === 'certificado' && !draggedCard.classList.contains('conc-slot-empty')) {
+      // Remove one empty slot from destination (if exists)
+      const emptySlot = col.querySelector('.conc-slot-empty');
+      if (emptySlot) emptySlot.remove();
+      // Add empty slot to source (if it lost a concentration and now has < 2 cert cards)
+      if (srcCol && srcCol !== col) {
+        const srcCerts = srcCol.querySelectorAll('.course-card[data-type="certificado"]:not(.conc-slot-empty)');
+        const srcEmpties = srcCol.querySelectorAll('.conc-slot-empty');
+        if (srcCerts.length + srcEmpties.length < 2) {
+          const slot = document.createElement('div');
+          slot.className = 'course-card conc-slot-empty';
+          slot.dataset.type = 'certificado';
+          slot.innerHTML = '<div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div>';
+          srcCol.appendChild(slot);
+        }
+      }
+    }
     draggedCard._didDrop = true;
+    applyReticula();
     recalcCredits();
     saveLayout();
   });
