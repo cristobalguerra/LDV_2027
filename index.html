@@ -205,12 +205,9 @@ body {
 
 .semester-col {
   display:grid;
-  grid-template-rows: auto repeat(var(--grid-rows, 11), var(--card-h, 62px));
   gap:4px; min-width:0;
   align-content:start;
 }
-/* All cards must be exactly the same height for retícula */
-.course-card { height:var(--card-h, 62px); overflow:hidden; }
 
 /* Semester header */
 .sem-header {
@@ -292,9 +289,6 @@ body {
   line-height:1.25; color:var(--text);
   margin-bottom:2px;
   flex:1;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
 }
 .card-footer {
   display:flex; align-items:center; justify-content:space-between;
@@ -1195,7 +1189,7 @@ body.role-admin #modalBadge { display:none; }
     <!-- PHASE 3: Experiencia e Interacción -->
     <div class="phase-wrap pw-3">
       <div class="phase-head">
-        <span class="phase-head-name">Experiencia e Interacción</span>
+        <span class="phase-head-name">Exper. / Interac.</span>
       </div>
       <div class="phase-semesters">
 
@@ -1598,25 +1592,19 @@ const TOTAL_GRID_ROWS = _row - 1;
 function applyReticula() {
   document.documentElement.style.setProperty('--grid-rows', TOTAL_GRID_ROWS);
 
+  // Phase 1: sort & assign grid-row to every card
   document.querySelectorAll('.semester-col').forEach(col => {
-    // Sort cards by lane order; proyecto goes last (will float up)
     const cards = [...col.querySelectorAll('.course-card')];
-    cards.sort((a, b) => {
-      const oa = TYPE_ORDER[a.dataset.type] ?? 99;
-      const ob = TYPE_ORDER[b.dataset.type] ?? 99;
-      return oa - ob;
-    });
+    cards.sort((a, b) => (TYPE_ORDER[a.dataset.type] ?? 99) - (TYPE_ORDER[b.dataset.type] ?? 99));
     cards.forEach(c => col.appendChild(c));
 
     const header = col.querySelector('.sem-header');
     if (header) header.style.gridRow = '1';
 
-    // Track which rows are occupied
     const usedRows = new Set();
     const laneCount = {};
-    const floaters = []; // proyecto cards
+    const floaters = [];
 
-    // First pass: place fixed-lane cards
     cards.forEach(card => {
       const t = card.dataset.type;
       if (t === 'proyecto') { floaters.push(card); return; }
@@ -1630,7 +1618,6 @@ function applyReticula() {
       usedRows.add(row);
     });
 
-    // Second pass: float proyecto into first empty rows (top to bottom)
     floaters.forEach(card => {
       for (let r = 2; r <= TOTAL_GRID_ROWS; r++) {
         if (!usedRows.has(r)) {
@@ -1640,6 +1627,34 @@ function applyReticula() {
         }
       }
     });
+  });
+
+  // Phase 2: measure tallest card per grid-row across ALL semesters
+  const rowHeights = {};
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
+    const r = card.style.gridRow;
+    if (!r) return;
+    // Temporarily clear fixed height to measure natural height
+    card.style.height = 'auto';
+    const h = card.scrollHeight;
+    rowHeights[r] = Math.max(rowHeights[r] || 0, h);
+  });
+
+  // Phase 3: build grid-template-rows and apply uniform height
+  const rowTemplate = ['auto']; // row 1 = header
+  for (let r = 2; r <= TOTAL_GRID_ROWS + 1; r++) {
+    const h = rowHeights[r] || 0;
+    rowTemplate.push(h > 0 ? h + 'px' : '0px');
+  }
+
+  document.querySelectorAll('.semester-col').forEach(col => {
+    col.style.gridTemplateRows = rowTemplate.join(' ');
+  });
+
+  // Set card heights to match their row
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
+    const r = card.style.gridRow;
+    if (r && rowHeights[r]) card.style.height = rowHeights[r] + 'px';
   });
 }
 
