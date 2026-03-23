@@ -2440,58 +2440,19 @@ async function loadLayout() {
   }
 }
 
-// ===== CERTIFICATE SELECTION =====
+// ===== CONCENTRACIONES (both are mandatory, no selection needed) =====
 const certMaterias = {
-  a: ['Motion y Sistemas de Contenido', 'Producción Visual Avanzada', 'Gestión Estratégica de Marca y Portafolio'],
-  b: ['Sistemas de Diseño Avanzados', 'Analítica y Métricas de Producto Digital', 'Accesibilidad y Experiencia Inclusiva'],
-  c: ['Diseño de Workshops Estratégicos', 'Modelos de Innovación y Desarrollo Organizacional', 'Gestión del Cambio y Cultura de Diseño']
+  a: ['Dir. de Arte y Fotografía de Producto', 'Sistemas de Diseño Avanzado', 'IA Aplicada al Diseño Visual'],
+  b: ['Diseño Estratégico e Innovación', 'Gestión e Implementación de Proyectos de Diseño', 'Emprendimiento y Modelos de Negocio para el Diseño']
 };
-let selectedCerts = [];
-let _certsSaving = false;
+let selectedCerts = ['a', 'b']; // both always selected
 
 async function loadCerts() {
-  if (db) {
-    db.ref('ldgd/certs').on('value', snap => {
-      if (_certsSaving) return;
-      selectedCerts = snap.val() || [];
-      syncCertUI();
-    });
-  } else {
-    selectedCerts = loadLocal(LS_CERTS) || [];
-    syncCertUI();
-  }
-}
-async function saveCertsDB() {
-  if (userRole === 'viewer') return; // viewers don't persist cert changes
-  _certsSaving = true;
-  await dbSet('certs', selectedCerts);
-  setTimeout(() => { _certsSaving = false; }, 500);
-}
-
-function syncCertUI() {
+  // Both concentrations are mandatory — mark cards as selected
   document.querySelectorAll('.cert-card').forEach(card => {
-    card.classList.toggle('selected', selectedCerts.includes(card.dataset.cert));
-  });
-  const slots = document.querySelectorAll('#semGrid .course-card[data-type="certificado"]');
-  const materias = [];
-  selectedCerts.forEach(c => (certMaterias[c] || []).forEach(m => materias.push(m)));
-  slots.forEach((slot, i) => {
-    const nameEl = slot.querySelector('.card-name');
-    if (i < materias.length) { nameEl.textContent = materias[i]; slot.classList.add('cert-filled'); }
-    else { nameEl.textContent = 'Materia de concentración'; slot.classList.remove('cert-filled'); }
+    card.classList.add('selected');
   });
 }
-
-document.querySelectorAll('.cert-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const id = card.dataset.cert;
-    if (selectedCerts.includes(id)) { selectedCerts = selectedCerts.filter(c => c !== id); }
-    else if (selectedCerts.length < 2) { selectedCerts.push(id); }
-    else { selectedCerts.shift(); selectedCerts.push(id); }
-    saveCertsDB();
-    syncCertUI();
-  });
-});
 
 // ===== PDF GENERATION =====
 document.getElementById('btnDownloadMap').addEventListener('click', generateMapPDF);
@@ -2504,7 +2465,7 @@ async function generateMapPDF() {
   const pw = doc.internal.pageSize.getWidth();
   const ph = doc.internal.pageSize.getHeight();
   const footer = () => { doc.setFontSize(6); doc.setTextColor(170); doc.text('LDV Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 15, ph - 8); };
-  const certNames = { a:'Concentración A: Dirección de Marca y Dirección de Arte', b:'Concentración B: Producto Digital y Sistemas Interactivos', c:'Concentración C: Gestión Estratégica de Servicios' };
+  const certNames = { a:'Concentración A: Dirección de Marca y Diseño Visual', b:'Concentración B: Diseño Estratégico y Gestión' };
 
   // ===== PAGE 1: MAPA CURRICULAR =====
   doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS', 15, 15);
