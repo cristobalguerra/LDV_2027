@@ -442,23 +442,26 @@ body {
 }
 
 /* ===== LEGEND ===== */
-.legend {
-  display:flex; align-items:center; gap:20px;
-  padding:16px 40px;
+.malla-footer {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  padding:20px 24px 12px;
   border-top:1px solid var(--border);
-  margin-top:40px;
+  margin-top:24px;
 }
-.legend-label {
-  font-size:0.6rem; font-weight:700;
-  letter-spacing:0.12em; text-transform:uppercase;
+.malla-footer-title {
+  font-family:'Raleway',sans-serif;
+  font-size:0.7rem; font-weight:700;
+  color:var(--text-secondary);
+  margin-bottom:2px;
+}
+.malla-footer-text {
+  font-family:'DM Sans',sans-serif;
+  font-size:0.58rem;
   color:var(--text-tertiary);
+  line-height:1.5;
 }
-.legend-item {
-  display:flex; align-items:center; gap:6px;
-  font-size:0.72rem; color:var(--text-secondary);
-}
-.legend-dot {
-  width:8px; height:8px; border-radius:50%;
+.malla-footer-right {
+  text-align:right;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -476,7 +479,7 @@ body {
   .filters-bar { padding:10px 20px; gap:8px; }
   .view { padding:20px 20px 40px; }
   .certs-grid { grid-template-columns:1fr; gap:16px; }
-  .legend { padding:12px 20px; flex-wrap:wrap; gap:12px; }
+  .malla-footer { padding:12px 20px; }
 }
 
 /* ===== MOBILE ===== */
@@ -528,8 +531,8 @@ body {
   .cert-title { font-size:1rem; }
 
   /* Legend */
-  .legend { padding:12px 16px; flex-wrap:wrap; gap:8px; }
-  .legend-item { font-size:0.65rem; }
+  .malla-footer { padding:10px 16px; flex-direction:column; gap:8px; }
+  .malla-footer-right { text-align:left; }
 }
 
 /* ===== SMALL PHONES ===== */
@@ -1293,14 +1296,16 @@ body.role-admin #modalBadge { display:none; }
 
   </div><!-- /phase-layout -->
 
-  <!-- Legend -->
-  <div class="legend">
-    <span class="legend-label">Ejes</span>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--lenguaje)"></span>Lenguaje Visual</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--sistemas)"></span>Sistemas e Identidad</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--experiencia)"></span>Experiencia e Interacción</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--direccion)"></span>Dirección Estratégica</div>
-    <div class="legend-item"><span class="legend-dot" style="background:var(--produccion)"></span>Producción y Gestión</div>
+  <!-- Leyenda institucional -->
+  <div class="malla-footer">
+    <div class="malla-footer-left">
+      <div class="malla-footer-title">Licenciatura en Diseño Visual · Plan 2027</div>
+      <div class="malla-footer-text">Universidad de Monterrey · CRGS · Escuela de Arte y Diseño</div>
+    </div>
+    <div class="malla-footer-right">
+      <div class="malla-footer-text">Documento de uso interno. Sujeto a aprobación del Comité Curricular.</div>
+      <div class="malla-footer-text">Prohibida su reproducción total o parcial sin autorización.</div>
+    </div>
   </div>
 </div>
 
