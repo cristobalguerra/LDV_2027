@@ -316,6 +316,29 @@ body {
   border-color:rgba(255,255,255,0.08);
 }
 
+/* Conocimiento General — cuadro gris completo */
+.course-card[data-type="general"] {
+  background:#333333;
+  border-color:#444;
+}
+.course-card[data-type="general"] .card-name,
+.course-card[data-type="general"] .card-credits { color:#fff; }
+.course-card[data-type="general"] .card-type {
+  background:rgba(255,255,255,0.15); color:#fff;
+}
+
+/* Formación UDEM — cuadro amarillo completo */
+.course-card[data-type="formacion"] {
+  background:var(--accent);
+  border-color:var(--accent);
+}
+.course-card[data-type="formacion"] .card-name,
+.course-card[data-type="formacion"] .card-credits { color:#333333; }
+.course-card[data-type="formacion"] .card-type {
+  background:rgba(0,0,0,0.15); color:#333333;
+}
+.course-card[data-type="formacion"]::before { background:#333333; }
+
 /* ===== CERTIFICADOS VIEW ===== */
 .certs-intro {
   max-width:640px; margin-bottom:40px;
