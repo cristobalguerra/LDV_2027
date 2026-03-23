@@ -452,6 +452,19 @@ body {
 }
 .course-card.conc-b .card-type { background:rgba(148,150,204,0.2); color:var(--experiencia); }
 
+/* Empty concentration slot */
+.course-card.conc-slot-empty {
+  background:transparent;
+  border:1px dashed rgba(255,255,255,0.12);
+  opacity:0.4;
+}
+.course-card.conc-slot-empty .card-name {
+  color:var(--text-tertiary); font-style:italic;
+}
+.course-card.conc-slot-empty .card-type {
+  background:transparent; border:1px dashed rgba(255,255,255,0.2); color:var(--text-tertiary);
+}
+
 .cert-note {
   margin-top:16px; padding-top:12px;
   border-top:1px solid var(--border);
@@ -1314,6 +1327,7 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-produccion" data-axes="produccion,lenguaje,experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Fotografía II: Dirección de Arte</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span><span class="card-dot lenguaje"></span><span class="card-dot experiencia"></span></div></div></div>
       <div class="course-card eje-produccion" data-axes="produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Producción II: Gestión de Producción</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-direccion conc-a" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración A</div><div class="card-name">Dir. de Arte y Fotografía de Producto</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card conc-slot-empty" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
 
@@ -1327,6 +1341,7 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card is-estudio eje-sistemas" data-axes="sistemas,lenguaje,experiencia" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Sistemas de Identidad III</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot lenguaje"></span><span class="card-dot experiencia"></span></div></div></div>
       <div class="course-card eje-direccion" data-axes="direccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SIII — Diseño de Futuros</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-direccion conc-a" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración A</div><div class="card-name">Sistemas de Diseño Avanzado</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card conc-slot-empty" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
@@ -1354,6 +1369,7 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-sistemas" data-axes="sistemas,produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Empaque</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot produccion"></span></div></div></div>
       <div class="course-card eje-produccion" data-axes="produccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SIV — Producción Artística Interdisciplinaria</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
       <div class="course-card eje-direccion conc-a" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración A</div><div class="card-name">IA Aplicada al Diseño Visual</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card conc-slot-empty" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
 
@@ -1379,6 +1395,7 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-direccion" data-axes="direccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SV — Investigación para el Diseño</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-produccion" data-axes="produccion" data-type="practicas"><div class="card-type practicas">Prácticas</div><div class="card-name">Prácticas Profesionales</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
       <div class="course-card eje-direccion conc-b" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración B</div><div class="card-name">Diseño Estratégico e Innovación</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card conc-slot-empty" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
 
