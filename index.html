@@ -377,7 +377,7 @@ body {
   height:3px;
 }
 .cert-card.cert-a::before { background:linear-gradient(90deg, var(--lenguaje), var(--produccion)); }
-.cert-card.cert-b::before { background:linear-gradient(90deg, var(--experiencia), var(--sistemas)); }
+.cert-card.cert-b::before { background:linear-gradient(90deg, #E91E90, #C2185B); }
 .cert-card.cert-c::before { background:linear-gradient(90deg, var(--direccion), var(--produccion)); }
 
 .cert-badge {
@@ -387,7 +387,7 @@ body {
   margin-bottom:16px;
 }
 .cert-a .cert-badge { color:var(--lenguaje); }
-.cert-b .cert-badge { color:var(--experiencia); }
+.cert-b .cert-badge { color:#E91E90; }
 .cert-c .cert-badge { color:var(--direccion); }
 
 .cert-title {
@@ -416,7 +416,7 @@ body {
   width:16px; height:1px;
 }
 .cert-a .cert-roles li::before { background:var(--lenguaje); }
-.cert-b .cert-roles li::before { background:var(--experiencia); }
+.cert-b .cert-roles li::before { background:#E91E90; }
 .cert-c .cert-roles li::before { background:var(--direccion); }
 
 .cert-materias { display:flex; flex-direction:column; gap:8px; }
@@ -433,7 +433,7 @@ body {
   flex-shrink:0;
 }
 .cert-a .cert-materia-code { background:var(--lenguaje-bg); color:var(--lenguaje); }
-.cert-b .cert-materia-code { background:var(--experiencia-bg); color:var(--experiencia); }
+.cert-b .cert-materia-code { background:rgba(233,30,144,0.12); color:#E91E90; }
 .cert-c .cert-materia-code { background:rgba(232,184,126,0.12); color:var(--direccion); }
 
 .cert-materia-name {
@@ -447,10 +447,10 @@ body {
 }
 .course-card.conc-a .card-type { background:rgba(90,173,163,0.2); color:var(--sistemas); }
 .course-card.conc-b {
-  background:rgba(148,150,204,0.12);
-  border-color:rgba(148,150,204,0.3);
+  background:rgba(233,30,144,0.10);
+  border-color:rgba(233,30,144,0.30);
 }
-.course-card.conc-b .card-type { background:rgba(148,150,204,0.2); color:var(--experiencia); }
+.course-card.conc-b .card-type { background:rgba(233,30,144,0.18); color:#E91E90; }
 
 /* Empty concentration slot */
 .course-card.conc-slot-empty {
@@ -871,17 +871,7 @@ body.role-admin #modalBadge { display:none; }
   border-color:var(--accent) !important;
   box-shadow:0 0 0 1px var(--accent), 0 12px 48px rgba(255,245,0,0.08);
 }
-.cert-check {
-  position:absolute; top:16px; right:16px;
-  width:24px; height:24px; border-radius:6px;
-  border:1px solid var(--border); background:var(--surface-2);
-  display:flex; align-items:center; justify-content:center;
-  font-size:0.65rem; font-weight:800;
-  color:transparent; transition:all 0.2s;
-}
-.cert-card.selected .cert-check {
-  background:var(--accent); border-color:var(--accent); color:var(--bg);
-}
+.cert-check { display:none; }
 
 /* ===== HEADER ACTIONS ===== */
 .header-actions {
