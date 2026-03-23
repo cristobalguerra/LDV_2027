@@ -464,6 +464,75 @@ body {
   text-align:right;
 }
 
+/* ===== PROGRAMA VIEW ===== */
+.programa-container {
+  max-width:780px; margin:0 auto;
+}
+.programa-header {
+  text-align:center; margin-bottom:48px;
+  padding-bottom:32px;
+  border-bottom:1px solid var(--border);
+}
+.programa-badge {
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; font-weight:700;
+  letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--bg); background:var(--accent);
+  padding:4px 14px; border-radius:4px;
+  margin-bottom:16px;
+}
+.programa-title {
+  font-family:'Raleway',sans-serif;
+  font-size:1.8rem; font-weight:800;
+  color:var(--text);
+  letter-spacing:-0.02em;
+  margin-bottom:8px;
+}
+.programa-school {
+  font-family:'DM Sans',sans-serif;
+  font-size:0.8rem; color:var(--text-tertiary);
+  letter-spacing:0.04em;
+}
+.programa-sections {
+  display:flex; flex-direction:column; gap:40px;
+}
+.programa-section {
+  position:relative;
+  padding-left:48px;
+}
+.programa-section-num {
+  position:absolute; left:0; top:0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.4rem; font-weight:800;
+  color:var(--accent); opacity:0.3;
+  line-height:1;
+}
+.programa-section-title {
+  font-family:'Raleway',sans-serif;
+  font-size:1.05rem; font-weight:700;
+  color:var(--text);
+  margin-bottom:12px;
+  letter-spacing:0.01em;
+}
+.programa-section-text {
+  font-family:'DM Sans',sans-serif;
+  font-size:0.88rem; line-height:1.7;
+  color:var(--text-secondary);
+  margin-bottom:10px;
+}
+.programa-section-text:last-child { margin-bottom:0; }
+.programa-footer-note {
+  margin-top:48px;
+  padding-top:20px;
+  border-top:1px solid var(--border);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.6rem;
+  color:var(--text-tertiary);
+  text-align:center;
+  letter-spacing:0.02em;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width:1400px) {
   .phase-layout { overflow-x:auto; }
@@ -1078,6 +1147,7 @@ body.role-admin #modalBadge { display:none; }
     </div>
     <div class="header-actions">
       <div class="nav-tabs">
+        <button class="nav-tab" data-view="programa">Programa</button>
         <button class="nav-tab active" data-view="mapa">Mapa</button>
         <button class="nav-tab" data-view="certificados">Concentraciones</button>
         <button class="nav-tab" data-view="competencias">Competencias</button>
@@ -1106,6 +1176,44 @@ body.role-admin #modalBadge { display:none; }
       <button class="filter-pill" data-type="disciplinar">Disciplinar</button>
       <button class="filter-pill" data-type="sinergia">Sinergia</button>
       <button class="filter-pill" data-type="certificado">Concentración</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PROGRAMA VIEW ===== -->
+<div class="view" id="view-programa">
+  <div class="programa-container">
+    <div class="programa-header">
+      <div class="programa-badge">Plan 2027</div>
+      <h1 class="programa-title">Licenciatura en Diseño Visual</h1>
+      <p class="programa-school">CRGS · Escuela de Arte y Diseño · Universidad de Monterrey</p>
+    </div>
+
+    <div class="programa-sections">
+      <div class="programa-section">
+        <div class="programa-section-num">01</div>
+        <h2 class="programa-section-title">Objetivo del Programa</h2>
+        <p class="programa-section-text">Formar profesionales del diseño con visión estratégica y pensamiento sistémico, capaces de concebir, estructurar y dirigir proyectos integrales que articulen identidad, experiencia, interacción, producción y modelo de negocio, respondiendo a contextos sociales, culturales y tecnológicos complejos.</p>
+        <p class="programa-section-text">El programa promueve el rigor técnico, la capacidad crítica, la toma de decisiones fundamentada y la gestión eficiente de procesos creativos, integrando innovación, sostenibilidad y responsabilidad ética para generar soluciones viables que impacten positivamente en el entorno económico, social y cultural.</p>
+      </div>
+
+      <div class="programa-section">
+        <div class="programa-section-num">02</div>
+        <h2 class="programa-section-title">Perfil de Egreso</h2>
+        <p class="programa-section-text">El egresado de la Licenciatura en Diseño Visual es un profesional del diseño con pensamiento sistémico y visión estratégica, capaz de concebir, estructurar y dirigir proyectos integrales que articulan identidad, información, experiencia, interacción y producción en contextos sociales, culturales y económicos complejos.</p>
+        <p class="programa-section-text">Integra rigor técnico, criterio conceptual y metodologías de gestión para transformar problemáticas en sistemas de diseño coherentes, viables y sostenibles. Posee la capacidad de tomar decisiones fundamentadas, coordinar procesos y equipos multidisciplinarios, vincular el diseño con modelos de negocio y evaluar el impacto cultural y social de sus propuestas, ejerciendo su práctica con ética, responsabilidad y compromiso con el entorno.</p>
+      </div>
+
+      <div class="programa-section">
+        <div class="programa-section-num">03</div>
+        <h2 class="programa-section-title">Perfil de Ingreso</h2>
+        <p class="programa-section-text">El aspirante a la Licenciatura en Diseño Visual es una persona con interés en el diseño, la comunicación visual y la construcción de experiencias, que manifiesta curiosidad por comprender cómo interactúan los elementos visuales, espaciales y tecnológicos en distintos contextos.</p>
+        <p class="programa-section-text">Posee capacidad de observación, pensamiento creativo y disposición para el análisis crítico. Muestra apertura al trabajo colaborativo, interés por integrar tecnología y procesos metodológicos en la resolución de problemas, así como sensibilidad hacia fenómenos culturales, sociales y económicos. Cuenta con habilidades básicas de expresión gráfica y comunicación, y disposición para desarrollar competencias técnicas, estratégicas y de gestión a lo largo de su formación profesional.</p>
+      </div>
+    </div>
+
+    <div class="programa-footer-note">
+      Documento de uso interno · Sujeto a aprobación del Comité Curricular · Prohibida su reproducción total o parcial sin autorización.
     </div>
   </div>
 </div>
