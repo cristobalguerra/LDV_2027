@@ -198,6 +198,12 @@ body {
 .jcb-D { background:rgba(113,116,178,0.2); color:#7174B2; }
 .jcb-M { background:rgba(255,245,0,0.15); color:var(--accent); }
 
+.journey-hint {
+  display:none; padding:6px 0 10px 44px;
+  font-family:'DM Sans',sans-serif; font-size:0.72rem;
+  color:var(--text-tertiary); letter-spacing:0.02em;
+}
+
 .malla-with-labels {
   display:flex; gap:0; align-items:stretch;
 }
@@ -1431,6 +1437,7 @@ body.role-admin #modalBadge { display:none; }
 
   <div class="journey-strip" id="journeyStrip"></div>
   <div class="journey-panel" id="journeyPanel"></div>
+  <div class="journey-hint" id="journeyHint">Selecciona un semestre para ver materias y habilidades adquiridas ↑</div>
 
   <div class="malla-with-labels">
     <div class="type-labels-col">
@@ -2234,6 +2241,8 @@ function buildJourneyStrip() {
     sem.addEventListener('click', () => {
       document.querySelectorAll('.journey-sem').forEach(s => s.classList.remove('active'));
       sem.classList.add('active');
+      const hint = document.getElementById('journeyHint');
+      if (hint) hint.style.display = 'none';
 
       const col = semCols[i];
       const courses = [...col.querySelectorAll('.course-card')].map(c => c.querySelector('.card-name')?.textContent.trim()).filter(Boolean);
@@ -2265,6 +2274,11 @@ function buildJourneyStrip() {
   }
 }
 buildJourneyStrip();
+// Auto-open S1 and show hint
+setTimeout(() => {
+  const first = document.querySelector('.journey-sem[data-sem="0"]');
+  if (first) first.click();
+}, 200);
 
 // ===== SYNC CONCENTRATION NAMES FROM MALLA TO CONCENTRACIONES PAGE =====
 function syncConcNames() {
