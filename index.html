@@ -1766,22 +1766,17 @@ const TOTAL_ROWS = _gridRow - 1;
 function applyReticula() {
   const CARD_H = 78; // fixed card height in px
 
-  // Build grid template: header auto, then fixed rows
-  const rowTemplate = ['auto'];
-  for (let r = 2; r <= TOTAL_ROWS; r++) rowTemplate.push(CARD_H + 'px');
-  const templateStr = rowTemplate.join(' ');
-
   document.querySelectorAll('.semester-col').forEach(col => {
     const cards = [...col.querySelectorAll('.course-card')];
     // Sort by type
     cards.sort((a, b) => (TYPE_ORDER[a.dataset.type] ?? 99) - (TYPE_ORDER[b.dataset.type] ?? 99));
     cards.forEach(c => col.appendChild(c));
 
-    // Assign grid rows
-    col.style.gridTemplateRows = templateStr;
     const header = col.querySelector('.sem-header');
     if (header) header.style.gridRow = '1';
 
+    // Assign grid rows and track which rows are used
+    const usedRows = new Set();
     const laneCount = {};
     cards.forEach(card => {
       const t = card.dataset.type;
@@ -1789,10 +1784,19 @@ function applyReticula() {
       if (!lane) return;
       const nth = laneCount[lane.start] || 0;
       laneCount[lane.start] = nth + 1;
-      card.style.gridRow = lane.start + Math.min(nth, lane.slots - 1);
+      const row = lane.start + Math.min(nth, lane.slots - 1);
+      card.style.gridRow = row;
       card.style.height = CARD_H + 'px';
       card.style.overflow = 'hidden';
+      usedRows.add(row);
     });
+
+    // Build per-column grid template: 0px for empty rows
+    const rowTemplate = ['auto'];
+    for (let r = 2; r <= TOTAL_ROWS; r++) {
+      rowTemplate.push(usedRows.has(r) ? CARD_H + 'px' : '0px');
+    }
+    col.style.gridTemplateRows = rowTemplate.join(' ');
   });
 
   // Set label heights and spacer to match actual grid
