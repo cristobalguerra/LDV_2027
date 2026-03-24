@@ -569,6 +569,64 @@ body {
   margin-bottom:14px;
 }
 .programa-section-text:last-child { margin-bottom:0; }
+/* Competencias list in Programa */
+.comp-list-programa {
+  display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; margin-top:16px;
+}
+.comp-item-prog {
+  display:flex; gap:10px; align-items:flex-start;
+  padding:14px; border-radius:10px; background:var(--surface-2); border:1px solid var(--border);
+}
+.comp-item-prog .comp-id {
+  font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:700;
+  color:var(--accent); min-width:28px;
+}
+.comp-item-prog .comp-label {
+  font-family:'Raleway',sans-serif; font-size:0.82rem; font-weight:700; color:var(--text); line-height:1.3;
+}
+.comp-item-prog .comp-desc {
+  font-family:'DM Sans',sans-serif; font-size:0.72rem; color:var(--text-secondary); line-height:1.4; margin-top:4px;
+}
+
+/* Trayecto formativo */
+.trayecto-wrap {
+  overflow-x:auto; margin-top:12px;
+}
+.trayecto-table {
+  width:100%; border-collapse:collapse; font-family:'DM Sans',sans-serif;
+}
+.trayecto-table th, .trayecto-table td {
+  padding:6px 4px; text-align:center; font-size:0.65rem; border:1px solid var(--border);
+}
+.trayecto-table th {
+  background:var(--surface-2); color:var(--text-secondary); font-weight:600;
+  font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.05em;
+}
+.trayecto-table th.th-comp {
+  text-align:left; padding-left:10px; font-family:'DM Sans',sans-serif; font-size:0.68rem;
+  min-width:200px; color:var(--text);
+}
+.trayecto-cell { border-radius:4px; min-width:24px; }
+.trayecto-cell.lvl-I { background:rgba(61,140,130,0.25); color:#3D8C82; font-weight:700; }
+.trayecto-cell.lvl-D { background:rgba(113,116,178,0.25); color:#7174B2; font-weight:700; }
+.trayecto-cell.lvl-M { background:rgba(255,245,0,0.2); color:var(--accent); font-weight:700; }
+.trayecto-cell.lvl-opt { border:1px dashed rgba(255,255,255,0.2); opacity:0.6; }
+
+.trayecto-legend {
+  display:flex; gap:20px; margin-top:16px; padding:12px 0;
+}
+.trayecto-legend-item {
+  display:flex; align-items:center; gap:6px;
+  font-family:'DM Sans',sans-serif; font-size:0.72rem; color:var(--text-secondary);
+}
+.trayecto-dot {
+  width:14px; height:14px; border-radius:3px;
+}
+.trayecto-dot.tl-i { background:rgba(61,140,130,0.35); }
+.trayecto-dot.tl-d { background:rgba(113,116,178,0.35); }
+.trayecto-dot.tl-m { background:rgba(255,245,0,0.3); }
+.trayecto-dot.tl-opt { background:transparent; border:1px dashed rgba(255,255,255,0.3); }
+
 .programa-footer-note {
   margin-top:48px;
   padding-top:20px;
@@ -1258,6 +1316,25 @@ body.role-admin #modalBadge { display:none; }
         <p class="programa-section-text">El aspirante a la Licenciatura en Diseño Visual y Negocios Creativos es una persona interesada en el diseño visual, la comunicación y la construcción de experiencias, con curiosidad por comprender cómo se configuran los sistemas visuales en distintos contextos culturales, sociales y tecnológicos.</p>
         <p class="programa-section-text">Cuenta con capacidad de observación, pensamiento creativo y disposición para el análisis crítico. Muestra interés por integrar herramientas tecnológicas, procesos metodológicos y nociones básicas de negocio en la resolución de problemas.</p>
         <p class="programa-section-text">Tiene habilidades iniciales de expresión visual y comunicación, apertura al trabajo colaborativo y sensibilidad hacia su entorno, así como disposición para desarrollar competencias técnicas, estratégicas y de gestión a lo largo de su formación profesional.</p>
+      </div>
+
+      <div class="programa-section">
+        <div class="programa-section-num">04</div>
+        <h2 class="programa-section-title">Competencias del Perfil de Egreso</h2>
+        <div class="comp-list-programa" id="compListPrograma"></div>
+      </div>
+
+      <div class="programa-section">
+        <div class="programa-section-num">05</div>
+        <h2 class="programa-section-title">Trayecto Formativo del Estudiante</h2>
+        <p class="programa-section-text" style="margin-bottom:24px;">Visualización del desarrollo progresivo de competencias a lo largo de los 9 semestres. Cada competencia pasa por tres niveles: <strong>Introduce</strong> (primer contacto), <strong>Desarrolla</strong> (profundización) y <strong>Domina</strong> (maestría). Las materias de concentración (opcionales) se indican con borde punteado.</p>
+        <div class="trayecto-wrap" id="trayectoWrap"></div>
+        <div class="trayecto-legend">
+          <div class="trayecto-legend-item"><span class="trayecto-dot tl-i"></span> Introduce</div>
+          <div class="trayecto-legend-item"><span class="trayecto-dot tl-d"></span> Desarrolla</div>
+          <div class="trayecto-legend-item"><span class="trayecto-dot tl-m"></span> Domina</div>
+          <div class="trayecto-legend-item"><span class="trayecto-dot tl-opt"></span> Concentración (opcional)</div>
+        </div>
       </div>
     </div>
 
@@ -2046,18 +2123,16 @@ function handleSeriacionLeave(e) {
 
 // ===== COMPETENCIAS DATA =====
 const COMPETENCIAS = [
-  { id:'C1', label:'Dominio del lenguaje visual y comunicación gráfica' },
-  { id:'C2', label:'Diseño y gestión de sistemas de identidad' },
-  { id:'C3', label:'Diseño de experiencias e interacción digital' },
-  { id:'C4', label:'Dirección estratégica de proyectos de diseño' },
-  { id:'C5', label:'Gestión de producción y recursos' },
-  { id:'C6', label:'Pensamiento crítico y de investigación' },
-  { id:'C7', label:'Innovación y desarrollo creativo' },
-  { id:'C8', label:'Liderazgo y trabajo interdisciplinario' },
-  { id:'C9', label:'Comunicación efectiva y argumentación' },
-  { id:'C10', label:'Ética profesional y responsabilidad social' },
-  { id:'C11', label:'Uso estratégico de tecnología digital' },
-  { id:'C12', label:'Emprendimiento y visión de negocios' }
+  { id:'C1', label:'Dominio del lenguaje visual y comunicación gráfica', desc:'Capacidad de articular forma, color, tipografía, imagen y composición para comunicar con claridad, coherencia y calidad estética.' },
+  { id:'C2', label:'Diseño y gestión de sistemas de identidad visual', desc:'Concepción, estructuración y gestión de sistemas de identidad que articulen marca, soportes y contextos con visión estratégica.' },
+  { id:'C3', label:'Diseño de experiencia, información e interacción', desc:'Investigación, diseño y validación de experiencias centradas en el usuario, integrando arquitectura de información, interfaz e interacción.' },
+  { id:'C4', label:'Dirección estratégica y gestión de proyectos de diseño', desc:'Planificación, coordinación y evaluación de proyectos integrales de diseño, vinculando objetivos creativos con resultados medibles.' },
+  { id:'C5', label:'Gestión de producción y tecnología digital', desc:'Dominio de procesos productivos, herramientas digitales y tecnologías emergentes para la implementación eficiente de soluciones de diseño.' },
+  { id:'C6', label:'Pensamiento crítico, investigación y fundamentación', desc:'Aplicación de metodologías de investigación y análisis crítico para fundamentar decisiones de diseño con rigor intelectual.' },
+  { id:'C7', label:'Innovación, creatividad y pensamiento prospectivo', desc:'Generación de soluciones originales mediante pensamiento creativo, especulativo y prospectivo ante contextos complejos.' },
+  { id:'C8', label:'Liderazgo, colaboración y comunicación profesional', desc:'Capacidad de liderar equipos, argumentar propuestas y comunicar ideas de manera efectiva en contextos multidisciplinarios.' },
+  { id:'C9', label:'Ética profesional, responsabilidad social y sostenibilidad', desc:'Ejercicio de la práctica profesional con criterio ético, conciencia social, cultural y compromiso con la sostenibilidad.' },
+  { id:'C10', label:'Emprendimiento, modelos de negocio y visión empresarial', desc:'Diseño y validación de emprendimientos creativos, vinculando diseño con estrategia de negocios y generación de valor.' }
 ];
 
 // ===== COURSE OBJECTIVES =====
@@ -2110,50 +2185,125 @@ const COURSE_OBJECTIVES = {
 };
 
 const SUGGESTED_COMPS = {
-  // SEM 1 — mayormente Introduce
-  'fundamentos-del-diseño-i':{C1:'I',C7:'I',C9:'I'},
-  'pensamiento-visual-y-representación-sistémica':{C1:'I',C6:'I',C7:'I'},
-  'historia-cultura-y-ética-del-diseño':{C6:'I',C10:'I'},
-  'si-herramientas-digitales-para-el-diseño':{C5:'I',C11:'I'},
-  'formación-udem':{C10:'I'},
-  // SEM 2 — Introduce + primeros Develop
-  'fundamentos-del-diseño-ii':{C1:'D',C7:'I',C9:'I'},
-  'tipografía-i':{C1:'I'},
-  'producción-i':{C5:'I',C11:'I'},
-  'ilustración':{C1:'I',C7:'I'},
-  'semiótica':{C1:'I',C6:'I',C9:'I'},
-  // SEM 3 — Develop
+  // ═══ SEM 1 — INTRODUCE ═══
+  'fundamentos-del-diseño-i':{C1:'I',C7:'I'},
+  'visualización-y-pensamiento-de-diseño':{C1:'I',C6:'I',C7:'I'},
+  'contexto-cultural-del-diseño':{C6:'I',C9:'I'},
+  'si-herramientas-digitales-para-el-diseño':{C5:'I'},
+  'formación-udem':{C9:'I'},
+  // ═══ SEM 2 — INTRODUCE → DEVELOP ═══
+  'fundamentos-del-diseño-ii':{C1:'D',C7:'I'},
+  'tipografía-i-fundamentos':{C1:'I',C5:'I'},
+  'ilustración-aplicada':{C1:'I',C7:'I'},
+  'lenguaje-y-significado-en-el-diseño':{C1:'I',C6:'I',C8:'I'},
+  // ═══ SEM 3 — DEVELOP ═══
   'sistemas-de-identidad-i':{C1:'D',C2:'I',C7:'D'},
-  'diseño-de-información-i':{C2:'I',C3:'I',C6:'D'},
+  'diseño-de-información-i':{C3:'I',C6:'D'},
   'fotografía-i':{C1:'D',C5:'I'},
   'tipografía-ii':{C1:'D',C2:'I'},
-  'sii-dirección-creativa-para-medios-audiovisuales-e-interactivos':{C1:'D',C5:'I',C7:'D',C11:'D'},
-  // SEM 4 — Develop
-  'sistemas-de-identidad-ii-narrativa-visual-estratégica':{C1:'D',C2:'D',C4:'I',C9:'D'},
-  'diseño-de-información-ii-sistemas-de-información':{C2:'D',C3:'D',C6:'D',C11:'D'},
-  'fotografía-ii-dirección-de-arte':{C1:'D',C4:'I',C5:'D'},
-  'estrategia-de-marca':{C2:'D',C4:'I',C12:'I'},
-  'producción-ii-gestión-de-producción':{C5:'D',C11:'D'},
-  // SEM 5 — Develop → Master
-  'sistemas-de-identidad-iii':{C1:'M',C2:'D',C3:'D',C7:'D'},
+  'sii-dirección-creativa-para-medios-audiovisuales-e-interactivos':{C1:'D',C5:'I',C7:'D',C8:'I'},
+  // ═══ SEM 4 — DEVELOP ═══
+  'diseño-de-información-ii-sistemas-de-información':{C2:'D',C3:'D',C5:'D',C6:'D'},
+  'gestión-de-producción-de-diseño':{C4:'I',C5:'D'},
+  'diseño-de-empaque':{C1:'D',C2:'D',C5:'D'},
+  // SEM 4 CONCENTRACIONES (opcionales — no cuentan para egreso)
+  'gestión-e-implementación-de-proyectos-de-diseño':{C4:'I',C10:'I'},
+  'dir-de-arte-y-fotografía-de-producto':{C1:'D',C5:'D'},
+  // ═══ SEM 5 — DEVELOP → MASTER ═══
+  'sistemas-de-identidad-iii':{C1:'M',C2:'D',C7:'D'},
+  'portafolio':{C1:'D',C8:'D'},
   'siii-diseño-de-futuros':{C4:'D',C6:'D',C7:'D'},
-  // SEM 6 — Develop → Master
-  'estudio-de-interacción':{C3:'D',C7:'D',C11:'D'},
+  // SEM 5 CONCENTRACIÓN (opcional)
+  'sistemas-de-diseño-avanzado':{C2:'D',C5:'D',C7:'D'},
+  // ═══ SEM 6 — DEVELOP → MASTER ═══
+  'estudio-de-interacción':{C3:'D',C5:'D',C7:'D'},
   'diseño-de-experiencia':{C3:'D',C6:'D'},
-  'prototipado-interactivo':{C3:'D',C7:'D',C11:'D'},
-  'siv-producción-artística-interdisciplinaria':{C5:'D',C7:'M',C8:'D'},
-  // SEM 7 — Master
-  'diseño-de-servicios':{C3:'M',C4:'D',C8:'D',C12:'D'},
-  'liderazgo-y-gestión-de-diseño':{C4:'D',C5:'M',C8:'D',C12:'D'},
+  'prototipado-interactivo':{C3:'D',C5:'D',C7:'D'},
+  'empaque':{C1:'D',C2:'D',C5:'D'},
+  'siv-producción-artística-interdisciplinaria':{C1:'D',C7:'M',C8:'D'},
+  // SEM 6 CONCENTRACIÓN (opcional)
+  'ia-aplicada-al-diseño-visual':{C5:'D',C7:'D'},
+  // ═══ SEM 7 — MASTER ═══
+  'diseño-de-servicios':{C3:'M',C4:'D',C8:'D',C10:'D'},
+  'prácticas-profesionales':{C4:'D',C5:'M',C8:'M',C9:'M'},
   'sv-investigación-para-el-diseño':{C4:'D',C6:'M'},
-  'prácticas-profesionales':{C5:'M',C8:'M',C10:'M'},
-  // SEM 8 — Master
+  // SEM 7 CONCENTRACIÓN (opcional)
+  'diseño-estratégico-e-innovación':{C4:'D',C7:'D',C10:'D'},
+  // ═══ SEM 8 — MASTER ═══
   'estudio-integral-de-diseño':{C1:'M',C2:'M',C3:'M',C4:'M',C7:'M'},
-  'proyecto-de-evaluación-final-i':{C4:'M',C6:'M',C9:'M'},
-  'svi-estrategia-de-negocios-para-el-diseño':{C4:'M',C12:'M'},
-  // SEM 9 — Master
-  'proyecto-de-evaluación-final-ii':{C4:'M',C6:'M',C7:'M',C9:'M'},
+  'proyecto-de-evaluación-final-i':{C4:'M',C6:'M',C8:'M'},
+  'svi-estrategia-de-negocios-para-el-diseño':{C4:'M',C10:'M'},
+  // SEM 8 CONCENTRACIÓN (opcional)
+  'emprendimiento-y-modelos-de-negocio-para-el-diseño':{C10:'D',C4:'D'},
+  // ═══ SEM 9 — MASTER ═══
+  'proyecto-de-evaluación-final-ii':{C1:'M',C4:'M',C6:'M',C7:'M',C8:'M',C9:'M'},
 };
+
+// ===== TRAYECTO FORMATIVO =====
+// Concentration course slugs (optional — dashed border)
+const CONC_SLUGS = new Set([
+  'gestión-e-implementación-de-proyectos-de-diseño','dir-de-arte-y-fotografía-de-producto',
+  'sistemas-de-diseño-avanzado','ia-aplicada-al-diseño-visual',
+  'diseño-estratégico-e-innovación','emprendimiento-y-modelos-de-negocio-para-el-diseño'
+]);
+
+function buildTrayecto() {
+  // Build competencias list
+  const listEl = document.getElementById('compListPrograma');
+  if (listEl) {
+    listEl.innerHTML = COMPETENCIAS.map(c =>
+      `<div class="comp-item-prog"><div class="comp-id">${c.id}</div><div><div class="comp-label">${c.label}</div><div class="comp-desc">${c.desc || ''}</div></div></div>`
+    ).join('');
+  }
+
+  // Build trayecto table: rows = competencias, cols = semesters 1-9
+  // For each semester, determine the highest level reached per competency
+  const semCols = document.querySelectorAll('.semester-col');
+  const semData = []; // [{slug: compMap}, ...]
+  const lvlOrder = {'I':1,'D':2,'M':3};
+
+  semCols.forEach((col, semIdx) => {
+    const semComps = {}; // {C1: {lvl, isOpt}, ...}
+    col.querySelectorAll('.course-card').forEach(card => {
+      const name = card.querySelector('.card-name')?.textContent.trim() || '';
+      const slug = name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+      const comps = SUGGESTED_COMPS[slug];
+      if (!comps) return;
+      const isOpt = CONC_SLUGS.has(slug);
+      for (const [cid, lvl] of Object.entries(comps)) {
+        const cur = semComps[cid];
+        if (!cur || lvlOrder[lvl] > lvlOrder[cur.lvl]) {
+          semComps[cid] = { lvl, isOpt: isOpt && (!cur || cur.isOpt) };
+        }
+      }
+    });
+    semData.push(semComps);
+  });
+
+  // Build HTML table
+  const wrap = document.getElementById('trayectoWrap');
+  if (!wrap) return;
+  let html = '<table class="trayecto-table"><thead><tr><th class="th-comp">Competencia</th>';
+  for (let s = 1; s <= 9; s++) html += `<th>S${s}</th>`;
+  html += '</tr></thead><tbody>';
+
+  COMPETENCIAS.forEach(comp => {
+    html += `<tr><td class="th-comp">${comp.id} — ${comp.label}</td>`;
+    for (let s = 0; s < 9; s++) {
+      const data = semData[s]?.[comp.id];
+      if (data) {
+        const optClass = data.isOpt ? ' lvl-opt' : '';
+        html += `<td class="trayecto-cell lvl-${data.lvl}${optClass}">${data.lvl}</td>`;
+      } else {
+        html += '<td class="trayecto-cell"></td>';
+      }
+    }
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  wrap.innerHTML = html;
+}
 
 // ===== TAB SWITCHING =====
 document.querySelectorAll('.nav-tab').forEach(tab => {
@@ -2164,6 +2314,7 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
     document.getElementById('view-' + tab.dataset.view).classList.add('active');
     document.getElementById('filtersBar').style.display = tab.dataset.view === 'mapa' ? 'flex' : 'none';
     if (tab.dataset.view === 'competencias') buildCompDashboard();
+    if (tab.dataset.view === 'programa') buildTrayecto();
     if (tab.dataset.view === 'banco') renderBank();
   });
 });
