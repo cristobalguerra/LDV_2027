@@ -2451,7 +2451,7 @@ const CONC_SLUGS = new Set([
   'diseño-estratégico-e-innovación','emprendimiento-en-diseño'
 ]);
 
-function buildTrayecto() {
+async function buildTrayecto() {
   // Build competencias list
   const listEl = document.getElementById('compListPrograma');
   if (listEl) {
@@ -2466,12 +2466,18 @@ function buildTrayecto() {
   const semData = []; // [{slug: compMap}, ...]
   const lvlOrder = {'I':1,'D':2,'M':3};
 
+  // Load saved plans to override suggested comps
+  const plans = (await dbGet('plans')) || {};
+
   semCols.forEach((col, semIdx) => {
     const semComps = {}; // {C1: {lvl, isOpt}, ...}
     col.querySelectorAll('.course-card').forEach(card => {
       const name = card.querySelector('.card-name')?.textContent.trim() || '';
       const slug = name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
-      const comps = SUGGESTED_COMPS[slug];
+      const courseId = card.dataset.origId || card.dataset.id || '';
+      // Use saved plan comps if available, otherwise suggested
+      const savedComps = plans[courseId]?.competencias || plans[slug]?.competencias;
+      const comps = savedComps || SUGGESTED_COMPS[slug];
       if (!comps) return;
       const isOpt = CONC_SLUGS.has(slug);
       for (const [cid, lvl] of Object.entries(comps)) {
@@ -2706,7 +2712,9 @@ async function openModal(card) {
       el.textContent = '';
     }
   });
-  const suggested = SUGGESTED_COMPS[currentCourseId] || {};
+  // Use slug from course name (not ID) to match SUGGESTED_COMPS
+  const nameSlug = name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+  const suggested = SUGGESTED_COMPS[nameSlug] || SUGGESTED_COMPS[slugId] || SUGGESTED_COMPS[currentCourseId] || {};
   renderCompetencias(plan.competencias || suggested, suggested);
   document.getElementById('compSuggestionNote').style.display = Object.keys(suggested).length ? '' : 'none';
   renderBiblio(plan.bibliografia || []);
