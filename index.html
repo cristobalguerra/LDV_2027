@@ -204,7 +204,7 @@ body {
 .pw-5 .phase-semesters { grid-template-columns: 1fr; }
 
 .semester-col {
-  display:grid;
+  display:flex; flex-direction:column;
   gap:4px; min-width:0;
   align-content:start;
 }
@@ -1697,102 +1697,27 @@ function getCourseId(card) {
   });
 })();
 
-// ===== RETÍCULA: FIXED TYPE LANES =====
-// Each type gets fixed grid rows so they align horizontally across semesters
-// Prácticas shares the disciplinar lane; Proyecto floats up to fill gaps
-const TYPE_LANES = [
-  { types: ['estudio'],                 slots: 1 },  // row 2
-  { types: ['disciplinar','practicas'], slots: 3 },  // rows 3-5
-  { types: ['sinergia'],                slots: 1 },  // row 6
-  { types: ['certificado'],             slots: 2 },  // rows 7-8
-  { types: ['formacion'],               slots: 1 },  // row 9
-  { types: ['general'],                 slots: 2 },  // rows 10-11
-];
-// Proyecto Terminal is NOT in the lanes — it fills the first empty row
-
-// Build row map: type -> {start, slots}
-const TYPE_ROW_START = {};
-const TYPE_ORDER = {};
-let _row = 2; // row 1 = sem-header
-TYPE_LANES.forEach((lane, laneIdx) => {
-  lane.types.forEach(t => {
-    TYPE_ROW_START[t] = { start: _row, slots: lane.slots };
-    TYPE_ORDER[t] = laneIdx;
-  });
-  _row += lane.slots;
-});
-const TOTAL_GRID_ROWS = _row - 1;
+// ===== RETÍCULA: SORT BY TYPE =====
+// Order: estudio → disciplinar/practicas → sinergia → certificado → proyecto → formacion → general
+const TYPE_ORDER = {
+  estudio: 0,
+  disciplinar: 1,
+  practicas: 1,
+  sinergia: 2,
+  certificado: 3,
+  proyecto: 4,
+  formacion: 5,
+  general: 6
+};
 
 function applyReticula() {
-  document.documentElement.style.setProperty('--grid-rows', TOTAL_GRID_ROWS);
-
-  // Phase 1: sort & assign grid-row to every card
   document.querySelectorAll('.semester-col').forEach(col => {
     const cards = [...col.querySelectorAll('.course-card')];
     cards.sort((a, b) => (TYPE_ORDER[a.dataset.type] ?? 99) - (TYPE_ORDER[b.dataset.type] ?? 99));
     cards.forEach(c => col.appendChild(c));
-
-    const header = col.querySelector('.sem-header');
-    if (header) header.style.gridRow = '1';
-
-    const usedRows = new Set();
-    const laneCount = {};
-    const floaters = [];
-
-    cards.forEach(card => {
-      const t = card.dataset.type;
-      if (t === 'proyecto') { floaters.push(card); return; }
-      const lane = TYPE_ROW_START[t];
-      if (!lane) { card.style.gridRow = ''; return; }
-      const laneKey = lane.start;
-      const nth = laneCount[laneKey] || 0;
-      laneCount[laneKey] = nth + 1;
-      const row = lane.start + Math.min(nth, lane.slots - 1);
-      card.style.gridRow = row;
-      usedRows.add(row);
-    });
-
-    floaters.forEach(card => {
-      for (let r = 2; r <= TOTAL_GRID_ROWS; r++) {
-        if (!usedRows.has(r)) {
-          card.style.gridRow = r;
-          usedRows.add(r);
-          break;
-        }
-      }
-    });
-  });
-
-  // Phase 2: measure tallest card per grid-row across ALL semesters
-  const rowHeights = {};
-  document.querySelectorAll('#semGrid .course-card').forEach(card => {
-    const r = card.style.gridRow;
-    if (!r) return;
-    // Temporarily clear fixed height to measure natural height
-    card.style.height = 'auto';
-    const h = card.scrollHeight;
-    rowHeights[r] = Math.max(rowHeights[r] || 0, h);
-  });
-
-  // Phase 3: build grid-template-rows and apply uniform height
-  const rowTemplate = ['auto']; // row 1 = header
-  for (let r = 2; r <= TOTAL_GRID_ROWS + 1; r++) {
-    const h = rowHeights[r] || 0;
-    rowTemplate.push(h > 0 ? h + 'px' : '0px');
-  }
-
-  document.querySelectorAll('.semester-col').forEach(col => {
-    col.style.gridTemplateRows = rowTemplate.join(' ');
-  });
-
-  // Set card heights to match their row
-  document.querySelectorAll('#semGrid .course-card').forEach(card => {
-    const r = card.style.gridRow;
-    if (r && rowHeights[r]) card.style.height = rowHeights[r] + 'px';
   });
 }
 
-// Apply on load
 applyReticula();
 
 // ===== PREREQUISITE / SERIACIÓN SYSTEM =====
