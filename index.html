@@ -1339,6 +1339,7 @@ body.role-admin #modalBadge { display:none; }
         <button class="nav-tab active" data-view="mapa">Mapa</button>
         <button class="nav-tab" data-view="certificados">Concentraciones</button>
         <button class="nav-tab" data-view="banco">Banco</button>
+        <button class="nav-tab" data-view="investigacion">Investigación</button>
       </div>
       <button class="btn-header" id="btnDownloadMap" title="Descargar mapa curricular PDF">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
@@ -1691,6 +1692,225 @@ body.role-admin #modalBadge { display:none; }
     <div class="bank-empty" id="bankEmpty">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7H4a1 1 0 00-1 1v10a2 2 0 002 2h14a2 2 0 002-2V8a1 1 0 00-1-1z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
       <p>No hay materias descartadas</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INVESTIGACIÓN VIEW ===== -->
+<div class="view" id="view-investigacion">
+  <div class="programa-container">
+    <div class="programa-header">
+      <div class="programa-badge">Investigación</div>
+      <h1 class="programa-title">Justificación del Plan de Estudios</h1>
+      <p class="programa-school">Licenciatura en Diseño Visual y Negocios Creativos · Plan 2027</p>
+    </div>
+
+    <div class="programa-sections">
+
+      <!-- SECTION 1: Justificación del nombre -->
+      <div class="programa-section">
+        <div class="programa-section-num">01</div>
+        <h2 class="programa-section-title">Justificación del Nombre del Programa</h2>
+        <p class="programa-section-text">El nombre <strong>Licenciatura en Diseño Visual y Negocios Creativos</strong> responde a la evolución del campo profesional del diseño, donde la competencia técnica visual debe articularse con capacidades estratégicas y empresariales. El término <em>Diseño Visual</em> mantiene compatibilidad con el EGEL Plus Diseño Gráfico de CENEVAL, preservando la elegibilidad para certificación nacional. <em>Negocios Creativos</em> posiciona al egresado en el ecosistema de la economía creativa y el emprendimiento.</p>
+        <p class="programa-section-text">Este enfoque se alinea con programas internacionales de referencia como el BBA en Strategic Design and Management de <strong>Parsons</strong>, el MBA in Design Strategy de <strong>CCA</strong>, y el MFA Designer as Entrepreneur de <strong>SVA</strong>, que integran diseño con visión empresarial.</p>
+        <div style="background:var(--surface-2);border-radius:10px;padding:16px 20px;margin-top:16px;border-left:3px solid var(--accent);">
+          <p style="font-size:0.85rem;color:var(--text);margin:0;line-height:1.5;"><strong>Nota EGEL:</strong> El EGEL Plus Diseño Gráfico de CENEVAL evalúa: Diseño de Comunicación Visual, Gestión de Proyectos, y Producción. La estructura curricular del programa cubre las tres áreas, manteniendo compatibilidad para que los egresados puedan presentar el examen y obtener el Testimonio de Desempeño.</p>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Contexto mercado laboral -->
+      <div class="programa-section">
+        <div class="programa-section-num">02</div>
+        <h2 class="programa-section-title">Contexto del Mercado Laboral en México</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0;">
+          <div style="background:var(--surface-2);border-radius:10px;padding:20px;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;color:var(--accent);">3,700+</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Vacantes UX/UI en Indeed México</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:10px;padding:20px;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;color:var(--sistemas);">2-3×</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Salario UX/UI vs. diseñador gráfico tradicional</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:10px;padding:20px;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;color:var(--experiencia);">6%</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Crecimiento anual de la economía creativa en México</div>
+          </div>
+        </div>
+        <p class="programa-section-text"><strong>Salarios por nivel de experiencia (MXN/año):</strong></p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0;">
+          <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+            <div style="font-size:0.75rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;">Diseñador Gráfico</div>
+            <div style="font-size:0.9rem;color:var(--text);margin-top:4px;">Entry: $96K–180K · Mid: $324K–540K · Senior: $572K–735K</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+            <div style="font-size:0.75rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;">UX/UI Designer</div>
+            <div style="font-size:0.9rem;color:var(--text);margin-top:4px;">Entry: $323K–415K · Mid: $408K–593K · Senior: $572K–735K</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+            <div style="font-size:0.75rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;">Design Manager</div>
+            <div style="font-size:0.9rem;color:var(--text);margin-top:4px;">Promedio: $660K · Rango: $326K–1,032K</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:8px;padding:14px 16px;">
+            <div style="font-size:0.75rem;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.06em;">Director Creativo</div>
+            <div style="font-size:0.9rem;color:var(--text);margin-top:4px;">Promedio: $610K · Senior: $740K–1,110K</div>
+          </div>
+        </div>
+        <p class="programa-section-text" style="margin-top:16px;font-size:0.78rem;color:var(--text-tertiary);">Fuentes: PayScale México, Glassdoor, WorldSalaries, Indeed México (2025-2026)</p>
+
+        <div style="background:var(--surface-2);border-radius:10px;padding:16px 20px;margin-top:20px;">
+          <p class="programa-section-text" style="margin:0;"><strong>Sectores con mayor demanda:</strong> Fintech (2do ecosistema más grande de LATAM), E-Commerce, Startups tecnológicas (Clip, Kavak, Konfío), Industria digital creativa, Automotriz y manufactura.</p>
+        </div>
+      </div>
+
+      <!-- SECTION 3: IA y transformación digital -->
+      <div class="programa-section">
+        <div class="programa-section-num">03</div>
+        <h2 class="programa-section-title">Impacto de la IA y Transformación Digital</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0;">
+          <div style="background:var(--surface-2);border-radius:10px;padding:20px;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;color:var(--accent);">37%</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Profesionales en México usan IA diariamente</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:10px;padding:20px;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;color:var(--sistemas);">96%</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Organizaciones en México aumentarán presupuesto de TI en 2026</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:10px;padding:20px;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:800;color:var(--experiencia);"><1%</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Vacantes de diseño que exigen IA formalmente</div>
+          </div>
+        </div>
+        <p class="programa-section-text">La brecha entre el uso real de IA (37%) y su exigencia formal en vacantes (<1%) representa una <strong>ventaja competitiva para egresados que dominen IA aplicada al diseño</strong>. El programa incluye la materia "Inteligencia Artificial para Diseño" como concentración, posicionando a los egresados como early adopters en un mercado que aún no formaliza esta competencia.</p>
+        <p class="programa-section-text" style="font-size:0.78rem;color:var(--text-tertiary);">Fuentes: Baker Institute, SAP LATAM, World Economic Forum, World Bank (2025)</p>
+      </div>
+
+      <!-- SECTION 4: Benchmark Internacional -->
+      <div class="programa-section">
+        <div class="programa-section-num">04</div>
+        <h2 class="programa-section-title">Benchmark Internacional: Diseño + Negocios</h2>
+        <p class="programa-section-text">Programas de referencia mundial que integran diseño visual con estrategia y emprendimiento:</p>
+        <div style="display:grid;grid-template-columns:1fr;gap:10px;margin:16px 0;">
+          <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:12px;padding:10px 16px;background:var(--surface-2);border-radius:8px;align-items:center;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--accent);">Parsons, NYC</div>
+            <div style="font-size:0.8rem;color:var(--text);">BBA Strategic Design & Management</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">Diseño + emprendimiento + estrategia</div>
+          </div>
+          <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:12px;padding:10px 16px;background:var(--surface-2);border-radius:8px;align-items:center;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--accent);">Aalto, Finlandia</div>
+            <div style="font-size:0.8rem;color:var(--text);">Int'l Design Business Management</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">Transdisciplinario: negocio + diseño + tech</div>
+          </div>
+          <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:12px;padding:10px 16px;background:var(--surface-2);border-radius:8px;align-items:center;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--accent);">TU Delft, Países Bajos</div>
+            <div style="font-size:0.8rem;color:var(--text);">MSc Strategic Product Design</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">Top 30 mundial en diseño + business</div>
+          </div>
+          <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:12px;padding:10px 16px;background:var(--surface-2);border-radius:8px;align-items:center;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--accent);">SVA, NYC</div>
+            <div style="font-size:0.8rem;color:var(--text);">MFA Designer as Entrepreneur</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">+50 estudios fundados por egresados</div>
+          </div>
+          <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:12px;padding:10px 16px;background:var(--surface-2);border-radius:8px;align-items:center;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--accent);">CCA, San Francisco</div>
+            <div style="font-size:0.8rem;color:var(--text);">MBA in Design Strategy</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">Cada alumno desarrolla go-to-market</div>
+          </div>
+          <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:12px;padding:10px 16px;background:var(--surface-2);border-radius:8px;align-items:center;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--accent);">Politecnico Milano</div>
+            <div style="font-size:0.8rem;color:var(--text);">Master in Service Design</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">Innovación + cultura creativa + negocio</div>
+          </div>
+          <div style="display:grid;grid-template-columns:200px 1fr 1fr;gap:12px;padding:10px 16px;background:var(--surface-2);border-radius:8px;align-items:center;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--accent);">ArtCenter, LA</div>
+            <div style="font-size:0.8rem;color:var(--text);">Entrepreneurship & Professional Practice</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);">75+ cursos de emprendimiento + INSEAD MBA</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 5: Benchmark Nacional -->
+      <div class="programa-section">
+        <div class="programa-section-num">05</div>
+        <h2 class="programa-section-title">Benchmark Nacional: Programas de Diseño en México</h2>
+        <p class="programa-section-text">Comparativa con las principales universidades del país. Solo 3-4 programas integran explícitamente negocios/emprendimiento en el currículo de diseño:</p>
+        <div style="overflow-x:auto;margin:16px 0;">
+          <table style="width:100%;border-collapse:collapse;font-family:'DM Sans',sans-serif;font-size:0.82rem;">
+            <thead>
+              <tr style="border-bottom:2px solid var(--accent);">
+                <th style="text-align:left;padding:10px 12px;color:var(--accent);font-weight:700;">Universidad</th>
+                <th style="text-align:left;padding:10px 12px;color:var(--text-secondary);">Programa</th>
+                <th style="text-align:center;padding:10px 12px;color:var(--text-secondary);">Sem.</th>
+                <th style="text-align:center;padding:10px 12px;color:var(--text-secondary);">Negocios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;color:var(--text);font-weight:600;">IBERO</td><td style="padding:8px 12px;color:var(--text-secondary);">Lic. en Diseño de Productos y Experiencias</td><td style="text-align:center;padding:8px;color:var(--text-secondary);">8</td><td style="text-align:center;color:var(--accent);">✓</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;color:var(--text);font-weight:600;">ITESM</td><td style="padding:8px 12px;color:var(--text-secondary);">Lic. en Diseño Industrial</td><td style="text-align:center;padding:8px;color:var(--text-secondary);">—</td><td style="text-align:center;color:var(--accent);">✓</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;color:var(--text);font-weight:600;">UP</td><td style="padding:8px 12px;color:var(--text-secondary);">Ing. en Innovación y Diseño</td><td style="text-align:center;padding:8px;color:var(--text-secondary);">—</td><td style="text-align:center;color:var(--accent);">✓</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;color:var(--text);font-weight:600;">UNAM</td><td style="padding:8px 12px;color:var(--text-secondary);">Lic. en Diseño y Comunicación Visual</td><td style="text-align:center;padding:8px;color:var(--text-secondary);">8</td><td style="text-align:center;color:var(--text-tertiary);">—</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;color:var(--text);font-weight:600;">UAM</td><td style="padding:8px 12px;color:var(--text-secondary);">Lic. en Diseño de la Comunicación Gráfica</td><td style="text-align:center;padding:8px;color:var(--text-secondary);">12 tri</td><td style="text-align:center;color:var(--text-tertiary);">—</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;color:var(--text);font-weight:600;">Anáhuac</td><td style="padding:8px 12px;color:var(--text-secondary);">Lic. en Diseño Gráfico</td><td style="text-align:center;padding:8px;color:var(--text-secondary);">8</td><td style="text-align:center;color:var(--text-tertiary);">parcial</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 12px;color:var(--text);font-weight:600;">La Salle</td><td style="padding:8px 12px;color:var(--text-secondary);">Lic. en Diseño Gráfico y Digital</td><td style="text-align:center;padding:8px;color:var(--text-secondary);">8</td><td style="text-align:center;color:var(--text-tertiary);">—</td></tr>
+              <tr style="background:rgba(255,245,0,0.05);"><td style="padding:8px 12px;color:var(--accent);font-weight:700;">UDEM (propuesta)</td><td style="padding:8px 12px;color:var(--accent);">Lic. en Diseño Visual y Negocios Creativos</td><td style="text-align:center;padding:8px;color:var(--accent);">9</td><td style="text-align:center;color:var(--accent);">✓✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="background:var(--surface-2);border-radius:10px;padding:16px 20px;margin-top:12px;border-left:3px solid var(--sistemas);">
+          <p style="font-size:0.85rem;color:var(--text);margin:0;line-height:1.5;"><strong>Diferenciador UDEM:</strong> Es el único programa a nivel licenciatura en México que integra de forma explícita y estructural: diseño visual + sistemas de identidad + experiencia/interacción + emprendimiento + modelos de negocio en un plan de 9 semestres con concentraciones profesionalizantes.</p>
+        </div>
+      </div>
+
+      <!-- SECTION 6: Tendencias globales -->
+      <div class="programa-section">
+        <div class="programa-section-num">06</div>
+        <h2 class="programa-section-title">Tendencias Globales en Educación de Diseño</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;">
+          <div style="background:var(--surface-2);border-radius:10px;padding:18px 20px;">
+            <div style="font-size:0.95rem;font-weight:700;color:var(--accent);margin-bottom:6px;">Design Thinking + Emprendimiento</div>
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin:0;line-height:1.45;">Las instituciones líderes integran metodologías de innovación (design thinking, lean startup) como competencias centrales, no optativas.</p>
+          </div>
+          <div style="background:var(--surface-2);border-radius:10px;padding:18px 20px;">
+            <div style="font-size:0.95rem;font-weight:700;color:var(--sistemas);margin-bottom:6px;">Modelos Transdisciplinarios</div>
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin:0;line-height:1.45;">Programas como Aalto IDBM operan entre escuelas de negocios, diseño y tecnología simultáneamente.</p>
+          </div>
+          <div style="background:var(--surface-2);border-radius:10px;padding:18px 20px;">
+            <div style="font-size:0.95rem;font-weight:700;color:var(--experiencia);margin-bottom:6px;">Diseñador = Líder de Negocio</div>
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin:0;line-height:1.45;">El paradigma evoluciona de "diseñador en empresa" a "diseñador como emprendedor" con competencias en IP, fundraising y estrategia financiera.</p>
+          </div>
+          <div style="background:var(--surface-2);border-radius:10px;padding:18px 20px;">
+            <div style="font-size:0.95rem;font-weight:700;color:var(--direccion);margin-bottom:6px;">IA como Herramienta Creativa</div>
+            <p style="font-size:0.82rem;color:var(--text-secondary);margin:0;line-height:1.45;">La IA se posiciona como compañero de ideación, visualización y análisis de tendencias — no como reemplazo del pensamiento creativo.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 7: Economía creativa México -->
+      <div class="programa-section">
+        <div class="programa-section-num">07</div>
+        <h2 class="programa-section-title">La Economía Creativa en México</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0;">
+          <div style="background:var(--surface-2);border-radius:10px;padding:20px;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:800;color:var(--accent);">$250B</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">MXN contribución al PIB (1.5%)</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:10px;padding:20px;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:800;color:var(--sistemas);">#1</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Exportador de activos creativos en LATAM</div>
+          </div>
+          <div style="background:var(--surface-2);border-radius:10px;padding:20px;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:800;color:var(--experiencia);">$300B</div>
+            <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">MXN industria audiovisual en CDMX</div>
+          </div>
+        </div>
+        <p class="programa-section-text">México es el principal exportador de activos creativos en América Latina (UNCTAD). La industria creativa crece al 6% anual, impulsada por fintech, e-commerce y startups tecnológicas. El programa prepara diseñadores para liderar este ecosistema, no solo participar en él.</p>
+        <p class="programa-section-text" style="font-size:0.78rem;color:var(--text-tertiary);">Fuentes: UNCTAD Creative Economy Outlook, INEGI, Secretaría de Economía</p>
+      </div>
+
+    </div>
+
+    <div class="programa-footer-note">
+      Investigación realizada con fuentes validadas: CENEVAL, PayScale, Glassdoor, Indeed, UNCTAD, OECD, World Economic Forum, World Bank, INEGI (2025-2026).<br>
+      Documento de uso interno · Sujeto a aprobación del Comité Curricular.
     </div>
   </div>
 </div>
