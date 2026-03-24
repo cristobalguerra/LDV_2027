@@ -327,6 +327,19 @@ body {
   font-size:0.7rem; font-weight:600;
   color:var(--text-tertiary);
 }
+/* Competency badges on cards */
+.card-comp-badges {
+  display:flex; flex-wrap:wrap; gap:2px; margin-bottom:3px;
+}
+.ccb {
+  font-family:'JetBrains Mono',monospace; font-size:0.48rem; font-weight:600;
+  padding:1px 3px; border-radius:2px; line-height:1.2;
+}
+.ccb sup { font-size:0.38rem; }
+.ccb-I { background:rgba(61,140,130,0.2); color:#3D8C82; }
+.ccb-D { background:rgba(113,116,178,0.2); color:#7174B2; }
+.ccb-M { background:rgba(255,245,0,0.15); color:var(--accent); }
+
 .card-dots {
   display:flex; gap:3px;
 }
@@ -1899,6 +1912,25 @@ function alignLabels() {
 applyReticula();
 window.addEventListener('load', () => setTimeout(applyReticula, 100));
 
+// Add competency badges to cards
+function addCompBadges() {
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
+    // Remove old badges
+    card.querySelectorAll('.card-comp-badges').forEach(b => b.remove());
+    const name = card.querySelector('.card-name')?.textContent.trim() || '';
+    const slug = name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+    const comps = SUGGESTED_COMPS[slug];
+    if (!comps || Object.keys(comps).length === 0) return;
+    const badges = document.createElement('div');
+    badges.className = 'card-comp-badges';
+    for (const [cid, lvl] of Object.entries(comps)) {
+      badges.innerHTML += `<span class="ccb ccb-${lvl}">${cid.replace('C','')}<sup>${lvl}</sup></span>`;
+    }
+    card.querySelector('.card-footer')?.before(badges);
+  });
+}
+// addCompBadges called after SUGGESTED_COMPS is defined (below)
+
 // ===== SYNC CONCENTRATION NAMES FROM MALLA TO CONCENTRACIONES PAGE =====
 function syncConcNames() {
   const concA = document.getElementById('cert-a-materias');
@@ -2136,53 +2168,236 @@ const COMPETENCIAS = [
 ];
 
 // ===== COURSE OBJECTIVES =====
-const COURSE_OBJECTIVES = {
-  // SEM 1
-  'fundamentos-del-diseño-i': 'Desarrollar el pensamiento compositivo y la sensibilidad visual mediante la exploración de principios formales del diseño: forma, color, espacio, ritmo y estructura, aplicados en ejercicios integradores de complejidad creciente.',
-  'pensamiento-visual-y-representación-sistémica': 'Construir capacidades de representación visual y pensamiento sistémico para analizar, abstraer y comunicar ideas complejas mediante diagramas, mapas conceptuales y esquemas visuales.',
-  'historia-cultura-y-ética-del-diseño': 'Comprender la evolución histórica del diseño visual, su relación con los contextos culturales, sociales y tecnológicos, y desarrollar un criterio ético para la práctica profesional responsable.',
-  'si-herramientas-digitales-para-el-diseño': 'Dominar las herramientas digitales fundamentales del diseño visual (vectorial, rasterizado, prototipado) como base técnica para la producción profesional en entornos creativos.',
-  // SEM 2
-  'fundamentos-del-diseño-ii': 'Profundizar en los sistemas compositivos y la articulación de narrativas visuales, integrando color, tipografía, imagen y espacio en proyectos de comunicación visual con mayor complejidad conceptual.',
-  'tipografía-i': 'Comprender los fundamentos tipográficos: anatomía, clasificación, legibilidad y jerarquía, aplicándolos en composiciones que comuniquen con claridad y coherencia visual.',
-  'ilustración': 'Desarrollar habilidades de expresión gráfica e ilustración como herramienta de comunicación visual, explorando técnicas análogas y digitales para la generación de imágenes con intención comunicativa.',
-  'semiótica': 'Analizar los procesos de significación y construcción de sentido en la comunicación visual, aplicando teoría semiótica para fundamentar decisiones de diseño con rigor conceptual.',
-  // SEM 3
-  'sistemas-de-identidad-i': 'Concebir y estructurar sistemas de identidad visual coherentes, desde la investigación y estrategia de marca hasta la aplicación en soportes básicos, integrando tipografía, símbolo y color.',
-  'diseño-de-información-i': 'Organizar, jerarquizar y visualizar información compleja de manera clara y accesible, aplicando principios de diseño de información y pensamiento sistémico.',
-  'fotografía-i': 'Dominar los fundamentos técnicos y expresivos de la fotografía: exposición, composición, iluminación y edición, como herramienta de producción visual profesional.',
-  'tipografía-ii': 'Profundizar en el diseño tipográfico avanzado: sistemas tipográficos, diseño editorial, micro y macrotipografía aplicados a proyectos de comunicación visual integral.',
-  'sii-dirección-creativa-para-medios-audiovisuales-e-interactivos': 'Dirigir proyectos creativos en medios audiovisuales e interactivos, integrando narrativa, producción visual y gestión de equipos multidisciplinarios.',
-  // SEM 4
-  'diseño-de-información-ii-sistemas-de-información': 'Diseñar sistemas de información complejos que articulen datos, visualización y experiencia de usuario, aplicando metodologías de investigación y pensamiento sistémico avanzado.',
-  'producción-ii-gestión-de-producción': 'Gestionar procesos de producción de diseño: presupuestos, proveedores, materiales, tiempos y control de calidad para la implementación eficiente de proyectos creativos.',
-  'gestión-e-implementación-de-proyectos-de-diseño': 'Planificar, coordinar e implementar proyectos de diseño desde la conceptualización hasta la entrega, aplicando metodologías de gestión y evaluación de resultados.',
-  'dir-de-arte-y-fotografía-de-producto': 'Dirigir sesiones fotográficas de producto con criterio estético y comercial, controlando iluminación, composición y postproducción para comunicación de marca.',
-  // SEM 5
-  'sistemas-de-identidad-iii': 'Desarrollar sistemas de identidad visual de alta complejidad que integren múltiples touchpoints, plataformas y contextos culturales, con visión estratégica y sostenible.',
-  'portafolio': 'Construir un portafolio profesional que articule y comunique de manera estratégica las competencias, proyectos y visión del diseñador, preparándolo para su inserción laboral.',
-  'siii-diseño-de-futuros': 'Aplicar metodologías prospectivas y especulativas para anticipar escenarios futuros y diseñar soluciones innovadoras que respondan a contextos sociales, tecnológicos y ambientales emergentes.',
-  'sistemas-de-diseño-avanzado': 'Crear y gestionar sistemas de diseño escalables: componentes, tokens, guías de estilo y documentación que aseguren consistencia visual y eficiencia en equipos de diseño.',
-  // SEM 6
-  'estudio-de-interacción': 'Concebir y desarrollar proyectos integrales de diseño de interacción que articulen experiencia de usuario, interfaz, prototipado y validación en contextos digitales complejos.',
-  'diseño-de-experiencia': 'Investigar, mapear y diseñar experiencias de usuario centradas en las personas, aplicando metodologías de UX research, journey mapping y arquitectura de información.',
-  'prototipado-interactivo': 'Dominar herramientas y metodologías de prototipado interactivo para validar hipótesis de diseño, iterar soluciones y comunicar propuestas a equipos multidisciplinarios.',
-  'empaque': 'Diseñar sistemas de empaque que integren función, estructura, sustentabilidad y comunicación de marca, considerando procesos productivos y normativas del mercado.',
-  'siv-producción-artística-interdisciplinaria': 'Explorar la intersección entre arte y diseño mediante proyectos interdisciplinarios que expandan los límites de la producción visual y generen propuestas culturalmente relevantes.',
-  'ia-aplicada-al-diseño-visual': 'Integrar herramientas de inteligencia artificial en el proceso de diseño: generación de imágenes, automatización de flujos, análisis de datos visuales y co-creación asistida por IA.',
-  // SEM 7
-  'diseño-de-servicios': 'Diseñar servicios integrales aplicando pensamiento sistémico: mapeo de stakeholders, blueprints de servicio, touchpoints y modelos de negocio que generen valor para usuarios y organizaciones.',
-  'prácticas-profesionales': 'Aplicar las competencias adquiridas en un entorno profesional real, integrando conocimientos técnicos, estratégicos y de gestión en proyectos de diseño con impacto.',
-  'sv-investigación-para-el-diseño': 'Aplicar metodologías de investigación cualitativa y cuantitativa para fundamentar decisiones de diseño, generando insights accionables que orienten proyectos estratégicos.',
-  'diseño-estratégico-e-innovación': 'Vincular el diseño con la estrategia organizacional y la innovación, aplicando frameworks de design thinking, lean y estrategia de negocio para generar soluciones viables.',
-  // SEM 8
-  'estudio-integral-de-diseño': 'Integrar todas las competencias del programa en un proyecto de diseño de alta complejidad que articule identidad, experiencia, producción, estrategia y modelo de negocio.',
-  'proyecto-de-evaluación-final-i': 'Definir, investigar y conceptualizar el proyecto terminal que demuestre dominio integral de las competencias del programa, con fundamentación teórica y metodológica sólida.',
-  'svi-estrategia-de-negocios-para-el-diseño': 'Desarrollar modelos de negocio viables para proyectos de diseño, integrando análisis de mercado, propuesta de valor, estructura financiera y estrategia de crecimiento.',
-  'emprendimiento-y-modelos-de-negocio-para-el-diseño': 'Diseñar y validar emprendimientos creativos, aplicando lean startup, canvas de modelo de negocio y estrategias de monetización para transformar ideas en proyectos sostenibles.',
-  // SEM 9
-  'proyecto-de-evaluación-final-ii': 'Ejecutar, implementar y presentar el proyecto terminal con excelencia técnica, conceptual y comunicativa, demostrando la capacidad de dirigir proyectos integrales de diseño.',
+const COURSE_DATA = {
+  // ═══ SEM 1 ═══
+  'diseño-visual-i-principios-y-composición':{
+    obj:'Desarrollar el pensamiento compositivo y la sensibilidad visual mediante principios formales del diseño aplicados en ejercicios de complejidad creciente.',
+    esp:['Aplicar principios de forma, proporción, ritmo y equilibrio','Explorar relaciones cromáticas y su impacto comunicativo','Integrar elementos visuales en composiciones con intención expresiva'],
+    temas:['Fundamentos de la forma y el espacio','Teoría y aplicación del color','Principios compositivos: ritmo, jerarquía, contraste','Narrativa visual básica','Proyecto integrador de composición'],
+    act:['Ejercicios de composición con restricciones formales','Bitácora visual de exploración cromática','Proyecto integrador: pieza de comunicación visual']
+  },
+  'visualización-y-pensamiento-de-diseño':{
+    obj:'Construir capacidades de representación visual y pensamiento sistémico para analizar, abstraer y comunicar ideas complejas.',
+    esp:['Desarrollar técnicas de representación visual de conceptos abstractos','Aplicar pensamiento sistémico al análisis de problemáticas','Comunicar procesos e ideas mediante esquemas y diagramas'],
+    temas:['Pensamiento visual y sketch thinking','Mapas conceptuales y diagramas sistémicos','Abstracción y síntesis visual','Comunicación visual de procesos','Design thinking: fundamentos'],
+    act:['Ejercicios de sketch rápido para ideación','Mapeo visual de sistemas complejos','Presentación visual de investigación']
+  },
+  'contexto-cultural-del-diseño':{
+    obj:'Comprender la evolución del diseño visual y su relación con contextos culturales, sociales y tecnológicos para desarrollar criterio ético profesional.',
+    esp:['Analizar movimientos históricos del diseño y su impacto cultural','Identificar la relación entre diseño, sociedad y tecnología','Desarrollar postura ética ante la práctica del diseño'],
+    temas:['Historia del diseño gráfico y visual','Diseño y contexto sociocultural','Ética y responsabilidad en la comunicación visual','Diseño y tecnología: evolución y prospectiva','Diseño latinoamericano y mexicano'],
+    act:['Ensayo crítico sobre un movimiento de diseño','Análisis de caso: impacto cultural de una pieza','Debate sobre ética en comunicación visual']
+  },
+  'herramientas-digitales-para-el-diseño':{
+    obj:'Dominar herramientas digitales fundamentales del diseño visual como base técnica para la producción profesional.',
+    esp:['Operar software de diseño vectorial y rasterizado','Gestionar archivos y flujos de trabajo digitales','Producir piezas digitales con estándares profesionales'],
+    temas:['Diseño vectorial (Illustrator/Figma)','Edición de imagen (Photoshop)','Fundamentos de prototipado digital','Gestión de archivos y formatos','Flujos de trabajo y colaboración digital'],
+    act:['Ejercicios técnicos progresivos por herramienta','Reproducción de piezas profesionales','Entrega de proyecto con especificaciones técnicas']
+  },
+  // ═══ SEM 2 ═══
+  'diseño-visual-ii-forma-color-y-estructura':{
+    obj:'Profundizar en sistemas compositivos y narrativas visuales, integrando color, tipografía, imagen y espacio en proyectos de mayor complejidad.',
+    esp:['Articular sistemas de color en proyectos de comunicación','Integrar tipografía e imagen en narrativas visuales','Resolver problemas de comunicación visual con criterio formal'],
+    temas:['Sistemas cromáticos avanzados','Estructura y retícula','Integración tipografía-imagen','Narrativa visual y secuencia','Proyecto de comunicación visual integral'],
+    act:['Sistema de identidad cromática para un proyecto','Diseño de piezas editoriales con retícula','Proyecto integrador: campaña visual']
+  },
+  'tipografía-i-fundamentos':{
+    obj:'Comprender los fundamentos tipográficos y aplicarlos en composiciones que comuniquen con claridad y coherencia visual.',
+    esp:['Identificar anatomía, clasificación y familias tipográficas','Aplicar principios de legibilidad y jerarquía','Componer textos con criterio tipográfico profesional'],
+    temas:['Anatomía y clasificación tipográfica','Legibilidad y lecturabilidad','Jerarquía tipográfica','Combinación de fuentes','Composición y retícula tipográfica'],
+    act:['Catálogo tipográfico analítico','Ejercicios de jerarquía y composición','Diseño de pieza editorial con énfasis tipográfico']
+  },
+  'ilustración-aplicada':{
+    obj:'Desarrollar habilidades de expresión gráfica e ilustración como herramienta de comunicación visual.',
+    esp:['Explorar técnicas de ilustración análoga y digital','Desarrollar un lenguaje gráfico personal','Aplicar ilustración con intención comunicativa'],
+    temas:['Técnicas de dibujo y representación','Ilustración digital: vectorial y rasterizada','Estilos y lenguajes gráficos','Ilustración editorial y publicitaria','Narrativa gráfica'],
+    act:['Serie de ilustraciones con técnica mixta','Proyecto de ilustración editorial','Portafolio de exploración gráfica personal']
+  },
+  'lenguaje-y-significado-en-el-diseño':{
+    obj:'Analizar los procesos de significación y construcción de sentido en la comunicación visual para fundamentar decisiones de diseño.',
+    esp:['Aplicar conceptos semióticos al análisis de piezas visuales','Fundamentar decisiones de diseño con rigor conceptual','Desarrollar pensamiento crítico sobre la comunicación visual'],
+    temas:['Semiótica visual: signo, significante, significado','Retórica de la imagen','Connotación y denotación en diseño','Análisis del discurso visual','Pragmática de la comunicación gráfica'],
+    act:['Análisis semiótico de campañas visuales','Rediseño fundamentado de una pieza existente','Ensayo sobre retórica visual contemporánea']
+  },
+  // ═══ SEM 3 ═══
+  'identidad-de-marca-i-fundamentos':{
+    obj:'Concebir y estructurar sistemas de identidad visual coherentes, desde investigación de marca hasta aplicación en soportes básicos.',
+    esp:['Investigar y definir estrategia de marca','Diseñar elementos básicos de identidad: símbolo, logotipo, paleta','Aplicar identidad en sistema de soportes básicos'],
+    temas:['Investigación y diagnóstico de marca','Estrategia y posicionamiento','Diseño de marca: símbolo, logotipo, sistema cromático','Manual de identidad básico','Aplicaciones en soportes impresos y digitales'],
+    act:['Investigación y brief de marca','Desarrollo de sistema de identidad visual','Presentación con manual y aplicaciones']
+  },
+  'diseño-de-información-i':{
+    obj:'Organizar, jerarquizar y visualizar información compleja de manera clara y accesible.',
+    esp:['Aplicar principios de organización y jerarquía de información','Diseñar visualizaciones de datos accesibles','Resolver problemas de comunicación de información'],
+    temas:['Principios de diseño de información','Arquitectura de información','Visualización de datos: gráficas, mapas, diagramas','Infografía y narrativa de datos','Accesibilidad informativa'],
+    act:['Infografía sobre un tema de investigación','Sistema de wayfinding o señalética','Visualización de datos de un dataset real']
+  },
+  'fotografía-para-diseño':{
+    obj:'Dominar fundamentos técnicos y expresivos de la fotografía como herramienta de producción visual profesional.',
+    esp:['Controlar exposición, composición e iluminación','Editar y postproducir fotografías profesionalmente','Aplicar fotografía como elemento de comunicación visual'],
+    temas:['Fundamentos técnicos: cámara, exposición, óptica','Composición fotográfica','Iluminación natural y artificial','Edición y postproducción digital','Fotografía aplicada al diseño'],
+    act:['Ejercicios técnicos de exposición e iluminación','Serie fotográfica con concepto visual','Producción fotográfica para pieza de diseño']
+  },
+  'tipografía-ii-aplicaciones':{
+    obj:'Profundizar en diseño tipográfico avanzado aplicado a proyectos de comunicación visual integral.',
+    esp:['Diseñar sistemas tipográficos para proyectos editoriales','Aplicar micro y macrotipografía en piezas complejas','Experimentar con tipografía como elemento expresivo'],
+    temas:['Sistemas tipográficos y familias','Diseño editorial avanzado','Micro y macrotipografía','Tipografía expresiva y experimental','Tipografía para medios digitales'],
+    act:['Diseño de publicación editorial','Experimentación tipográfica en poster','Sistema tipográfico para identidad']
+  },
+  'direc-creat-para-med-audiovis-e-interac':{
+    obj:'Dirigir proyectos creativos en medios audiovisuales e interactivos, integrando narrativa, producción y gestión.',
+    esp:['Conceptualizar narrativas para medios audiovisuales','Dirigir equipos en producción de contenido visual','Integrar medios interactivos en proyectos de comunicación'],
+    temas:['Narrativa audiovisual y guión','Dirección creativa y de arte','Producción de video y motion graphics','Medios interactivos y multimedia','Gestión de proyectos audiovisuales'],
+    act:['Desarrollo de concepto creativo audiovisual','Producción de pieza de motion graphics','Dirección de proyecto multimedia en equipo']
+  },
+  // ═══ SEM 4 ═══
+  'diseño-de-información-ii-sistemas-de-información':{
+    obj:'Diseñar sistemas de información complejos articulando datos, visualización y experiencia de usuario.',
+    esp:['Diseñar interfaces de visualización de datos interactivas','Aplicar metodologías de UX a sistemas de información','Integrar pensamiento sistémico en soluciones informativas'],
+    temas:['Sistemas de información complejos','Diseño de interfaces de datos','UX aplicado a información','Dashboards y paneles de control','Narrativa de datos avanzada'],
+    act:['Diseño de dashboard interactivo','Sistema de información para organización real','Prototipo de visualización de datos']
+  },
+  'gestión-de-producción':{
+    obj:'Gestionar procesos de producción de diseño: presupuestos, proveedores, materiales y control de calidad.',
+    esp:['Planificar procesos productivos de diseño','Gestionar presupuestos, proveedores y tiempos','Asegurar calidad en la implementación de proyectos'],
+    temas:['Procesos de producción gráfica e impresión','Gestión de presupuestos y proveedores','Control de calidad y supervisión','Materiales y acabados','Producción digital y multimedia'],
+    act:['Cotización y plan de producción para proyecto real','Supervisión de producción de pieza impresa','Análisis de caso: gestión de producción']
+  },
+  'diseño-de-empaque':{
+    obj:'Diseñar sistemas de empaque integrando función, estructura, sustentabilidad y comunicación de marca.',
+    esp:['Diseñar empaques con criterio funcional y estético','Considerar sustentabilidad y normativas del mercado','Integrar identidad de marca en sistemas de empaque'],
+    temas:['Estructura y materiales de empaque','Diseño gráfico aplicado a empaque','Sustentabilidad y ecodiseño','Normativas y regulaciones','Sistemas de empaque y líneas de producto'],
+    act:['Diseño de empaque para producto nuevo','Rediseño sustentable de empaque existente','Prototipo funcional con especificaciones de producción']
+  },
+  'dir-de-arte-y-fotografía':{
+    obj:'Dirigir sesiones fotográficas de producto con criterio estético y comercial para comunicación de marca.',
+    esp:['Conceptualizar y planificar dirección de arte fotográfica','Controlar iluminación y composición para producto','Postproducir imágenes con estándar comercial'],
+    temas:['Dirección de arte para fotografía','Fotografía de producto y still life','Iluminación de estudio avanzada','Postproducción y retoque profesional','Producción de catálogo visual'],
+    act:['Sesión fotográfica dirigida de producto','Producción de catálogo visual de marca','Portfolio de dirección de arte']
+  },
+  'gestión-de-proyectos-de-diseño':{
+    obj:'Planificar, coordinar e implementar proyectos de diseño aplicando metodologías de gestión.',
+    esp:['Aplicar metodologías de gestión de proyectos','Coordinar equipos y recursos en proyectos creativos','Evaluar resultados y documentar aprendizajes'],
+    temas:['Metodologías de gestión: agile, waterfall, hybrid','Planificación y cronogramas','Gestión de equipos creativos','Presupuestos y alcance','Evaluación y métricas de proyecto'],
+    act:['Plan de gestión para proyecto real de diseño','Simulación de gestión de proyecto en equipo','Caso de estudio: análisis de proyecto profesional']
+  },
+  // ═══ SEM 5 ═══
+  'identidad-de-marca-ii-implementación':{
+    obj:'Implementar sistemas de identidad visual de alta complejidad en múltiples touchpoints con visión estratégica.',
+    esp:['Desarrollar sistemas de marca para múltiples plataformas','Gestionar consistencia visual en ecosistemas complejos','Evaluar y evolucionar sistemas de identidad existentes'],
+    temas:['Sistemas de identidad multiplataforma','Branding digital y redes sociales','Arquitectura de marca','Evolución y actualización de marcas','Gestión de marca a largo plazo'],
+    act:['Implementación de marca en ecosistema digital completo','Proyecto de rebranding fundamentado','Guía de marca extendida con aplicaciones']
+  },
+  'portafolio-profesional':{
+    obj:'Construir un portafolio profesional que comunique estratégicamente competencias y visión del diseñador.',
+    esp:['Curar y editar proyectos para presentación profesional','Diseñar narrativa personal de marca','Preparar materiales para inserción laboral'],
+    temas:['Estrategia de portafolio profesional','Curación y presentación de proyectos','Marca personal del diseñador','Plataformas y formatos de portafolio','Preparación para el mercado laboral'],
+    act:['Desarrollo de portafolio digital profesional','Sesión de retroalimentación con profesionales','Simulación de entrevista y presentación']
+  },
+  'diseño-de-futuros-pendientes':{
+    obj:'Aplicar metodologías prospectivas para anticipar escenarios futuros y diseñar soluciones innovadoras.',
+    esp:['Utilizar herramientas de diseño especulativo y futuros','Identificar señales de cambio y tendencias emergentes','Proponer escenarios y soluciones para contextos futuros'],
+    temas:['Diseño especulativo y critical design','Metodologías de futuros y prospectiva','Señales débiles y tendencias','Escenarios y prototipos de futuro','Diseño para transiciones y sostenibilidad'],
+    act:['Mapeo de señales y tendencias emergentes','Diseño de escenario futuro para contexto local','Prototipo especulativo con narrativa visual']
+  },
+  'toma-de-decisiones-en-procesos-de-diseño':{
+    obj:'Desarrollar capacidad de toma de decisiones fundamentada en procesos complejos de diseño.',
+    esp:['Aplicar frameworks de análisis para decisiones de diseño','Evaluar trade-offs en proyectos multivariable','Argumentar decisiones con datos y criterio profesional'],
+    temas:['Frameworks de decisión en diseño','Análisis de trade-offs y priorización','Evaluación de alternativas con criterios múltiples','Decisiones basadas en datos e investigación','Comunicación y argumentación de decisiones'],
+    act:['Análisis de caso con múltiples variables de decisión','Simulación de comité de evaluación de proyecto','Presentación argumentada de propuesta de diseño']
+  },
+  // ═══ SEM 6 ═══
+  'estudio-de-interacción':{
+    obj:'Concebir y desarrollar proyectos integrales de diseño de interacción en contextos digitales complejos.',
+    esp:['Diseñar sistemas de interacción centrados en el usuario','Prototipar y validar soluciones de interacción','Integrar experiencia, interfaz y tecnología en proyectos'],
+    temas:['Principios de diseño de interacción','Diseño de interfaces (UI)','Sistemas de navegación y flujos','Microinteracciones y animación','Diseño responsivo y multiplataforma'],
+    act:['Diseño de aplicación digital integral','Prototipo interactivo con validación de usuario','Proyecto de diseño de sistema digital complejo']
+  },
+  'diseño-de-experiencia':{
+    obj:'Investigar, mapear y diseñar experiencias centradas en las personas aplicando metodologías de UX.',
+    esp:['Aplicar UX research para entender necesidades de usuarios','Mapear y diseñar journey maps y service blueprints','Iterar soluciones basadas en feedback de usuario'],
+    temas:['UX Research: entrevistas, observación, testing','Journey mapping y service blueprints','Arquitectura de información','Diseño centrado en el usuario','Métricas de experiencia y usabilidad'],
+    act:['Investigación de usuario para proyecto real','Mapeo de experiencia y propuesta de mejora','Test de usabilidad con iteración']
+  },
+  'prototipado-de-experiencias':{
+    obj:'Dominar herramientas y metodologías de prototipado para validar hipótesis de diseño e iterar soluciones.',
+    esp:['Prototipar en baja y alta fidelidad según la etapa del proyecto','Validar hipótesis de diseño con usuarios reales','Comunicar propuestas a equipos mediante prototipos'],
+    temas:['Prototipado de baja fidelidad: paper, wireframes','Prototipado de alta fidelidad: Figma, Framer','Testing y validación con usuarios','Iteración basada en datos','Handoff y documentación para desarrollo'],
+    act:['Sprint de prototipado rápido','Prototipo interactivo con testing de usuario','Documentación de diseño para handoff']
+  },
+  'producción-artística-interdisciplinaria':{
+    obj:'Explorar la intersección arte-diseño mediante proyectos que expandan los límites de la producción visual.',
+    esp:['Experimentar con medios y técnicas no convencionales','Desarrollar proyectos en la frontera arte-diseño','Generar propuestas culturalmente relevantes'],
+    temas:['Arte contemporáneo y diseño','Medios experimentales y nuevos medios','Instalación y diseño espacial','Producción interdisciplinaria','Contexto cultural y exhibición'],
+    act:['Proyecto de exploración en medios experimentales','Colaboración interdisciplinaria con otras áreas','Exhibición o presentación pública de obra']
+  },
+  'inteligencia-artificial-para-diseño':{
+    obj:'Integrar herramientas de IA en el proceso de diseño: generación, automatización y co-creación.',
+    esp:['Utilizar herramientas de IA generativa con criterio de diseño','Automatizar flujos de trabajo con IA','Evaluar críticamente el rol de la IA en diseño'],
+    temas:['IA generativa: imagen, texto, código','Prompt engineering para diseño','Automatización de flujos creativos','IA en UX, branding y producción','Ética y futuro de la IA en diseño'],
+    act:['Proyecto de diseño asistido por IA','Comparativa: proceso manual vs. asistido por IA','Ensayo crítico sobre IA y práctica profesional']
+  },
+  // ═══ SEM 7 ═══
+  'diseño-de-servicios':{
+    obj:'Diseñar servicios integrales aplicando pensamiento sistémico y vinculando diseño con modelos de negocio.',
+    esp:['Mapear ecosistemas de servicio con stakeholders','Diseñar blueprints y touchpoints de servicio','Vincular diseño de servicio con modelo de negocio'],
+    temas:['Service design thinking','Mapeo de stakeholders y ecosistemas','Service blueprints y customer journey','Touchpoints y evidencia de servicio','Modelos de negocio y propuesta de valor'],
+    act:['Diseño de servicio para organización real','Blueprint y prototipo de touchpoints','Presentación con modelo de negocio integrado']
+  },
+  'prácticas-profesionales':{
+    obj:'Aplicar competencias adquiridas en un entorno profesional real con impacto.',
+    esp:['Integrar conocimientos en proyectos profesionales reales','Trabajar en equipo en entorno laboral','Desarrollar criterio profesional y ética de trabajo'],
+    temas:['Inmersión en estudio, agencia o empresa','Gestión de proyectos reales','Trabajo en equipo multidisciplinario','Comunicación profesional','Reflexión sobre práctica profesional'],
+    act:['Trabajo en empresa/estudio durante el semestre','Bitácora reflexiva de práctica','Presentación de aprendizajes y proyectos realizados']
+  },
+  'innovación-en-diseño':{
+    obj:'Aplicar metodologías de investigación para fundamentar decisiones de diseño y generar insights estratégicos.',
+    esp:['Diseñar investigaciones cualitativas y cuantitativas','Generar insights accionables a partir de datos','Fundamentar proyectos de diseño con evidencia'],
+    temas:['Metodologías de investigación para diseño','Investigación cualitativa: etnografía, entrevistas','Investigación cuantitativa: encuestas, analytics','Síntesis e insight generation','Investigación aplicada a proyectos estratégicos'],
+    act:['Diseño y ejecución de investigación de campo','Síntesis de hallazgos en framework visual','Fundamentación de proyecto con evidencia']
+  },
+  'diseño-estratégico-e-innovación':{
+    obj:'Vincular diseño con estrategia organizacional e innovación para generar soluciones viables.',
+    esp:['Aplicar frameworks de design thinking y lean','Conectar diseño con objetivos de negocio','Desarrollar propuestas de innovación fundamentadas'],
+    temas:['Design thinking avanzado','Lean startup y validación','Estrategia de innovación','Diseño y transformación organizacional','Métricas de impacto'],
+    act:['Proyecto de innovación para organización real','Validación de propuesta con metodología lean','Pitch de solución con modelo de negocio']
+  },
+  // ═══ SEM 8 ═══
+  'estudio-integral-de-diseño':{
+    obj:'Integrar todas las competencias en un proyecto de alta complejidad articulando identidad, experiencia, producción y estrategia.',
+    esp:['Concebir proyecto integral con múltiples dimensiones','Dirigir desarrollo desde concepto hasta implementación','Demostrar dominio de competencias del programa'],
+    temas:['Proyecto integral de diseño','Integración de identidad, UX, producción','Dirección de proyecto complejo','Modelo de negocio y viabilidad','Presentación y comunicación profesional'],
+    act:['Desarrollo de proyecto integral de diseño','Presentación ante panel de profesionales','Documentación completa del proyecto']
+  },
+  'proyecto-de-evaluación-final-i':{
+    obj:'Definir, investigar y conceptualizar el proyecto terminal con fundamentación teórica y metodológica sólida.',
+    esp:['Definir problemática y alcance del proyecto terminal','Investigar y fundamentar el marco teórico','Conceptualizar propuesta de diseño con metodología clara'],
+    temas:['Definición de proyecto y problemática','Marco teórico y estado del arte','Metodología de investigación aplicada','Conceptualización y propuesta','Planificación de implementación'],
+    act:['Documento de investigación y fundamentación','Presentación de concepto ante comité','Plan de implementación detallado']
+  },
+  'negocios-pendiente':{
+    obj:'Desarrollar modelos de negocio viables para proyectos de diseño integrando análisis de mercado y estrategia.',
+    esp:['Analizar mercado y competencia para proyectos de diseño','Estructurar propuesta de valor y modelo financiero','Desarrollar estrategia de crecimiento y sostenibilidad'],
+    temas:['Análisis de mercado y competencia','Business Model Canvas','Propuesta de valor y pricing','Estructura financiera básica','Estrategia de crecimiento'],
+    act:['Desarrollo de modelo de negocio para proyecto propio','Análisis financiero básico','Pitch de negocio ante inversionistas simulados']
+  },
+  'emprendimiento-en-diseño':{
+    obj:'Diseñar y validar emprendimientos creativos aplicando lean startup y estrategias de monetización.',
+    esp:['Identificar oportunidades de emprendimiento en diseño','Validar ideas con metodología lean','Desarrollar MVP y estrategia de lanzamiento'],
+    temas:['Lean startup para creativos','Validación de ideas y MVP','Monetización de servicios de diseño','Marca personal y posicionamiento','Ecosistema emprendedor y financiamiento'],
+    act:['Desarrollo de MVP para emprendimiento','Validación con usuarios reales','Plan de lanzamiento y pitch final']
+  },
+  // ═══ SEM 9 ═══
+  'proyecto-de-evaluación-final-ii':{
+    obj:'Ejecutar, implementar y presentar el proyecto terminal demostrando capacidad de dirigir proyectos integrales de diseño.',
+    esp:['Implementar proyecto con excelencia técnica y conceptual','Presentar y defender proyecto ante comité evaluador','Demostrar dominio integral de competencias del programa'],
+    temas:['Implementación y producción del proyecto','Refinamiento y control de calidad','Documentación final','Preparación de presentación','Defensa ante comité evaluador'],
+    act:['Implementación completa del proyecto terminal','Exposición pública del proyecto','Defensa ante comité evaluador']
+  },
 };
+// Backward compat
+const COURSE_OBJECTIVES = {};
+Object.entries(COURSE_DATA).forEach(([k,v]) => { COURSE_OBJECTIVES[k] = v.obj; });
 
 const SUGGESTED_COMPS = {
   // ═══ SEM 1 — INTRODUCE ═══
@@ -2241,6 +2456,9 @@ const SUGGESTED_COMPS = {
   // ═══ SEM 9 — MASTER ═══
   'proyecto-de-evaluación-final-ii':{C1:'M',C4:'M',C6:'M',C7:'M',C8:'M',C9:'M'},
 };
+
+// Now that SUGGESTED_COMPS is defined, add competency badges to cards
+addCompBadges();
 
 // ===== TRAYECTO FORMATIVO =====
 // Concentration course slugs (optional — dashed border)
@@ -2484,16 +2702,23 @@ async function openModal(card) {
 
   const plans = (await dbGet('plans')) || {};
   const plan = plans[currentCourseId] || {};
-  // Pre-fill objectives from COURSE_OBJECTIVES if not saved
+  // Pre-fill from COURSE_DATA if not saved
   const slugId = currentCourseId.replace(/--s\d+p\d+$/, '');
+  const cd = COURSE_DATA[slugId] || {};
   textFields.forEach(k => {
     const el = document.getElementById('field-' + k);
     if (!el) return;
     const saved = plan[k] || '';
     if (saved) { el.textContent = saved; return; }
-    // Pre-fill objetivo from suggested objectives
-    if (k === 'objetivo' && COURSE_OBJECTIVES[slugId]) {
-      el.textContent = COURSE_OBJECTIVES[slugId];
+    // Pre-fill from COURSE_DATA
+    if (k === 'objetivo' && cd.obj) {
+      el.textContent = cd.obj;
+    } else if (k === 'objetivosEspecificos' && cd.esp) {
+      el.innerHTML = cd.esp.map((e,i) => `${i+1}. ${e}`).join('<br>');
+    } else if (k === 'contenido' && cd.temas) {
+      el.innerHTML = cd.temas.map((t,i) => `Unidad ${i+1}: ${t}`).join('<br>');
+    } else if (k === 'metodologia' && cd.act) {
+      el.innerHTML = cd.act.map((a,i) => `${i+1}. ${a}`).join('<br>');
     } else {
       el.textContent = '';
     }
