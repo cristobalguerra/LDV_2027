@@ -150,18 +150,18 @@ body {
   display:flex; flex-direction:column; gap:4px;
   width:28px; min-width:28px; padding-top:0; margin-right:6px;
 }
-.type-label-spacer { height:60px; } /* matches sem-header height */
+.type-label-spacer { height:60px; }
 .type-label {
   font-family:'JetBrains Mono',monospace;
-  font-size:0.42rem; font-weight:700;
-  letter-spacing:0.08em; text-transform:uppercase;
+  font-size:0.52rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase;
   writing-mode:vertical-lr; text-orientation:mixed;
   transform:rotate(180deg);
   display:flex; align-items:center; justify-content:center;
-  padding:6px 2px;
+  padding:4px 2px;
   border-radius:4px;
   color:var(--text-tertiary);
-  flex:1;
+  flex:none;
 }
 .tl-estudio { color:var(--accent); background:rgba(255,245,0,0.05); }
 .tl-disciplinar { color:var(--text-secondary); background:rgba(255,255,255,0.03); }
@@ -232,7 +232,7 @@ body {
 .pw-5 .phase-semesters { grid-template-columns: 1fr; }
 
 .semester-col {
-  display:flex; flex-direction:column;
+  display:grid;
   gap:4px; min-width:0;
   align-content:start;
 }
@@ -298,9 +298,9 @@ body {
 
 /* Card type badge */
 .card-type {
-  display:inline-block; font-size:0.52rem; font-weight:700;
+  display:inline-block; font-size:0.58rem; font-weight:700;
   letter-spacing:0.06em; text-transform:uppercase;
-  padding:2px 5px; border-radius:3px;
+  padding:2px 6px; border-radius:3px;
   margin-bottom:2px;
 }
 .card-type.estudio { background:rgba(255,245,0,0.12); color:var(--accent); }
@@ -313,7 +313,7 @@ body {
 .card-type.formacion { background:rgba(255,255,255,0.04); color:var(--text-tertiary); }
 
 .card-name {
-  font-family:'Raleway',sans-serif; font-size:0.72rem; font-weight:600;
+  font-family:'Raleway',sans-serif; font-size:0.82rem; font-weight:600;
   line-height:1.3; color:var(--text);
   margin-bottom:2px;
   flex:1;
@@ -323,7 +323,7 @@ body {
 }
 .card-credits {
   font-family:'JetBrains Mono',monospace;
-  font-size:0.62rem; font-weight:600;
+  font-size:0.7rem; font-weight:600;
   color:var(--text-tertiary);
 }
 .card-dots {
@@ -1309,7 +1309,6 @@ body.role-admin #modalBadge { display:none; }
       </div>
       <div class="course-card is-estudio eje-lenguaje" data-axes="lenguaje" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Fundamentos del Diseño II</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
       <div class="course-card eje-lenguaje" data-axes="lenguaje" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Tipografía I</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
-      <div class="course-card eje-produccion" data-axes="produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Producción I</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
       <div class="course-card eje-lenguaje" data-axes="lenguaje" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Ilustración</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
       <div class="course-card eje-neutral" data-axes="lenguaje" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Semiótica</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
@@ -1347,9 +1346,7 @@ body.role-admin #modalBadge { display:none; }
         <div class="sem-cr">48</div>
         <div class="sem-cr-label">créditos</div>
       </div>
-      <div class="course-card is-estudio eje-sistemas" data-axes="sistemas,lenguaje" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Sistemas de Identidad II / Narrativa Visual Estratégica</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot lenguaje"></span></div></div></div>
       <div class="course-card is-estudio eje-sistemas" data-axes="sistemas,experiencia" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Diseño de Información II: Sistemas de Información</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot experiencia"></span></div></div></div>
-      <div class="course-card eje-produccion" data-axes="produccion,lenguaje,experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Fotografía II: Dirección de Arte</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span><span class="card-dot lenguaje"></span><span class="card-dot experiencia"></span></div></div></div>
       <div class="course-card eje-produccion" data-axes="produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Producción II: Gestión de Producción</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-direccion conc-a" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración A</div><div class="card-name">Dir. de Arte y Fotografía de Producto</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
@@ -1749,49 +1746,82 @@ const TYPE_ORDER = {
   general: 6
 };
 
+// Grid lanes: type → { start row, number of slots }
+const TYPE_LANES = [
+  { types: ['estudio'],                 slots: 1 },
+  { types: ['disciplinar','practicas'], slots: 4 },
+  { types: ['sinergia'],                slots: 1 },
+  { types: ['certificado','proyecto'],  slots: 2 },
+  { types: ['formacion'],               slots: 1 },
+  { types: ['general'],                 slots: 1 },
+];
+const TYPE_ROW = {};
+let _gridRow = 2; // row 1 = header
+TYPE_LANES.forEach(lane => {
+  lane.types.forEach(t => { TYPE_ROW[t] = { start: _gridRow, slots: lane.slots }; });
+  _gridRow += lane.slots;
+});
+const TOTAL_ROWS = _gridRow - 1;
+
 function applyReticula() {
-  // Sort cards by type in each semester
+  const CARD_H = 78; // fixed card height in px
+
+  // Build grid template: header auto, then fixed rows
+  const rowTemplate = ['auto'];
+  for (let r = 2; r <= TOTAL_ROWS; r++) rowTemplate.push(CARD_H + 'px');
+  const templateStr = rowTemplate.join(' ');
+
   document.querySelectorAll('.semester-col').forEach(col => {
     const cards = [...col.querySelectorAll('.course-card')];
+    // Sort by type
     cards.sort((a, b) => (TYPE_ORDER[a.dataset.type] ?? 99) - (TYPE_ORDER[b.dataset.type] ?? 99));
     cards.forEach(c => col.appendChild(c));
-  });
 
-  // Measure max height per type lane across all semesters
-  const laneHeights = {};
-  const typeToLane = { estudio:'estudio', disciplinar:'disciplinar', practicas:'disciplinar',
-    sinergia:'sinergia', certificado:'certificado', proyecto:'certificado',
-    formacion:'formacion', general:'general' };
+    // Assign grid rows
+    col.style.gridTemplateRows = templateStr;
+    const header = col.querySelector('.sem-header');
+    if (header) header.style.gridRow = '1';
 
-  document.querySelectorAll('.semester-col').forEach(col => {
-    const cards = [...col.querySelectorAll('.course-card')];
-    const laneH = {};
+    const laneCount = {};
     cards.forEach(card => {
-      const lane = typeToLane[card.dataset.type] || 'general';
-      laneH[lane] = (laneH[lane] || 0) + card.offsetHeight + 4; // +4 for gap
+      const t = card.dataset.type;
+      const lane = TYPE_ROW[t];
+      if (!lane) return;
+      const nth = laneCount[lane.start] || 0;
+      laneCount[lane.start] = nth + 1;
+      card.style.gridRow = lane.start + Math.min(nth, lane.slots - 1);
+      card.style.height = CARD_H + 'px';
+      card.style.overflow = 'hidden';
     });
-    for (const [lane, h] of Object.entries(laneH)) {
-      laneHeights[lane] = Math.max(laneHeights[lane] || 0, h);
-    }
   });
 
-  // Set label heights to match
-  const labelMap = {
-    estudio: '.tl-estudio', disciplinar: '.tl-disciplinar',
-    sinergia: '.tl-sinergia', certificado: '.tl-certificado',
-    formacion: '.tl-formacion', general: '.tl-general'
-  };
-  for (const [lane, sel] of Object.entries(labelMap)) {
-    const el = document.querySelector(sel);
-    if (el && laneHeights[lane]) {
-      el.style.height = laneHeights[lane] + 'px';
-      el.style.flex = 'none';
+  // Set label heights and spacer to match actual grid
+  // Measure from first semester column's grid
+  const firstCol = document.querySelector('.semester-col');
+  if (firstCol) {
+    const header = firstCol.querySelector('.sem-header');
+    const spacer = document.querySelector('.type-label-spacer');
+    if (header && spacer) {
+      spacer.style.height = (header.offsetHeight + 4) + 'px'; // +4 for gap
     }
   }
+  const labelMap = [
+    ['.tl-estudio', 1],
+    ['.tl-disciplinar', 4],
+    ['.tl-sinergia', 1],
+    ['.tl-certificado', 2],
+    ['.tl-formacion', 1],
+    ['.tl-general', 1],
+  ];
+  labelMap.forEach(([sel, slots]) => {
+    const el = document.querySelector(sel);
+    if (el) {
+      el.style.height = (slots * CARD_H + (slots - 1) * 4) + 'px';
+    }
+  });
 }
 
 applyReticula();
-// Recalc after fonts/images load
 window.addEventListener('load', () => setTimeout(applyReticula, 100));
 
 // ===== PREREQUISITE / SERIACIÓN SYSTEM =====
