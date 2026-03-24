@@ -150,7 +150,7 @@ body {
   display:flex; flex-direction:column; gap:4px;
   width:28px; min-width:28px; padding-top:0; margin-right:6px;
 }
-.type-label-spacer { height:60px; }
+.type-label-spacer { display:none; }
 .type-label {
   font-family:'JetBrains Mono',monospace;
   font-size:0.52rem; font-weight:700;
@@ -1793,23 +1793,33 @@ function applyReticula() {
   });
 
   // Set label heights
-  setTimeout(() => {
-    const spacer = document.querySelector('.type-label-spacer');
-    const firstHeader = document.querySelector('.sem-header');
-    if (spacer && firstHeader) spacer.style.height = firstHeader.offsetHeight + 'px';
-    const labelMap = [
-      ['.tl-estudio', 1],
-      ['.tl-disciplinar', 3],
-      ['.tl-sinergia', 1],
-      ['.tl-certificado', 3], // 2 cert + 1 proyecto
-      ['.tl-formacion', 1],
-      ['.tl-general', 1],
-    ];
-    labelMap.forEach(([sel, slots]) => {
-      const el = document.querySelector(sel);
-      if (el) el.style.height = (slots * (CARD_H + 4) - 4) + 'px';
-    });
-  }, 50);
+  const labelMap = [
+    ['.tl-estudio', 1],
+    ['.tl-disciplinar', 3],
+    ['.tl-sinergia', 1],
+    ['.tl-certificado', 3],
+    ['.tl-formacion', 1],
+    ['.tl-general', 1],
+  ];
+  labelMap.forEach(([sel, slots]) => {
+    const el = document.querySelector(sel);
+    if (el) el.style.height = (slots * (CARD_H + 4) - 4) + 'px';
+  });
+  // Calculate offset: phase-head + border + phase-semesters-padding + sem-header + gap
+  const labelsCol = document.querySelector('.type-labels-col');
+  const phaseHead = document.querySelector('.phase-head');
+  const phaseSems = document.querySelector('.phase-semesters');
+  const semHeader = document.querySelector('.sem-header');
+  if (labelsCol && phaseHead && phaseSems && semHeader) {
+    const phStyle = getComputedStyle(phaseHead);
+    const psStyle = getComputedStyle(phaseSems);
+    const phH = phaseHead.offsetHeight + parseFloat(phStyle.marginBottom || 0);
+    const psP = parseFloat(psStyle.paddingTop || 0);
+    const shH = semHeader.offsetHeight;
+    const pwBorder = 1; // phase-wrap border
+    const gap = 4; // grid gap
+    labelsCol.style.paddingTop = (pwBorder + phH + psP + shH + gap) + 'px';
+  }
 }
 
 applyReticula();
