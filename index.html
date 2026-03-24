@@ -377,7 +377,7 @@ body {
   height:3px;
 }
 .cert-card.cert-a::before { background:linear-gradient(90deg, var(--lenguaje), var(--produccion)); }
-.cert-card.cert-b::before { background:linear-gradient(90deg, #E91E90, #C2185B); }
+.cert-card.cert-b::before { background:linear-gradient(90deg, var(--experiencia), var(--sistemas)); }
 .cert-card.cert-c::before { background:linear-gradient(90deg, var(--direccion), var(--produccion)); }
 
 .cert-badge {
@@ -387,7 +387,7 @@ body {
   margin-bottom:16px;
 }
 .cert-a .cert-badge { color:var(--lenguaje); }
-.cert-b .cert-badge { color:#E91E90; }
+.cert-b .cert-badge { color:var(--experiencia); }
 .cert-c .cert-badge { color:var(--direccion); }
 
 .cert-title {
@@ -416,7 +416,7 @@ body {
   width:16px; height:1px;
 }
 .cert-a .cert-roles li::before { background:var(--lenguaje); }
-.cert-b .cert-roles li::before { background:#E91E90; }
+.cert-b .cert-roles li::before { background:var(--experiencia); }
 .cert-c .cert-roles li::before { background:var(--direccion); }
 
 .cert-materias { display:flex; flex-direction:column; gap:8px; }
@@ -433,7 +433,7 @@ body {
   flex-shrink:0;
 }
 .cert-a .cert-materia-code { background:var(--lenguaje-bg); color:var(--lenguaje); }
-.cert-b .cert-materia-code { background:rgba(233,30,144,0.12); color:#E91E90; }
+.cert-b .cert-materia-code { background:var(--experiencia-bg); color:var(--experiencia); }
 .cert-c .cert-materia-code { background:rgba(232,184,126,0.12); color:var(--direccion); }
 
 .cert-materia-name {
@@ -447,26 +447,10 @@ body {
 }
 .course-card.conc-a .card-type { background:rgba(90,173,163,0.2); color:var(--sistemas); }
 .course-card.conc-b {
-  background:rgba(233,30,144,0.10);
-  border-color:rgba(233,30,144,0.30);
+  background:rgba(148,150,204,0.12);
+  border-color:rgba(148,150,204,0.3);
 }
-.course-card.conc-b .card-type { background:rgba(233,30,144,0.18); color:#E91E90; }
-
-/* Empty concentration slot */
-.course-card.conc-slot-empty {
-  background:transparent;
-  border:1px dashed rgba(255,255,255,0.15);
-  opacity:0.35;
-  cursor:default;
-  pointer-events:none;
-}
-.course-card.conc-slot-empty .card-name {
-  color:var(--text-tertiary); font-style:italic; font-size:0.55rem;
-}
-.course-card.conc-slot-empty .card-type {
-  background:transparent; border:1px dashed rgba(255,255,255,0.2); color:var(--text-tertiary);
-}
-.course-card.conc-slot-empty .card-footer { display:none; }
+.course-card.conc-b .card-type { background:rgba(232,71,140,0.15); color:#E8478C; }
 
 .cert-note {
   margin-top:16px; padding-top:12px;
@@ -871,7 +855,17 @@ body.role-admin #modalBadge { display:none; }
   border-color:var(--accent) !important;
   box-shadow:0 0 0 1px var(--accent), 0 12px 48px rgba(255,245,0,0.08);
 }
-.cert-check { display:none; }
+.cert-check {
+  position:absolute; top:16px; right:16px;
+  width:24px; height:24px; border-radius:6px;
+  border:1px solid var(--border); background:var(--surface-2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.65rem; font-weight:800;
+  color:transparent; transition:all 0.2s;
+}
+.cert-card.selected .cert-check {
+  background:var(--accent); border-color:var(--accent); color:var(--bg);
+}
 
 /* ===== HEADER ACTIONS ===== */
 .header-actions {
@@ -1320,7 +1314,6 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-produccion" data-axes="produccion,lenguaje,experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Fotografía II: Dirección de Arte</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span><span class="card-dot lenguaje"></span><span class="card-dot experiencia"></span></div></div></div>
       <div class="course-card eje-produccion" data-axes="produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Producción II: Gestión de Producción</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-direccion conc-a" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración A</div><div class="card-name">Dir. de Arte y Fotografía de Producto</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
-      <div class="course-card conc-slot-empty" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
 
@@ -1335,7 +1328,6 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-direccion" data-axes="direccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Portafolio</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-direccion" data-axes="direccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SIII — Diseño de Futuros</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-direccion conc-a" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración A</div><div class="card-name">Sistemas de Diseño Avanzado</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
-      <div class="course-card conc-slot-empty" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
@@ -1363,7 +1355,6 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-sistemas" data-axes="sistemas,produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Empaque</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot produccion"></span></div></div></div>
       <div class="course-card eje-produccion" data-axes="produccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SIV — Producción Artística Interdisciplinaria</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
       <div class="course-card eje-direccion conc-a" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración A</div><div class="card-name">IA Aplicada al Diseño Visual</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
-      <div class="course-card conc-slot-empty" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
 
@@ -1388,7 +1379,6 @@ body.role-admin #modalBadge { display:none; }
       <div class="course-card eje-direccion" data-axes="direccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SV — Investigación para el Diseño</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
       <div class="course-card eje-produccion" data-axes="produccion" data-type="practicas"><div class="card-type practicas">Prácticas</div><div class="card-name">Prácticas Profesionales</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
       <div class="course-card eje-direccion conc-b" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración B</div><div class="card-name">Diseño Estratégico e Innovación</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
-      <div class="course-card conc-slot-empty" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div></div>
       <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
     </div>
 
@@ -1773,12 +1763,12 @@ function applyReticula() {
     });
   });
 
-  // Phase 2: measure tallest card per grid-row across ALL semesters (skip empty slots)
+  // Phase 2: measure tallest card per grid-row across ALL semesters
   const rowHeights = {};
   document.querySelectorAll('#semGrid .course-card').forEach(card => {
     const r = card.style.gridRow;
     if (!r) return;
-    if (card.classList.contains('conc-slot-empty')) return; // don't measure empties
+    // Temporarily clear fixed height to measure natural height
     card.style.height = 'auto';
     const h = card.scrollHeight;
     rowHeights[r] = Math.max(rowHeights[r] || 0, h);
@@ -2345,7 +2335,6 @@ document.querySelectorAll('.semester-col').forEach(col => {
     e.preventDefault();
     col.classList.remove('drag-over');
     if (!draggedCard) return;
-    const srcCol = draggedCard.parentElement;
     // Insert before the closest card, or append at end
     const afterElement = getDragAfterElement(col, e.clientY);
     if (afterElement) {
@@ -2353,26 +2342,7 @@ document.querySelectorAll('.semester-col').forEach(col => {
     } else {
       col.appendChild(draggedCard);
     }
-    // If concentration card was dropped, manage empty slots
-    if (draggedCard.dataset.type === 'certificado' && !draggedCard.classList.contains('conc-slot-empty')) {
-      // Remove one empty slot from destination (if exists)
-      const emptySlot = col.querySelector('.conc-slot-empty');
-      if (emptySlot) emptySlot.remove();
-      // Add empty slot to source (if it lost a concentration and now has < 2 cert cards)
-      if (srcCol && srcCol !== col) {
-        const srcCerts = srcCol.querySelectorAll('.course-card[data-type="certificado"]:not(.conc-slot-empty)');
-        const srcEmpties = srcCol.querySelectorAll('.conc-slot-empty');
-        if (srcCerts.length + srcEmpties.length < 2) {
-          const slot = document.createElement('div');
-          slot.className = 'course-card conc-slot-empty';
-          slot.dataset.type = 'certificado';
-          slot.innerHTML = '<div class="card-type certificado">Concentración</div><div class="card-name">— Slot disponible —</div><div class="card-footer"><span class="card-credits">0 cr</span><div class="card-dots"></div></div>';
-          srcCol.appendChild(slot);
-        }
-      }
-    }
     draggedCard._didDrop = true;
-    applyReticula();
     recalcCredits();
     saveLayout();
   });
