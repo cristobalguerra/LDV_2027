@@ -791,13 +791,13 @@ body {
   .nav-tab { padding:6px 12px; font-size:0.65rem; }
 }
 
-/* ===== VALIDATION ===== */
+/* ===== VALIDATION — SEMÁFORO ===== */
 .val-section {
-  margin-bottom:20px; border:1px solid var(--border); border-radius:12px;
+  margin-bottom:16px; border:1px solid var(--border); border-radius:12px;
   overflow:hidden; background:var(--surface);
 }
 .val-section-head {
-  padding:14px 18px; background:var(--surface-2); cursor:pointer;
+  padding:16px 20px; background:var(--surface-2); cursor:pointer;
   display:flex; justify-content:space-between; align-items:center;
   user-select:none;
 }
@@ -809,60 +809,72 @@ body {
   font-size:0.8rem; font-weight:600; color:var(--text-tertiary);
   background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:4px;
 }
-.val-section-body { display:none; padding:20px 22px; }
+.val-section-body { display:none; padding:16px 20px; }
 .val-section.open .val-section-body { display:block; }
 .val-section.open .val-section-head { border-bottom:1px solid var(--border); }
 
 .val-item {
-  padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+  padding:14px 16px; margin-bottom:8px; border-radius:10px;
+  background:var(--surface-2); border:1px solid transparent;
+  transition:border-color 0.3s;
 }
-.val-item:last-child { border-bottom:none; }
+.val-item.rated-green { border-color:rgba(76,175,80,0.4); }
+.val-item.rated-yellow { border-color:rgba(255,193,7,0.4); }
+.val-item.rated-red { border-color:rgba(244,67,54,0.4); }
+
+.val-item-top {
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+}
 .val-item-label {
-  font-size:1.05rem; color:var(--text); line-height:1.5; margin-bottom:12px;
+  font-size:1rem; color:var(--text); line-height:1.4; flex:1;
 }
-.val-likert {
-  display:flex; gap:8px; margin-bottom:10px;
+.val-semaforo {
+  display:flex; gap:6px; flex-shrink:0;
 }
-.val-likert-btn {
-  width:48px; height:42px; border-radius:8px; border:1px solid var(--border);
-  background:transparent; color:var(--text-secondary); font-size:1rem; font-weight:600;
-  cursor:pointer; transition:all 0.2s; font-family:'JetBrains Mono',monospace;
+.val-sem-btn {
+  width:38px; height:38px; border-radius:50%; border:2px solid transparent;
+  cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center;
+  font-size:0.9rem;
 }
-.val-likert-btn:hover { border-color:var(--accent); color:var(--accent); }
-.val-likert-btn.selected {
-  background:var(--accent); color:#000; border-color:var(--accent);
+.val-sem-btn.green { background:rgba(76,175,80,0.15); border-color:rgba(76,175,80,0.3); }
+.val-sem-btn.green:hover, .val-sem-btn.green.selected { background:#4caf50; border-color:#4caf50; }
+.val-sem-btn.yellow { background:rgba(255,193,7,0.15); border-color:rgba(255,193,7,0.3); }
+.val-sem-btn.yellow:hover, .val-sem-btn.yellow.selected { background:#ffc107; border-color:#ffc107; }
+.val-sem-btn.red { background:rgba(244,67,54,0.15); border-color:rgba(244,67,54,0.3); }
+.val-sem-btn.red:hover, .val-sem-btn.red.selected { background:#f44336; border-color:#f44336; }
+.val-sem-btn.selected { transform:scale(1.15); }
+
+.val-comment-wrap {
+  margin-top:10px; display:none; animation:fadeIn 0.3s;
 }
+.val-item.show-comment .val-comment-wrap { display:block; }
 .val-comment {
   width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--border);
-  background:var(--surface-2); color:var(--text); font-size:0.95rem; resize:vertical;
-  min-height:38px; font-family:'DM Sans',sans-serif;
+  background:var(--surface); color:var(--text); font-size:0.9rem; resize:vertical;
+  min-height:36px; font-family:'DM Sans',sans-serif;
 }
 .val-comment::placeholder { color:var(--text-tertiary); }
 
 /* Dashboard */
+.val-dash-section { margin-bottom:20px; }
 .val-dash-item {
-  padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+  display:flex; align-items:center; gap:12px; padding:10px 14px;
+  margin-bottom:4px; border-radius:8px; background:var(--surface-2);
 }
-.val-dash-label { font-size:0.82rem; color:var(--text); margin-bottom:6px; }
-.val-dash-bar-wrap {
-  display:flex; align-items:center; gap:10px;
+.val-dash-label { font-size:0.9rem; color:var(--text); flex:1; }
+.val-dash-dots { display:flex; gap:4px; }
+.val-dash-dot {
+  width:24px; height:24px; border-radius:50%; display:flex;
+  align-items:center; justify-content:center; font-size:0.65rem;
+  font-weight:700; color:#000;
 }
-.val-dash-bar {
-  flex:1; height:8px; background:var(--surface-3); border-radius:4px; overflow:hidden;
-}
-.val-dash-bar-fill {
-  height:100%; border-radius:4px; transition:width 0.5s;
-}
-.val-dash-score {
-  font-family:'JetBrains Mono',monospace; font-size:0.8rem; font-weight:700;
-  min-width:32px; text-align:right;
-}
-.val-dash-comments {
-  margin-top:6px; padding-left:12px;
-}
+.val-dash-dot.g { background:#4caf50; }
+.val-dash-dot.y { background:#ffc107; }
+.val-dash-dot.r { background:#f44336; }
+.val-dash-comments { margin-top:4px; padding-left:16px; }
 .val-dash-comment {
-  font-size:0.72rem; color:var(--text-tertiary); line-height:1.4;
-  padding:3px 0; border-left:2px solid var(--border); padding-left:8px; margin-bottom:4px;
+  font-size:0.78rem; color:var(--text-tertiary); line-height:1.4;
+  padding:3px 0; border-left:2px solid var(--border); padding-left:8px; margin-bottom:3px;
 }
 .val-dash-comment strong { color:var(--text-secondary); }
 
@@ -1976,19 +1988,24 @@ body.role-admin #modalBadge { display:none; }
 
     <!-- Professor login -->
     <div id="valLogin" style="text-align:center;padding:60px 20px;">
-      <h2 style="font-family:'Raleway',sans-serif;font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:8px;">Instrumento de Validación</h2>
-      <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:32px;line-height:1.5;">Este instrumento permite a profesores y expertos evaluar los componentes del plan de estudios LDV 2027.<br>Los resultados se agregan de forma anónima para el análisis del comité curricular.</p>
-      <div style="display:flex;gap:10px;max-width:400px;margin:0 auto;">
-        <input id="valName" type="text" placeholder="Tu nombre completo" style="flex:1;padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:0.9rem;font-family:'DM Sans',sans-serif;">
-        <button id="valStart" style="padding:12px 24px;border-radius:10px;background:var(--accent);color:#000;font-weight:700;font-size:0.85rem;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">Iniciar</button>
+      <h2 style="font-family:'Raleway',sans-serif;font-size:1.8rem;font-weight:800;color:var(--text);margin-bottom:8px;">Validación Curricular</h2>
+      <p style="font-size:1rem;color:var(--text-secondary);margin-bottom:12px;line-height:1.5;">Evalúa cada componente del plan de estudios LDV 2027.</p>
+      <div style="display:flex;gap:24px;justify-content:center;margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#4caf50;display:inline-block;"></span><span style="font-size:0.95rem;color:var(--text-secondary);">Adecuado</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#ffc107;display:inline-block;"></span><span style="font-size:0.95rem;color:var(--text-secondary);">Ajustar</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#f44336;display:inline-block;"></span><span style="font-size:0.95rem;color:var(--text-secondary);">Reconsiderar</span></div>
+      </div>
+      <div style="display:flex;gap:10px;max-width:420px;margin:0 auto;">
+        <input id="valName" type="text" placeholder="Tu nombre completo" style="flex:1;padding:14px 18px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:1rem;font-family:'DM Sans',sans-serif;">
+        <button id="valStart" style="padding:14px 28px;border-radius:10px;background:var(--accent);color:#000;font-weight:700;font-size:1rem;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">Iniciar</button>
       </div>
     </div>
 
     <!-- Validation instrument (hidden until login) -->
     <div id="valInstrument" style="display:none;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
         <div>
-          <h2 style="font-family:'Raleway',sans-serif;font-size:1.8rem;font-weight:800;color:var(--text);margin-bottom:6px;">Validación del Plan LDV 2027</h2>
+          <h2 style="font-family:'Raleway',sans-serif;font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:4px;">Validación del Plan LDV 2027</h2>
           <p style="font-size:1rem;color:var(--text-secondary);">Evaluando como: <strong id="valWho" style="color:var(--accent);"></strong></p>
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
@@ -1996,23 +2013,12 @@ body.role-admin #modalBadge { display:none; }
           <button id="valSubmit" style="padding:12px 24px;border-radius:10px;background:var(--accent);color:#000;font-weight:700;font-size:0.95rem;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">Enviar validación</button>
         </div>
       </div>
-
-      <!-- Scale legend -->
-      <div style="display:flex;gap:18px;padding:14px 18px;background:var(--surface-2);border-radius:10px;margin-bottom:24px;flex-wrap:wrap;">
-        <span style="font-size:0.9rem;color:var(--text-tertiary);font-weight:600;">ESCALA:</span>
-        <span style="font-size:0.9rem;color:var(--text-secondary);">1 = Totalmente en desacuerdo</span>
-        <span style="font-size:0.9rem;color:var(--text-secondary);">2 = En desacuerdo</span>
-        <span style="font-size:0.9rem;color:var(--text-secondary);">3 = Neutral</span>
-        <span style="font-size:0.9rem;color:var(--text-secondary);">4 = De acuerdo</span>
-        <span style="font-size:0.9rem;color:var(--text-secondary);">5 = Totalmente de acuerdo</span>
-      </div>
-
       <div id="valSections"></div>
     </div>
 
-    <!-- Admin dashboard (hidden until admin login) -->
+    <!-- Admin dashboard -->
     <div id="valDashboard" style="display:none;margin-top:32px;">
-      <h2 style="font-family:'Raleway',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:16px;">Resultados de Validación</h2>
+      <h2 style="font-family:'Raleway',sans-serif;font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:16px;">Resultados de Validación</h2>
       <div id="valDashContent"></div>
     </div>
   </div>
@@ -3956,18 +3962,18 @@ async function initApp() {
   }
 }
 
-// ===== VALIDATION SYSTEM =====
+// ===== VALIDATION SYSTEM — SEMÁFORO =====
 (function() {
   let validatorName = '';
+  const SEM_VALUES = { green: 'adecuado', yellow: 'ajustar', red: 'reconsiderar' };
 
-  // Define validation items
   const VAL_SECTIONS = [
     {
       id: 'nombre',
       title: 'Nombre del Programa',
       items: [
-        { id: 'nombre-1', label: 'El nombre "Licenciatura en Diseño Visual y Negocios Creativos" comunica con claridad el alcance del programa.' },
-        { id: 'nombre-2', label: 'El nombre diferencia al programa de ofertas existentes como "Diseño Gráfico" o "Comunicación Visual".' },
+        { id: 'nombre-1', label: '"Licenciatura en Diseño Visual y Negocios Creativos" comunica el alcance del programa.' },
+        { id: 'nombre-2', label: 'Se diferencia de ofertas como "Diseño Gráfico" o "Comunicación Visual".' },
         { id: 'nombre-3', label: 'El nombre es atractivo y comprensible para aspirantes y empleadores.' },
       ]
     },
@@ -4059,13 +4065,15 @@ async function initApp() {
         '<div class="val-section-body">' +
           sec.items.map(item =>
             '<div class="val-item" data-item="' + item.id + '">' +
-              '<div class="val-item-label">' + item.label + '</div>' +
-              '<div class="val-likert">' +
-                [1,2,3,4,5].map(n =>
-                  '<button class="val-likert-btn" data-val="' + n + '" onclick="selectLikert(this)">' + n + '</button>'
-                ).join('') +
+              '<div class="val-item-top">' +
+                '<div class="val-item-label">' + item.label + '</div>' +
+                '<div class="val-semaforo">' +
+                  '<button class="val-sem-btn green" data-color="green" title="Adecuado" onclick="selectSemaforo(this)">✓</button>' +
+                  '<button class="val-sem-btn yellow" data-color="yellow" title="Ajustar" onclick="selectSemaforo(this)">~</button>' +
+                  '<button class="val-sem-btn red" data-color="red" title="Reconsiderar" onclick="selectSemaforo(this)">✗</button>' +
+                '</div>' +
               '</div>' +
-              '<textarea class="val-comment" placeholder="Comentario (opcional)..." rows="1"></textarea>' +
+              '<div class="val-comment-wrap"><textarea class="val-comment" placeholder="¿Qué ajustarías o por qué reconsiderar?" rows="2"></textarea></div>' +
             '</div>'
           ).join('') +
         '</div>' +
@@ -4073,23 +4081,29 @@ async function initApp() {
     }).join('');
 
     document.getElementById('valProgress').textContent = '0 / ' + totalItems;
-    // Open first section
     container.querySelector('.val-section')?.classList.add('open');
   }
 
-  // Make selectLikert global
-  window.selectLikert = function(btn) {
-    const siblings = btn.parentElement.querySelectorAll('.val-likert-btn');
+  window.selectSemaforo = function(btn) {
+    const item = btn.closest('.val-item');
+    const siblings = item.querySelectorAll('.val-sem-btn');
     siblings.forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
+    // Show comment field for yellow/red, hide for green
+    item.classList.remove('rated-green','rated-yellow','rated-red');
+    item.classList.add('rated-' + btn.dataset.color);
+    if (btn.dataset.color === 'green') {
+      item.classList.remove('show-comment');
+    } else {
+      item.classList.add('show-comment');
+      item.querySelector('.val-comment')?.focus();
+    }
     updateProgress();
   };
 
   function updateProgress() {
-    const answered = document.querySelectorAll('#valSections .val-likert-btn.selected').length;
-    // Count unique items answered
     const items = new Set();
-    document.querySelectorAll('#valSections .val-likert-btn.selected').forEach(btn => {
+    document.querySelectorAll('#valSections .val-sem-btn.selected').forEach(btn => {
       items.add(btn.closest('.val-item').dataset.item);
     });
     const total = document.querySelectorAll('#valSections .val-item').length;
@@ -4116,21 +4130,21 @@ async function initApp() {
     const responses = {};
     document.querySelectorAll('#valSections .val-item').forEach(item => {
       const id = item.dataset.item;
-      const selected = item.querySelector('.val-likert-btn.selected');
-      const comment = item.querySelector('.val-comment').value.trim();
+      const selected = item.querySelector('.val-sem-btn.selected');
+      const comment = item.querySelector('.val-comment')?.value?.trim();
       if (selected || comment) {
         responses[id] = {
-          score: selected ? parseInt(selected.dataset.val) : null,
+          rating: selected ? selected.dataset.color : null,
           comment: comment || null
         };
       }
     });
 
-    const answeredCount = Object.values(responses).filter(r => r.score !== null).length;
+    const answeredCount = Object.values(responses).filter(r => r.rating !== null).length;
     const totalCount = document.querySelectorAll('#valSections .val-item').length;
 
-    if (answeredCount < totalCount * 0.5) {
-      if (!confirm('Has respondido ' + answeredCount + ' de ' + totalCount + ' ítems. ¿Deseas enviar la validación parcial?')) return;
+    if (answeredCount < 3) {
+      if (!confirm('Has evaluado solo ' + answeredCount + ' ítems. ¿Deseas enviar así?')) return;
     }
 
     const data = {
@@ -4167,48 +4181,45 @@ async function initApp() {
       return;
     }
 
-    // Aggregate scores
+    // Aggregate ratings
     const allItems = {};
     validators.forEach(v => {
       Object.entries(v.responses || {}).forEach(([id, resp]) => {
-        if (!allItems[id]) allItems[id] = { scores: [], comments: [] };
-        if (resp.score !== null) allItems[id].scores.push({ name: v.name, score: resp.score });
+        if (!allItems[id]) allItems[id] = { ratings: [], comments: [] };
+        if (resp.rating) allItems[id].ratings.push({ name: v.name, rating: resp.rating });
         if (resp.comment) allItems[id].comments.push({ name: v.name, text: resp.comment });
       });
     });
 
-    // Build dashboard
     const allSections = [...VAL_SECTIONS, ...buildMateriaSections()];
-    let html = '<div style="margin-bottom:16px;padding:12px 16px;background:var(--surface-2);border-radius:10px;">' +
-      '<span style="font-size:0.85rem;color:var(--text);">' + validators.length + ' validaciones recibidas: </span>' +
-      '<span style="font-size:0.85rem;color:var(--accent);">' + validators.map(v => v.name).join(', ') + '</span></div>';
+    let html = '<div style="margin-bottom:16px;padding:14px 18px;background:var(--surface-2);border-radius:10px;">' +
+      '<span style="font-size:1rem;color:var(--text);">' + validators.length + ' validaciones: </span>' +
+      '<span style="font-size:1rem;color:var(--accent);">' + validators.map(v => v.name).join(', ') + '</span></div>';
 
     allSections.forEach(sec => {
-      html += '<div class="val-section open" style="margin-bottom:16px;">' +
+      html += '<div class="val-section open val-dash-section">' +
         '<div class="val-section-head" onclick="this.parentElement.classList.toggle(\'open\')">' +
           '<span class="val-section-title">' + sec.title + '</span>' +
         '</div><div class="val-section-body">';
 
       sec.items.forEach(item => {
-        const data = allItems[item.id] || { scores: [], comments: [] };
-        const avg = data.scores.length ? (data.scores.reduce((s, x) => s + x.score, 0) / data.scores.length) : 0;
-        const pct = (avg / 5) * 100;
-        const color = avg >= 4 ? '#4caf50' : avg >= 3 ? '#ffc107' : avg >= 2 ? '#ff9800' : '#f44336';
-
+        const data = allItems[item.id] || { ratings: [], comments: [] };
         html += '<div class="val-dash-item">' +
           '<div class="val-dash-label">' + item.label + '</div>' +
-          '<div class="val-dash-bar-wrap">' +
-            '<div class="val-dash-bar"><div class="val-dash-bar-fill" style="width:' + pct + '%;background:' + color + ';"></div></div>' +
-            '<div class="val-dash-score" style="color:' + color + ';">' + (avg ? avg.toFixed(1) : '—') + '</div>' +
-            '<div style="font-size:0.65rem;color:var(--text-tertiary);">(' + data.scores.length + ')</div>' +
-          '</div>';
+          '<div class="val-dash-dots">' +
+            data.ratings.map(r => {
+              const cls = r.rating === 'green' ? 'g' : r.rating === 'yellow' ? 'y' : 'r';
+              const icon = r.rating === 'green' ? '✓' : r.rating === 'yellow' ? '~' : '✗';
+              return '<div class="val-dash-dot ' + cls + '" title="' + r.name + '">' + icon + '</div>';
+            }).join('') +
+          '</div>' +
+        '</div>';
 
         if (data.comments.length) {
           html += '<div class="val-dash-comments">' +
             data.comments.map(c => '<div class="val-dash-comment"><strong>' + c.name + ':</strong> ' + c.text + '</div>').join('') +
           '</div>';
         }
-        html += '</div>';
       });
 
       html += '</div></div>';
