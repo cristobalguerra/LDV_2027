@@ -4004,16 +4004,6 @@ async function initApp() {
       ]
     },
     {
-      id: 'estructura',
-      title: 'Estructura Curricular General',
-      items: [
-        { id: 'est-1', label: 'La duración de 9 semestres es adecuada para la formación propuesta.' },
-        { id: 'est-2', label: 'La distribución de créditos por semestre es equilibrada.' },
-        { id: 'est-3', label: 'La progresión por fases (Fundamentos → Sistemas → Experiencia → Dirección → Proyecto) es lógica.' },
-        { id: 'est-4', label: 'El modelo de 2 concentraciones profesionales aporta valor diferencial.' },
-      ]
-    },
-    {
       id: 'competencias',
       title: 'Competencias del Perfil de Egreso',
       items: [
@@ -4027,16 +4017,18 @@ async function initApp() {
   // Add materias section dynamically from the malla
   function buildMateriaSections() {
     const sections = [];
+    const validTypes = ['estudio', 'disciplinar', 'certificado'];
     document.querySelectorAll('.semester-col').forEach((col, i) => {
       const cards = [...col.querySelectorAll('.course-card:not(.conc-slot-empty)')];
       if (!cards.length) return;
       const items = cards.map((card, j) => {
         const name = card.querySelector('.card-name')?.textContent?.trim() || '';
-        const type = card.querySelector('.card-type')?.textContent?.trim() || '';
-        if (name === 'Formación UDEM' || name === 'Conocimiento General') return null;
+        const type = card.dataset.type || '';
+        if (!validTypes.includes(type)) return null;
+        const tag = type === 'certificado' ? ' (Concentración)' : '';
         return {
           id: 'mat-s' + (i+1) + '-' + j,
-          label: name + ' — es pertinente en el semestre ' + (i+1) + ' y su contenido contribuye al perfil de egreso.'
+          label: name + tag
         };
       }).filter(Boolean);
       if (items.length) {
