@@ -1984,10 +1984,10 @@ body.role-admin #modalBadge { display:none; }
 
 <!-- ===== VALIDACIÓN VIEW ===== -->
 <div class="view" id="view-validacion">
-  <div class="programa-content" style="max-width:900px;">
+  <div class="programa-content" style="max-width:900px;margin:0 auto;">
 
     <!-- Professor login -->
-    <div id="valLogin" style="padding:40px 20px;">
+    <div id="valLogin" style="padding:40px 20px;text-align:center;">
 
       <!-- Formal header -->
       <div style="text-align:center;margin-bottom:32px;">
@@ -2015,14 +2015,14 @@ body.role-admin #modalBadge { display:none; }
         <h3 style="font-family:'Raleway',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:12px;margin-top:24px;">Datos del evaluador</h3>
         <p style="font-size:0.9rem;color:var(--text-tertiary);margin-bottom:12px;">Al ingresar su nombre, acepta participar voluntariamente en este proceso de validación curricular.</p>
       </div>
-      <div style="display:flex;gap:10px;max-width:500px;margin:0 auto;">
+      <div style="display:flex;gap:10px;max-width:500px;margin:0 auto;justify-content:center;">
         <input id="valName" type="text" placeholder="Nombre completo del evaluador" style="flex:1;padding:14px 18px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-size:1rem;font-family:'DM Sans',sans-serif;">
         <button id="valStart" style="padding:14px 28px;border-radius:10px;background:var(--accent);color:#000;font-weight:700;font-size:1rem;border:none;cursor:pointer;font-family:'Raleway',sans-serif;letter-spacing:0.02em;">Iniciar evaluación</button>
       </div>
     </div>
 
     <!-- Validation instrument (hidden until login) -->
-    <div id="valInstrument" style="display:none;">
+    <div id="valInstrument" style="display:none;max-width:800px;margin:0 auto;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
         <div>
           <h2 style="font-family:'Raleway',sans-serif;font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:4px;">Validación del Plan LDV 2027</h2>
@@ -2037,7 +2037,7 @@ body.role-admin #modalBadge { display:none; }
     </div>
 
     <!-- Admin dashboard -->
-    <div id="valDashboard" style="display:none;margin-top:32px;">
+    <div id="valDashboard" style="display:none;margin-top:32px;max-width:800px;margin-left:auto;margin-right:auto;">
       <h2 style="font-family:'Raleway',sans-serif;font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:16px;">Resultados de Validación</h2>
       <div id="valDashContent"></div>
     </div>
