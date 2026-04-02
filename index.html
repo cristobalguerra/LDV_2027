@@ -2075,6 +2075,7 @@ body.role-admin #modalBadge { display:none; }
       <button class="modal-close" id="modalClose">&times;</button>
     </div>
     <div class="modal-body" id="modalBody">
+      <div class="modal-section" id="descSection" style="display:none;"><div class="modal-section-label">Descripción del Curso</div><div id="field-desc" style="font-size:0.95rem;line-height:1.7;color:var(--text-secondary);padding:16px;background:var(--surface-2);border-radius:10px;border-left:3px solid var(--accent);"></div></div>
       <div class="modal-section"><div class="modal-section-label">Objetivo General</div><div class="modal-field" id="field-objetivo" contenteditable="true" data-placeholder="Describe el objetivo general de la materia..."></div></div>
       <div class="modal-section"><div class="modal-section-label">Objetivos Específicos</div><div class="modal-field" id="field-objetivosEspecificos" contenteditable="true" data-placeholder="1. ...  2. ...  3. ..."></div></div>
       <div class="modal-section">
@@ -2685,24 +2686,28 @@ const COMPETENCIAS = [
 const COURSE_DATA = {
   // ═══ SEM 1 ═══
   'diseño-visual-i-principios-y-composición':{
+    desc:'En este curso comenzamos desde lo esencial: ¿cómo se construye una imagen que comunica? Explorarás los principios de composición, forma, color y espacio no como reglas rígidas, sino como herramientas para tomar decisiones visuales con intención. A través de ejercicios progresivos, descubrirás cómo una línea puede generar tensión, cómo el vacío comunica tanto como lo lleno, y por qué el color transforma el significado de todo lo que toca. Este es el punto de partida: aquí desarrollas el ojo y la mano que te acompañarán el resto de la carrera. Lo que construyas aquí será la base de Diseño Visual II.',
     obj:'Desarrollar el pensamiento compositivo y la sensibilidad visual mediante principios formales del diseño aplicados en ejercicios de complejidad creciente.',
     esp:['Aplicar principios de forma, proporción, ritmo y equilibrio','Explorar relaciones cromáticas y su impacto comunicativo','Integrar elementos visuales en composiciones con intención expresiva'],
     temas:['Fundamentos de la forma y el espacio','Teoría y aplicación del color','Principios compositivos: ritmo, jerarquía, contraste','Narrativa visual básica','Proyecto integrador de composición'],
     act:['Ejercicios de composición con restricciones formales','Bitácora visual de exploración cromática','Proyecto integrador: pieza de comunicación visual']
   },
   'visualización-y-pensamiento-de-diseño':{
+    desc:'¿Cómo representas una idea que todavía no tiene forma? En este curso desarrollarás la capacidad de pensar visualmente: transformar datos abstractos, procesos complejos y conceptos intangibles en esquemas, diagramas y mapas que otros puedan entender. Trabajarás con pensamiento sistémico — la habilidad de ver las conexiones entre las partes de un problema antes de resolverlo. Esta forma de pensar será fundamental cuando llegues a Diseño de Información y a los Estudios de semestres avanzados, donde los problemas dejan de ser lineales.',
     obj:'Construir capacidades de representación visual y pensamiento sistémico para analizar, abstraer y comunicar ideas complejas.',
     esp:['Desarrollar técnicas de representación visual de conceptos abstractos','Aplicar pensamiento sistémico al análisis de problemáticas','Comunicar procesos e ideas mediante esquemas y diagramas'],
     temas:['Pensamiento visual y sketch thinking','Mapas conceptuales y diagramas sistémicos','Abstracción y síntesis visual','Comunicación visual de procesos','Design thinking: fundamentos'],
     act:['Ejercicios de sketch rápido para ideación','Mapeo visual de sistemas complejos','Presentación visual de investigación']
   },
   'contexto-cultural-del-diseño':{
+    desc:'Todo diseño existe dentro de un contexto. ¿Qué pasaba en el mundo cuando surgió la Bauhaus? ¿Por qué el diseño suizo se ve así? ¿Qué tiene que ver la revolución digital con cómo diseñamos hoy? En este curso recorrerás la historia del diseño no como una lista de fechas, sino como una conversación continua entre cultura, tecnología y sociedad. También explorarás las dimensiones éticas de la práctica: ¿qué responsabilidad tiene un diseñador sobre lo que comunica? Lo que aprendas aquí te dará argumentos para fundamentar cada decisión que tomes en el futuro.',
     obj:'Comprender la evolución del diseño visual y su relación con contextos culturales, sociales y tecnológicos para desarrollar criterio ético profesional.',
     esp:['Analizar movimientos históricos del diseño y su impacto cultural','Identificar la relación entre diseño, sociedad y tecnología','Desarrollar postura ética ante la práctica del diseño'],
     temas:['Historia del diseño gráfico y visual','Diseño y contexto sociocultural','Ética y responsabilidad en la comunicación visual','Diseño y tecnología: evolución y prospectiva','Diseño latinoamericano y mexicano'],
     act:['Ensayo crítico sobre un movimiento de diseño','Análisis de caso: impacto cultural de una pieza','Debate sobre ética en comunicación visual']
   },
   'herramientas-digitales-para-el-diseño':{
+    desc:'Las ideas necesitan herramientas para materializarse. En este curso dominarás las herramientas digitales que usarás durante toda la carrera y tu vida profesional: diseño vectorial, edición de imagen, prototipado básico y gestión de archivos. No se trata solo de aprender botones — se trata de desarrollar fluidez técnica para que la herramienta no sea un obstáculo entre tu idea y su ejecución. Este es tu taller de Sinergia: lo que aprendas aquí se conectará directamente con lo que produces en Diseño Visual I y en cada proyecto futuro.',
     obj:'Dominar herramientas digitales fundamentales del diseño visual como base técnica para la producción profesional.',
     esp:['Operar software de diseño vectorial y rasterizado','Gestionar archivos y flujos de trabajo digitales','Producir piezas digitales con estándares profesionales'],
     temas:['Diseño vectorial (Illustrator/Figma)','Edición de imagen (Photoshop)','Fundamentos de prototipado digital','Gestión de archivos y formatos','Flujos de trabajo y colaboración digital'],
@@ -2710,24 +2715,28 @@ const COURSE_DATA = {
   },
   // ═══ SEM 2 ═══
   'diseño-visual-ii-forma-color-y-estructura':{
+    desc:'Ya tienes los fundamentos. Ahora la pregunta cambia: ¿cómo construyes un sistema visual que funcione como un todo? En Diseño Visual II trabajarás con retículas, sistemas cromáticos y la integración de tipografía con imagen. Los proyectos aumentan en complejidad — ya no resuelves una composición aislada, sino un conjunto de piezas que deben convivir con coherencia. Aquí empiezas a pensar como diseñador de sistemas, una mentalidad que será central cuando llegues a Identidad de Marca y a los Estudios avanzados.',
     obj:'Profundizar en sistemas compositivos y narrativas visuales, integrando color, tipografía, imagen y espacio en proyectos de mayor complejidad.',
     esp:['Articular sistemas de color en proyectos de comunicación','Integrar tipografía e imagen en narrativas visuales','Resolver problemas de comunicación visual con criterio formal'],
     temas:['Sistemas cromáticos avanzados','Estructura y retícula','Integración tipografía-imagen','Narrativa visual y secuencia','Proyecto de comunicación visual integral'],
     act:['Sistema de identidad cromática para un proyecto','Diseño de piezas editoriales con retícula','Proyecto integrador: campaña visual']
   },
   'tipografía-i-fundamentos':{
+    desc:'La tipografía es la voz del diseño. ¿Cómo elige una fuente un diseñador? ¿Por qué una decisión tipográfica puede hacer que un mensaje se sienta serio, juguetón o urgente? En este curso aprenderás a leer la tipografía — su anatomía, sus familias, sus reglas de legibilidad — y a usarla como herramienta expresiva. Desde la jerarquía de un cartel hasta el ritmo de una página editorial, la tipografía estará presente en todo lo que hagas. Lo que domines aquí se profundizará en Tipografía II.',
     obj:'Comprender los fundamentos tipográficos y aplicarlos en composiciones que comuniquen con claridad y coherencia visual.',
     esp:['Identificar anatomía, clasificación y familias tipográficas','Aplicar principios de legibilidad y jerarquía','Componer textos con criterio tipográfico profesional'],
     temas:['Anatomía y clasificación tipográfica','Legibilidad y lecturabilidad','Jerarquía tipográfica','Combinación de fuentes','Composición y retícula tipográfica'],
     act:['Catálogo tipográfico analítico','Ejercicios de jerarquía y composición','Diseño de pieza editorial con énfasis tipográfico']
   },
   'ilustración-aplicada':{
+    desc:'¿Qué pasa cuando el diseñador también puede dibujar? La ilustración amplía tu vocabulario visual de formas que la fotografía o la tipografía no pueden. En este curso explorarás técnicas análogas y digitales para desarrollar un lenguaje gráfico propio. No se trata de "dibujar bonito" — se trata de usar la imagen generada como herramienta de comunicación con intención. Crearás ilustraciones editoriales, narrativas gráficas y piezas experimentales que alimentarán tu portafolio y expandirán las posibilidades de tus proyectos futuros.',
     obj:'Desarrollar habilidades de expresión gráfica e ilustración como herramienta de comunicación visual.',
     esp:['Explorar técnicas de ilustración análoga y digital','Desarrollar un lenguaje gráfico personal','Aplicar ilustración con intención comunicativa'],
     temas:['Técnicas de dibujo y representación','Ilustración digital: vectorial y rasterizada','Estilos y lenguajes gráficos','Ilustración editorial y publicitaria','Narrativa gráfica'],
     act:['Serie de ilustraciones con técnica mixta','Proyecto de ilustración editorial','Portafolio de exploración gráfica personal']
   },
   'lenguaje-y-significado-en-el-diseño':{
+    desc:'¿Por qué un color rojo en un empaque comunica algo diferente que en una señal de tránsito? ¿Cómo funciona la metáfora visual? En este curso explorarás la semiótica — la ciencia de los signos y los significados — aplicada al diseño. Aprenderás a analizar cómo las imágenes construyen sentido, cómo la retórica visual persuade y cómo las decisiones de diseño nunca son neutrales. Esta capacidad de fundamentar tus decisiones con rigor conceptual te distinguirá como profesional: no solo sabrás diseñar, sabrás explicar por qué.',
     obj:'Analizar los procesos de significación y construcción de sentido en la comunicación visual para fundamentar decisiones de diseño.',
     esp:['Aplicar conceptos semióticos al análisis de piezas visuales','Fundamentar decisiones de diseño con rigor conceptual','Desarrollar pensamiento crítico sobre la comunicación visual'],
     temas:['Semiótica visual: signo, significante, significado','Retórica de la imagen','Connotación y denotación en diseño','Análisis del discurso visual','Pragmática de la comunicación gráfica'],
@@ -2735,30 +2744,35 @@ const COURSE_DATA = {
   },
   // ═══ SEM 3 ═══
   'identidad-de-marca-i-fundamentos':{
+    desc:'Aquí comienza el trabajo con marcas reales. ¿Qué es una marca más allá de un logotipo? ¿Cómo se investiga, se define una estrategia y se traduce en un sistema visual coherente? En este Estudio trabajarás el proceso completo: desde el brief y la investigación de mercado hasta el diseño de símbolo, logotipo, paleta cromática y sus primeras aplicaciones. Desarrollarás tu primer manual de identidad — un documento que articula decisiones, no solo las muestra. Este es el inicio de una secuencia que continuará en Identidad de Marca II.',
     obj:'Concebir y estructurar sistemas de identidad visual coherentes, desde investigación de marca hasta aplicación en soportes básicos.',
     esp:['Investigar y definir estrategia de marca','Diseñar elementos básicos de identidad: símbolo, logotipo, paleta','Aplicar identidad en sistema de soportes básicos'],
     temas:['Investigación y diagnóstico de marca','Estrategia y posicionamiento','Diseño de marca: símbolo, logotipo, sistema cromático','Manual de identidad básico','Aplicaciones en soportes impresos y digitales'],
     act:['Investigación y brief de marca','Desarrollo de sistema de identidad visual','Presentación con manual y aplicaciones']
   },
   'diseño-de-información-i':{
+    desc:'Vivimos rodeados de datos, pero la información no existe hasta que alguien la organiza. ¿Cómo haces comprensible lo complejo? ¿Cómo diseñas para que alguien encuentre lo que busca en segundos? En este curso aprenderás a estructurar, jerarquizar y visualizar información de manera clara y accesible. Trabajarás con infografías, sistemas de señalética y visualizaciones de datos reales. Esta capacidad de hacer visible lo invisible conecta directamente con Diseño de Información II, donde escalarás a sistemas completos.',
     obj:'Organizar, jerarquizar y visualizar información compleja de manera clara y accesible.',
     esp:['Aplicar principios de organización y jerarquía de información','Diseñar visualizaciones de datos accesibles','Resolver problemas de comunicación de información'],
     temas:['Principios de diseño de información','Arquitectura de información','Visualización de datos: gráficas, mapas, diagramas','Infografía y narrativa de datos','Accesibilidad informativa'],
     act:['Infografía sobre un tema de investigación','Sistema de wayfinding o señalética','Visualización de datos de un dataset real']
   },
   'fotografía-para-diseño':{
+    desc:'La fotografía es una de las herramientas más poderosas del diseñador visual. ¿Cómo controlas la luz para contar una historia? ¿Cómo compones una imagen que no solo se vea bien, sino que comunique exactamente lo que necesitas? En este curso dominarás los fundamentos técnicos — cámara, exposición, iluminación — y los expresivos — composición, narrativa, intención. Producirás fotografía aplicada a tus proyectos de diseño. Si eliges la Concentración A, profundizarás en Dirección de Arte y Fotografía de Producto.',
     obj:'Dominar fundamentos técnicos y expresivos de la fotografía como herramienta de producción visual profesional.',
     esp:['Controlar exposición, composición e iluminación','Editar y postproducir fotografías profesionalmente','Aplicar fotografía como elemento de comunicación visual'],
     temas:['Fundamentos técnicos: cámara, exposición, óptica','Composición fotográfica','Iluminación natural y artificial','Edición y postproducción digital','Fotografía aplicada al diseño'],
     act:['Ejercicios técnicos de exposición e iluminación','Serie fotográfica con concepto visual','Producción fotográfica para pieza de diseño']
   },
   'tipografía-ii-aplicaciones':{
+    desc:'En Tipografía I aprendiste las reglas. Ahora vas a romperlas con criterio. ¿Qué pasa cuando la tipografía deja de ser solo texto y se convierte en imagen? En este curso trabajarás con sistemas tipográficos complejos — diseño editorial, microtipografía, tipografía expresiva y experimental. Diseñarás publicaciones, carteles y sistemas donde la letra es protagonista. También explorarás la tipografía en medios digitales, preparándote para los proyectos de interacción que vendrán en semestres posteriores.',
     obj:'Profundizar en diseño tipográfico avanzado aplicado a proyectos de comunicación visual integral.',
     esp:['Diseñar sistemas tipográficos para proyectos editoriales','Aplicar micro y macrotipografía en piezas complejas','Experimentar con tipografía como elemento expresivo'],
     temas:['Sistemas tipográficos y familias','Diseño editorial avanzado','Micro y macrotipografía','Tipografía expresiva y experimental','Tipografía para medios digitales'],
     act:['Diseño de publicación editorial','Experimentación tipográfica en poster','Sistema tipográfico para identidad']
   },
   'direc-creat-para-med-audiovis-e-interac':{
+    desc:'¿Cómo se dirige un proyecto creativo que involucra video, animación, sonido e interacción? En esta Sinergia asumirás el rol de director creativo: concebirás narrativas audiovisuales, coordinarás equipos y llevarás un proyecto desde la idea hasta la producción final. Trabajarás con motion graphics, video y medios interactivos — habilidades que complementan tu formación visual y te preparan para dirigir proyectos donde el diseño se mueve, suena y responde. Es tu primera experiencia de dirección creativa en equipo.',
     obj:'Dirigir proyectos creativos en medios audiovisuales e interactivos, integrando narrativa, producción y gestión.',
     esp:['Conceptualizar narrativas para medios audiovisuales','Dirigir equipos en producción de contenido visual','Integrar medios interactivos en proyectos de comunicación'],
     temas:['Narrativa audiovisual y guión','Dirección creativa y de arte','Producción de video y motion graphics','Medios interactivos y multimedia','Gestión de proyectos audiovisuales'],
@@ -2766,30 +2780,35 @@ const COURSE_DATA = {
   },
   // ═══ SEM 4 ═══
   'diseño-de-información-ii-sistemas-de-información':{
+    desc:'En Diseño de Información I organizaste datos. Ahora diseñarás sistemas completos. ¿Cómo funciona un dashboard que miles de personas usan para tomar decisiones? ¿Cómo se diseña una interfaz que haga legible un ecosistema de datos en tiempo real? En este Estudio trabajarás con UX aplicado a sistemas de información, diseñarás interfaces de visualización interactiva y resolverás problemas donde la complejidad del dato exige pensamiento sistémico. Este es el puente entre el diseño visual y la experiencia digital.',
     obj:'Diseñar sistemas de información complejos articulando datos, visualización y experiencia de usuario.',
     esp:['Diseñar interfaces de visualización de datos interactivas','Aplicar metodologías de UX a sistemas de información','Integrar pensamiento sistémico en soluciones informativas'],
     temas:['Sistemas de información complejos','Diseño de interfaces de datos','UX aplicado a información','Dashboards y paneles de control','Narrativa de datos avanzada'],
     act:['Diseño de dashboard interactivo','Sistema de información para organización real','Prototipo de visualización de datos']
   },
   'gestión-de-producción':{
+    desc:'Un diseño que no se puede producir es solo una idea bonita. ¿Cuánto cuesta imprimir lo que diseñaste? ¿Qué pasa si el papel no absorbe la tinta como esperabas? ¿Cómo supervisas a un proveedor? En este curso aprenderás el lado operativo del diseño: presupuestos, tiempos, materiales, acabados y control de calidad. Visitarás imprentas, cotizarás proyectos reales y supervisarás producciones. Esta capacidad de gestionar la materialización de un proyecto es lo que separa al diseñador profesional del aficionado.',
     obj:'Gestionar procesos de producción de diseño: presupuestos, proveedores, materiales y control de calidad.',
     esp:['Planificar procesos productivos de diseño','Gestionar presupuestos, proveedores y tiempos','Asegurar calidad en la implementación de proyectos'],
     temas:['Procesos de producción gráfica e impresión','Gestión de presupuestos y proveedores','Control de calidad y supervisión','Materiales y acabados','Producción digital y multimedia'],
     act:['Cotización y plan de producción para proyecto real','Supervisión de producción de pieza impresa','Análisis de caso: gestión de producción']
   },
   'diseño-de-empaque':{
+    desc:'El empaque es la primera interfaz física entre un producto y una persona. ¿Cómo diseñas algo que protege, comunica, seduce y además es sustentable? En este curso integrarás estructura, materiales, comunicación de marca y normativas del mercado para diseñar sistemas de empaque reales. Trabajarás con prototipos físicos, especificaciones de producción y líneas de producto. Aquí convergen habilidades de identidad, producción y pensamiento sistémico — es diseño tridimensional con propósito comercial.',
     obj:'Diseñar sistemas de empaque integrando función, estructura, sustentabilidad y comunicación de marca.',
     esp:['Diseñar empaques con criterio funcional y estético','Considerar sustentabilidad y normativas del mercado','Integrar identidad de marca en sistemas de empaque'],
     temas:['Estructura y materiales de empaque','Diseño gráfico aplicado a empaque','Sustentabilidad y ecodiseño','Normativas y regulaciones','Sistemas de empaque y líneas de producto'],
     act:['Diseño de empaque para producto nuevo','Rediseño sustentable de empaque existente','Prototipo funcional con especificaciones de producción']
   },
   'dir-de-arte-y-fotografía':{
+    desc:'En Fotografía para Diseño aprendiste a operar la cámara. Ahora dirigirás la sesión completa. ¿Cómo se conceptualiza una imagen que vende? ¿Cómo diriges iluminación, escenografía y postproducción para que el producto cuente la historia que la marca necesita? En esta Concentración trabajarás con fotografía de producto, still life y catálogos comerciales con estándar profesional. Aquí dejas de ser el diseñador que "también toma fotos" y te conviertes en director de arte visual.',
     obj:'Dirigir sesiones fotográficas de producto con criterio estético y comercial para comunicación de marca.',
     esp:['Conceptualizar y planificar dirección de arte fotográfica','Controlar iluminación y composición para producto','Postproducir imágenes con estándar comercial'],
     temas:['Dirección de arte para fotografía','Fotografía de producto y still life','Iluminación de estudio avanzada','Postproducción y retoque profesional','Producción de catálogo visual'],
     act:['Sesión fotográfica dirigida de producto','Producción de catálogo visual de marca','Portfolio de dirección de arte']
   },
   'gestión-de-proyectos-de-diseño':{
+    desc:'¿Cómo se lleva un proyecto de diseño desde la idea hasta la entrega sin que se desborde en tiempo, presupuesto o alcance? En esta Concentración aprenderás metodologías de gestión — agile, waterfall, híbridas — aplicadas específicamente a proyectos creativos. Coordinarás equipos, definirás alcances, gestionarás stakeholders y evaluarás resultados. No se trata de convertirte en project manager: se trata de que como diseñador puedas dirigir tus propios proyectos con la misma rigurosidad con la que los diseñas.',
     obj:'Planificar, coordinar e implementar proyectos de diseño aplicando metodologías de gestión.',
     esp:['Aplicar metodologías de gestión de proyectos','Coordinar equipos y recursos en proyectos creativos','Evaluar resultados y documentar aprendizajes'],
     temas:['Metodologías de gestión: agile, waterfall, hybrid','Planificación y cronogramas','Gestión de equipos creativos','Presupuestos y alcance','Evaluación y métricas de proyecto'],
@@ -2797,24 +2816,28 @@ const COURSE_DATA = {
   },
   // ═══ SEM 5 ═══
   'identidad-de-marca-ii-implementación':{
+    desc:'Ya sabes diseñar una marca. Ahora la pregunta es: ¿cómo vive esa marca en el mundo real? En este Estudio implementarás sistemas de identidad en ecosistemas complejos — digitales, impresos, espaciales. Trabajarás con arquitectura de marca, branding en redes sociales, y la gestión de consistencia visual cuando una marca tiene decenas de touchpoints. También explorarás el rebranding: cómo evolucionar una marca sin perder su esencia. Es la culminación de la secuencia de identidad que iniciaste en tercer semestre.',
     obj:'Implementar sistemas de identidad visual de alta complejidad en múltiples touchpoints con visión estratégica.',
     esp:['Desarrollar sistemas de marca para múltiples plataformas','Gestionar consistencia visual en ecosistemas complejos','Evaluar y evolucionar sistemas de identidad existentes'],
     temas:['Sistemas de identidad multiplataforma','Branding digital y redes sociales','Arquitectura de marca','Evolución y actualización de marcas','Gestión de marca a largo plazo'],
     act:['Implementación de marca en ecosistema digital completo','Proyecto de rebranding fundamentado','Guía de marca extendida con aplicaciones']
   },
   'portafolio-profesional':{
+    desc:'Tu portafolio no es una colección de proyectos — es el argumento de por qué alguien debería contratarte. ¿Qué proyectos muestras? ¿En qué orden? ¿Qué historia cuentan sobre ti como diseñador? En este curso curarás, editarás y presentarás tu trabajo con estrategia. Construirás tu marca personal, tu portafolio digital y te prepararás para el mercado laboral con simulaciones de entrevista y sesiones de retroalimentación con profesionales activos. Este es el momento de mirarte al espejo y preguntarte: ¿quién soy como diseñador?',
     obj:'Construir un portafolio profesional que comunique estratégicamente competencias y visión del diseñador.',
     esp:['Curar y editar proyectos para presentación profesional','Diseñar narrativa personal de marca','Preparar materiales para inserción laboral'],
     temas:['Estrategia de portafolio profesional','Curación y presentación de proyectos','Marca personal del diseñador','Plataformas y formatos de portafolio','Preparación para el mercado laboral'],
     act:['Desarrollo de portafolio digital profesional','Sesión de retroalimentación con profesionales','Simulación de entrevista y presentación']
   },
   'diseño-de-futuros-pendientes':{
+    desc:'¿Cómo será el diseño en 10 años? ¿Qué problemas enfrentaremos que todavía no existen? En esta Sinergia explorarás el diseño especulativo y la prospectiva: herramientas para imaginar futuros posibles y diseñar para ellos hoy. Trabajarás con señales débiles, tendencias emergentes y escenarios. No se trata de predecir — se trata de expandir tu capacidad de imaginar y proponer. Los proyectos que generes aquí conectarán con la Sinergia de Investigación en séptimo semestre, completando tu capacidad de fundamentar el futuro.',
     obj:'Aplicar metodologías prospectivas para anticipar escenarios futuros y diseñar soluciones innovadoras.',
     esp:['Utilizar herramientas de diseño especulativo y futuros','Identificar señales de cambio y tendencias emergentes','Proponer escenarios y soluciones para contextos futuros'],
     temas:['Diseño especulativo y critical design','Metodologías de futuros y prospectiva','Señales débiles y tendencias','Escenarios y prototipos de futuro','Diseño para transiciones y sostenibilidad'],
     act:['Mapeo de señales y tendencias emergentes','Diseño de escenario futuro para contexto local','Prototipo especulativo con narrativa visual']
   },
   'toma-de-decisiones-en-procesos-de-diseño':{
+    desc:'Diseñar es decidir. Cada proyecto implica cientos de decisiones: ¿qué tipografía? ¿qué color? ¿qué quito? ¿qué priorizo? ¿Cómo decides cuando hay múltiples opciones válidas y recursos limitados? En este curso desarrollarás frameworks para tomar decisiones de diseño con rigor: análisis de trade-offs, priorización con criterios múltiples y argumentación basada en evidencia. Esta capacidad de decidir y defender tus decisiones será fundamental en Prácticas Profesionales, en tu Proyecto Terminal y en toda tu carrera.',
     obj:'Desarrollar capacidad de toma de decisiones fundamentada en procesos complejos de diseño.',
     esp:['Aplicar frameworks de análisis para decisiones de diseño','Evaluar trade-offs en proyectos multivariable','Argumentar decisiones con datos y criterio profesional'],
     temas:['Frameworks de decisión en diseño','Análisis de trade-offs y priorización','Evaluación de alternativas con criterios múltiples','Decisiones basadas en datos e investigación','Comunicación y argumentación de decisiones'],
@@ -2822,30 +2845,35 @@ const COURSE_DATA = {
   },
   // ═══ SEM 6 ═══
   'estudio-de-interacción':{
+    desc:'El diseño ya no es estático. ¿Cómo se diseña algo que responde, que se adapta, que cambia según quién lo usa y cómo lo usa? En este Estudio concebirás y desarrollarás proyectos de diseño de interacción: aplicaciones, sistemas digitales, interfaces que las personas realmente utilizan. Integrarás todo lo que sabes de composición, tipografía, información y sistemas para crear experiencias digitales completas. Este es el semestre donde el diseño cobra vida y donde Diseño de Experiencia y Prototipado serán tus herramientas complementarias.',
     obj:'Concebir y desarrollar proyectos integrales de diseño de interacción en contextos digitales complejos.',
     esp:['Diseñar sistemas de interacción centrados en el usuario','Prototipar y validar soluciones de interacción','Integrar experiencia, interfaz y tecnología en proyectos'],
     temas:['Principios de diseño de interacción','Diseño de interfaces (UI)','Sistemas de navegación y flujos','Microinteracciones y animación','Diseño responsivo y multiplataforma'],
     act:['Diseño de aplicación digital integral','Prototipo interactivo con validación de usuario','Proyecto de diseño de sistema digital complejo']
   },
   'diseño-de-experiencia':{
+    desc:'Antes de diseñar una interfaz, necesitas entender a las personas que la usarán. ¿Qué necesitan? ¿Qué les frustra? ¿Cuál es su recorrido real, no el que imaginamos? En este curso aprenderás UX Research — entrevistas, observación, testing — y metodologías para mapear experiencias y proponer mejoras. Diseñarás journey maps, service blueprints y arquitecturas de información basadas en evidencia. Esta mentalidad centrada en el usuario transformará la forma en que abordas cualquier proyecto de diseño.',
     obj:'Investigar, mapear y diseñar experiencias centradas en las personas aplicando metodologías de UX.',
     esp:['Aplicar UX research para entender necesidades de usuarios','Mapear y diseñar journey maps y service blueprints','Iterar soluciones basadas en feedback de usuario'],
     temas:['UX Research: entrevistas, observación, testing','Journey mapping y service blueprints','Arquitectura de información','Diseño centrado en el usuario','Métricas de experiencia y usabilidad'],
     act:['Investigación de usuario para proyecto real','Mapeo de experiencia y propuesta de mejora','Test de usabilidad con iteración']
   },
   'prototipado-de-experiencias':{
+    desc:'Una idea no probada es solo una suposición. ¿Cómo validas que tu diseño realmente funciona antes de invertir recursos en desarrollarlo? En este curso dominarás el prototipado — desde sketches en papel hasta prototipos de alta fidelidad en Figma y Framer. Harás testing con usuarios reales, iterarás basándote en datos y aprenderás a comunicar tus propuestas a equipos de desarrollo. La capacidad de prototipar rápido y validar con evidencia es una de las habilidades más valoradas en la industria actual.',
     obj:'Dominar herramientas y metodologías de prototipado para validar hipótesis de diseño e iterar soluciones.',
     esp:['Prototipar en baja y alta fidelidad según la etapa del proyecto','Validar hipótesis de diseño con usuarios reales','Comunicar propuestas a equipos mediante prototipos'],
     temas:['Prototipado de baja fidelidad: paper, wireframes','Prototipado de alta fidelidad: Figma, Framer','Testing y validación con usuarios','Iteración basada en datos','Handoff y documentación para desarrollo'],
     act:['Sprint de prototipado rápido','Prototipo interactivo con testing de usuario','Documentación de diseño para handoff']
   },
   'producción-artística-interdisciplinaria':{
+    desc:'¿Dónde termina el diseño y comienza el arte? ¿Tiene que haber una frontera? En esta Sinergia explorarás la intersección entre arte contemporáneo y diseño visual. Trabajarás con medios experimentales — instalación, nuevos medios, intervenciones espaciales — y desarrollarás proyectos que expandan lo que consideras posible. Colaborarás con estudiantes de otras disciplinas y presentarás tu trabajo en contextos de exhibición. Este espacio de experimentación libre alimentará tu creatividad para los proyectos estratégicos que siguen.',
     obj:'Explorar la intersección arte-diseño mediante proyectos que expandan los límites de la producción visual.',
     esp:['Experimentar con medios y técnicas no convencionales','Desarrollar proyectos en la frontera arte-diseño','Generar propuestas culturalmente relevantes'],
     temas:['Arte contemporáneo y diseño','Medios experimentales y nuevos medios','Instalación y diseño espacial','Producción interdisciplinaria','Contexto cultural y exhibición'],
     act:['Proyecto de exploración en medios experimentales','Colaboración interdisciplinaria con otras áreas','Exhibición o presentación pública de obra']
   },
   'inteligencia-artificial-para-diseño':{
+    desc:'La IA no reemplaza al diseñador — amplifica lo que puede hacer. ¿Cómo integras generación de imagen, automatización de flujos y co-creación con IA en tu proceso sin perder el criterio ni la autoría? En esta Concentración explorarás las herramientas de IA disponibles hoy con ojo crítico de diseñador: cuándo sirven, cuándo no, qué implicaciones éticas tienen. No se trata de aprender un software específico — se trata de desarrollar una relación inteligente con la tecnología que definirá tu práctica profesional.',
     obj:'Integrar herramientas de IA en el proceso de diseño: generación, automatización y co-creación.',
     esp:['Utilizar herramientas de IA generativa con criterio de diseño','Automatizar flujos de trabajo con IA','Evaluar críticamente el rol de la IA en diseño'],
     temas:['IA generativa: imagen, texto, código','Prompt engineering para diseño','Automatización de flujos creativos','IA en UX, branding y producción','Ética y futuro de la IA en diseño'],
@@ -2853,24 +2881,28 @@ const COURSE_DATA = {
   },
   // ═══ SEM 7 ═══
   'diseño-de-servicios':{
+    desc:'Un restaurante, un hospital, una app de transporte — todos son servicios. ¿Cómo se diseña una experiencia que involucra personas, espacios, tecnología y tiempo? En este Estudio aplicarás pensamiento sistémico a escala real: mapearás ecosistemas de servicio, diseñarás blueprints, prototiparás touchpoints y vincularás tu propuesta con un modelo de negocio viable. Es el Estudio más complejo del programa porque integra todo: identidad, información, experiencia, gestión y estrategia. Aquí demuestras que puedes dirigir.',
     obj:'Diseñar servicios integrales aplicando pensamiento sistémico y vinculando diseño con modelos de negocio.',
     esp:['Mapear ecosistemas de servicio con stakeholders','Diseñar blueprints y touchpoints de servicio','Vincular diseño de servicio con modelo de negocio'],
     temas:['Service design thinking','Mapeo de stakeholders y ecosistemas','Service blueprints y customer journey','Touchpoints y evidencia de servicio','Modelos de negocio y propuesta de valor'],
     act:['Diseño de servicio para organización real','Blueprint y prototipo de touchpoints','Presentación con modelo de negocio integrado']
   },
   'prácticas-profesionales':{
+    desc:'Es momento de salir del aula. En Prácticas Profesionales trabajarás en un estudio de diseño, agencia, empresa o startup aplicando todo lo que has aprendido en proyectos reales con clientes reales y deadlines reales. Aprenderás cómo funciona un equipo profesional desde adentro, cómo se comunica con clientes, cómo se gestionan expectativas y cómo se entrega trabajo con estándar de mercado. Llevarás una bitácora reflexiva y presentarás tus aprendizajes al final del semestre. Esta experiencia define tu transición de estudiante a profesional.',
     obj:'Aplicar competencias adquiridas en un entorno profesional real con impacto.',
     esp:['Integrar conocimientos en proyectos profesionales reales','Trabajar en equipo en entorno laboral','Desarrollar criterio profesional y ética de trabajo'],
     temas:['Inmersión en estudio, agencia o empresa','Gestión de proyectos reales','Trabajo en equipo multidisciplinario','Comunicación profesional','Reflexión sobre práctica profesional'],
     act:['Trabajo en empresa/estudio durante el semestre','Bitácora reflexiva de práctica','Presentación de aprendizajes y proyectos realizados']
   },
   'innovación-en-diseño':{
+    desc:'¿En qué se basa una decisión de diseño? ¿En la intuición? ¿En datos? ¿En ambos? En esta Sinergia aprenderás a diseñar y ejecutar investigaciones — cualitativas y cuantitativas — que fundamenten tus proyectos con evidencia. Harás etnografía, entrevistas, análisis de datos y síntesis de hallazgos. Los insights que generes aquí alimentarán directamente tu Proyecto de Evaluación Final. Esta es la materia que convierte opiniones en argumentos y suposiciones en estrategia.',
     obj:'Aplicar metodologías de investigación para fundamentar decisiones de diseño y generar insights estratégicos.',
     esp:['Diseñar investigaciones cualitativas y cuantitativas','Generar insights accionables a partir de datos','Fundamentar proyectos de diseño con evidencia'],
     temas:['Metodologías de investigación para diseño','Investigación cualitativa: etnografía, entrevistas','Investigación cuantitativa: encuestas, analytics','Síntesis e insight generation','Investigación aplicada a proyectos estratégicos'],
     act:['Diseño y ejecución de investigación de campo','Síntesis de hallazgos en framework visual','Fundamentación de proyecto con evidencia']
   },
   'diseño-estratégico-e-innovación':{
+    desc:'¿Cómo convences a un directivo de que el diseño no es un gasto sino una inversión? En esta Concentración aprenderás a vincular diseño con estrategia organizacional: design thinking avanzado, lean startup, métricas de impacto y transformación por diseño. Trabajarás con organizaciones reales proponiendo soluciones de innovación fundamentadas. Aquí el diseñador deja de esperar instrucciones y empieza a definir la dirección. Es la preparación directa para el rol de consultor o estratega de diseño.',
     obj:'Vincular diseño con estrategia organizacional e innovación para generar soluciones viables.',
     esp:['Aplicar frameworks de design thinking y lean','Conectar diseño con objetivos de negocio','Desarrollar propuestas de innovación fundamentadas'],
     temas:['Design thinking avanzado','Lean startup y validación','Estrategia de innovación','Diseño y transformación organizacional','Métricas de impacto'],
@@ -2878,24 +2910,28 @@ const COURSE_DATA = {
   },
   // ═══ SEM 8 ═══
   'estudio-integral-de-diseño':{
+    desc:'Este es el Estudio que lo integra todo. ¿Puedes concebir un proyecto que articule identidad, experiencia, producción y estrategia de negocio en una propuesta coherente? En este curso lo demostrarás. Dirigirás un proyecto de alta complejidad desde el concepto hasta la implementación, tomando decisiones en todas las dimensiones del diseño. Es la prueba de que puedes pensar y ejecutar como profesional integral. Lo que produzcas aquí será la pieza central de tu portafolio y la antesala de tu Proyecto de Evaluación Final.',
     obj:'Integrar todas las competencias en un proyecto de alta complejidad articulando identidad, experiencia, producción y estrategia.',
     esp:['Concebir proyecto integral con múltiples dimensiones','Dirigir desarrollo desde concepto hasta implementación','Demostrar dominio de competencias del programa'],
     temas:['Proyecto integral de diseño','Integración de identidad, UX, producción','Dirección de proyecto complejo','Modelo de negocio y viabilidad','Presentación y comunicación profesional'],
     act:['Desarrollo de proyecto integral de diseño','Presentación ante panel de profesionales','Documentación completa del proyecto']
   },
   'proyecto-de-evaluación-final-i':{
+    desc:'Tu proyecto terminal comienza aquí. ¿Cuál es la problemática que quieres abordar? ¿Por qué importa? ¿Cómo la fundamentas? En PEF I definirás el alcance, investigarás el contexto, construirás tu marco teórico y conceptualizarás tu propuesta de diseño con una metodología clara. Presentarás ante un comité que evaluará la solidez de tu planteamiento. Este semestre es de pensamiento, investigación y estrategia — la ejecución viene en PEF II. La calidad de tu proyecto terminal depende de la profundidad de esta fase.',
     obj:'Definir, investigar y conceptualizar el proyecto terminal con fundamentación teórica y metodológica sólida.',
     esp:['Definir problemática y alcance del proyecto terminal','Investigar y fundamentar el marco teórico','Conceptualizar propuesta de diseño con metodología clara'],
     temas:['Definición de proyecto y problemática','Marco teórico y estado del arte','Metodología de investigación aplicada','Conceptualización y propuesta','Planificación de implementación'],
     act:['Documento de investigación y fundamentación','Presentación de concepto ante comité','Plan de implementación detallado']
   },
   'negocios-pendiente':{
+    desc:'¿Tu diseño genera valor económico? ¿Para quién? ¿Cómo? En esta Sinergia aprenderás a construir modelos de negocio viables para proyectos de diseño. Analizarás mercados, definirás propuestas de valor, estructurarás modelos financieros básicos y diseñarás estrategias de crecimiento. Usarás Business Model Canvas y herramientas de validación para asegurar que tu proyecto no solo es bello y funcional, sino también sostenible. Este conocimiento es la diferencia entre un diseñador que trabaja para otros y uno que puede generar su propio valor.',
     obj:'Desarrollar modelos de negocio viables para proyectos de diseño integrando análisis de mercado y estrategia.',
     esp:['Analizar mercado y competencia para proyectos de diseño','Estructurar propuesta de valor y modelo financiero','Desarrollar estrategia de crecimiento y sostenibilidad'],
     temas:['Análisis de mercado y competencia','Business Model Canvas','Propuesta de valor y pricing','Estructura financiera básica','Estrategia de crecimiento'],
     act:['Desarrollo de modelo de negocio para proyecto propio','Análisis financiero básico','Pitch de negocio ante inversionistas simulados']
   },
   'emprendimiento-en-diseño':{
+    desc:'¿Y si en lugar de buscar empleo, creas el tuyo? En esta Concentración diseñarás y validarás tu propio emprendimiento creativo. Aprenderás lean startup aplicado a diseño: cómo identificar oportunidades, crear un MVP, validar con usuarios reales y desarrollar una estrategia de lanzamiento. Trabajarás en tu marca personal, explorarás modelos de monetización para servicios de diseño y te conectarás con el ecosistema emprendedor. El proyecto final es un pitch real ante un panel. Algunos de los mejores estudios de diseño nacieron así.',
     obj:'Diseñar y validar emprendimientos creativos aplicando lean startup y estrategias de monetización.',
     esp:['Identificar oportunidades de emprendimiento en diseño','Validar ideas con metodología lean','Desarrollar MVP y estrategia de lanzamiento'],
     temas:['Lean startup para creativos','Validación de ideas y MVP','Monetización de servicios de diseño','Marca personal y posicionamiento','Ecosistema emprendedor y financiamiento'],
@@ -2903,6 +2939,7 @@ const COURSE_DATA = {
   },
   // ═══ SEM 9 ═══
   'proyecto-de-evaluación-final-ii':{
+    desc:'Todo culmina aquí. En PEF II ejecutarás, implementarás y presentarás el proyecto que conceptualizaste en PEF I. Producirás piezas con excelencia técnica, documentarás tu proceso con rigor y defenderás tu trabajo ante un comité evaluador compuesto por profesores y profesionales del sector. Este no es un examen — es tu declaración profesional: la demostración de que puedes concebir, fundamentar, ejecutar y comunicar un proyecto integral de diseño. Lo que presentes aquí es con lo que sales al mundo.',
     obj:'Ejecutar, implementar y presentar el proyecto terminal demostrando capacidad de dirigir proyectos integrales de diseño.',
     esp:['Implementar proyecto con excelencia técnica y conceptual','Presentar y defender proyecto ante comité evaluador','Demostrar dominio integral de competencias del programa'],
     temas:['Implementación y producción del proyecto','Refinamiento y control de calidad','Documentación final','Preparación de presentación','Defensa ante comité evaluador'],
@@ -3224,6 +3261,11 @@ async function openModal(card) {
   // Pre-fill from COURSE_DATA if not saved
   const slugId = currentCourseId.replace(/--s\d+p\d+$/, '');
   const cd = COURSE_DATA[slugId] || {};
+  // Show course description
+  const descEl = document.getElementById('field-desc');
+  const descSection = document.getElementById('descSection');
+  if (cd.desc) { descEl.textContent = cd.desc; descSection.style.display = ''; }
+  else { descSection.style.display = 'none'; }
   textFields.forEach(k => {
     const el = document.getElementById('field-' + k);
     if (!el) return;
