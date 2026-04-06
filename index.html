@@ -4398,6 +4398,77 @@ async function initApp() {
   let changeLog = {};
   let currentFilter = 'all';
 
+  // Pre-filled suggested resolutions based on program context
+  const SUGGESTED_RESOLUTIONS = {
+    // === EDUARDO ===
+    'Eduardo Guizar Vukovich|mat-s1-2': { action: 'approve', text: 'Se acepta la observación. Se ajustará la descripción de Contexto Cultural del Diseño para enfatizar el componente histórico como eje vertebrador del curso, reforzando la línea "historia del diseño no como una lista de fechas, sino como una conversación continua".' },
+    'Eduardo Guizar Vukovich|mat-s3-0': { action: 'approve', text: 'Se acepta parcialmente. Se revisará la descripción de Identidad de Marca I para mencionar explícitamente la investigación de mercado como parte del proceso de diagnóstico de marca. El componente de mercadotecnia se aborda transversalmente en la fase de brief y posicionamiento, no como contenido teórico aislado.' },
+
+    // === SERGIO — NOMBRE ===
+    'Sergio Trujillo Pérez|nombre-1': { action: 'reject', text: 'El término "Negocios Creativos" no se limita a materias explícitas de negocios. Los Estudios (12 cr cada uno) integran progresivamente visión de negocio: desde brief comercial en Identidad de Marca I hasta modelo de negocio completo en Diseño de Servicios. La restricción de 324 créditos impide agregar más materias de negocios puras, pero el enfoque está distribuido transversalmente. Se evaluará si el nombre genera confusión mediante focus groups con aspirantes.' },
+    'Sergio Trujillo Pérez|nombre-2': { action: 'reject', text: 'Se mantiene la posición anterior. La malla integra el componente de negocios dentro de los Estudios y Sinergias, no como bloque aislado. Se complementa con las concentraciones de Gestión y Emprendimiento. Se agenda validación con aspirantes y empleadores.' },
+    'Sergio Trujillo Pérez|nombre-3': { action: 'approve', text: 'Observación válida sobre el riesgo de confusión. Se realizará un estudio con aspirantes potenciales para validar la percepción del nombre. Si se confirma que genera resistencia en perfiles creativos, se evaluarán alternativas como "Diseño Visual y Estrategia Creativa".' },
+
+    // === SERGIO — OBJETIVO ===
+    'Sergio Trujillo Pérez|obj-1': { action: 'approve', text: 'Se acepta. Se ajustará la redacción del objetivo para incluir explícitamente el verbo "diseñar" junto con "concebir, estructurar y dirigir". El diseñador visual diseña — eso debe ser evidente desde el objetivo.' },
+    'Sergio Trujillo Pérez|obj-2': { action: 'approve', text: 'Se acepta. Se incorporará "pensamiento creativo" o "creatividad" como componente explícito en la primera oración del objetivo, alineándolo con el nombre del programa.' },
+    'Sergio Trujillo Pérez|obj-3': { action: 'approve', text: 'Observación pertinente. Se revisará la redacción para calibrar las expectativas: los modelos de negocio se abordan progresivamente a través de los Estudios (no en 2 materias aisladas). Se ajustará el lenguaje para reflejar "vinculación con contextos de negocio" en lugar de "dominio de modelos de negocio".' },
+
+    // === SERGIO — PERFIL EGRESO ===
+    'Sergio Trujillo Pérez|pe-1': { action: 'approve', text: 'Se acepta. Se ajustará el perfil de egreso para: (1) enfatizar la capacidad de diseñar/desarrollar soluciones gráficas como habilidad central, (2) incluir el componente creativo explícitamente, (3) calibrar las menciones a "modelos de negocio" con lenguaje más preciso.' },
+    'Sergio Trujillo Pérez|pe-2': { action: 'approve', text: 'Observación válida sobre C8. Se revisará la redacción de la competencia para ser más realista: en lugar de "lidera equipos multidisciplinarios" se usará "colabora y coordina en equipos multidisciplinarios", reflejando la progresión de las Sinergias donde el trabajo en equipo se desarrolla gradualmente.' },
+    'Sergio Trujillo Pérez|pe-3': { action: 'approve', text: 'Se acepta. Se diferenciará claramente la redacción del perfil de egreso respecto al objetivo del programa. El objetivo describe lo que el programa hace; el perfil describe lo que el egresado es capaz de hacer. Se aprovechará para complementar con habilidades concretas.' },
+
+    // === SERGIO — PERFIL INGRESO ===
+    'Sergio Trujillo Pérez|pi-1': { action: 'approve', text: 'Se acepta. Se ajustará el perfil de ingreso para balancear intereses con aptitudes y habilidades verificables. Se incluirá mención a aspectos éticos como disposición del aspirante.' },
+    'Sergio Trujillo Pérez|pi-2': { action: 'approve', text: 'Observaciones válidas. Se clarificará: (1) "capacidad de observación" se redactará como "atención al detalle y curiosidad por el entorno visual", (2) "expresión visual" se cambiará a "interés en la comunicación gráfica" para no exigir habilidades previas, (3) "sensibilidad hacia su entorno" se concretará como "conciencia de problemáticas sociales y culturales".' },
+
+    // === SERGIO — COMPETENCIAS ===
+    'Sergio Trujillo Pérez|comp-1': { action: 'approve', text: 'Observaciones sustanciales. Para C7 (Innovación/Prospectiva): se ajustará la descripción para enfatizar que el pensamiento prospectivo SÍ considera limitantes reales — no es fantasía sino anticipación fundamentada. Para C8 (Liderazgo/Emprendimiento): se revisará para ser más progresivo — el liderazgo se desarrolla gradualmente en las Sinergias (trabajo en equipo desde sem 1) hasta Prácticas Profesionales. El emprendimiento se valida con MVP y metodología lean, no con plan de negocios completo.' },
+    'Sergio Trujillo Pérez|comp-2': { action: 'approve', text: 'Se acepta el reordenamiento. C6 (Investigación y pensamiento crítico) se moverá antes de C4 (Dirección estratégica). Es lógico: investigar y fundamentar precede a dirigir y gestionar.' },
+    'Sergio Trujillo Pérez|comp-3': { action: 'approve', text: 'Se diseñarán criterios de evaluación específicos para cada competencia. C7: se evaluará mediante la calidad del análisis de tendencias y la fundamentación de escenarios propuestos (no la "corrección" del futuro imaginado). C8: cada alumno liderará al menos 1 proyecto en equipo durante las Sinergias; el emprendimiento se evaluará mediante la viabilidad del MVP desarrollado en la Concentración B.' },
+
+    // === SERGIO — MATERIAS SEM 1 ===
+    'Sergio Trujillo Pérez|mat-s1-1': { action: 'approve', text: 'Observación muy pertinente. Se ajustará la descripción y el alcance de Visualización y Pensamiento de Diseño para primer semestre: en lugar de "transformar datos abstractos y procesos complejos", se enfocará en "representar ideas propias mediante esquemas básicos, mapas mentales y diagramas simples". La complejidad se reserva para Diseño de Información I (sem 3). Se consultará con neuropsicología educativa para alinear expectativas con el desarrollo cognitivo de los estudiantes.' },
+
+    // === SERGIO — MATERIAS SEM 2 ===
+    'Sergio Trujillo Pérez|mat-s2-0': { action: 'approve', text: 'Observación válida sobre la simultaneidad Tipografía I / Diseño Visual II. Se ajustará la descripción de DV II: la integración tipografía-imagen se abordará con tipografía como elemento compositivo básico (no editorial), usando fuentes predeterminadas. La profundización tipográfica completa vendrá con Tipografía I que corre en paralelo y Tipografía II en sem 3. Se revisará la secuencia con los líderes de academia.' },
+    'Sergio Trujillo Pérez|mat-s2-1': { action: 'approve', text: 'Se acepta ajustar los alcances de Tipografía I. La descripción se calibrará para reflejar el contenido real del semestre: anatomía, clasificación, legibilidad, jerarquía básica. Los proyectos editoriales complejos (página editorial, publicaciones) se moverán a Tipografía II. Se programará junta con el líder de academia de tipografía para alinear la descripción con la realidad del aula.' },
+    'Sergio Trujillo Pérez|mat-s2-2': { action: 'approve', text: 'Se acepta calibrar los alcances de Ilustración. Para segundo semestre los entregables serán: exploración de técnicas básicas de representación, desarrollo de un estilo gráfico personal incipiente, y aplicación de ilustración en piezas sencillas. Los términos "ilustraciones editoriales" y "narrativas gráficas" se ajustarán al nivel esperado. Se consultará con el líder de academia.' },
+    'Sergio Trujillo Pérez|mat-s2-3': { action: 'approve', text: 'Se agendarán reuniones con los profesores actuales de Concepto y Narrativa (Lenguaje y Significado) para documentar las problemáticas existentes e incorporar los aprendizajes en la nueva descripción.' },
+
+    // === SERGIO — MATERIAS SEM 3 ===
+    'Sergio Trujillo Pérez|mat-s3-0': { action: 'approve', text: 'Se acepta parcialmente. La descripción de Identidad de Marca I se enfocará en los aspectos gráficos del sistema de identidad (emblema, tipografía, color, aplicaciones básicas), reservando la estrategia de marca y el manual completo para Identidad de Marca II. Los aspectos de investigación serán introductorios (brief, benchmark visual), no metodología de investigación formal. Se consultará con el líder de academia.' },
+    'Sergio Trujillo Pérez|mat-s3-1': { action: 'approve', text: 'Se acepta ajustar los alcances de Diseño de Información I. En tercer semestre el enfoque será: principios de jerarquía de información, infografías básicas (a nivel de 3er semestre — no se espera una infografía de nivel profesional), y fundamentos de visualización. Los sistemas de señalética y dashboards se moverán a DI II. El alumno SÍ puede hacer una infografía en 3er semestre, calibrada a su nivel de desarrollo gráfico. Se coordinará con el líder de academia.' },
+    'Sergio Trujillo Pérez|mat-s3-2': { action: 'reject', text: 'Se reconoce la necesidad de más formación en fotografía. Sin embargo, agregar una segunda materia obligatoria de fotografía excedería el límite de 324 créditos. La Concentración A (Dir. de Arte y Fotografía de Producto) ofrece la profundización. Alternativa: se evaluará integrar más componente fotográfico dentro de los Estudios (ej: producción fotográfica como parte del proyecto de identidad). Se discutirá con el comité para buscar una solución dentro de la restricción crediticia.' },
+    'Sergio Trujillo Pérez|mat-s3-3': { action: 'approve', text: 'Observación fundamental. Se ajustará la descripción de Tipografía II para reflejar que los alumnos aún están consolidando reglas, no rompiéndolas. El contenido se enfocará en: diseño editorial básico (no avanzado), micro y macrotipografía aplicada, y composición tipográfica en contextos reales. La experimentación tipográfica se reservará para proyectos de semestres superiores. Se programará junta con el líder de academia de tipografía y se evaluará la posibilidad de integrar el taller de impresión tradicional.' },
+
+    // === SERGIO — MATERIAS SEM 4 ===
+    'Sergio Trujillo Pérez|mat-s4-0': { action: 'approve', text: 'Se acepta revisar la descripción de DI II. Se clarificará que para 4to semestre el enfoque es diseño de sistemas de información (no interfaces de datos en tiempo real). Los fundamentos de UX se introducen aquí de manera básica como parte del proceso de diseño de información, no como disciplina separada. La profundización en UX/UI viene en sem 6 (Estudio de Interacción). Se ajustará la descripción para ser realista al nivel del semestre.' },
+    'Sergio Trujillo Pérez|mat-s4-1': { action: 'approve', text: 'Se evaluará si Gestión de Producción debería impartirse antes (sem 3) para que los alumnos tengan nociones de producción cuando empiecen a trabajar en proyectos de identidad. Se consultará con los profesores actuales sobre la secuencia óptima.' },
+    'Sergio Trujillo Pérez|mat-s4-2': { action: 'approve', text: 'Se agendarán reuniones con los profesores de Diseño de Empaque para definir claramente los límites entre diseño gráfico de empaque y diseño industrial. El alcance de la materia se enfocará en: comunicación visual del empaque, normativas de etiquetado, y sustentabilidad desde la perspectiva gráfica.' },
+    'Sergio Trujillo Pérez|mat-s4-3': { action: 'reject', text: 'Se reconoce que Dirección de Arte es una habilidad fundamental. Sin embargo, moverla a materia obligatoria requeriría eliminar otra materia del tronco común para respetar los 324 créditos. La Concentración A garantiza que quienes la elijan tengan formación profunda en dir. de arte. Para el resto, los Estudios integran decisiones de dirección de arte como parte del proceso de proyecto. Se evaluará reforzar el componente de dirección de arte dentro de los Estudios existentes. Respecto a la segunda materia de fotografía: misma restricción de créditos (ver mat-s3-2).' },
+    'Sergio Trujillo Pérez|mat-s4-4': { action: 'approve', text: 'Se acepta clarificar el título y agregar descripción completa. Se renombró a "Gestión de Proyectos Creativos". Se consultará con los profesores actuales de Gestión para identificar problemáticas y áreas de oportunidad. La materia se diferencia de Gestión de Producción: producción = materialización; proyectos = planificación, coordinación, entrega.' },
+
+    // === SERGIO — MATERIAS SEM 5 ===
+    'Sergio Trujillo Pérez|mat-s5-0': { action: 'approve', text: 'Observación pertinente sobre la secuencia. Se evaluará: (1) si Identidad II debería ir en sem 4 (inmediatamente después de Identidad I) en lugar de sem 5, (2) redistribuir el contenido para que I se enfoque en aspectos gráficos y II en aspectos estratégicos + manual completo, como sugiere el evaluador. Se trabajará con el líder de academia para definir la secuencia óptima.' },
+    'Sergio Trujillo Pérez|mat-s5-3': { action: 'approve', text: 'Se acepta que el título era confuso. La materia se enfoca en frameworks de evaluación y argumentación para decisiones de diseño — no dirección de arte ni estrategia publicitaria. Se mejorará la descripción para ser más clara sobre los entregables: análisis de trade-offs en proyectos, presentaciones argumentadas, evaluación de alternativas. Se evaluará si el contenido puede integrarse dentro de otra materia existente.' },
+
+    // === SERGIO — MATERIAS SEM 6 ===
+    'Sergio Trujillo Pérez|mat-s6-0': { action: 'approve', text: 'Se revisará el orden entre DI II (sem 4) y Estudio de Interacción (sem 6). El argumento es válido: si DI II exige más nivel técnico que el Estudio de Interacción, la secuencia podría no ser la óptima. Se analizará la progresión de complejidad técnica y se ajustará si es necesario.' },
+    'Sergio Trujillo Pérez|mat-s6-1': { action: 'approve', text: 'Observación recurrente y válida sobre materias simultáneas (Diseño de Experiencia + Prototipado en el mismo semestre). Se evaluarán dos opciones: (1) fusionar ambas en una sola materia de mayor peso crediticio, (2) secuenciar: Diseño de Experiencia primero y Prototipado después. Se verificará que no haya duplicación de contenido con Diseño de Servicios (sem 7).' },
+    'Sergio Trujillo Pérez|mat-s6-2': { action: 'approve', text: 'Misma observación que mat-s6-1 — se abordará conjuntamente. La resolución aplicará para ambas materias.' },
+    'Sergio Trujillo Pérez|mat-s6-4': { action: 'approve', text: 'Se acepta que el título necesita clarificación y la descripción ya fue agregada. La materia de IA para Diseño se enfoca en: integración de herramientas de IA generativa con criterio de diseñador, automatización de flujos creativos, y evaluación crítica del rol de la IA. Los alcances se definirán con profesores que ya integran IA en sus cursos actuales.' },
+
+    // === SERGIO — MATERIAS SEM 7 ===
+    'Sergio Trujillo Pérez|mat-s7-0': { action: 'approve', text: 'Se agendarán reuniones con los profesores actuales de Diseño de Servicios para documentar áreas de oportunidad, problemáticas con entregables y alcances reales. Los hallazgos se incorporarán en la descripción final.' },
+    'Sergio Trujillo Pérez|mat-s7-3': { action: 'approve', text: 'Se acepta que el título era confuso. Se renombró a "Consultoría y Estrategia de Diseño". La descripción ya fue agregada: design thinking avanzado, lean startup, métricas de impacto, trabajo con organizaciones reales. Los alcances y entregables se definirán con personas con experiencia en consultoría de diseño.' },
+
+    // === SERGIO — MATERIAS SEM 8 ===
+    'Sergio Trujillo Pérez|mat-s8-0': { action: 'approve', text: 'Observación válida sobre la progresión de negocios. Se aclara que el componente de negocios no aparece solo en sem 8 — se integra progresivamente: brief comercial (sem 3), gestión de producción/presupuestos (sem 4), gestión de proyectos (sem 4), modelo de negocio en Diseño de Servicios (sem 7), y se consolida en sem 8. Sin embargo, se acepta que la progresión debe ser más explícita en las descripciones. Se revisará la Sinergia de Estrategia de Negocios para definir alcances realistas.' },
+    'Sergio Trujillo Pérez|mat-s8-2': { action: 'approve', text: 'Se acepta que el título necesita clarificación. Se renombró a "Emprendimiento Creativo". La descripción fue agregada: lean startup para creativos, MVP, validación con usuarios, marca personal, pitch. Se consultará con profesores con experiencia en emprendimiento (dentro y fuera de UDEM) para definir alcances realistas y evitar prometer lo que 16 semanas no pueden entregar.' },
+  };
+
   // Map item IDs to human-readable labels
   function getItemLabel(id) {
     // Parse ID to find component
@@ -4491,11 +4562,16 @@ async function initApp() {
       const ratingLabel = s.rating === 'red' ? 'Reconsiderar' : 'Ajustar';
 
       let actionsHtml = '';
+      const suggested = SUGGESTED_RESOLUTIONS[key];
       if (s.status === 'pending') {
+        const suggestedLabel = suggested ? (suggested.action === 'approve' ? '💡 Sugerencia: Aprobar' : '💡 Sugerencia: Descartar') : '';
+        const suggestedText = suggested ? suggested.text : '';
         actionsHtml = `
+          ${suggested ? '<div style="font-size:0.72rem;color:var(--accent);margin-bottom:6px;font-weight:600;">' + suggestedLabel + '</div>' : ''}
           <button class="gc-btn approve" onclick="gestionResolve('${key}','approved')">✓ Aprobar</button>
           <button class="gc-btn reject" onclick="gestionResolve('${key}','rejected')">✗ Descartar</button>
-          <textarea class="gc-reason-input" id="reason-${key.replace(/[^a-z0-9]/gi,'_')}" placeholder="Resolución o motivo (opcional)..."></textarea>
+          ${suggested ? '<button class="gc-btn" onclick="document.getElementById(\'reason-' + key.replace(/[^a-z0-9]/gi,'_') + '\').value=SUGGESTED_RESOLUTIONS[\'' + key.replace(/'/g,"\\'") + '\'].text" style="color:var(--accent);border-color:var(--accent-dim);">Usar sugerencia</button>' : ''}
+          <textarea class="gc-reason-input" id="reason-${key.replace(/[^a-z0-9]/gi,'_')}" placeholder="Resolución o motivo...">${suggestedText}</textarea>
         `;
       } else {
         const statusLabel = s.status === 'approved' ? '✓ Aprobada' : '✗ Descartada';
