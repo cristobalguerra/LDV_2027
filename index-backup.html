@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LDV · Plan 2027 · Mapa Curricular</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<style>
+:root {
+  --bg: #0a0a0b;
+  --surface: #141416;
+  --surface-2: #1c1c1f;
+  --surface-3: #242428;
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.12);
+  --text: #f0efe9;
+  --text-secondary: rgba(240,239,233,0.55);
+  --text-tertiary: rgba(240,239,233,0.3);
+
+  /* Refined palette */
+  --lenguaje: #e8a0bf;
+  --lenguaje-bg: rgba(232,160,191,0.08);
+  --sistemas: #7ecba1;
+  --sistemas-bg: rgba(126,203,161,0.08);
+  --experiencia: #7ec8e3;
+  --experiencia-bg: rgba(126,200,227,0.08);
+  --direccion: #e8b87e;
+  --direccion-bg: rgba(232,184,126,0.08);
+  --produccion: #e87e7e;
+  --produccion-bg: rgba(232,126,126,0.08);
+
+  /* Accent */
+  --accent: #c8ff00;
+  --accent-dim: rgba(200,255,0,0.15);
+
+  /* Phase colors */
+  --phase-1: #6366f1;
+  --phase-2: #7ecba1;
+  --phase-3: #7ec8e3;
+  --phase-4: #e8b87e;
+  --phase-5: #c8ff00;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:14px; -webkit-font-smoothing:antialiased; }
+body {
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ===== HEADER ===== */
+.header {
+  position:sticky; top:0; z-index:100;
+  background:rgba(10,10,11,0.85);
+  backdrop-filter:blur(20px) saturate(1.4);
+  border-bottom:1px solid var(--border);
+}
+.header-top {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 40px 0;
+}
+.logo-area { display:flex; align-items:baseline; gap:16px; }
+.logo {
+  font-size:0.7rem; font-weight:700; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--text-secondary);
+}
+.logo span { color:var(--accent); }
+.program-name {
+  font-size:1.6rem; font-weight:800; letter-spacing:-0.03em;
+  background:linear-gradient(135deg, var(--text) 0%, rgba(240,239,233,0.7) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.credits-badge {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.75rem; font-weight:600;
+  color:var(--accent); background:var(--accent-dim);
+  padding:4px 10px; border-radius:100px;
+  letter-spacing:0.05em;
+}
+
+/* Tabs */
+.nav-tabs {
+  display:flex; gap:2px; padding:16px 40px 0;
+}
+.nav-tab {
+  padding:10px 24px; border:none; background:transparent;
+  color:var(--text-secondary); font:inherit; font-size:0.8rem;
+  font-weight:600; letter-spacing:0.04em; text-transform:uppercase;
+  cursor:pointer; border-radius:8px 8px 0 0;
+  transition:all 0.2s;
+}
+.nav-tab:hover { color:var(--text); background:var(--surface); }
+.nav-tab.active {
+  color:var(--text); background:var(--surface);
+  border-bottom:2px solid var(--accent);
+}
+
+/* Filters */
+.filters-bar {
+  display:flex; align-items:center; gap:12px;
+  padding:14px 40px;
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.filter-label {
+  font-size:0.65rem; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--text-tertiary); margin-right:4px;
+}
+.filter-group { display:flex; gap:4px; flex-wrap:wrap; }
+.filter-pill {
+  padding:5px 14px; border-radius:100px;
+  font:inherit; font-size:0.72rem; font-weight:500;
+  border:1px solid var(--border); background:transparent;
+  color:var(--text-secondary); cursor:pointer;
+  transition:all 0.2s;
+}
+.filter-pill:hover { border-color:var(--border-hover); color:var(--text); }
+.filter-pill.active { background:var(--surface-2); border-color:var(--border-hover); color:var(--text); }
+.filter-pill.eje-lenguaje.active { border-color:var(--lenguaje); color:var(--lenguaje); background:var(--lenguaje-bg); }
+.filter-pill.eje-sistemas.active { border-color:var(--sistemas); color:var(--sistemas); background:var(--sistemas-bg); }
+.filter-pill.eje-experiencia.active { border-color:var(--experiencia); color:var(--experiencia); background:var(--experiencia-bg); }
+.filter-pill.eje-direccion.active { border-color:var(--direccion); color:var(--direccion); background:var(--direccion-bg); }
+.filter-pill.eje-produccion.active { border-color:var(--produccion); color:var(--produccion); background:var(--produccion-bg); }
+.filter-separator {
+  width:1px; height:20px; background:var(--border); margin:0 8px;
+}
+
+/* ===== MAPA VIEW ===== */
+.view { display:none; padding:32px 40px 60px; }
+.view.active { display:block; }
+
+/* Phase headers */
+.phases-row {
+  display:grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap:8px; margin-bottom:8px;
+}
+.phase-group {
+  text-align:center; padding:12px 8px;
+  border-radius:12px;
+}
+.phase-label {
+  font-size:0.6rem; font-weight:700;
+  letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--text-tertiary); margin-bottom:4px;
+}
+.phase-name {
+  font-size:0.7rem; font-weight:600;
+  color:var(--text-secondary); line-height:1.3;
+}
+
+/* Semester grid */
+.semesters-grid {
+  display:grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap:8px; align-items:start;
+}
+.semester-col { display:flex; flex-direction:column; gap:6px; }
+
+/* Semester header */
+.sem-header {
+  padding:16px 12px;
+  border-radius:12px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.sem-header::before {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:2px;
+}
+.sem-header.phase-1::before { background:var(--phase-1); }
+.sem-header.phase-2::before { background:var(--phase-2); }
+.sem-header.phase-3::before { background:var(--phase-3); }
+.sem-header.phase-4::before { background:var(--phase-4); }
+.sem-header.phase-5::before { background:var(--phase-5); }
+
+.sem-header .sem-num {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; font-weight:600;
+  letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--text-secondary);
+}
+.sem-header .sem-cr {
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.4rem; font-weight:800;
+  color:var(--text); margin-top:2px;
+  letter-spacing:-0.02em;
+}
+.sem-header .sem-cr-label {
+  font-size:0.6rem; font-weight:500;
+  color:var(--text-tertiary); letter-spacing:0.08em;
+}
+
+/* Course cards */
+.course-card {
+  padding:14px 12px;
+  border-radius:10px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  cursor:pointer;
+  transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
+  position:relative;
+  overflow:hidden;
+  min-height:105px;
+  display:flex;
+  flex-direction:column;
+}
+.course-card::before {
+  content:''; position:absolute; top:0; left:0;
+  width:3px; height:100%; border-radius:0 2px 2px 0;
+}
+.course-card:hover {
+  border-color:var(--border-hover);
+  transform:translateY(-1px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+}
+
+/* Eje accent bars */
+.course-card.eje-lenguaje::before { background:var(--lenguaje); }
+.course-card.eje-sistemas::before { background:var(--sistemas); }
+.course-card.eje-experiencia::before { background:var(--experiencia); }
+.course-card.eje-direccion::before { background:var(--direccion); }
+.course-card.eje-produccion::before { background:var(--produccion); }
+.course-card.eje-multi::before {
+  background:linear-gradient(180deg, var(--lenguaje), var(--sistemas), var(--experiencia), var(--direccion), var(--produccion));
+}
+.course-card.eje-neutral::before { background:var(--text-tertiary); }
+
+/* Card type badge */
+.card-type {
+  display:inline-block; font-size:0.58rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase;
+  padding:2px 8px; border-radius:4px;
+  margin-bottom:6px;
+}
+.card-type.estudio { background:rgba(200,255,0,0.12); color:var(--accent); }
+.card-type.disciplinar { background:rgba(255,255,255,0.06); color:var(--text-secondary); }
+.card-type.sinergia { background:rgba(126,200,227,0.1); color:var(--experiencia); }
+.card-type.certificado { background:rgba(232,184,126,0.1); color:var(--direccion); }
+.card-type.practicas { background:rgba(232,126,126,0.1); color:var(--produccion); }
+.card-type.proyecto { background:rgba(200,255,0,0.12); color:var(--accent); }
+.card-type.general { background:rgba(255,255,255,0.04); color:var(--text-tertiary); }
+.card-type.formacion { background:rgba(255,255,255,0.04); color:var(--text-tertiary); }
+
+.card-name {
+  font-size:0.78rem; font-weight:600;
+  line-height:1.35; color:var(--text);
+  margin-bottom:8px;
+  flex:1;
+}
+.card-footer {
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-credits {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem; font-weight:600;
+  color:var(--text-tertiary);
+}
+.card-dots {
+  display:flex; gap:3px;
+}
+.card-dot {
+  width:6px; height:6px; border-radius:50%;
+}
+.card-dot.lenguaje { background:var(--lenguaje); }
+.card-dot.sistemas { background:var(--sistemas); }
+.card-dot.experiencia { background:var(--experiencia); }
+.card-dot.direccion { background:var(--direccion); }
+.card-dot.produccion { background:var(--produccion); }
+
+/* Estudio card - special treatment */
+.course-card.is-estudio {
+  background:var(--surface-2);
+  border-color:rgba(255,255,255,0.08);
+}
+.course-card.is-estudio .card-name {
+  font-size:0.82rem; font-weight:700;
+}
+
+/* ===== CERTIFICADOS VIEW ===== */
+.certs-intro {
+  max-width:640px; margin-bottom:40px;
+}
+.certs-intro h2 {
+  font-size:0.65rem; font-weight:700;
+  letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:12px;
+}
+.certs-intro p {
+  font-size:1rem; color:var(--text-secondary);
+  line-height:1.6;
+}
+.certs-intro strong { color:var(--text); }
+
+.certs-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.cert-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:32px 28px;
+  position:relative;
+  overflow:hidden;
+  transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.cert-card:hover {
+  border-color:var(--border-hover);
+  transform:translateY(-2px);
+  box-shadow:0 12px 48px rgba(0,0,0,0.4);
+}
+.cert-card::before {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:3px;
+}
+.cert-card.cert-a::before { background:linear-gradient(90deg, var(--lenguaje), var(--produccion)); }
+.cert-card.cert-b::before { background:linear-gradient(90deg, var(--experiencia), var(--sistemas)); }
+.cert-card.cert-c::before { background:linear-gradient(90deg, var(--direccion), var(--produccion)); }
+
+.cert-badge {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.6rem; font-weight:700;
+  letter-spacing:0.15em; text-transform:uppercase;
+  margin-bottom:16px;
+}
+.cert-a .cert-badge { color:var(--lenguaje); }
+.cert-b .cert-badge { color:var(--experiencia); }
+.cert-c .cert-badge { color:var(--direccion); }
+
+.cert-title {
+  font-size:1.2rem; font-weight:800;
+  letter-spacing:-0.02em; line-height:1.25;
+  margin-bottom:8px;
+}
+.cert-subtitle {
+  font-size:0.8rem; font-style:italic;
+  color:var(--text-secondary); margin-bottom:24px;
+}
+
+.cert-section-label {
+  font-size:0.6rem; font-weight:700;
+  letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--text-tertiary); margin-bottom:12px;
+}
+.cert-roles { list-style:none; margin-bottom:28px; }
+.cert-roles li {
+  font-size:0.85rem; color:var(--text-secondary);
+  padding:6px 0;
+  display:flex; align-items:center; gap:10px;
+}
+.cert-roles li::before {
+  content:''; display:block;
+  width:16px; height:1px;
+}
+.cert-a .cert-roles li::before { background:var(--lenguaje); }
+.cert-b .cert-roles li::before { background:var(--experiencia); }
+.cert-c .cert-roles li::before { background:var(--direccion); }
+
+.cert-materias { display:flex; flex-direction:column; gap:8px; }
+.cert-materia {
+  display:flex; align-items:center; gap:12px;
+  padding:10px 14px; border-radius:8px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+}
+.cert-materia-code {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem; font-weight:700;
+  padding:3px 8px; border-radius:4px;
+  flex-shrink:0;
+}
+.cert-a .cert-materia-code { background:var(--lenguaje-bg); color:var(--lenguaje); }
+.cert-b .cert-materia-code { background:var(--experiencia-bg); color:var(--experiencia); }
+.cert-c .cert-materia-code { background:rgba(232,184,126,0.12); color:var(--direccion); }
+
+.cert-materia-name {
+  font-size:0.8rem; font-weight:500;
+  color:var(--text-secondary);
+}
+
+/* ===== LEGEND ===== */
+.legend {
+  display:flex; align-items:center; gap:20px;
+  padding:16px 40px;
+  border-top:1px solid var(--border);
+  margin-top:40px;
+}
+.legend-label {
+  font-size:0.6rem; font-weight:700;
+  letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--text-tertiary);
+}
+.legend-item {
+  display:flex; align-items:center; gap:6px;
+  font-size:0.72rem; color:var(--text-secondary);
+}
+.legend-dot {
+  width:8px; height:8px; border-radius:50%;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:1400px) {
+  .semesters-grid, .phases-row {
+    grid-template-columns: repeat(9, minmax(120px, 1fr));
+    overflow-x:auto;
+  }
+  .view { overflow-x:auto; }
+}
+
+/* ===== TABLET ===== */
+@media (max-width:1024px) {
+  .header-top { padding:16px 20px 0; flex-wrap:wrap; gap:12px; }
+  .logo-area { gap:10px; }
+  .program-name { font-size:1.2rem; }
+  .filters-bar { padding:10px 20px; gap:8px; }
+  .view { padding:20px 20px 40px; }
+  .certs-grid { grid-template-columns:1fr; gap:16px; }
+  .legend { padding:12px 20px; flex-wrap:wrap; gap:12px; }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:768px) {
+  .header-top {
+    padding:14px 16px 0; flex-direction:column; align-items:flex-start; gap:10px;
+  }
+  .logo-area { flex-wrap:wrap; gap:8px; }
+  .logo { font-size:0.6rem; }
+  .program-name { font-size:1rem; }
+  .credits-badge { font-size:0.65rem; padding:3px 8px; }
+  .header-actions { width:100%; justify-content:space-between; }
+  .nav-tabs { flex:1; }
+  .nav-tab { padding:8px 16px; font-size:0.7rem; }
+  .filters-bar {
+    padding:10px 16px; gap:6px; overflow-x:auto;
+    -webkit-overflow-scrolling:touch; flex-wrap:nowrap;
+  }
+  .filter-pill { font-size:0.65rem; padding:4px 10px; white-space:nowrap; }
+  .filter-label { font-size:0.58rem; white-space:nowrap; }
+  .filter-separator { margin:0 4px; }
+
+  /* Phases row: horizontal scroll */
+  .phases-row {
+    grid-template-columns: repeat(9, 140px);
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+    padding-bottom:8px; gap:6px;
+  }
+
+  /* Semesters: horizontal scroll cards */
+  .view { padding:16px 16px 40px; overflow-x:auto; }
+  .semesters-grid {
+    grid-template-columns: repeat(9, 260px);
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+    padding-bottom:16px; gap:6px;
+    scroll-snap-type:x mandatory;
+  }
+  .semester-col { scroll-snap-align:start; min-width:260px; }
+  .course-card { min-height:90px; }
+
+  /* Modal full screen on mobile */
+  .modal-panel { width:100vw; }
+  .modal-header { padding:20px 16px 14px; }
+  .modal-course-name { font-size:1rem; }
+  .modal-body { padding:14px 16px 24px; }
+  .modal-footer { padding:12px 16px; }
+  .modal-field { font-size:0.78rem; min-height:48px; padding:10px 12px; }
+  .comp-item { padding:6px 10px; gap:8px; }
+  .comp-label { font-size:0.72rem; }
+  .file-zone { padding:16px; }
+
+  /* Certs */
+  .certs-intro { margin-bottom:24px; }
+  .certs-intro p { font-size:0.88rem; }
+  .cert-card { padding:24px 20px; }
+  .cert-title { font-size:1rem; }
+
+  /* Legend */
+  .legend { padding:12px 16px; flex-wrap:wrap; gap:8px; }
+  .legend-item { font-size:0.65rem; }
+}
+
+/* ===== SMALL PHONES ===== */
+@media (max-width:400px) {
+  .header-top { padding:10px 12px 0; }
+  .program-name { font-size:0.88rem; }
+  .semesters-grid { grid-template-columns: repeat(9, 230px); }
+  .semester-col { min-width:230px; }
+  .nav-tab { padding:6px 12px; font-size:0.65rem; }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.course-card { animation:fadeIn 0.4s ease backwards; }
+.semester-col:nth-child(1) .course-card { animation-delay:0.02s; }
+.semester-col:nth-child(2) .course-card { animation-delay:0.04s; }
+.semester-col:nth-child(3) .course-card { animation-delay:0.06s; }
+.semester-col:nth-child(4) .course-card { animation-delay:0.08s; }
+.semester-col:nth-child(5) .course-card { animation-delay:0.1s; }
+.semester-col:nth-child(6) .course-card { animation-delay:0.12s; }
+.semester-col:nth-child(7) .course-card { animation-delay:0.14s; }
+.semester-col:nth-child(8) .course-card { animation-delay:0.16s; }
+.semester-col:nth-child(9) .course-card { animation-delay:0.18s; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--surface-3); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,0.15); }
+
+/* ===== COMPETENCIAS DASHBOARD ===== */
+.comp-dashboard { max-width:100%; }
+.comp-dash-title { font-size:1.3rem; font-weight:700; margin-bottom:4px; }
+.comp-dash-subtitle { font-size:0.8rem; color:var(--text-secondary); margin-bottom:16px; }
+.comp-dash-legend { display:flex; gap:16px; margin-bottom:20px; font-size:0.75rem; }
+.comp-dash-legend-item { display:flex; align-items:center; gap:5px; color:var(--text-secondary); }
+.comp-dash-legend-dot { width:24px; height:18px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:0.6rem; font-weight:800; color:#fff; }
+.comp-dash-legend-dot.l-I { background:#a855f7; }
+.comp-dash-legend-dot.l-D { background:#f59e0b; }
+.comp-dash-legend-dot.l-M { background:var(--accent); color:var(--bg); }
+.comp-dash-layout { display:flex; gap:20px; align-items:flex-start; }
+.comp-matrix-wrap { overflow-x:auto; border-radius:12px; border:1px solid var(--border); flex-shrink:0; }
+.comp-matrix { border-collapse:collapse; font-size:0.85rem; }
+.comp-matrix th, .comp-matrix td { padding:8px 6px; text-align:center; border:1px solid var(--border); }
+.comp-matrix th { background:var(--surface-2); font-weight:700; color:var(--text-secondary); position:sticky; top:0; z-index:1; }
+.comp-matrix th.sem-header { font-size:0.78rem; min-width:36px; }
+.comp-matrix td.comp-cell { font-family:'JetBrains Mono',monospace; font-size:0.8rem; font-weight:800; width:36px; }
+.comp-matrix td.comp-name-cell { text-align:left; padding-left:10px; font-size:0.88rem; color:var(--text); white-space:nowrap; background:var(--surface); position:sticky; left:0; z-index:1; }
+.comp-matrix tr.sem-divider td { background:var(--surface-2); padding:4px 10px; font-weight:700; color:var(--text-tertiary); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; }
+.comp-cell-I { background:rgba(168,85,247,0.2); color:#c084fc; }
+.comp-cell-D { background:rgba(245,158,11,0.2); color:#fbbf24; }
+.comp-cell-M { background:rgba(200,255,0,0.15); color:var(--accent); }
+.comp-cell-empty { color:var(--border); }
+.comp-dash-summary { display:flex; flex-direction:column; gap:8px; min-width:220px; max-width:280px; }
+.comp-summary-card { padding:12px; border-radius:10px; background:var(--surface); border:1px solid var(--border); }
+.comp-summary-id { font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:700; color:var(--accent); }
+.comp-summary-label { font-size:0.75rem; color:var(--text-secondary); margin:2px 0 8px; }
+.comp-summary-progress { display:flex; gap:3px; }
+.comp-summary-dot { width:8px; height:8px; border-radius:2px; }
+.comp-summary-dot.filled-I { background:#a855f7; }
+.comp-summary-dot.filled-D { background:#f59e0b; }
+.comp-summary-dot.filled-M { background:var(--accent); }
+.comp-summary-dot.empty { background:var(--surface-3); }
+.comp-summary-status { font-size:0.65rem; margin-top:6px; color:var(--text-tertiary); }
+
+/* ===== MODAL / PLAN ANALÍTICO ===== */
+.modal-overlay {
+  position:fixed; inset:0; z-index:200;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(8px);
+  opacity:0; pointer-events:none;
+  transition:opacity 0.3s;
+}
+.modal-overlay.active { opacity:1; pointer-events:auto; }
+.modal-panel {
+  position:absolute; top:0; right:0; bottom:0;
+  width:min(580px, 92vw);
+  background:var(--bg);
+  border-left:1px solid var(--border);
+  transform:translateX(100%);
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  display:flex; flex-direction:column;
+}
+.modal-overlay.active .modal-panel { transform:translateX(0); }
+.modal-header {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:28px 28px 20px; border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.modal-header-info { flex:1; min-width:0; }
+.modal-close {
+  width:32px; height:32px; border:1px solid var(--border);
+  border-radius:8px; background:transparent; color:var(--text-secondary);
+  font-size:1.1rem; cursor:pointer; display:flex;
+  align-items:center; justify-content:center;
+  transition:all 0.2s; flex-shrink:0; margin-left:12px;
+}
+.modal-close:hover { background:var(--surface-2); color:var(--text); }
+.modal-course-name {
+  font-size:1.2rem; font-weight:800; letter-spacing:-0.02em;
+  line-height:1.3; margin-top:6px;
+}
+.modal-meta {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem; font-weight:500;
+  color:var(--text-tertiary); margin-top:6px;
+}
+.modal-body { flex:1; overflow-y:auto; padding:20px 28px 32px; }
+.modal-section { margin-bottom:20px; }
+.modal-section-label {
+  font-size:0.58rem; font-weight:700;
+  letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--text-tertiary); margin-bottom:8px;
+}
+.modal-field {
+  min-height:56px; padding:12px 14px; border-radius:8px;
+  background:var(--surface); border:1px solid var(--border);
+  font:inherit; font-size:0.82rem; line-height:1.6;
+  color:var(--text-secondary); outline:none;
+  transition:border-color 0.2s, color 0.2s;
+  white-space:pre-wrap;
+}
+.modal-field:focus { border-color:rgba(200,255,0,0.4); color:var(--text); }
+.modal-field:empty::before {
+  content:attr(data-placeholder);
+  color:var(--text-tertiary);
+}
+.modal-footer {
+  padding:14px 28px; border-top:1px solid var(--border);
+  display:flex; gap:8px; flex-shrink:0;
+}
+.btn-action {
+  padding:9px 18px; border-radius:8px;
+  font:inherit; font-size:0.7rem; font-weight:600;
+  letter-spacing:0.04em; text-transform:uppercase;
+  cursor:pointer; transition:all 0.2s;
+  border:1px solid var(--border);
+  background:var(--surface); color:var(--text-secondary);
+  display:flex; align-items:center; gap:6px;
+}
+.btn-action:hover { background:var(--surface-2); color:var(--text); border-color:var(--border-hover); }
+.btn-action.primary { background:var(--accent); color:var(--bg); border-color:var(--accent); }
+.btn-action.primary:hover { background:#d4ff33; }
+.btn-action svg { width:14px; height:14px; }
+.btn-action.danger { border-color:rgba(239,68,68,0.3); color:#ef4444; }
+.btn-action.danger:hover { background:rgba(239,68,68,0.1); border-color:#ef4444; }
+
+/* ===== MODAL TYPE SELECT ===== */
+.modal-type-row { display:flex; align-items:center; gap:8px; }
+.modal-type-select {
+  display:none; font:inherit; font-size:0.62rem; font-weight:600;
+  text-transform:uppercase; letter-spacing:0.06em;
+  padding:3px 8px; border-radius:6px;
+  background:var(--surface); border:1px solid var(--border); color:var(--text-secondary);
+  cursor:pointer; outline:none;
+}
+.modal-type-select:focus { border-color:rgba(200,255,0,0.4); }
+body.role-admin .modal-type-select { display:block; }
+body.role-admin #modalBadge { display:none; }
+
+/* ===== CERT SELECTION ===== */
+.cert-card { cursor:pointer; user-select:none; }
+.cert-card.selected {
+  border-color:var(--accent) !important;
+  box-shadow:0 0 0 1px var(--accent), 0 12px 48px rgba(200,255,0,0.08);
+}
+.cert-check {
+  position:absolute; top:16px; right:16px;
+  width:24px; height:24px; border-radius:6px;
+  border:1px solid var(--border); background:var(--surface-2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.65rem; font-weight:800;
+  color:transparent; transition:all 0.2s;
+}
+.cert-card.selected .cert-check {
+  background:var(--accent); border-color:var(--accent); color:var(--bg);
+}
+
+/* ===== HEADER ACTIONS ===== */
+.header-actions {
+  display:flex; align-items:center; gap:12px;
+}
+.btn-header {
+  padding:8px 14px; border-radius:8px;
+  font:inherit; font-size:0.68rem; font-weight:600;
+  letter-spacing:0.04em; text-transform:uppercase;
+  cursor:pointer; transition:all 0.2s;
+  border:1px solid var(--border);
+  background:transparent; color:var(--text-secondary);
+  display:flex; align-items:center; gap:6px;
+}
+.btn-header:hover { background:var(--surface); color:var(--text); border-color:var(--border-hover); }
+.btn-header svg { width:14px; height:14px; }
+
+/* Cert slot highlight */
+.course-card.cert-filled { border-color:rgba(200,255,0,0.15); }
+
+/* ===== COMPETENCIAS I-D-M ===== */
+.comp-list { display:flex; flex-direction:column; gap:4px; }
+.comp-item {
+  display:flex; align-items:center; gap:10px;
+  padding:8px 12px; border-radius:8px;
+  background:var(--surface); border:1px solid var(--border);
+  user-select:none; transition:all 0.2s;
+}
+.comp-item:hover { border-color:var(--border-hover); }
+.comp-item.has-level { border-color:rgba(200,255,0,0.25); background:rgba(200,255,0,0.04); }
+.comp-id {
+  font-family:'JetBrains Mono',monospace; font-size:0.75rem;
+  font-weight:700; color:var(--text-tertiary); width:30px; flex-shrink:0;
+}
+.comp-label { font-size:0.88rem; color:var(--text-secondary); line-height:1.3; }
+.comp-item.has-level .comp-label { color:var(--text); }
+.comp-level-btns { display:flex; gap:4px; margin-left:12px; flex-shrink:0; }
+.comp-level-btn {
+  width:34px; height:28px; border-radius:6px; border:1.5px solid var(--border-hover);
+  background:transparent; color:var(--text-tertiary); cursor:pointer;
+  font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center; transition:all 0.2s;
+}
+.comp-level-btn:hover { border-color:var(--text-secondary); color:var(--text); }
+.comp-level-btn.active-I { background:#a855f7; border-color:#a855f7; color:#fff; }
+.comp-level-btn.active-D { background:#f59e0b; border-color:#f59e0b; color:#fff; }
+.comp-level-btn.active-M { background:var(--accent); border-color:var(--accent); color:var(--bg); }
+.comp-item.suggested { border-left:2px solid var(--accent); }
+.comp-suggested-badge { color:var(--accent); font-size:0.7rem; flex-shrink:0; margin-right:4px; }
+.comp-suggestion-note { font-size:0.75rem; color:var(--text-tertiary); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.comp-suggestion-note span { color:var(--accent); }
+.comp-legend { display:flex; gap:12px; margin-bottom:10px; font-size:0.7rem; color:var(--text-tertiary); }
+.comp-legend-item { display:flex; align-items:center; gap:4px; }
+.comp-legend-dot { width:10px; height:10px; border-radius:3px; }
+.comp-legend-dot.l-I { background:#a855f7; }
+.comp-legend-dot.l-D { background:#f59e0b; }
+.comp-legend-dot.l-M { background:var(--accent); }
+
+/* ===== BIBLIOGRAFÍA + ARCHIVOS ===== */
+.biblio-list { display:flex; flex-direction:column; gap:6px; }
+.biblio-entry {
+  display:flex; gap:8px; align-items:center;
+}
+.biblio-input {
+  flex:1; padding:8px 12px; border-radius:8px;
+  background:var(--surface); border:1px solid var(--border);
+  font:inherit; font-size:0.82rem; color:var(--text-secondary);
+  outline:none; transition:border-color 0.2s;
+}
+.biblio-input:focus { border-color:rgba(200,255,0,0.4); color:var(--text); }
+.biblio-input::placeholder { color:var(--text-tertiary); }
+.biblio-remove {
+  width:28px; height:28px; border-radius:6px; flex-shrink:0;
+  border:1px solid var(--border); background:transparent;
+  color:var(--text-tertiary); font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s;
+}
+.biblio-remove:hover { background:rgba(232,126,126,0.1); color:var(--produccion); border-color:var(--produccion); }
+.biblio-add {
+  padding:6px 14px; border-radius:8px; border:1px dashed var(--border);
+  background:transparent; color:var(--text-tertiary);
+  font:inherit; font-size:0.72rem; font-weight:600; cursor:pointer;
+  transition:all 0.2s; align-self:flex-start; margin-top:4px;
+}
+.biblio-add:hover { border-color:var(--accent); color:var(--accent); }
+
+/* File upload area */
+.file-zone {
+  margin-top:12px; padding:20px; border-radius:10px;
+  border:2px dashed var(--border); text-align:center;
+  transition:all 0.2s; cursor:pointer;
+}
+.file-zone:hover, .file-zone.drag-over {
+  border-color:var(--accent); background:rgba(200,255,0,0.03);
+}
+.file-zone-label {
+  font-size:0.75rem; color:var(--text-tertiary); line-height:1.5;
+}
+.file-zone-label strong { color:var(--accent); }
+.file-list { margin-top:8px; display:flex; flex-direction:column; gap:4px; }
+.file-item {
+  display:flex; align-items:center; gap:8px;
+  padding:6px 10px; border-radius:6px; background:var(--surface);
+  border:1px solid var(--border); font-size:0.72rem;
+}
+.file-item-name { flex:1; color:var(--text-secondary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.file-item-size { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--text-tertiary); }
+
+/* ===== DRAG & DROP ===== */
+.course-card[draggable="true"] { cursor:grab; }
+.course-card.dragging { opacity:0.4; cursor:grabbing; }
+.semester-col.drag-over { background:var(--accent-dim); border-radius:12px; transition:background 0.2s; }
+
+/* ===== SAVE BUTTON STATES ===== */
+.btn-action.saved { background:#4ade80; color:var(--bg); border-color:#4ade80; pointer-events:none; }
+.btn-action.unsaved { border-color:var(--accent); }
+.btn-action.unsaved::after { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); display:inline-block; margin-left:6px; animation:pulse-dot 1.5s ease infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ===== BANCO DE MATERIAS ===== */
+.bank-empty { text-align:center; padding:60px 20px; color:var(--text-tertiary); }
+.bank-empty svg { width:48px; height:48px; margin-bottom:12px; opacity:0.3; }
+.bank-list { display:flex; flex-direction:column; gap:10px; max-width:800px; }
+.bank-item {
+  padding:16px 20px; border-radius:12px;
+  background:var(--surface); border:1px solid var(--border);
+  display:flex; gap:16px; align-items:flex-start;
+  transition:border-color 0.2s;
+}
+.bank-item:hover { border-color:var(--border-hover); }
+.bank-item-info { flex:1; min-width:0; }
+.bank-item-name { font-weight:700; font-size:0.95rem; margin-bottom:4px; }
+.bank-item-meta { font-size:0.72rem; color:var(--text-secondary); display:flex; gap:12px; flex-wrap:wrap; }
+.bank-item-meta span { display:flex; align-items:center; gap:4px; }
+.bank-item-note {
+  margin-top:8px; padding:8px 12px; border-radius:8px;
+  background:var(--surface-2); border:1px solid var(--border);
+  font-size:0.8rem; color:var(--text-secondary); line-height:1.4;
+  font-style:italic;
+}
+.bank-item-note::before { content:'"'; }
+.bank-item-note::after { content:'"'; }
+.bank-item-actions { display:flex; gap:6px; flex-shrink:0; }
+.bank-btn {
+  padding:6px 14px; border-radius:8px; font:inherit; font-size:0.72rem;
+  font-weight:600; cursor:pointer; border:1px solid var(--border);
+  background:transparent; color:var(--text-secondary); transition:all 0.2s;
+}
+.bank-btn:hover { border-color:var(--border-hover); color:var(--text); }
+.bank-btn.restore { border-color:rgba(200,255,0,0.3); color:var(--accent); }
+.bank-btn.restore:hover { background:var(--accent-dim); }
+.bank-btn.delete { border-color:rgba(239,68,68,0.3); color:#ef4444; }
+.bank-btn.delete:hover { background:rgba(239,68,68,0.1); }
+
+/* Context menu */
+.ctx-menu {
+  position:fixed; z-index:9999; min-width:180px;
+  background:var(--surface-2); border:1px solid var(--border-hover);
+  border-radius:10px; padding:4px; display:none;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+}
+.ctx-menu.show { display:block; }
+.ctx-menu-item {
+  display:flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:8px; border:none;
+  background:transparent; color:var(--text); font:inherit;
+  font-size:0.8rem; cursor:pointer; width:100%; text-align:left;
+}
+.ctx-menu-item:hover { background:var(--surface-3); }
+.ctx-menu-item.danger { color:#ef4444; }
+.ctx-menu-item svg { width:16px; height:16px; flex-shrink:0; }
+
+/* ===== LOGIN OVERLAY ===== */
+.login-overlay {
+  position:fixed; inset:0; z-index:999;
+  background:var(--bg);
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column;
+}
+.login-overlay.hidden { display:none; }
+.login-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:48px 40px;
+  max-width:400px; width:90%;
+  text-align:center;
+}
+.login-logo {
+  font-size:0.65rem; font-weight:700;
+  letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--text-secondary); margin-bottom:8px;
+}
+.login-logo span { color:var(--accent); }
+.login-title {
+  font-size:1.5rem; font-weight:800;
+  letter-spacing:-0.03em; margin-bottom:6px;
+  background:linear-gradient(135deg, var(--text) 0%, rgba(240,239,233,0.7) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.login-subtitle {
+  font-size:0.8rem; color:var(--text-tertiary);
+  margin-bottom:32px;
+}
+.login-btn {
+  width:100%; padding:14px; border-radius:12px;
+  font:inherit; font-size:0.85rem; font-weight:700;
+  letter-spacing:0.02em; cursor:pointer;
+  transition:all 0.2s; border:none; margin-bottom:12px;
+}
+.login-btn.primary {
+  background:var(--accent); color:var(--bg);
+}
+.login-btn.primary:hover { background:#d4ff33; }
+.login-btn.secondary {
+  background:var(--surface-2); color:var(--text-secondary);
+  border:1px solid var(--border);
+}
+.login-btn.secondary:hover { background:var(--surface-3); color:var(--text); }
+.login-divider {
+  display:flex; align-items:center; gap:12px;
+  margin:20px 0; color:var(--text-tertiary); font-size:0.7rem;
+}
+.login-divider::before, .login-divider::after {
+  content:''; flex:1; height:1px; background:var(--border);
+}
+.login-pw-group {
+  display:flex; gap:8px; margin-bottom:8px;
+}
+.login-pw-input {
+  flex:1; padding:12px 14px; border-radius:10px;
+  background:var(--surface-2); border:1px solid var(--border);
+  font:inherit; font-size:0.85rem; color:var(--text);
+  outline:none; transition:border-color 0.2s;
+}
+.login-pw-input:focus { border-color:var(--accent); }
+.login-pw-input::placeholder { color:var(--text-tertiary); }
+.login-pw-btn {
+  padding:12px 20px; border-radius:10px;
+  background:var(--surface-3); border:1px solid var(--border);
+  font:inherit; font-size:0.78rem; font-weight:700;
+  color:var(--text-secondary); cursor:pointer;
+  transition:all 0.2s; white-space:nowrap;
+}
+.login-pw-btn:hover { background:var(--accent); color:var(--bg); border-color:var(--accent); }
+.login-error {
+  font-size:0.72rem; color:var(--produccion);
+  margin-top:6px; min-height:1.2em;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN OVERLAY ===== -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <div class="login-logo"><span>UDEM</span> · CRGS</div>
+    <div class="login-title">LDV · Plan 2027</div>
+    <div class="login-subtitle">Mapa Curricular</div>
+    <button class="login-btn primary" id="btnViewProgram">Ver Programa</button>
+    <div class="login-divider">Administrador</div>
+    <div class="login-pw-group">
+      <input class="login-pw-input" type="password" id="loginPassword" placeholder="Contraseña">
+      <button class="login-pw-btn" id="btnAdminLogin">Entrar</button>
+    </div>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo-area">
+      <div class="logo"><span>UDEM</span></div>
+      <div class="program-name">Licenciatura en Diseño Visual LDV</div>
+      <div class="credits-badge">Plan 2027 · 342 CR</div>
+    </div>
+    <div class="header-actions">
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-view="mapa">Mapa</button>
+        <button class="nav-tab" data-view="certificados">Concentraciones</button>
+        <button class="nav-tab" data-view="competencias">Competencias</button>
+        <button class="nav-tab" data-view="banco">Banco</button>
+      </div>
+      <button class="btn-header" id="btnDownloadMap" title="Descargar mapa curricular PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        PDF
+      </button>
+    </div>
+  </div>
+  <div class="filters-bar" id="filtersBar">
+    <span class="filter-label">Ejes</span>
+    <div class="filter-group">
+      <button class="filter-pill eje-lenguaje active" data-filter="lenguaje">Lenguaje Visual</button>
+      <button class="filter-pill eje-sistemas active" data-filter="sistemas">Sistemas e Identidad</button>
+      <button class="filter-pill eje-experiencia active" data-filter="experiencia">Experiencia e Interacción</button>
+      <button class="filter-pill eje-direccion active" data-filter="direccion">Dirección Estratégica</button>
+      <button class="filter-pill eje-produccion active" data-filter="produccion">Producción y Gestión</button>
+    </div>
+    <div class="filter-separator"></div>
+    <span class="filter-label">Tipo</span>
+    <div class="filter-group">
+      <button class="filter-pill active" data-type="all">Todas</button>
+      <button class="filter-pill" data-type="estudio">Estudio</button>
+      <button class="filter-pill" data-type="disciplinar">Disciplinar</button>
+      <button class="filter-pill" data-type="sinergia">Sinergia</button>
+      <button class="filter-pill" data-type="certificado">Concentración</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAPA VIEW ===== -->
+<div class="view active" id="view-mapa">
+
+  <div class="phases-row">
+    <div class="phase-group" style="grid-column:1/3">
+      <div class="phase-label" style="color:var(--phase-1)">Sems. 1–2</div>
+      <div class="phase-name">Fundamentos</div>
+    </div>
+    <div class="phase-group" style="grid-column:3/6">
+      <div class="phase-label" style="color:var(--phase-2)">Sems. 3–5</div>
+      <div class="phase-name">Sistemas de Identidad y Comunicación</div>
+    </div>
+    <div class="phase-group" style="grid-column:6/7">
+      <div class="phase-label" style="color:var(--phase-3)">Sem. 6</div>
+      <div class="phase-name">Experiencia e Interacción</div>
+    </div>
+    <div class="phase-group" style="grid-column:7/9">
+      <div class="phase-label" style="color:var(--phase-4)">Sems. 7–8</div>
+      <div class="phase-name">Dirección Estratégica</div>
+    </div>
+    <div class="phase-group" style="grid-column:9/10">
+      <div class="phase-label" style="color:var(--phase-5)">Sem. 9</div>
+      <div class="phase-name">Proyecto Profesional</div>
+    </div>
+  </div>
+
+  <div class="semesters-grid" id="semGrid">
+    <!-- SEM 1 -->
+    <div class="semester-col">
+      <div class="sem-header phase-1">
+        <div class="sem-num">Sem 1</div>
+        <div class="sem-cr">36</div>
+        <div class="sem-cr-label">créditos</div>
+      </div>
+      <div class="course-card is-estudio eje-lenguaje" data-axes="lenguaje" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Fundamentos del Diseño I</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
+      <div class="course-card eje-lenguaje" data-axes="lenguaje,sistemas" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Pensamiento Visual y Representación Sistémica</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span><span class="card-dot sistemas"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="lenguaje" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Historia, Cultura y Ética del Diseño</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
+      <div class="course-card eje-produccion" data-axes="produccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SI — Herramientas Digitales para el Diseño</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+    </div>
+
+    <!-- SEM 2 -->
+    <div class="semester-col">
+      <div class="sem-header phase-1">
+        <div class="sem-num">Sem 2</div>
+        <div class="sem-cr">42</div>
+        <div class="sem-cr-label">créditos</div>
+      </div>
+      <div class="course-card is-estudio eje-lenguaje" data-axes="lenguaje" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Fundamentos del Diseño II</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
+      <div class="course-card eje-lenguaje" data-axes="lenguaje" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Tipografía I</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
+      <div class="course-card eje-produccion" data-axes="produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Producción I</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
+      <div class="course-card eje-lenguaje" data-axes="lenguaje" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Ilustración</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="lenguaje" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Semiótica</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+    </div>
+
+    <!-- SEM 3 -->
+    <div class="semester-col">
+      <div class="sem-header phase-2">
+        <div class="sem-num">Sem 3</div>
+        <div class="sem-cr">42</div>
+        <div class="sem-cr-label">créditos</div>
+      </div>
+      <div class="course-card is-estudio eje-sistemas" data-axes="sistemas" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Sistemas de Identidad I</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot sistemas"></span></div></div></div>
+      <div class="course-card eje-sistemas" data-axes="sistemas,experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Diseño de Información I</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot experiencia"></span></div></div></div>
+      <div class="course-card eje-produccion" data-axes="produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Fotografía I</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
+      <div class="course-card eje-lenguaje" data-axes="lenguaje" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Tipografía II</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span></div></div></div>
+      <div class="course-card eje-produccion" data-axes="produccion,experiencia,lenguaje" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SII — Dirección Creativa para Medios Audiovisuales e Interactivos</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span><span class="card-dot experiencia"></span><span class="card-dot lenguaje"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+    </div>
+
+    <!-- SEM 4 -->
+    <div class="semester-col">
+      <div class="sem-header phase-2">
+        <div class="sem-num">Sem 4</div>
+        <div class="sem-cr">48</div>
+        <div class="sem-cr-label">créditos</div>
+      </div>
+      <div class="course-card is-estudio eje-sistemas" data-axes="sistemas,lenguaje" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Sistemas de Identidad II / Narrativa Visual Estratégica</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot lenguaje"></span></div></div></div>
+      <div class="course-card eje-sistemas" data-axes="sistemas,experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Diseño de Información II: Sistemas de Información</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot experiencia"></span></div></div></div>
+      <div class="course-card eje-produccion" data-axes="produccion,lenguaje,experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Fotografía II: Dirección de Arte</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span><span class="card-dot lenguaje"></span><span class="card-dot experiencia"></span></div></div></div>
+      <div class="course-card eje-sistemas" data-axes="sistemas" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Estrategia de Marca</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot sistemas"></span></div></div></div>
+      <div class="course-card eje-produccion" data-axes="produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Producción II: Gestión de Producción</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">Materia de concentración</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+    </div>
+
+    <!-- SEM 5 -->
+    <div class="semester-col">
+      <div class="sem-header phase-2">
+        <div class="sem-num">Sem 5</div>
+        <div class="sem-cr">36</div>
+        <div class="sem-cr-label">créditos</div>
+      </div>
+      <div class="course-card is-estudio eje-sistemas" data-axes="sistemas,lenguaje,experiencia" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Sistemas de Identidad III</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot sistemas"></span><span class="card-dot lenguaje"></span><span class="card-dot experiencia"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SIII — Diseño de Futuros</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">Materia de concentración</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="formacion"><div class="card-type formacion">Formación UDEM</div><div class="card-name">Formación UDEM</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+    </div>
+
+    <!-- SEM 6 -->
+    <div class="semester-col">
+      <div class="sem-header phase-3">
+        <div class="sem-num">Sem 6</div>
+        <div class="sem-cr">42</div>
+        <div class="sem-cr-label">créditos</div>
+      </div>
+      <div class="course-card is-estudio eje-experiencia" data-axes="experiencia" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Estudio de Interacción</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot experiencia"></span></div></div></div>
+      <div class="course-card eje-experiencia" data-axes="experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Diseño de Experiencia</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot experiencia"></span></div></div></div>
+      <div class="course-card eje-experiencia" data-axes="experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Prototipado Interactivo</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot experiencia"></span></div></div></div>
+      <div class="course-card eje-produccion" data-axes="produccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SIV — Producción Artística Interdisciplinaria</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">Materia de concentración</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+    </div>
+
+    <!-- SEM 7 -->
+    <div class="semester-col">
+      <div class="sem-header phase-4">
+        <div class="sem-num">Sem 7</div>
+        <div class="sem-cr">42</div>
+        <div class="sem-cr-label">créditos</div>
+      </div>
+      <div class="course-card is-estudio eje-experiencia" data-axes="experiencia,direccion,produccion" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Diseño de Servicios</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot experiencia"></span><span class="card-dot direccion"></span><span class="card-dot produccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion,produccion" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Liderazgo y Gestión de Diseño</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span><span class="card-dot produccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SV — Investigación para el Diseño</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-produccion" data-axes="produccion" data-type="practicas"><div class="card-type practicas">Prácticas</div><div class="card-name">Prácticas Profesionales</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">Materia de concentración</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+    </div>
+
+    <!-- SEM 8 -->
+    <div class="semester-col">
+      <div class="sem-header phase-4">
+        <div class="sem-num">Sem 8</div>
+        <div class="sem-cr">42</div>
+        <div class="sem-cr-label">créditos</div>
+      </div>
+      <div class="course-card is-estudio eje-multi" data-axes="lenguaje,sistemas,experiencia,direccion,produccion" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Estudio Integral de Diseño</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span><span class="card-dot sistemas"></span><span class="card-dot experiencia"></span><span class="card-dot direccion"></span><span class="card-dot produccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="proyecto"><div class="card-type proyecto">Proyecto Terminal</div><div class="card-name">Proyecto de Evaluación Final I</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">SVI — Estrategia de Negocios para el Diseño</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">Materia de concentración</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-direccion" data-axes="direccion" data-type="certificado"><div class="card-type certificado">Concentración</div><div class="card-name">Materia de concentración</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot direccion"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+    </div>
+
+    <!-- SEM 9 -->
+    <div class="semester-col">
+      <div class="sem-header phase-5">
+        <div class="sem-num">Sem 9</div>
+        <div class="sem-cr">12</div>
+        <div class="sem-cr-label">créditos</div>
+      </div>
+      <div class="course-card is-estudio eje-multi" data-axes="lenguaje,sistemas,experiencia,direccion,produccion" data-type="proyecto"><div class="card-type proyecto">Proyecto Terminal</div><div class="card-name">Proyecto de Evaluación Final II</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot lenguaje"></span><span class="card-dot sistemas"></span><span class="card-dot experiencia"></span><span class="card-dot direccion"></span><span class="card-dot produccion"></span></div></div></div>
+      <div class="course-card eje-neutral" data-axes="" data-type="general"><div class="card-type general">Conocimiento General</div><div class="card-name">Conocimiento General</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"></div></div></div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <span class="legend-label">Ejes</span>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--lenguaje)"></span>Lenguaje Visual</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--sistemas)"></span>Sistemas e Identidad</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--experiencia)"></span>Experiencia e Interacción</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--direccion)"></span>Dirección Estratégica</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--produccion)"></span>Producción y Gestión</div>
+  </div>
+</div>
+
+<!-- ===== CONCENTRACIONES VIEW ===== -->
+<div class="view" id="view-certificados">
+  <div class="certs-intro">
+    <h2>Perfiles de Egreso y Concentraciones Profesionales</h2>
+    <p>Elige <strong>2 concentraciones</strong>. Sus 6 materias ocuparán los slots interdisciplinarios (Sems. 4–8), definiendo tu perfil profesional de egreso.</p>
+  </div>
+
+  <div class="certs-grid">
+    <!-- CERT A -->
+    <div class="cert-card cert-a" data-cert="a">
+      <div class="cert-check">&#10003;</div>
+      <div class="cert-badge">Concentración A</div>
+      <div class="cert-title">Dirección de Marca y Dirección de Arte</div>
+      <div class="cert-subtitle">"Dominio visual avanzado + implementación profesional"</div>
+      <div class="cert-section-label">Roles de egreso</div>
+      <ul class="cert-roles">
+        <li>Director de arte</li>
+        <li>Brand designer</li>
+        <li>Creative lead</li>
+        <li>Especialista en identidad visual</li>
+      </ul>
+      <div class="cert-section-label">Materias</div>
+      <div class="cert-materias">
+        <div class="cert-materia"><span class="cert-materia-code">A1</span><span class="cert-materia-name">Motion y Sistemas de Contenido</span></div>
+        <div class="cert-materia"><span class="cert-materia-code">A2</span><span class="cert-materia-name">Producción Visual Avanzada</span></div>
+        <div class="cert-materia"><span class="cert-materia-code">A3</span><span class="cert-materia-name">Gestión Estratégica de Marca y Portafolio</span></div>
+      </div>
+    </div>
+
+    <!-- CERT B -->
+    <div class="cert-card cert-b" data-cert="b">
+      <div class="cert-check">&#10003;</div>
+      <div class="cert-badge">Concentración B</div>
+      <div class="cert-title">Producto Digital y Sistemas Interactivos</div>
+      <div class="cert-subtitle">"Perfil UX/Product"</div>
+      <div class="cert-section-label">Roles de egreso</div>
+      <ul class="cert-roles">
+        <li>UX / UI designer</li>
+        <li>Product designer</li>
+        <li>Interaction designer</li>
+      </ul>
+      <div class="cert-section-label">Materias</div>
+      <div class="cert-materias">
+        <div class="cert-materia"><span class="cert-materia-code">B1</span><span class="cert-materia-name">Sistemas de Diseño Avanzados</span></div>
+        <div class="cert-materia"><span class="cert-materia-code">B2</span><span class="cert-materia-name">Analítica y Métricas de Producto Digital</span></div>
+        <div class="cert-materia"><span class="cert-materia-code">B3</span><span class="cert-materia-name">Accesibilidad y Experiencia Inclusiva</span></div>
+      </div>
+    </div>
+
+    <!-- CERT C -->
+    <div class="cert-card cert-c" data-cert="c">
+      <div class="cert-check">&#10003;</div>
+      <div class="cert-badge">Concentración C</div>
+      <div class="cert-title">Gestión Estratégica de Servicios y Transformación Organizacional</div>
+      <div class="cert-subtitle">"Perfil estratégico con enfoque consultivo"</div>
+      <div class="cert-section-label">Roles de egreso</div>
+      <ul class="cert-roles">
+        <li>Service designer</li>
+        <li>Design strategist</li>
+        <li>Innovation consultant</li>
+      </ul>
+      <div class="cert-section-label">Materias</div>
+      <div class="cert-materias">
+        <div class="cert-materia"><span class="cert-materia-code">C1</span><span class="cert-materia-name">Diseño de Workshops Estratégicos</span></div>
+        <div class="cert-materia"><span class="cert-materia-code">C2</span><span class="cert-materia-name">Modelos de Innovación y Desarrollo Organizacional</span></div>
+        <div class="cert-materia"><span class="cert-materia-code">C3</span><span class="cert-materia-name">Gestión del Cambio y Cultura de Diseño</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== COMPETENCIAS DASHBOARD ===== -->
+<div class="view" id="view-competencias">
+  <div class="comp-dashboard">
+    <h2 class="comp-dash-title">Matriz Curricular de Competencias</h2>
+    <p class="comp-dash-subtitle">Progresión de competencias del perfil de egreso a lo largo del plan de estudios.</p>
+    <div class="comp-dash-legend">
+      <div class="comp-dash-legend-item"><div class="comp-dash-legend-dot l-I">I</div> Introduce</div>
+      <div class="comp-dash-legend-item"><div class="comp-dash-legend-dot l-D">D</div> Desarrolla</div>
+      <div class="comp-dash-legend-item"><div class="comp-dash-legend-dot l-M">M</div> Domina</div>
+    </div>
+    <div class="comp-dash-layout">
+      <div class="comp-matrix-wrap" id="compMatrixWrap"></div>
+      <div class="comp-dash-summary" id="compDashSummary"></div>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-banco">
+  <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:4px;">Banco de Materias Descartadas</h2>
+  <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:24px;">Materias removidas del plan curricular. Puedes restaurarlas o eliminarlas permanentemente.</p>
+  <div class="bank-list" id="bankList">
+    <div class="bank-empty" id="bankEmpty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7H4a1 1 0 00-1 1v10a2 2 0 002 2h14a2 2 0 002-2V8a1 1 0 00-1-1z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+      <p>No hay materias descartadas</p>
+    </div>
+  </div>
+</div>
+
+<!-- Context menu -->
+<div class="ctx-menu" id="ctxMenu">
+  <button class="ctx-menu-item" id="ctxSendBank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a1 1 0 00-1 1v10a2 2 0 002 2h14a2 2 0 002-2V8a1 1 0 00-1-1z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+    Enviar al Banco
+  </button>
+</div>
+
+<!-- ===== MODAL / PLAN ANALÍTICO ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <div class="modal-header-info">
+        <div class="modal-type-row">
+          <div class="card-type" id="modalBadge"></div>
+          <select class="modal-type-select" id="modalTypeSelect">
+            <option value="estudio">Estudio</option>
+            <option value="disciplinar">Disciplinar</option>
+            <option value="sinergia">Sinergia</option>
+            <option value="certificado">Concentración</option>
+            <option value="formacion">Formación UDEM</option>
+            <option value="general">Conocimiento General</option>
+            <option value="proyecto">Proyecto Terminal</option>
+            <option value="practicas">Prácticas</option>
+          </select>
+        </div>
+        <h2 class="modal-course-name" id="modalCourseName" contenteditable="false"></h2>
+        <div class="modal-meta" id="modalMeta"></div>
+      </div>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <div class="modal-section"><div class="modal-section-label">Objetivo General</div><div class="modal-field" id="field-objetivo" contenteditable="true" data-placeholder="Describe el objetivo general de la materia..."></div></div>
+      <div class="modal-section"><div class="modal-section-label">Objetivos Específicos</div><div class="modal-field" id="field-objetivosEspecificos" contenteditable="true" data-placeholder="1. ...  2. ...  3. ..."></div></div>
+      <div class="modal-section">
+        <div class="modal-section-label">Competencias del Perfil de Egreso</div>
+        <div class="comp-legend">
+          <div class="comp-legend-item"><div class="comp-legend-dot l-I"></div> Introduce</div>
+          <div class="comp-legend-item"><div class="comp-legend-dot l-D"></div> Desarrolla</div>
+          <div class="comp-legend-item"><div class="comp-legend-dot l-M"></div> Domina</div>
+        </div>
+        <div class="comp-suggestion-note" id="compSuggestionNote"><span>★</span> Nivel sugerido para esta asignatura</div>
+        <div class="comp-list" id="compList"></div>
+      </div>
+      <div class="modal-section"><div class="modal-section-label">Contenido Temático</div><div class="modal-field" id="field-contenido" contenteditable="true" data-placeholder="Unidad 1: ...  Unidad 2: ...  Unidad 3: ..."></div></div>
+      <div class="modal-section"><div class="modal-section-label">Metodología de Enseñanza</div><div class="modal-field" id="field-metodologia" contenteditable="true" data-placeholder="Estrategias didácticas, actividades de aprendizaje..."></div></div>
+      <div class="modal-section"><div class="modal-section-label">Criterios de Evaluación</div><div class="modal-field" id="field-evaluacion" contenteditable="true" data-placeholder="Proyectos: 40%  Exámenes: 30%  Participación: 30%"></div></div>
+      <div class="modal-section">
+        <div class="modal-section-label">Bibliografía</div>
+        <div class="biblio-list" id="biblioList"></div>
+        <button class="biblio-add" id="biblioAdd">+ Agregar referencia</button>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">Archivos</div>
+        <div class="file-zone" id="fileZone">
+          <div class="file-zone-label">Arrastra archivos aquí o <strong>haz clic</strong><br><span style="font-size:0.65rem">Máx. 5 MB por archivo</span></div>
+          <input type="file" id="fileInput" multiple style="display:none">
+        </div>
+        <div class="file-list" id="fileList"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-action primary" id="btnSave">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Grabar
+      </button>
+      <button class="btn-action" id="btnDownloadPlan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        PDF
+      </button>
+      <button class="btn-action" id="btnCloseModal">Cerrar</button>
+      <button class="btn-action danger" id="btnToBanco" style="margin-left:auto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        Mover a banco
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== USER ROLE =====
+let userRole = null; // 'admin' | 'viewer'
+
+// ===== LOGIN =====
+document.getElementById('btnViewProgram').addEventListener('click', () => enterApp('viewer'));
+document.getElementById('btnAdminLogin').addEventListener('click', () => {
+  const pw = document.getElementById('loginPassword').value;
+  if (pw === 'ldv2027') { enterApp('admin'); }
+  else { document.getElementById('loginError').textContent = 'Contraseña incorrecta'; }
+});
+document.getElementById('loginPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('btnAdminLogin').click();
+});
+
+function enterApp(role) {
+  userRole = role;
+  document.getElementById('loginOverlay').classList.add('hidden');
+  document.body.classList.toggle('role-admin', role === 'admin');
+  applyRole();
+  initApp();
+}
+
+function applyRole() {
+  if (userRole === 'viewer') {
+    // Disable drag & drop
+    document.querySelectorAll('#semGrid .course-card').forEach(card => {
+      card.removeAttribute('draggable');
+      card.style.cursor = 'pointer';
+    });
+    // Hide save button, biblio add, file upload, banco in modal
+    document.getElementById('btnSave').style.display = 'none';
+    document.getElementById('biblioAdd').style.display = 'none';
+    document.getElementById('fileZone').style.display = 'none';
+    document.getElementById('btnToBanco').style.display = 'none';
+    // Make text fields not editable
+    document.querySelectorAll('.modal-field[contenteditable]').forEach(f => {
+      f.setAttribute('contenteditable', 'false');
+      f.style.cursor = 'default';
+    });
+  }
+}
+
+// ===== FIREBASE + STORAGE =====
+let db = null;
+try {
+  const firebaseConfig = {
+    apiKey: "AIzaSyBBL_4-qLh8HIwyS_nHE42mIF63UNnp5Kc",
+    authDomain: "ldgd-udem.firebaseapp.com",
+    databaseURL: "https://ldgd-udem-default-rtdb.firebaseio.com",
+    projectId: "ldgd-udem",
+    storageBucket: "ldgd-udem.firebasestorage.app",
+    messagingSenderId: "260800156279",
+    appId: "1:260800156279:web:de3218454fe72b8fc46c72"
+  };
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+} catch(e) { console.log('Firebase not configured, using localStorage'); }
+
+const LS_PLANS = 'ldgd-plan-analitico';
+const LS_CERTS = 'ldgd-selected-certs';
+const LS_LAYOUT = 'ldgd-layout';
+
+function loadLocal(key) { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } }
+function saveLocal(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) { console.warn('localStorage full'); } }
+
+async function dbGet(path) {
+  if (db) { const snap = await db.ref('ldgd/' + path).once('value'); return snap.val(); }
+  return loadLocal('ldgd-' + path.replace(/\//g,'-'));
+}
+async function dbSet(path, val) {
+  if (db) { await db.ref('ldgd/' + path).set(val); }
+  saveLocal('ldgd-' + path.replace(/\//g,'-'), val);
+}
+
+function getCourseId(card) {
+  return card.dataset.id || '';
+}
+
+// ===== ASSIGN UNIQUE IDs TO CARDS =====
+(function assignCardIds() {
+  const counts = {};
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
+    const name = card.querySelector('.card-name').textContent.trim();
+    const slug = name.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi, '-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+    counts[slug] = (counts[slug] || 0) + 1;
+    const id = counts[slug] > 1 ? slug + '-' + counts[slug] : slug;
+    card.dataset.id = id;
+    card.dataset.origId = id; // preserve original HTML id for customizations lookup
+  });
+})();
+
+// ===== COMPETENCIAS DATA =====
+const COMPETENCIAS = [
+  { id:'C1', label:'Dominio del lenguaje visual y comunicación gráfica' },
+  { id:'C2', label:'Diseño y gestión de sistemas de identidad' },
+  { id:'C3', label:'Diseño de experiencias e interacción digital' },
+  { id:'C4', label:'Dirección estratégica de proyectos de diseño' },
+  { id:'C5', label:'Gestión de producción y recursos' },
+  { id:'C6', label:'Pensamiento crítico y de investigación' },
+  { id:'C7', label:'Innovación y desarrollo creativo' },
+  { id:'C8', label:'Liderazgo y trabajo interdisciplinario' },
+  { id:'C9', label:'Comunicación efectiva y argumentación' },
+  { id:'C10', label:'Ética profesional y responsabilidad social' },
+  { id:'C11', label:'Uso estratégico de tecnología digital' },
+  { id:'C12', label:'Emprendimiento y visión de negocios' }
+];
+
+const SUGGESTED_COMPS = {
+  // SEM 1 — mayormente Introduce
+  'fundamentos-del-diseño-i':{C1:'I',C7:'I',C9:'I'},
+  'pensamiento-visual-y-representación-sistémica':{C1:'I',C6:'I',C7:'I'},
+  'historia-cultura-y-ética-del-diseño':{C6:'I',C10:'I'},
+  'si-herramientas-digitales-para-el-diseño':{C5:'I',C11:'I'},
+  'formación-udem':{C10:'I'},
+  // SEM 2 — Introduce + primeros Develop
+  'fundamentos-del-diseño-ii':{C1:'D',C7:'I',C9:'I'},
+  'tipografía-i':{C1:'I'},
+  'producción-i':{C5:'I',C11:'I'},
+  'ilustración':{C1:'I',C7:'I'},
+  'semiótica':{C1:'I',C6:'I',C9:'I'},
+  // SEM 3 — Develop
+  'sistemas-de-identidad-i':{C1:'D',C2:'I',C7:'D'},
+  'diseño-de-información-i':{C2:'I',C3:'I',C6:'D'},
+  'fotografía-i':{C1:'D',C5:'I'},
+  'tipografía-ii':{C1:'D',C2:'I'},
+  'sii-dirección-creativa-para-medios-audiovisuales-e-interactivos':{C1:'D',C5:'I',C7:'D',C11:'D'},
+  // SEM 4 — Develop
+  'sistemas-de-identidad-ii-narrativa-visual-estratégica':{C1:'D',C2:'D',C4:'I',C9:'D'},
+  'diseño-de-información-ii-sistemas-de-información':{C2:'D',C3:'D',C6:'D',C11:'D'},
+  'fotografía-ii-dirección-de-arte':{C1:'D',C4:'I',C5:'D'},
+  'estrategia-de-marca':{C2:'D',C4:'I',C12:'I'},
+  'producción-ii-gestión-de-producción':{C5:'D',C11:'D'},
+  // SEM 5 — Develop → Master
+  'sistemas-de-identidad-iii':{C1:'M',C2:'D',C3:'D',C7:'D'},
+  'siii-diseño-de-futuros':{C4:'D',C6:'D',C7:'D'},
+  // SEM 6 — Develop → Master
+  'estudio-de-interacción':{C3:'D',C7:'D',C11:'D'},
+  'diseño-de-experiencia':{C3:'D',C6:'D'},
+  'prototipado-interactivo':{C3:'D',C7:'D',C11:'D'},
+  'siv-producción-artística-interdisciplinaria':{C5:'D',C7:'M',C8:'D'},
+  // SEM 7 — Master
+  'diseño-de-servicios':{C3:'M',C4:'D',C8:'D',C12:'D'},
+  'liderazgo-y-gestión-de-diseño':{C4:'D',C5:'M',C8:'D',C12:'D'},
+  'sv-investigación-para-el-diseño':{C4:'D',C6:'M'},
+  'prácticas-profesionales':{C5:'M',C8:'M',C10:'M'},
+  // SEM 8 — Master
+  'estudio-integral-de-diseño':{C1:'M',C2:'M',C3:'M',C4:'M',C7:'M'},
+  'proyecto-de-evaluación-final-i':{C4:'M',C6:'M',C9:'M'},
+  'svi-estrategia-de-negocios-para-el-diseño':{C4:'M',C12:'M'},
+  // SEM 9 — Master
+  'proyecto-de-evaluación-final-ii':{C4:'M',C6:'M',C7:'M',C9:'M'},
+};
+
+// ===== TAB SWITCHING =====
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('view-' + tab.dataset.view).classList.add('active');
+    document.getElementById('filtersBar').style.display = tab.dataset.view === 'mapa' ? 'flex' : 'none';
+    if (tab.dataset.view === 'competencias') buildCompDashboard();
+    if (tab.dataset.view === 'banco') renderBank();
+  });
+});
+
+// ===== EJE FILTERS =====
+document.querySelectorAll('.filter-pill[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => { btn.classList.toggle('active'); applyFilters(); });
+});
+const typeFilters = document.querySelectorAll('.filter-pill[data-type]');
+typeFilters.forEach(btn => {
+  btn.addEventListener('click', () => {
+    typeFilters.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  });
+});
+function applyFilters() {
+  const activeEjes = [...document.querySelectorAll('.filter-pill[data-filter].active')].map(b => b.dataset.filter);
+  const activeType = document.querySelector('.filter-pill[data-type].active')?.dataset.type || 'all';
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
+    const cardAxes = (card.dataset.axes || '').split(',').filter(Boolean);
+    const cardType = card.dataset.type;
+    const matchEje = cardAxes.length === 0 || cardAxes.some(a => activeEjes.includes(a));
+    const matchType = activeType === 'all' || cardType === activeType;
+    card.style.opacity = matchEje && matchType ? '1' : '0.12';
+    card.style.transform = matchEje && matchType ? 'scale(1)' : 'scale(0.98)';
+    card.style.pointerEvents = matchEje && matchType ? 'auto' : 'none';
+  });
+}
+
+// ===== MODAL / PLAN ANALÍTICO =====
+const overlay = document.getElementById('modalOverlay');
+const modalName = document.getElementById('modalCourseName');
+const modalBadge = document.getElementById('modalBadge');
+const modalMeta = document.getElementById('modalMeta');
+const compList = document.getElementById('compList');
+const biblioList = document.getElementById('biblioList');
+const fileListEl = document.getElementById('fileList');
+let currentCourseId = null;
+let currentCard = null;
+let currentFiles = [];
+let _savedSnapshot = null;
+
+const textFields = ['objetivo','objetivosEspecificos','contenido','metodologia','evaluacion'];
+
+function markUnsaved() {
+  if (userRole !== 'admin') return;
+  const btn = document.getElementById('btnSave');
+  if (!btn.classList.contains('saved')) btn.classList.add('unsaved');
+}
+function snapshotPlan() { _savedSnapshot = JSON.stringify(gatherPlanData()); }
+function hasChanges() { return _savedSnapshot !== JSON.stringify(gatherPlanData()); }
+
+// checked = {C1:'I', C3:'D'} or ['C1','C3'] (legacy), suggested = {C1:'I', C7:'D'} or []
+function renderCompetencias(checked, suggested) {
+  // Normalize legacy array format to object
+  if (Array.isArray(checked)) { const obj = {}; checked.forEach(id => { obj[id] = 'I'; }); checked = obj; }
+  suggested = suggested || {};
+  if (Array.isArray(suggested)) { const obj = {}; suggested.forEach(id => { obj[id] = 'I'; }); suggested = obj; }
+  compList.innerHTML = '';
+  const levels = ['I','D','M'];
+  COMPETENCIAS.forEach(c => {
+    const isSuggested = !!suggested[c.id];
+    const currentLevel = checked[c.id] || null;
+    const item = document.createElement('div');
+    item.className = 'comp-item' + (currentLevel ? ' has-level' : '') + (isSuggested ? ' suggested' : '');
+    item.dataset.compId = c.id;
+    item.dataset.level = currentLevel || '';
+    let btnsHtml = levels.map(l =>
+      `<button class="comp-level-btn${currentLevel === l ? ' active-' + l : ''}" data-level="${l}">${l}</button>`
+    ).join('');
+    item.innerHTML = `<span class="comp-id">${c.id}</span><span class="comp-label">${c.label}</span>` +
+      (isSuggested ? `<span class="comp-suggested-badge" title="Sugerido: ${suggested[c.id]}">★${suggested[c.id]}</span>` : '') +
+      `<div class="comp-level-btns">${btnsHtml}</div>`;
+    item.querySelectorAll('.comp-level-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const lvl = btn.dataset.level;
+        const isActive = btn.classList.contains('active-' + lvl);
+        item.querySelectorAll('.comp-level-btn').forEach(b => b.className = 'comp-level-btn');
+        if (isActive) { item.dataset.level = ''; item.classList.remove('has-level'); }
+        else { btn.classList.add('active-' + lvl); item.dataset.level = lvl; item.classList.add('has-level'); }
+        markUnsaved();
+      });
+    });
+    if (userRole === 'viewer') item.querySelectorAll('.comp-level-btn').forEach(b => { b.disabled = true; b.style.pointerEvents = 'none'; });
+    compList.appendChild(item);
+  });
+}
+function getCheckedComps() {
+  const result = {};
+  compList.querySelectorAll('.comp-item').forEach(el => {
+    const lvl = el.dataset.level;
+    if (lvl) result[el.dataset.compId] = lvl;
+  });
+  return result;
+}
+
+function renderBiblio(refs) {
+  biblioList.innerHTML = '';
+  (refs.length ? refs : ['']).forEach((r, i) => addBiblioEntry(r));
+}
+function addBiblioEntry(val) {
+  const entry = document.createElement('div');
+  entry.className = 'biblio-entry';
+  entry.innerHTML = `<input class="biblio-input" type="text" placeholder="Autor (Año). Título. Editorial." value="${(val||'').replace(/"/g,'&quot;')}"><button class="biblio-remove">&times;</button>`;
+  entry.querySelector('.biblio-remove').addEventListener('click', () => {
+    if (biblioList.children.length > 1) entry.remove();
+    else entry.querySelector('.biblio-input').value = '';
+  });
+  biblioList.appendChild(entry);
+}
+function getBiblioRefs() {
+  return [...biblioList.querySelectorAll('.biblio-input')].map(i => i.value.trim()).filter(Boolean);
+}
+
+function renderFiles(files) {
+  currentFiles = files || [];
+  fileListEl.innerHTML = '';
+  currentFiles.forEach((f, i) => {
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    const sizeKB = f.size ? (f.size / 1024).toFixed(0) + ' KB' : '';
+    item.innerHTML = `<span class="file-item-name">${f.name}</span><span class="file-item-size">${sizeKB}</span><button class="biblio-remove">&times;</button>`;
+    item.querySelector('.biblio-remove').addEventListener('click', () => { currentFiles.splice(i, 1); renderFiles(currentFiles); });
+    fileListEl.appendChild(item);
+  });
+}
+
+// File upload handlers
+const fileZone = document.getElementById('fileZone');
+const fileInput = document.getElementById('fileInput');
+fileZone.addEventListener('click', () => fileInput.click());
+fileZone.addEventListener('dragover', e => { e.preventDefault(); fileZone.classList.add('drag-over'); });
+fileZone.addEventListener('dragleave', () => fileZone.classList.remove('drag-over'));
+fileZone.addEventListener('drop', e => { e.preventDefault(); fileZone.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', () => { handleFiles(fileInput.files); fileInput.value = ''; });
+
+function handleFiles(filesList) {
+  [...filesList].forEach(file => {
+    if (file.size > 5 * 1024 * 1024) { alert('Archivo "' + file.name + '" excede 5 MB'); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      currentFiles.push({ name: file.name, size: file.size, type: file.type, data: reader.result });
+      renderFiles(currentFiles);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+document.getElementById('biblioAdd').addEventListener('click', () => addBiblioEntry(''));
+
+async function openModal(card) {
+  currentCard = card;
+  const name = card.querySelector('.card-name').textContent;
+  const type = card.querySelector('.card-type')?.textContent || '';
+  const credits = card.querySelector('.card-credits')?.textContent || '';
+  currentCourseId = getCourseId(card);
+  modalName.textContent = name;
+  modalBadge.textContent = type;
+  modalBadge.className = 'card-type ' + type.toLowerCase();
+  modalMeta.textContent = credits + ' · Plan 2027';
+  openModalAdmin(card);
+
+  const plans = (await dbGet('plans')) || {};
+  const plan = plans[currentCourseId] || {};
+  textFields.forEach(k => {
+    const el = document.getElementById('field-' + k);
+    if (el) el.textContent = plan[k] || '';
+  });
+  const suggested = SUGGESTED_COMPS[currentCourseId] || {};
+  renderCompetencias(plan.competencias || suggested, suggested);
+  document.getElementById('compSuggestionNote').style.display = Object.keys(suggested).length ? '' : 'none';
+  renderBiblio(plan.bibliografia || []);
+  renderFiles(plan.archivos || []);
+
+  // Reset save button
+  const saveBtn = document.getElementById('btnSave');
+  saveBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Grabar';
+  saveBtn.classList.remove('saved', 'unsaved');
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  snapshotPlan();
+}
+
+function closeModal() {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+  currentCourseId = null;
+  currentCard = null;
+  currentFiles = [];
+}
+
+function gatherPlanData() {
+  const plan = {};
+  textFields.forEach(k => {
+    const el = document.getElementById('field-' + k);
+    if (el) plan[k] = el.textContent.trim();
+  });
+  plan.competencias = getCheckedComps();
+  plan.bibliografia = getBiblioRefs();
+  plan.archivos = currentFiles;
+  return plan;
+}
+
+async function savePlan() {
+  if (!currentCourseId) return;
+  const plans = (await dbGet('plans')) || {};
+  const plan = gatherPlanData();
+  const hasContent = textFields.some(k => plan[k]) || Object.keys(plan.competencias).length || plan.bibliografia.length || plan.archivos.length;
+  if (hasContent) { plans[currentCourseId] = plan; } else { delete plans[currentCourseId]; }
+  await dbSet('plans', plans);
+  const btn = document.getElementById('btnSave');
+  btn.innerHTML = '&#10003; Guardado'; btn.classList.remove('unsaved'); btn.classList.add('saved');
+  snapshotPlan();
+  setTimeout(() => { btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Grabar'; btn.classList.remove('saved'); }, 2000);
+}
+
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('btnCloseModal').addEventListener('click', closeModal);
+document.getElementById('btnSave').addEventListener('click', savePlan);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal(); });
+document.querySelector('.modal-body').addEventListener('input', markUnsaved);
+
+// ===== DRAG & DROP =====
+let draggedCard = null;
+
+document.querySelectorAll('#semGrid .course-card').forEach(card => {
+  card.setAttribute('draggable', 'true');
+  card.addEventListener('click', e => {
+    if (card._wasDragged) { card._wasDragged = false; return; }
+    openModal(card);
+  });
+  card.addEventListener('dragstart', e => {
+    draggedCard = card;
+    card.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', card.dataset.id);
+  });
+  card.addEventListener('dragend', () => {
+    card.classList.remove('dragging');
+    document.querySelectorAll('.semester-col.drag-over').forEach(c => c.classList.remove('drag-over'));
+    if (draggedCard && draggedCard._didDrop) { draggedCard._wasDragged = true; }
+    draggedCard._didDrop = false;
+    draggedCard = null;
+  });
+});
+
+document.querySelectorAll('.semester-col').forEach(col => {
+  col.addEventListener('dragover', e => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    col.classList.add('drag-over');
+  });
+  col.addEventListener('dragleave', e => {
+    if (!col.contains(e.relatedTarget)) col.classList.remove('drag-over');
+  });
+  col.addEventListener('drop', e => {
+    e.preventDefault();
+    col.classList.remove('drag-over');
+    if (!draggedCard) return;
+    // Insert before the closest card, or append at end
+    const afterElement = getDragAfterElement(col, e.clientY);
+    if (afterElement) {
+      col.insertBefore(draggedCard, afterElement);
+    } else {
+      col.appendChild(draggedCard);
+    }
+    draggedCard._didDrop = true;
+    recalcCredits();
+    saveLayout();
+  });
+});
+
+function getDragAfterElement(col, y) {
+  const cards = [...col.querySelectorAll('.course-card:not(.dragging)')];
+  let closest = null, closestOffset = Number.NEGATIVE_INFINITY;
+  cards.forEach(card => {
+    const box = card.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > closestOffset) { closestOffset = offset; closest = card; }
+  });
+  return closest;
+}
+
+// ===== CREDIT RECALCULATION =====
+function recalcCredits() {
+  let total = 0;
+  document.querySelectorAll('.semester-col').forEach(col => {
+    let semTotal = 0;
+    col.querySelectorAll('.course-card').forEach(card => {
+      const crText = card.querySelector('.card-credits')?.textContent || '';
+      const cr = parseInt(crText) || 0;
+      semTotal += cr;
+    });
+    total += semTotal;
+    const semCrEl = col.querySelector('.sem-cr');
+    if (semCrEl) semCrEl.textContent = semTotal;
+  });
+  const badge = document.querySelector('.credits-badge');
+  if (badge) badge.textContent = 'Plan 2027 · ' + total + ' CR';
+}
+
+// ===== LAYOUT SAVE/LOAD (REAL-TIME SYNC) =====
+let _layoutSaving = false; // prevent echo when we just saved
+
+let _layoutTimer = null;
+function saveLayout() {
+  if (userRole === 'viewer') return;
+  clearTimeout(_layoutTimer);
+  _layoutTimer = setTimeout(async () => {
+    const layout = {};
+    document.querySelectorAll('.semester-col').forEach((col, i) => {
+      layout['sem' + (i + 1)] = [...col.querySelectorAll('.course-card')].map(c => c.dataset.origId || c.dataset.id);
+    });
+    _layoutSaving = true;
+    await dbSet('layout', layout);
+    setTimeout(() => { _layoutSaving = false; }, 500);
+  }, 1500);
+}
+
+function applyLayout(layout) {
+  if (!layout) return;
+  const cardMap = {};
+  document.querySelectorAll('#semGrid .course-card').forEach(c => {
+    cardMap[c.dataset.origId || c.dataset.id] = c;
+    // Also index by current id for backward compat with old layout data
+    if (c.dataset.id !== c.dataset.origId) cardMap[c.dataset.id] = c;
+  });
+  document.querySelectorAll('.semester-col').forEach((col, i) => {
+    const ids = layout['sem' + (i + 1)];
+    if (!ids) return;
+    ids.forEach(id => {
+      if (cardMap[id]) col.appendChild(cardMap[id]);
+    });
+  });
+  recalcCredits();
+}
+
+async function loadLayout() {
+  if (db) {
+    db.ref('ldgd/layout').on('value', snap => {
+      if (_layoutSaving) return; // skip echo from our own save
+      applyLayout(snap.val());
+    });
+  } else {
+    applyLayout(loadLocal(LS_LAYOUT));
+  }
+}
+
+// ===== CERTIFICATE SELECTION =====
+const certMaterias = {
+  a: ['Motion y Sistemas de Contenido', 'Producción Visual Avanzada', 'Gestión Estratégica de Marca y Portafolio'],
+  b: ['Sistemas de Diseño Avanzados', 'Analítica y Métricas de Producto Digital', 'Accesibilidad y Experiencia Inclusiva'],
+  c: ['Diseño de Workshops Estratégicos', 'Modelos de Innovación y Desarrollo Organizacional', 'Gestión del Cambio y Cultura de Diseño']
+};
+let selectedCerts = [];
+let _certsSaving = false;
+
+async function loadCerts() {
+  if (db) {
+    db.ref('ldgd/certs').on('value', snap => {
+      if (_certsSaving) return;
+      selectedCerts = snap.val() || [];
+      syncCertUI();
+    });
+  } else {
+    selectedCerts = loadLocal(LS_CERTS) || [];
+    syncCertUI();
+  }
+}
+async function saveCertsDB() {
+  if (userRole === 'viewer') return; // viewers don't persist cert changes
+  _certsSaving = true;
+  await dbSet('certs', selectedCerts);
+  setTimeout(() => { _certsSaving = false; }, 500);
+}
+
+function syncCertUI() {
+  document.querySelectorAll('.cert-card').forEach(card => {
+    card.classList.toggle('selected', selectedCerts.includes(card.dataset.cert));
+  });
+  const slots = document.querySelectorAll('#semGrid .course-card[data-type="certificado"]');
+  const materias = [];
+  selectedCerts.forEach(c => (certMaterias[c] || []).forEach(m => materias.push(m)));
+  slots.forEach((slot, i) => {
+    const nameEl = slot.querySelector('.card-name');
+    if (i < materias.length) { nameEl.textContent = materias[i]; slot.classList.add('cert-filled'); }
+    else { nameEl.textContent = 'Materia de concentración'; slot.classList.remove('cert-filled'); }
+  });
+}
+
+document.querySelectorAll('.cert-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const id = card.dataset.cert;
+    if (selectedCerts.includes(id)) { selectedCerts = selectedCerts.filter(c => c !== id); }
+    else if (selectedCerts.length < 2) { selectedCerts.push(id); }
+    else { selectedCerts.shift(); selectedCerts.push(id); }
+    saveCertsDB();
+    syncCertUI();
+  });
+});
+
+// ===== PDF GENERATION =====
+document.getElementById('btnDownloadMap').addEventListener('click', generateMapPDF);
+document.getElementById('btnDownloadPlan').addEventListener('click', generatePlanPDF);
+
+async function generateMapPDF() {
+  if (!window.jspdf) { alert('La librería PDF aún no carga. Espera unos segundos e intenta de nuevo.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('l', 'mm', 'a3');
+  const pw = doc.internal.pageSize.getWidth();
+  const ph = doc.internal.pageSize.getHeight();
+  const footer = () => { doc.setFontSize(6); doc.setTextColor(170); doc.text('LDV Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 15, ph - 8); };
+  const certNames = { a:'Concentración A: Dirección de Marca y Dirección de Arte', b:'Concentración B: Producto Digital y Sistemas Interactivos', c:'Concentración C: Gestión Estratégica de Servicios' };
+
+  // ===== PAGE 1: MAPA CURRICULAR =====
+  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS', 15, 15);
+  doc.setFontSize(18); doc.setTextColor(30); doc.text('LDV · Licenciatura en Diseño Visual', 15, 24);
+  doc.setFontSize(10); doc.setTextColor(100); doc.text('Plan 2027 · ' + document.querySelector('.credits-badge').textContent.split('·').pop().trim(), 15, 31);
+  if (selectedCerts.length) { doc.text('Concentraciones: ' + selectedCerts.map(c => certNames[c]).join(' + '), 15, 37); }
+  const startY = 44; const colW = (pw - 30) / 9;
+  document.querySelectorAll('.semester-col').forEach((col, i) => {
+    const x = 15 + i * colW; let y = startY;
+    const semNum = col.querySelector('.sem-num')?.textContent || '';
+    const semCr = col.querySelector('.sem-cr')?.textContent || '';
+    doc.setFillColor(240,240,240); doc.rect(x, y, colW - 2, 12, 'F');
+    doc.setFontSize(7); doc.setTextColor(100); doc.text(semNum, x + 3, y + 5);
+    doc.setFontSize(10); doc.setTextColor(30); doc.text(semCr + ' cr', x + 3, y + 10);
+    y += 15;
+    col.querySelectorAll('.course-card').forEach(card => {
+      const name = card.querySelector('.card-name')?.textContent || '';
+      const type = card.querySelector('.card-type')?.textContent || '';
+      const cr = card.querySelector('.card-credits')?.textContent || '';
+      const lines = doc.splitTextToSize(name, colW - 8);
+      const cardH = Math.max(14, 8 + lines.length * 4);
+      doc.setFillColor(248,248,248); doc.setDrawColor(220); doc.rect(x, y, colW - 2, cardH, 'FD');
+      doc.setFontSize(5); doc.setTextColor(140); doc.text(type.toUpperCase(), x + 3, y + 4);
+      doc.setFontSize(6.5); doc.setTextColor(40); doc.text(lines, x + 3, y + 8);
+      doc.setFontSize(5); doc.setTextColor(140); doc.text(cr, x + 3, y + cardH - 2);
+      y += cardH + 2;
+    });
+  });
+  footer();
+
+  // ===== PAGE 2: CONCENTRACIONES =====
+  if (selectedCerts.length) {
+    doc.addPage('a3', 'l');
+    doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS · LDV Plan 2027', 15, 15);
+    doc.setFontSize(16); doc.setTextColor(30); doc.text('Concentraciones Profesionales Seleccionadas', 15, 25);
+    let cy = 38;
+    selectedCerts.forEach(certKey => {
+      doc.setFontSize(12); doc.setTextColor(50); doc.text(certNames[certKey], 15, cy); cy += 8;
+      const materias = certMaterias[certKey] || [];
+      const certCard = document.querySelector(`.cert-card[data-cert="${certKey}"]`);
+      // Roles
+      const roles = certCard ? [...certCard.querySelectorAll('.cert-roles li')].map(li => li.textContent) : [];
+      if (roles.length) {
+        doc.setFontSize(8); doc.setTextColor(100); doc.text('Roles de egreso:', 20, cy); cy += 5;
+        roles.forEach(r => { doc.setFontSize(8); doc.setTextColor(60); doc.text('• ' + r, 25, cy); cy += 4.5; });
+        cy += 3;
+      }
+      // Materias
+      doc.setFontSize(8); doc.setTextColor(100); doc.text('Materias de la concentración:', 20, cy); cy += 5;
+      materias.forEach(m => { doc.setFontSize(9); doc.setTextColor(40); doc.text('• ' + m, 25, cy); cy += 5; });
+      cy += 10;
+    });
+    footer();
+  }
+
+  // ===== PAGE 3: MATRIZ DE COMPETENCIAS =====
+  doc.addPage('a3', 'l');
+  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · CRGS · LDV Plan 2027', 15, 15);
+  doc.setFontSize(16); doc.setTextColor(30); doc.text('Matriz Curricular de Competencias', 15, 25);
+  doc.setFontSize(7); doc.setTextColor(120); doc.text('I = Introduce   D = Desarrolla   M = Domina', 15, 31);
+  const plans = (await dbGet('plans')) || {};
+  const nameColW = 85; const cellW = (pw - 30 - nameColW) / 12;
+  let my = 38;
+  // Header
+  doc.setFillColor(230,230,230); doc.rect(15, my, nameColW, 7, 'F');
+  doc.setFontSize(6); doc.setTextColor(80); doc.text('MATERIA', 17, my + 5);
+  COMPETENCIAS.forEach((c, ci) => {
+    const cx = 15 + nameColW + ci * cellW;
+    doc.rect(cx, my, cellW, 7, 'F');
+    doc.text(c.id, cx + cellW / 2, my + 5, { align: 'center' });
+  });
+  my += 9;
+  // Rows by semester
+  const lvlColors = { I:[235,220,255], D:[255,243,220], M:[240,255,210] };
+  const lvlTextColors = { I:[120,50,200], D:[180,120,10], M:[80,130,0] };
+  document.querySelectorAll('.semester-col').forEach((col, si) => {
+    if (my > ph - 20) { doc.addPage('a3', 'l'); my = 15; }
+    // Sem divider
+    doc.setFillColor(245,245,245); doc.rect(15, my, pw - 30, 6, 'F');
+    doc.setFontSize(6); doc.setTextColor(130); doc.text('SEMESTRE ' + (si + 1), 17, my + 4);
+    my += 7;
+    col.querySelectorAll('.course-card').forEach(card => {
+      if (my > ph - 15) { doc.addPage('a3', 'l'); my = 15; }
+      const id = card.dataset.id;
+      const name = card.querySelector('.card-name')?.textContent || '';
+      const plan = plans[id];
+      let comps = plan?.competencias || SUGGESTED_COMPS[id] || {};
+      if (Array.isArray(comps)) { const obj = {}; comps.forEach(cid => { obj[cid] = 'I'; }); comps = obj; }
+      // Name cell
+      doc.setDrawColor(230); doc.rect(15, my, nameColW, 6, 'S');
+      doc.setFontSize(5.5); doc.setTextColor(40);
+      const tName = doc.splitTextToSize(name, nameColW - 4);
+      doc.text(tName[0], 17, my + 4);
+      // Comp cells
+      COMPETENCIAS.forEach((c, ci) => {
+        const cx = 15 + nameColW + ci * cellW;
+        const lvl = comps[c.id];
+        if (lvl) {
+          const bg = lvlColors[lvl] || [248,248,248]; doc.setFillColor(bg[0], bg[1], bg[2]); doc.rect(cx, my, cellW, 6, 'FD');
+          const tc = lvlTextColors[lvl] || [40,40,40]; doc.setTextColor(tc[0], tc[1], tc[2]);
+          doc.setFontSize(7); doc.setFont(undefined, 'bold'); doc.text(lvl, cx + cellW / 2, my + 4.5, { align: 'center' }); doc.setFont(undefined, 'normal');
+        } else {
+          doc.setDrawColor(240); doc.rect(cx, my, cellW, 6, 'S');
+        }
+      });
+      my += 7;
+    });
+  });
+  // Competencias legend
+  if (my > ph - 45) { doc.addPage('a3', 'l'); my = 15; }
+  my += 5;
+  doc.setFontSize(9); doc.setTextColor(30); doc.text('Competencias del Perfil de Egreso', 15, my); my += 6;
+  COMPETENCIAS.forEach(c => {
+    doc.setFontSize(6.5); doc.setTextColor(80); doc.text(c.id + ' — ' + c.label, 15, my); my += 4;
+  });
+  footer();
+
+  doc.save('LDV_Plan2027_Completo.pdf');
+}
+
+async function generatePlanPDF() {
+  if (!currentCourseId) return;
+  if (!window.jspdf) { alert('La librería PDF aún no carga. Espera unos segundos e intenta de nuevo.'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF('p', 'mm', 'letter');
+  const pw = doc.internal.pageSize.getWidth();
+  const name = modalName.textContent;
+  const meta = modalMeta.textContent;
+  const plan = gatherPlanData();
+  doc.setFontSize(8); doc.setTextColor(150); doc.text('UDEM · LDV · PLAN ANALÍTICO', 20, 18);
+  doc.setFontSize(16); doc.setTextColor(30);
+  const tl = doc.splitTextToSize(name, pw - 40); doc.text(tl, 20, 28);
+  doc.setFontSize(9); doc.setTextColor(120); doc.text(meta, 20, 28 + tl.length * 7);
+  let y = 35 + tl.length * 7;
+  doc.setDrawColor(200); doc.line(20, y, pw - 20, y); y += 8;
+
+  const sections = [
+    ['Objetivo General', plan.objetivo],
+    ['Objetivos Específicos', plan.objetivosEspecificos],
+    ['Competencias del Perfil de Egreso', (() => { const comps = plan.competencias || {}; if (Array.isArray(comps)) return comps.map(id => { const c = COMPETENCIAS.find(x => x.id === id); return c ? c.id + ' — ' + c.label : id; }).join('\n') || '(Sin competencias)'; const entries = Object.entries(comps); if (!entries.length) return '(Sin competencias)'; const labels = {I:'Introduce', D:'Desarrolla', M:'Domina'}; return entries.map(([id, lvl]) => { const c = COMPETENCIAS.find(x => x.id === id); return `[${lvl}] ${id} — ${c ? c.label : id} (${labels[lvl]})`; }).join('\n'); })()],
+    ['Contenido Temático', plan.contenido],
+    ['Metodología de Enseñanza', plan.metodologia],
+    ['Criterios de Evaluación', plan.evaluacion],
+    ['Bibliografía', plan.bibliografia.join('\n') || '(Sin bibliografía)']
+  ];
+  sections.forEach(([label, content]) => {
+    content = content || '(Sin contenido)';
+    if (y > 250) { doc.addPage(); y = 20; }
+    doc.setFontSize(7); doc.setTextColor(140); doc.text(label.toUpperCase(), 20, y); y += 5;
+    doc.setFontSize(9.5); doc.setTextColor(50);
+    const lines = doc.splitTextToSize(content, pw - 40); doc.text(lines, 20, y); y += lines.length * 4.5 + 8;
+  });
+  doc.setFontSize(6); doc.setTextColor(170);
+  doc.text('LDV Plan 2027 · Universidad de Monterrey · ' + new Date().toLocaleDateString('es-MX'), 20, 272);
+  doc.save('LDV_PlanAnalitico_' + currentCourseId + '.pdf');
+}
+
+// ===== BANCO DE MATERIAS =====
+const ctxMenu = document.getElementById('ctxMenu');
+let ctxTarget = null;
+
+document.querySelectorAll('#semGrid .course-card').forEach(card => {
+  card.addEventListener('contextmenu', e => {
+    if (userRole !== 'admin') return;
+    e.preventDefault();
+    ctxTarget = card;
+    ctxMenu.style.left = e.clientX + 'px';
+    ctxMenu.style.top = e.clientY + 'px';
+    ctxMenu.classList.add('show');
+  });
+});
+document.addEventListener('click', () => ctxMenu.classList.remove('show'));
+document.addEventListener('contextmenu', e => {
+  if (!e.target.closest('.course-card')) ctxMenu.classList.remove('show');
+});
+
+document.getElementById('ctxSendBank').addEventListener('click', async () => {
+  if (!ctxTarget) return;
+  const name = ctxTarget.querySelector('.card-name').textContent;
+  const note = prompt('¿Por qué se descarta "' + name + '"?\n(Opcional — deja vacío si no quieres agregar nota)');
+  if (note === null) return; // cancelled
+
+  const cardId = getCourseId(ctxTarget);
+  const bank = (await dbGet('bank')) || [];
+  bank.push({
+    id: cardId,
+    name: name,
+    type: ctxTarget.querySelector('.card-type')?.textContent || '',
+    credits: ctxTarget.querySelector('.card-credits')?.textContent || '',
+    axes: ctxTarget.dataset.axes || '',
+    html: ctxTarget.outerHTML,
+    note: note || '',
+    date: new Date().toISOString().slice(0, 10)
+  });
+  await dbSet('bank', bank);
+
+  ctxTarget.remove();
+  recalcCredits();
+  saveLayout();
+  ctxTarget = null;
+});
+
+async function renderBank() {
+  const bankList = document.getElementById('bankList');
+  const bankEmpty = document.getElementById('bankEmpty');
+  const bank = (await dbGet('bank')) || [];
+
+  // Clear all except empty message
+  bankList.querySelectorAll('.bank-item').forEach(el => el.remove());
+  bankEmpty.style.display = bank.length ? 'none' : '';
+
+  bank.forEach((item, idx) => {
+    const el = document.createElement('div');
+    el.className = 'bank-item';
+    el.innerHTML = `
+      <div class="bank-item-info">
+        <div class="bank-item-name">${item.name}</div>
+        <div class="bank-item-meta">
+          <span>${item.type || 'Materia'}</span>
+          <span>${item.credits || ''}</span>
+          <span>Descartada: ${item.date || '—'}</span>
+        </div>
+        ${item.note ? '<div class="bank-item-note">' + item.note + '</div>' : ''}
+      </div>
+      <div class="bank-item-actions">
+        ${userRole === 'admin' ? `
+          <button class="bank-btn restore" data-idx="${idx}" title="Restaurar al mapa">Restaurar</button>
+          <button class="bank-btn delete" data-idx="${idx}" title="Eliminar permanentemente">Eliminar</button>
+        ` : ''}
+      </div>`;
+    el.querySelector('.bank-btn.restore')?.addEventListener('click', () => restoreFromBank(idx));
+    el.querySelector('.bank-btn.delete')?.addEventListener('click', () => deleteFromBank(idx));
+    bankList.appendChild(el);
+  });
+}
+
+async function restoreFromBank(idx) {
+  const bank = (await dbGet('bank')) || [];
+  const item = bank[idx];
+  if (!item) return;
+
+  // Re-create the card in the last semester column
+  const temp = document.createElement('div');
+  temp.innerHTML = item.html;
+  const card = temp.firstElementChild;
+
+  // Re-attach events to restored card
+  card.setAttribute('draggable', 'true');
+  card.addEventListener('click', e => {
+    if (card._wasDragged) { card._wasDragged = false; return; }
+    openModal(card);
+  });
+  card.addEventListener('dragstart', e => {
+    draggedCard = card;
+    card.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', card.dataset.id);
+  });
+  card.addEventListener('dragend', () => {
+    card.classList.remove('dragging');
+    document.querySelectorAll('.semester-col.drag-over').forEach(c => c.classList.remove('drag-over'));
+    if (draggedCard && draggedCard._didDrop) { draggedCard._wasDragged = true; }
+    draggedCard._didDrop = false;
+    draggedCard = null;
+  });
+  card.addEventListener('contextmenu', e => {
+    if (userRole !== 'admin') return;
+    e.preventDefault();
+    ctxTarget = card;
+    ctxMenu.style.left = e.clientX + 'px';
+    ctxMenu.style.top = e.clientY + 'px';
+    ctxMenu.classList.add('show');
+  });
+
+  // Append to first semester (user can drag it where they want)
+  const firstCol = document.querySelector('.semester-col');
+  firstCol.appendChild(card);
+
+  bank.splice(idx, 1);
+  await dbSet('bank', bank);
+  recalcCredits();
+  saveLayout();
+  renderBank();
+}
+
+async function deleteFromBank(idx) {
+  const bank = (await dbGet('bank')) || [];
+  const item = bank[idx];
+  if (!item) return;
+  if (!confirm('¿Eliminar "' + item.name + '" permanentemente?\nEsta acción no se puede deshacer.')) return;
+  bank.splice(idx, 1);
+  await dbSet('bank', bank);
+  renderBank();
+}
+
+// ===== COMPETENCIAS DASHBOARD =====
+async function buildCompDashboard() {
+  const plans = (await dbGet('plans')) || {};
+  // Group courses by semester
+  const semCols = document.querySelectorAll('.semester-col');
+  const semesters = [];
+  semCols.forEach((col, i) => {
+    const cards = [...col.querySelectorAll('.course-card')];
+    cards.forEach(card => {
+      const id = card.dataset.id;
+      const name = card.querySelector('.card-name').textContent;
+      const plan = plans[id];
+      let comps = plan?.competencias || SUGGESTED_COMPS[id] || {};
+      // Legacy array format
+      if (Array.isArray(comps)) { const obj = {}; comps.forEach(cid => { obj[cid] = 'I'; }); comps = obj; }
+      semesters.push({ id, name, sem: i + 1, comps });
+    });
+  });
+  // Build matrix table: rows = courses (grouped by sem), cols = C1-C12
+  const wrap = document.getElementById('compMatrixWrap');
+  let html = '<table class="comp-matrix"><thead><tr><th style="text-align:left;padding-left:10px;">Materia</th>';
+  COMPETENCIAS.forEach(c => { html += `<th class="sem-header">${c.id}</th>`; });
+  html += '</tr></thead><tbody>';
+  let currentSem = 0;
+  semesters.forEach(course => {
+    if (course.sem !== currentSem) {
+      currentSem = course.sem;
+      html += `<tr class="sem-divider"><td colspan="${COMPETENCIAS.length + 1}">Semestre ${currentSem}</td></tr>`;
+    }
+    html += `<tr><td class="comp-name-cell">${course.name}</td>`;
+    COMPETENCIAS.forEach(c => {
+      const lvl = course.comps[c.id];
+      if (lvl) html += `<td class="comp-cell comp-cell-${lvl}">${lvl}</td>`;
+      else html += `<td class="comp-cell comp-cell-empty">·</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  wrap.innerHTML = html;
+  // Summary cards per competencia
+  const summary = document.getElementById('compDashSummary');
+  summary.innerHTML = '';
+  COMPETENCIAS.forEach(c => {
+    let hasI = false, hasD = false, hasM = false;
+    let count = 0;
+    semesters.forEach(course => {
+      const lvl = course.comps[c.id];
+      if (lvl) { count++; if (lvl === 'I') hasI = true; if (lvl === 'D') hasD = true; if (lvl === 'M') hasM = true; }
+    });
+    let status = '';
+    if (hasI && hasD && hasM) status = 'Progresión completa: I → D → M';
+    else if (hasI && hasD) status = 'Falta Dominio (M)';
+    else if (hasI) status = 'Solo Introduce — falta desarrollo';
+    else if (count === 0) status = 'Sin asignar';
+    else status = `${count} materia${count > 1 ? 's' : ''}`;
+    const card = document.createElement('div');
+    card.className = 'comp-summary-card';
+    card.innerHTML = `<div class="comp-summary-id">${c.id}</div><div class="comp-summary-label">${c.label}</div>` +
+      `<div class="comp-summary-progress">` +
+      `<div class="comp-summary-dot ${hasI ? 'filled-I' : 'empty'}" title="Introduce"></div>` +
+      `<div class="comp-summary-dot ${hasD ? 'filled-D' : 'empty'}" title="Desarrolla"></div>` +
+      `<div class="comp-summary-dot ${hasM ? 'filled-M' : 'empty'}" title="Domina"></div>` +
+      `</div><div class="comp-summary-status">${status}</div>`;
+    summary.appendChild(card);
+  });
+}
+
+// ===== EDITABLE COURSE NAME & TYPE (ADMIN) =====
+const modalTypeSelect = document.getElementById('modalTypeSelect');
+const TYPE_LABELS = {estudio:'Estudio',disciplinar:'Disciplinar',sinergia:'Sinergia',certificado:'Concentración',formacion:'Formación UDEM',general:'Conocimiento General',proyecto:'Proyecto Terminal',practicas:'Prácticas'};
+
+function openModalAdmin(card) {
+  if (userRole === 'admin') {
+    modalName.setAttribute('contenteditable', 'true');
+    modalName.style.cursor = 'text';
+    const t = card.dataset.type || 'disciplinar';
+    modalTypeSelect.value = t;
+  } else {
+    modalName.setAttribute('contenteditable', 'false');
+    modalName.style.cursor = 'default';
+  }
+}
+
+function applyNameTypeChange() {
+  if (!currentCard || userRole !== 'admin') return;
+  const newName = modalName.textContent.trim();
+  const newType = modalTypeSelect.value;
+  if (!newName) return;
+  // Update card
+  currentCard.querySelector('.card-name').textContent = newName;
+  const typeEl = currentCard.querySelector('.card-type');
+  typeEl.textContent = TYPE_LABELS[newType] || newType;
+  typeEl.className = 'card-type ' + newType;
+  currentCard.dataset.type = newType;
+  if (newType === 'estudio') {
+    currentCard.classList.add('is-estudio');
+    currentCard.querySelector('.card-credits').textContent = '12 cr';
+  } else {
+    currentCard.classList.remove('is-estudio');
+    if (currentCard.querySelector('.card-credits').textContent === '12 cr') {
+      currentCard.querySelector('.card-credits').textContent = '6 cr';
+    }
+  }
+  // Update badge in modal
+  modalBadge.textContent = TYPE_LABELS[newType] || newType;
+  modalBadge.className = 'card-type ' + newType;
+  // Re-generate ID
+  const slug = newName.toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+  const oldId = currentCard.dataset.id;
+  currentCard.dataset.id = slug;
+  currentCourseId = slug;
+  // Update modal meta with new credits
+  const newCredits = currentCard.querySelector('.card-credits').textContent;
+  modalMeta.textContent = newCredits + ' · Plan 2027';
+  // Persist customizations
+  recalcCredits();
+  saveCustomizations();
+  saveLayout();
+}
+
+modalTypeSelect.addEventListener('change', applyNameTypeChange);
+modalName.addEventListener('blur', applyNameTypeChange);
+
+async function saveCustomizations() {
+  const customs = {};
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
+    const key = card.dataset.origId || card.dataset.id;
+    customs[key] = {
+      name: card.querySelector('.card-name').textContent.trim(),
+      type: card.dataset.type || 'disciplinar',
+      credits: card.querySelector('.card-credits')?.textContent || '6 cr'
+    };
+  });
+  await dbSet('customizations', customs);
+}
+
+async function loadCustomizations() {
+  const customs = await dbGet('customizations');
+  if (!customs) return;
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
+    const key = card.dataset.origId || card.dataset.id;
+    const c = customs[key];
+    if (!c) return;
+    card.querySelector('.card-name').textContent = c.name;
+    if (c.credits) card.querySelector('.card-credits').textContent = c.credits;
+    const typeEl = card.querySelector('.card-type');
+    typeEl.textContent = TYPE_LABELS[c.type] || c.type;
+    typeEl.className = 'card-type ' + c.type;
+    card.dataset.type = c.type;
+    if (c.type === 'estudio') card.classList.add('is-estudio');
+    else card.classList.remove('is-estudio');
+  });
+}
+
+// ===== MODAL → BANCO BUTTON =====
+document.getElementById('btnToBanco').addEventListener('click', async () => {
+  if (!currentCard || userRole !== 'admin') return;
+  const name = currentCard.querySelector('.card-name').textContent.trim();
+  const note = prompt('¿Por qué se descarta "' + name + '"?\n(Opcional — deja vacío si no quieres agregar nota)');
+  if (note === null) return; // cancelled
+  const bank = (await dbGet('bank')) || [];
+  bank.push({
+    id: currentCard.dataset.origId || getCourseId(currentCard),
+    name: name,
+    type: currentCard.querySelector('.card-type')?.textContent || '',
+    credits: currentCard.querySelector('.card-credits')?.textContent || '',
+    axes: currentCard.dataset.axes || '',
+    html: currentCard.outerHTML,
+    note: note || '',
+    date: new Date().toISOString().slice(0, 10)
+  });
+  await dbSet('bank', bank);
+  currentCard.remove();
+  closeModal();
+  recalcCredits();
+  saveLayout();
+  renderBank();
+});
+
+// ===== APPLY BANK (remove banked cards from DOM on load) =====
+async function applyBank() {
+  const bank = (await dbGet('bank')) || [];
+  if (!bank.length) return;
+  const bankedIds = new Set(bank.map(b => b.id));
+  document.querySelectorAll('#semGrid .course-card').forEach(card => {
+    if (bankedIds.has(card.dataset.origId || card.dataset.id)) card.remove();
+  });
+}
+
+// ===== INIT =====
+async function initApp() {
+  await loadCustomizations();
+  await applyBank();
+  await loadLayout();
+  await loadCerts();
+  recalcCredits();
+  buildCompDashboard();
+  renderBank();
+  // Re-apply role restrictions after layout loaded (cards may have been re-added)
+  if (userRole === 'viewer') {
+    document.querySelectorAll('#semGrid .course-card').forEach(card => {
+      card.removeAttribute('draggable');
+      card.style.cursor = 'pointer';
+    });
+    document.getElementById('btnToBanco').style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>
