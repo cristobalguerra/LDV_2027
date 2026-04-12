@@ -1745,7 +1745,7 @@ body.role-admin #modalBadge { display:none; }
         <div class="sem-cr">42</div>
         <div class="sem-cr-label">créditos</div>
       </div>
-      <div class="course-card is-estudio eje-experiencia" data-axes="experiencia" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Estudio de Interacción</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot experiencia"></span></div></div></div>
+      <div class="course-card is-estudio eje-experiencia" data-axes="experiencia" data-type="estudio"><div class="card-type estudio">Estudio</div><div class="card-name">Estudio de Diseño de Interacción</div><div class="card-footer"><span class="card-credits">12 cr</span><div class="card-dots"><span class="card-dot experiencia"></span></div></div></div>
       <div class="course-card eje-experiencia" data-axes="experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Diseño de Experiencia</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot experiencia"></span></div></div></div>
       <div class="course-card eje-experiencia" data-axes="experiencia" data-type="disciplinar"><div class="card-type disciplinar">Disciplinar</div><div class="card-name">Prototipado de Experiencias</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot experiencia"></span></div></div></div>
       <div class="course-card eje-produccion" data-axes="produccion" data-type="sinergia"><div class="card-type sinergia">Sinergia</div><div class="card-name">Producción Artística Interdisciplinaria</div><div class="card-footer"><span class="card-credits">6 cr</span><div class="card-dots"><span class="card-dot produccion"></span></div></div></div>
@@ -2597,8 +2597,8 @@ const DEFAULT_PREREQS = {
   'Sistemas de Identidad I': ['Fundamentos del Diseño II'],
   'Diseño de Información II: Sistemas de Información': ['Sistemas de Identidad I'],
   'Sistemas de Identidad III': ['Diseño de Información II: Sistemas de Información'],
-  'Estudio de Interacción': ['Sistemas de Identidad III'],
-  'Diseño de Servicios': ['Estudio de Interacción'],
+  'Estudio de Diseño de Interacción': ['Sistemas de Identidad III'],
+  'Diseño de Servicios': ['Estudio de Diseño de Interacción'],
   'Estudio Integral de Diseño': ['Diseño de Servicios'],
   'Tipografía II': ['Tipografía I'],
   // Concentraciones NO tienen prerrequisitos (abiertas a otras carreras)
@@ -2973,7 +2973,7 @@ const COURSE_DATA = {
     act:['Análisis de caso con múltiples variables de decisión','Simulación de comité de evaluación de proyecto','Presentación argumentada de propuesta de diseño']
   },
   // ═══ SEM 6 ═══
-  'estudio-de-interacción':{
+  'estudio-de-diseño-de-interacción':{
     desc:'El diseño ya no es estático. ¿Cómo se diseña algo que responde, que se adapta, que cambia según quién lo usa y cómo lo usa? En este Estudio concebirás y desarrollarás proyectos de diseño de interacción: aplicaciones, sistemas digitales, interfaces que las personas realmente utilizan. Integrarás todo lo que sabes de composición, tipografía, información y sistemas para crear experiencias digitales completas. Este es el semestre donde el diseño cobra vida y donde Diseño de Experiencia y Prototipado serán tus herramientas complementarias.',
     obj:'Concebir y desarrollar proyectos integrales de diseño de interacción en contextos digitales complejos.',
     esp:['Diseñar sistemas de interacción centrados en el usuario','Prototipar y validar soluciones de interacción','Integrar experiencia, interfaz y tecnología en proyectos'],
@@ -3168,6 +3168,7 @@ const SUGGESTED_COMPS = {
   // SEM 5 CONCENTRACIONES (opcionales)
   'dirección-visual-de-marca':{SLO1:'I',SLO2:'A'},
   // ═══ SEM 6 — INTERMEDIO → AVANZADO ═══
+  'estudio-de-diseño-de-interacción':{SLO1:'I',SLO2:'A',SLO3:'I',SLO4:'A'},
   'estudio-de-interacción':{SLO1:'I',SLO2:'A',SLO3:'I',SLO4:'A'},
   'diseño-de-experiencia':{SLO3:'I',SLO4:'I'},
   'prototipado-de-experiencias':{SLO3:'I',SLO4:'A'},
@@ -4558,7 +4559,7 @@ async function initApp() {
     'Sergio Trujillo Pérez|mat-s3-3': { action: 'approve', text: 'Observación fundamental. Se ajustará la descripción de Tipografía II para reflejar que los alumnos aún están consolidando reglas, no rompiéndolas. El contenido se enfocará en: diseño editorial básico (no avanzado), micro y macrotipografía aplicada, y composición tipográfica en contextos reales. La experimentación tipográfica se reservará para proyectos de semestres superiores. Se programará junta con el líder de academia de tipografía y se evaluará la posibilidad de integrar el taller de impresión tradicional.' },
 
     // === SERGIO — MATERIAS SEM 4 ===
-    'Sergio Trujillo Pérez|mat-s4-0': { action: 'approve', text: 'Se acepta revisar la descripción de DI II. Se clarificará que para 4to semestre el enfoque es diseño de sistemas de información (no interfaces de datos en tiempo real). Los fundamentos de UX se introducen aquí de manera básica como parte del proceso de diseño de información, no como disciplina separada. La profundización en UX/UI viene en sem 6 (Estudio de Interacción). Se ajustará la descripción para ser realista al nivel del semestre.' },
+    'Sergio Trujillo Pérez|mat-s4-0': { action: 'approve', text: 'Se acepta revisar la descripción de DI II. Se clarificará que para 4to semestre el enfoque es diseño de sistemas de información (no interfaces de datos en tiempo real). Los fundamentos de UX se introducen aquí de manera básica como parte del proceso de diseño de información, no como disciplina separada. La profundización en UX/UI viene en sem 6 (Estudio de Diseño de Interacción). Se ajustará la descripción para ser realista al nivel del semestre.' },
     'Sergio Trujillo Pérez|mat-s4-1': { action: 'approve', text: 'Se evaluará si Gestión de Producción debería impartirse antes (sem 3) para que los alumnos tengan nociones de producción cuando empiecen a trabajar en proyectos de identidad. Se consultará con los profesores actuales sobre la secuencia óptima.' },
     'Sergio Trujillo Pérez|mat-s4-2': { action: 'approve', text: 'Se agendarán reuniones con los profesores de Diseño de Empaque para definir claramente los límites entre diseño gráfico de empaque y diseño industrial. El alcance de la materia se enfocará en: comunicación visual del empaque, normativas de etiquetado, y sustentabilidad desde la perspectiva gráfica.' },
     'Sergio Trujillo Pérez|mat-s4-3': { action: 'reject', text: 'Se reconoce que Dirección de Arte es una habilidad fundamental. Sin embargo, moverla a materia obligatoria requeriría eliminar otra materia del tronco común para respetar los 324 créditos. La Concentración A garantiza que quienes la elijan tengan formación profunda en dir. de arte. Para el resto, los Estudios integran decisiones de dirección de arte como parte del proceso de proyecto. Se evaluará reforzar el componente de dirección de arte dentro de los Estudios existentes. Respecto a la segunda materia de fotografía: misma restricción de créditos (ver mat-s3-2).' },
@@ -4569,7 +4570,7 @@ async function initApp() {
     'Sergio Trujillo Pérez|mat-s5-3': { action: 'approve', text: 'Se acepta que el título era confuso. La materia se enfoca en frameworks de evaluación y argumentación para decisiones de diseño — no dirección de arte ni estrategia publicitaria. Se mejorará la descripción para ser más clara sobre los entregables: análisis de trade-offs en proyectos, presentaciones argumentadas, evaluación de alternativas. Se evaluará si el contenido puede integrarse dentro de otra materia existente.' },
 
     // === SERGIO — MATERIAS SEM 6 ===
-    'Sergio Trujillo Pérez|mat-s6-0': { action: 'approve', text: 'Se revisará el orden entre DI II (sem 4) y Estudio de Interacción (sem 6). El argumento es válido: si DI II exige más nivel técnico que el Estudio de Interacción, la secuencia podría no ser la óptima. Se analizará la progresión de complejidad técnica y se ajustará si es necesario.' },
+    'Sergio Trujillo Pérez|mat-s6-0': { action: 'approve', text: 'Se revisará el orden entre DI II (sem 4) y Estudio de Diseño de Interacción (sem 6). El argumento es válido: si DI II exige más nivel técnico que el Estudio de Diseño de Interacción, la secuencia podría no ser la óptima. Se analizará la progresión de complejidad técnica y se ajustará si es necesario.' },
     'Sergio Trujillo Pérez|mat-s6-1': { action: 'approve', text: 'Observación recurrente y válida sobre materias simultáneas (Diseño de Experiencia + Prototipado en el mismo semestre). Se evaluarán dos opciones: (1) fusionar ambas en una sola materia de mayor peso crediticio, (2) secuenciar: Diseño de Experiencia primero y Prototipado después. Se verificará que no haya duplicación de contenido con Diseño de Servicios (sem 7).' },
     'Sergio Trujillo Pérez|mat-s6-2': { action: 'approve', text: 'Misma observación que mat-s6-1 — se abordará conjuntamente. La resolución aplicará para ambas materias.' },
     'Sergio Trujillo Pérez|mat-s6-4': { action: 'approve', text: 'Se atendió la observación. La materia se renombró de "IA Aplicada al Diseño Visual" a "Motion Design y Contenido Digital" — un enfoque más atemporal y con alcances claros: motion graphics, animación para marcas, contenido audiovisual para plataformas digitales. La IA se integra transversalmente en el programa como herramienta, no como materia aislada. Descripción y objetivos ya fueron actualizados.' },
