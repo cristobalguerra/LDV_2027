@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Certificado en Diseño Estratégico y Dirección Creativa · Propuesta LDV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0e0e;
+  --surface: #161616;
+  --surface-2: #1f1f1f;
+  --surface-3: #2a2a2a;
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.16);
+  --text: #f0efe9;
+  --text-secondary: rgba(240,239,233,0.6);
+  --text-tertiary: rgba(240,239,233,0.35);
+  --accent: #FFF500;
+  --accent-dim: rgba(255,245,0,0.12);
+  --indigo: #7174B2;
+  --teal: #3D8C82;
+  --coral: #E88B6E;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+.raleway { font-family: 'Raleway', sans-serif; }
+
+/* ========== HERO ========== */
+.hero {
+  min-height: 100vh;
+  padding: 80px 0 60px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+}
+.hero-meta {
+  display: flex; gap: 24px; align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--text-tertiary);
+  margin-bottom: 40px;
+}
+.hero-meta::before, .hero-meta::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  max-width: 1000px;
+}
+.hero h1 em {
+  font-style: italic; font-weight: 500;
+  color: var(--accent);
+}
+.hero-lead {
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  color: var(--text-secondary);
+  max-width: 720px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 24px; margin-top: 32px;
+}
+.stat-box {
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+.stat-num {
+  font-family: 'Raleway', sans-serif;
+  font-size: 2.4rem; font-weight: 800;
+  line-height: 1; letter-spacing: -0.02em;
+  color: var(--accent);
+}
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--text-tertiary);
+  margin-top: 8px;
+}
+
+/* ========== SECTIONS ========== */
+section { padding: 100px 0; border-bottom: 1px solid var(--border); }
+.sec-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.24em;
+  color: var(--accent); margin-bottom: 12px;
+}
+.sec-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.1; letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  max-width: 800px;
+}
+.sec-lead {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 720px; line-height: 1.7;
+  margin-bottom: 56px;
+}
+
+/* ========== MATERIAS GRID ========== */
+.materias {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.materia {
+  background: var(--surface);
+  padding: 36px 32px;
+  position: relative;
+  transition: background 0.3s;
+}
+.materia:hover { background: var(--surface-2); }
+.materia-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.materia-eje {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 3px 10px; border-radius: 100px;
+  margin-bottom: 14px;
+}
+.eje-visual { background: rgba(232,139,110,0.12); color: var(--coral); }
+.eje-mixto  { background: rgba(255,245,0,0.10); color: var(--accent); }
+.eje-negocio { background: rgba(113,116,178,0.18); color: var(--indigo); }
+.materia-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.35rem; font-weight: 700;
+  line-height: 1.2; letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.materia-desc {
+  font-size: 0.92rem; color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ========== PERFIL EGRESADO ========== */
+.perfil-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+}
+.perfil-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 22px;
+  display: flex; flex-direction: column;
+  gap: 16px;
+}
+.perfil-card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; color: var(--accent);
+  letter-spacing: 0.2em;
+}
+.perfil-card-text {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1rem; font-weight: 600;
+  line-height: 1.35; color: var(--text);
+}
+
+/* ========== DIFERENCIADOR TABLE ========== */
+.diff-table {
+  display: grid; grid-template-columns: 1.5fr 2fr 2fr;
+  border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+}
+.diff-row { display: contents; }
+.diff-cell {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+.diff-head .diff-cell {
+  background: var(--surface-2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--text-tertiary);
+  font-weight: 600;
+}
+.diff-cell.uni { font-family: 'Raleway', sans-serif; font-weight: 700; }
+.diff-cell.detail { color: var(--text-secondary); }
+.diff-cell.udem { color: var(--accent); font-weight: 700; }
+.diff-row.udem-row .diff-cell { background: rgba(255,245,0,0.05); border-bottom-color: rgba(255,245,0,0.15); border-top: 2px solid rgba(255,245,0,0.3); }
+
+/* ========== ACREDITACIÓN ========== */
+.acred {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  align-items: stretch;
+}
+.acred-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 40px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.acred-card.featured {
+  background: linear-gradient(135deg, rgba(255,245,0,0.08), rgba(255,245,0,0.02));
+  border-color: rgba(255,245,0,0.2);
+}
+.acred-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: var(--accent-dim);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem; font-weight: 700;
+}
+.acred h3 {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.4rem; font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.acred p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.65; }
+.acred ul { list-style: none; padding: 0; margin-top: 8px; }
+.acred li {
+  position: relative; padding: 6px 0 6px 22px;
+  font-size: 0.9rem; color: var(--text-secondary);
+  line-height: 1.5;
+}
+.acred li::before {
+  content: ''; position: absolute;
+  left: 0; top: 14px; width: 12px; height: 1px;
+  background: var(--accent); opacity: 0.6;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  padding: 60px 0 80px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--text-tertiary);
+}
+footer .brand {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.95rem; letter-spacing: -0.01em;
+  text-transform: none; color: var(--text);
+  font-weight: 700; margin-bottom: 8px;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .materias { grid-template-columns: 1fr; }
+  .perfil-grid { grid-template-columns: repeat(2, 1fr); }
+  .acred { grid-template-columns: 1fr; }
+  .diff-table { grid-template-columns: 1fr; }
+  .diff-cell { border-bottom: 1px solid var(--border); }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-meta">
+      <span>UDEM · CRGS · Escuela de Arte y Diseño</span>
+    </div>
+    <div class="hero-eyebrow">Propuesta · Plan 2027</div>
+    <h1>Certificado en <em>Diseño Estratégico</em> y <em>Dirección Creativa</em></h1>
+    <p class="hero-lead">
+      Una credencial profesional que articula dominio visual avanzado con visión estratégica y de negocio, otorgada al egresar de la Licenciatura en Diseño Visual y Negocios Creativos.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-box">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Asignaturas</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">36</div>
+        <div class="stat-label">Créditos</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">S4–S8</div>
+        <div class="stat-label">Semestres</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1</div>
+        <div class="stat-label">en su tipo en MX</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ¿POR QUÉ AHORA? -->
+<section>
+  <div class="container">
+    <div class="sec-num">01 · Contexto</div>
+    <h2 class="sec-title">El Modelo Educativo UDEM 2027 destina 6 asignaturas a certificados profesionales.</h2>
+    <p class="sec-lead">
+      El nuevo Eje de Formación Interdisciplinaria reserva 6 asignaturas optativas para que cada programa ofrezca a sus estudiantes una credencial diferenciadora: certificados, electivas avanzadas, posgrado, intercambios o inglés profesionalizante. Para LDV, proponemos consolidar este espacio en un único certificado oficial que entregue al egresado un activo profesional verificable.
+    </p>
+  </div>
+</section>
+
+<!-- LAS 6 MATERIAS -->
+<section>
+  <div class="container">
+    <div class="sec-num">02 · Estructura</div>
+    <h2 class="sec-title">Seis asignaturas que combinan dominio visual y visión de negocio.</h2>
+    <p class="sec-lead">
+      Cada materia desarrolla competencias específicas pero conectadas. Dos tienen un eje predominantemente visual, dos se enfocan en estrategia y negocio, y dos articulan ambas dimensiones. El proyecto integrador (PEF) consolida la integración.
+    </p>
+    <div class="materias">
+
+      <div class="materia">
+        <div class="materia-num">C1 · Semestre 4</div>
+        <div class="materia-eje eje-visual">Eje Visual</div>
+        <div class="materia-title">Dirección de Arte y Producción Visual</div>
+        <div class="materia-desc">Conceptualizar y dirigir producciones visuales con criterio estético y comercial. Fotografía de producto, still life, dirección de set, postproducción profesional.</div>
+      </div>
+
+      <div class="materia">
+        <div class="materia-num">C2 · Semestre 5</div>
+        <div class="materia-eje eje-mixto">Visual + Negocio</div>
+        <div class="materia-title">Dirección Visual de Marca</div>
+        <div class="materia-desc">Dirigir la implementación visual de marcas a escala. Sistemas de diseño, guías de estilo extendidas, gestión de consistencia visual en ecosistemas complejos.</div>
+      </div>
+
+      <div class="materia">
+        <div class="materia-num">C3 · Semestre 6</div>
+        <div class="materia-eje eje-visual">Eje Visual</div>
+        <div class="materia-title">Animación Gráfica y Contenido Digital</div>
+        <div class="materia-desc">Conceptualizar y producir contenido visual en movimiento. Motion graphics, animación para marcas, video corto y narrativa audiovisual para plataformas digitales.</div>
+      </div>
+
+      <div class="materia">
+        <div class="materia-num">C4 · Semestre 4</div>
+        <div class="materia-eje eje-negocio">Eje Negocio</div>
+        <div class="materia-title">Gestión de Proyectos Creativos</div>
+        <div class="materia-desc">Planificar y coordinar proyectos integrales de diseño. Metodologías ágiles, gestión de equipos, presupuestos, alcances y evaluación de resultados.</div>
+      </div>
+
+      <div class="materia">
+        <div class="materia-num">C5 · Semestre 7</div>
+        <div class="materia-eje eje-mixto">Visual + Negocio</div>
+        <div class="materia-title">Inteligencia Artificial Aplicada al Diseño Visual</div>
+        <div class="materia-desc">Integrar herramientas de IA generativa en procesos de diseño con criterio creativo, ético y profesional. Prompt engineering, automatización de flujos visuales, validación crítica de outputs.</div>
+      </div>
+
+      <div class="materia">
+        <div class="materia-num">C6 · Semestre 8</div>
+        <div class="materia-eje eje-negocio">Eje Negocio</div>
+        <div class="materia-title">Emprendimiento Creativo</div>
+        <div class="materia-desc">Diseñar y validar emprendimientos creativos. Lean startup, MVP, marca personal, modelos de monetización para servicios de diseño.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PERFIL DEL EGRESADO CERTIFICADO -->
+<section>
+  <div class="container">
+    <div class="sec-num">03 · Perfil del egresado certificado</div>
+    <h2 class="sec-title">Lo que el egresado podrá hacer en el mundo profesional.</h2>
+    <div class="perfil-grid">
+      <div class="perfil-card">
+        <div class="perfil-card-num">01</div>
+        <div class="perfil-card-text">Dirigir un proyecto completo de diseño, desde concepto hasta implementación</div>
+      </div>
+      <div class="perfil-card">
+        <div class="perfil-card-num">02</div>
+        <div class="perfil-card-text">Articular propuestas visuales con argumentos estratégicos y de negocio</div>
+      </div>
+      <div class="perfil-card">
+        <div class="perfil-card-num">03</div>
+        <div class="perfil-card-text">Liderar equipos creativos en agencias, estudios o áreas in-house</div>
+      </div>
+      <div class="perfil-card">
+        <div class="perfil-card-num">04</div>
+        <div class="perfil-card-text">Emprender un estudio o servicio de diseño con base estratégica sólida</div>
+      </div>
+      <div class="perfil-card">
+        <div class="perfil-card-num">05</div>
+        <div class="perfil-card-text">Integrar herramientas de IA generativa en procesos creativos con criterio profesional y ético</div>
+      </div>
+      <div class="perfil-card">
+        <div class="perfil-card-num">06</div>
+        <div class="perfil-card-text">Producir contenido visual en movimiento para marcas en ecosistemas digitales</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIADOR -->
+<section>
+  <div class="container">
+    <div class="sec-num">04 · Diferenciador competitivo</div>
+    <h2 class="sec-title">Ninguna licenciatura en México ofrece esta combinación.</h2>
+    <p class="sec-lead">
+      Existen programas que cubren la parte visual. Otros, la parte de negocio. Solo UDEM ofrece un certificado profesional que integra ambas dimensiones dentro de una licenciatura.
+    </p>
+
+    <div class="diff-table">
+      <div class="diff-row diff-head">
+        <div class="diff-cell">Universidad</div>
+        <div class="diff-cell">Programa equivalente</div>
+        <div class="diff-cell">Limitación frente a LDV+Certificado</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell uni">ITESM</div>
+        <div class="diff-cell detail">Lic. Diseño Industrial</div>
+        <div class="diff-cell detail">No es diseño visual. Sin certificado.</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell uni">IBERO CDMX</div>
+        <div class="diff-cell detail">Lic. Diseño Gráfico</div>
+        <div class="diff-cell detail">Sin certificado estratégico integrado.</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell uni">CENTRO</div>
+        <div class="diff-cell detail">Lic. Comunicación Visual</div>
+        <div class="diff-cell detail">Sin componente de negocio explícito.</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell uni">CEDIM</div>
+        <div class="diff-cell detail">Lic. Diseño Gráfico y Mercadotecnia</div>
+        <div class="diff-cell detail">Mercadotecnia ≠ diseño estratégico.</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell uni">Anáhuac</div>
+        <div class="diff-cell detail">Lic. Diseño Visual Transmedia</div>
+        <div class="diff-cell detail">Foco en medios, no en estrategia.</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-cell uni">UNAM</div>
+        <div class="diff-cell detail">Lic. Diseño y Comunicación Visual</div>
+        <div class="diff-cell detail">Sin certificación profesional.</div>
+      </div>
+      <div class="diff-row udem-row">
+        <div class="diff-cell udem">UDEM</div>
+        <div class="diff-cell udem">LDV + Certificado en Diseño Estratégico y Dirección Creativa</div>
+        <div class="diff-cell udem">Único programa nacional con esta integración.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACREDITACIÓN -->
+<section>
+  <div class="container">
+    <div class="sec-num">05 · Acreditación</div>
+    <h2 class="sec-title">Cómo se obtiene y qué incluye.</h2>
+    <p class="sec-lead">
+      El certificado se otorga al cumplir tres condiciones simultáneas durante la licenciatura.
+    </p>
+
+    <div class="acred">
+      <div class="acred-card">
+        <div class="acred-icon">→</div>
+        <h3>Requisitos de obtención</h3>
+        <ul>
+          <li>Cursar y aprobar las 6 asignaturas optativas del certificado con calificación mínima de 80</li>
+          <li>Presentar un Programa de Evaluación Final (PEF I o II) que articule al menos 3 áreas del certificado</li>
+          <li>Defender el proyecto ante comité con representante externo de la industria</li>
+        </ul>
+      </div>
+
+      <div class="acred-card featured">
+        <div class="acred-icon">★</div>
+        <h3>Lo que entrega UDEM</h3>
+        <ul>
+          <li>Constancia oficial firmada por dirección de programa y dirección de escuela</li>
+          <li>Sello digital verificable compatible con LinkedIn, con código QR a credencial UDEM</li>
+          <li>Mención en suplemento al título profesional</li>
+          <li>Reconocimiento ante empleadores certificados del programa</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACTO -->
+<section>
+  <div class="container">
+    <div class="sec-num">06 · Por qué importa</div>
+    <h2 class="sec-title">Para el aspirante, para el padre, para el empleador.</h2>
+
+    <div class="perfil-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="perfil-card">
+        <div class="perfil-card-num">PARA EL ASPIRANTE</div>
+        <div class="perfil-card-text" style="font-size: 0.95rem;">Una credencial extra al egresar que diferencia su perfil frente a egresados de Diseño Gráfico tradicional. Le abre puertas a estudios, agencias, in-house y emprendimiento.</div>
+      </div>
+      <div class="perfil-card">
+        <div class="perfil-card-num">PARA EL PADRE</div>
+        <div class="perfil-card-text" style="font-size: 0.95rem;">Retorno de inversión verificable. Su hijo no solo se titula: obtiene una credencial profesional adicional con valor en el mercado laboral.</div>
+      </div>
+      <div class="perfil-card">
+        <div class="perfil-card-num">PARA EL EMPLEADOR</div>
+        <div class="perfil-card-text" style="font-size: 0.95rem;">Un perfil claro y verificable. El certificado señala que el egresado no es solo un diseñador técnico, sino alguien que entiende cómo el diseño aporta valor al negocio.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="brand">Licenciatura en Diseño Visual y Negocios Creativos</div>
+    <div>Universidad de Monterey · CRGS · Escuela de Arte y Diseño</div>
+    <div style="margin-top: 16px; opacity: 0.6;">Propuesta interna · Plan 2027 · Mayo 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
