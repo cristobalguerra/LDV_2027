@@ -68,26 +68,29 @@ body {
   display:flex; align-items:center; justify-content:space-between;
   padding:20px 40px 0;
 }
-.logo-area { display:flex; align-items:center; gap:14px; }
+.logo-area { display:flex; align-items:center; gap:16px; min-width:0; flex:1; max-width:560px; }
 .header-logo-svg {
-  width:60px; height:auto; flex-shrink:0; fill:var(--accent);
+  width:48px; height:auto; flex-shrink:0; fill:var(--accent);
 }
+.header-divider { width:1px; height:36px; background:var(--border); flex-shrink:0; }
+.header-titles { display:flex; flex-direction:column; gap:3px; min-width:0; flex:1; }
 .header-school {
-  font-family:'DM Sans',sans-serif; font-size:0.58rem; font-weight:500;
-  letter-spacing:0.08em; text-transform:uppercase; color:var(--text-tertiary);
-  line-height:1.2;
+  font-family:'JetBrains Mono',monospace; font-size:0.55rem; font-weight:600;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--text-tertiary);
+  line-height:1.2; white-space:nowrap;
 }
 .program-name {
-  font-family:'Raleway',sans-serif; font-size:1.6rem; font-weight:800; letter-spacing:-0.02em;
-  background:linear-gradient(135deg, var(--text) 0%, rgba(240,239,233,0.7) 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  font-family:'Raleway',sans-serif; font-size:0.88rem; font-weight:700; letter-spacing:-0.005em;
+  color:var(--text); line-height:1.22;
 }
 .credits-badge {
   font-family:'JetBrains Mono',monospace;
-  font-size:0.75rem; font-weight:600;
+  font-size:0.65rem; font-weight:600;
   color:var(--accent); background:var(--accent-dim);
   padding:4px 10px; border-radius:100px;
-  letter-spacing:0.05em;
+  letter-spacing:0.06em;
+  white-space:nowrap; flex-shrink:0;
+  border:1px solid color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 /* Tabs */
@@ -214,15 +217,16 @@ body {
 .type-label-spacer { display:none; }
 .type-label {
   font-family:'JetBrains Mono',monospace;
-  font-size:0.52rem; font-weight:700;
-  letter-spacing:0.1em; text-transform:uppercase;
-  writing-mode:vertical-lr; text-orientation:mixed;
-  transform:rotate(180deg);
+  font-size:0.55rem; font-weight:700;
+  letter-spacing:0.18em; text-transform:uppercase;
+  writing-mode:vertical-rl; text-orientation:mixed;
   display:flex; align-items:center; justify-content:center;
-  padding:4px 2px;
-  border-radius:4px;
+  padding:8px 4px;
+  border-radius:6px;
   color:var(--text-tertiary);
   flex:none;
+  white-space:nowrap;
+  overflow:hidden;
 }
 .tl-estudio { color:var(--accent); background:rgba(255,245,0,0.05); }
 .tl-disciplinar { color:var(--text-secondary); background:rgba(255,255,255,0.03); }
@@ -300,27 +304,32 @@ body {
 
 /* Semester header */
 .sem-header {
-  padding:4px 4px;
-  border-radius:4px;
+  padding:8px 6px;
+  border-radius:6px;
   text-align:center;
   background:var(--surface-2);
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+  min-height:54px; justify-content:center;
 }
 
 .sem-header .sem-num {
   font-family:'JetBrains Mono',monospace;
-  font-size:0.5rem; font-weight:600;
-  letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--text-secondary);
+  font-size:0.55rem; font-weight:700;
+  letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--text-tertiary);
+  line-height:1;
 }
 .sem-header .sem-cr {
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.9rem; font-weight:800;
+  font-family:'Raleway',sans-serif;
+  font-size:1.05rem; font-weight:800;
   color:var(--text);
   letter-spacing:-0.02em;
+  line-height:1;
 }
 .sem-header .sem-cr-label {
-  font-size:0.45rem; font-weight:500;
-  color:var(--text-tertiary); letter-spacing:0.08em;
+  font-size:0.5rem; font-weight:500;
+  color:var(--text-tertiary); letter-spacing:0.12em; text-transform:uppercase;
+  line-height:1;
 }
 
 /* Course cards */
@@ -443,16 +452,16 @@ body {
 
 /* ===== CERTIFICADOS VIEW ===== */
 .certs-intro {
-  max-width:640px; margin-bottom:40px;
+  max-width:720px; margin:0 auto 48px; text-align:center;
 }
 .certs-intro h2 {
-  font-family:'Raleway',sans-serif; font-size:0.65rem; font-weight:700;
-  letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--accent); margin-bottom:12px;
+  font-family:'JetBrains Mono',monospace; font-size:0.65rem; font-weight:700;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:16px;
 }
 .certs-intro p {
   font-size:1rem; color:var(--text-secondary);
-  line-height:1.6;
+  line-height:1.65; max-width:580px; margin:0 auto;
 }
 .certs-intro strong { color:var(--text); }
 
@@ -642,6 +651,30 @@ body {
   margin-bottom:14px;
 }
 .programa-section-text:last-child { margin-bottom:0; }
+.programa-subtitle {
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem; font-weight:700;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--text-tertiary);
+  margin:28px 0 14px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+.programa-attrs {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:8px 24px; margin:0;
+  padding:0; list-style:none;
+}
+.programa-attrs li {
+  font-family:'DM Sans',sans-serif;
+  font-size:0.92rem; color:var(--text-secondary);
+  padding:8px 0 8px 22px; position:relative; line-height:1.5;
+  border:none !important;
+}
+.programa-attrs li::before {
+  content:''; position:absolute; left:0; top:14px;
+  width:10px; height:1px; background:var(--accent); opacity:0.6;
+}
+@media (max-width:640px) { .programa-attrs { grid-template-columns:1fr; } }
 /* Competencias list in Programa */
 .comp-list-programa {
   display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; margin-top:16px;
@@ -1117,7 +1150,7 @@ body.role-admin #modalBadge { display:none; }
 
 /* ===== HEADER ACTIONS ===== */
 .header-actions {
-  display:flex; align-items:center; gap:12px;
+  display:flex; align-items:center; gap:12px; flex-shrink:0;
 }
 .btn-header {
   padding:8px 14px; border-radius:8px;
@@ -1487,11 +1520,12 @@ body.role-admin #modalBadge { display:none; }
   <div class="header-top">
     <div class="logo-area">
       <svg class="header-logo-svg" viewBox="200 67 50 14" xmlns="http://www.w3.org/2000/svg"><g><path d="M208.58,68.61h2.47v6.95c0,1.33-0.4,2.36-1.19,3.11c-0.79,0.75-1.94,1.12-3.47,1.12c-1.52,0-2.67-0.37-3.46-1.11c-0.79-0.74-1.18-1.78-1.18-3.12v-6.95h2.47v7.03c0,0.7,0.18,1.23,0.54,1.59c0.37,0.36,0.91,0.54,1.62,0.54c0.72,0,1.26-0.18,1.63-0.54c0.37-0.36,0.55-0.89,0.55-1.59V68.61z"/><path d="M222.68,74.23c0,0.89-0.12,1.68-0.38,2.36c-0.25,0.69-0.61,1.27-1.07,1.74c-0.46,0.48-1.01,0.84-1.66,1.08c-0.65,0.25-1.36,0.37-2.15,0.37h-2.84c-0.45,0-0.79-0.11-1.04-0.35c-0.24-0.23-0.37-0.55-0.37-0.96v-8.54c0-0.41,0.12-0.73,0.37-0.97c0.24-0.23,0.59-0.35,1.04-0.35h2.88c0.79,0,1.52,0.13,2.16,0.38c0.64,0.26,1.19,0.62,1.64,1.1c0.46,0.48,0.81,1.07,1.05,1.76C222.56,72.56,222.68,73.35,222.68,74.23 M220.28,74.23c0-1.16-0.26-2.07-0.79-2.74c-0.53-0.67-1.26-1-2.21-1h-1.67v7.4h1.76c0.93,0,1.64-0.31,2.15-0.94C220.03,76.33,220.28,75.42,220.28,74.23"/><path d="M226.23,79.78c-0.46,0-0.8-0.11-1.05-0.35c-0.24-0.23-0.37-0.55-0.37-0.96v-8.54c0-0.41,0.12-0.73,0.37-0.97c0.25-0.23,0.6-0.35,1.05-0.35h6.44v1.84h-5.41v2.75h4.73v1.77h-4.73v2.97h5.42v1.83H226.23z"/><path d="M246.47,79.78h-2.18V71.7l-2.4,7.28c-0.16,0.59-0.59,0.88-1.3,0.88c-0.69,0-1.14-0.29-1.34-0.88l-2.35-7.29v8.1h-2.1v-9.65c0-0.51,0.17-0.9,0.5-1.15c0.33-0.25,0.77-0.38,1.32-0.38c0.31,0,0.57,0.04,0.8,0.11c0.22,0.07,0.41,0.17,0.57,0.3c0.16,0.12,0.29,0.28,0.39,0.46c0.1,0.18,0.19,0.37,0.26,0.58l2,6.37l2.09-6.37c0.13-0.42,0.33-0.76,0.61-1.04c0.28-0.27,0.73-0.41,1.35-0.41c0.55,0,0.98,0.13,1.3,0.38c0.32,0.25,0.48,0.64,0.48,1.15V79.78z"/></g></svg>
-      <div style="display:flex;flex-direction:column;gap:1px;">
-        <div class="program-name">Licenciatura en Diseño Visual y Negocios Creativos</div>
+      <div class="header-divider"></div>
+      <div class="header-titles">
         <div class="header-school">CRGS · Escuela de Arte y Diseño</div>
+        <div class="program-name">Licenciatura en Diseño Visual y Negocios Creativos</div>
       </div>
-      <div class="credits-badge">Plan 2027 · 342 CR</div>
+      <div class="credits-badge">Plan 2027 · 324 CR</div>
     </div>
     <div class="header-actions">
       <div class="nav-tabs">
@@ -1549,39 +1583,39 @@ body.role-admin #modalBadge { display:none; }
         <div class="programa-section-num">02</div>
         <h2 class="programa-section-title">Perfil de Egreso</h2>
         <p class="programa-section-text">La persona egresada de la Licenciatura en Diseño Visual y Negocios Creativos será capaz de diseñar y dirigir proyectos integrales que articulen identidad, información, experiencia, interacción y producción en contextos sociales, culturales y económicos complejos, mediante la aplicación del rigor técnico, pensamiento sistémico y metodologías estratégicas para transformar problemáticas en soluciones viables, tomando decisiones fundamentadas, colaborando efectivamente en equipos multidisciplinarios, vinculando el diseño con contextos de negocio y evaluando su impacto social y cultural, ejerciendo su práctica con ética, responsabilidad y compromiso profesional.</p>
-        <h3 style="font-family:'Raleway',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin:20px 0 12px;">Conocimientos</h3>
-        <ul style="list-style:none;padding:0;margin:0 0 16px;">
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Aplicar fundamentos teóricos del diseño visual, comunicación y cultura visual</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Integrar metodologías de diseño estratégico y pensamiento sistémico</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Implementar procesos de experiencia de usuario e interacción digital</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Aplicar gestión de proyectos creativos</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Vincular el diseño con contextos organizacionales y de negocio</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Integrar investigación aplicada al diseño</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Desarrollar soluciones mediante tecnologías digitales y prototipado interactivo</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;">Emplear marcos éticos y normativos del ejercicio profesional</li>
+        <div class="programa-subtitle">Conocimientos</div>
+        <ul class="programa-attrs">
+          <li>Aplicar fundamentos teóricos del diseño visual, comunicación y cultura visual</li>
+          <li>Integrar metodologías de diseño estratégico y pensamiento sistémico</li>
+          <li>Implementar procesos de experiencia de usuario e interacción digital</li>
+          <li>Aplicar gestión de proyectos creativos</li>
+          <li>Vincular el diseño con contextos organizacionales y de negocio</li>
+          <li>Integrar investigación aplicada al diseño</li>
+          <li>Desarrollar soluciones mediante tecnologías digitales y prototipado interactivo</li>
+          <li>Emplear marcos éticos y normativos del ejercicio profesional</li>
         </ul>
-        <h3 style="font-family:'Raleway',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin:20px 0 12px;">Habilidades</h3>
-        <ul style="list-style:none;padding:0;margin:0 0 16px;">
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Concebir y diseñar proyectos integrales de diseño</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Estructurar sistemas de comunicación visual</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Colaborar en procesos de diseño interdisciplinarios</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Aplicar metodologías de investigación</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Tomar decisiones fundamentadas en evidencia</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Colaborar efectivamente en equipos de trabajo</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Gestionar proyectos creativos</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Desarrollar soluciones innovadoras</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;">Evaluar impacto de proyectos de diseño</li>
+        <div class="programa-subtitle">Habilidades</div>
+        <ul class="programa-attrs">
+          <li>Concebir y diseñar proyectos integrales de diseño</li>
+          <li>Estructurar sistemas de comunicación visual</li>
+          <li>Colaborar en procesos de diseño interdisciplinarios</li>
+          <li>Aplicar metodologías de investigación</li>
+          <li>Tomar decisiones fundamentadas en evidencia</li>
+          <li>Colaborar efectivamente en equipos de trabajo</li>
+          <li>Gestionar proyectos creativos</li>
+          <li>Desarrollar soluciones innovadoras</li>
+          <li>Evaluar impacto de proyectos de diseño</li>
         </ul>
-        <h3 style="font-family:'Raleway',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin:20px 0 12px;">Actitudes</h3>
-        <ul style="list-style:none;padding:0;margin:0;">
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Ejercer responsabilidad ética profesional</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Mostrar pensamiento crítico</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Actuar con compromiso social</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Demostrar disposición al trabajo colaborativo</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Mantener disposición hacia la innovación</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Asumir responsabilidad en la toma de decisiones</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;border-bottom:1px solid var(--border);">Mostrar adaptabilidad al cambio tecnológico</li>
-          <li style="font-size:0.9rem;color:var(--text-secondary);padding:4px 0;">Promover la responsabilidad social en el diseño</li>
+        <div class="programa-subtitle">Actitudes</div>
+        <ul class="programa-attrs">
+          <li>Ejercer responsabilidad ética profesional</li>
+          <li>Mostrar pensamiento crítico</li>
+          <li>Actuar con compromiso social</li>
+          <li>Demostrar disposición al trabajo colaborativo</li>
+          <li>Mantener disposición hacia la innovación</li>
+          <li>Asumir responsabilidad en la toma de decisiones</li>
+          <li>Mostrar adaptabilidad al cambio tecnológico</li>
+          <li>Promover la responsabilidad social en el diseño</li>
         </ul>
       </div>
 
@@ -1632,7 +1666,7 @@ body.role-admin #modalBadge { display:none; }
       <div class="type-label tl-estudio">Estudio</div>
       <div class="type-label tl-disciplinar">Disciplinar</div>
       <div class="type-label tl-sinergia">Sinergia</div>
-      <div class="type-label tl-certificado">Conc. / Proyecto</div>
+      <div class="type-label tl-certificado">Concentración</div>
       <div class="type-label tl-formacion">Formación</div>
       <div class="type-label tl-general">Conocimiento General</div>
     </div>
