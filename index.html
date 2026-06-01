@@ -20,8 +20,8 @@
   --border: rgba(255,255,255,0.08);
   --border-hover: rgba(255,255,255,0.15);
   --text: #f0efe9;
-  --text-secondary: rgba(240,239,233,0.65);
-  --text-tertiary: rgba(240,239,233,0.42);
+  --text-secondary: rgba(240,239,233,0.74);
+  --text-tertiary: rgba(240,239,233,0.60);
 
   /* Ejes — paleta institucional + EAD (aclarados para dark mode) */
   --lenguaje: #FFF500;
@@ -137,6 +137,50 @@ body {
 .filter-pill.eje-experiencia.active { border-color:var(--experiencia); color:var(--experiencia); background:var(--experiencia-bg); }
 .filter-pill.eje-direccion.active { border-color:var(--direccion); color:var(--direccion); background:var(--direccion-bg); }
 .filter-pill.eje-produccion.active { border-color:var(--produccion); color:var(--produccion); background:var(--produccion-bg); }
+
+/* ===== COMPETENCY TRACER ===== */
+.filter-pill.comp-pill { font-family:'JetBrains Mono',monospace; font-weight:700; letter-spacing:0.04em; }
+.filter-pill.comp-pill.active { border-color:var(--accent); color:var(--accent); background:rgba(255,245,0,0.10); }
+.comp-caption { display:none; }
+.comp-caption.show {
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  margin:10px 0 0; padding:10px 14px; border-radius:10px;
+  background:var(--surface-2); border:1px solid var(--border);
+}
+.comp-caption .cc-name { font-size:0.82rem; font-weight:700; color:var(--text); }
+.comp-caption .cc-name span { color:var(--accent); font-family:'JetBrains Mono',monospace; margin-right:8px; }
+.comp-caption .cc-legend { display:flex; gap:14px; font-size:0.7rem; color:var(--text-secondary); }
+.comp-caption .cc-legend b { display:inline-flex; align-items:center; font-weight:500; }
+.comp-caption .cc-legend b::before { content:''; width:9px; height:9px; border-radius:2px; margin-right:5px; }
+.comp-caption .cc-legend .cl-B::before { background:#3D8C82; }
+.comp-caption .cc-legend .cl-I::before { background:#7174B2; }
+.comp-caption .cc-legend .cl-A::before { background:#E88B6E; }
+.comp-caption .cc-legend .cl-E::before { background:var(--accent); }
+.comp-caption .cc-arrow { color:var(--text-tertiary); }
+
+/* card states while a competency is active */
+.course-card.comp-dim { opacity:0.09 !important; transform:scale(0.985) !important; pointer-events:none !important; filter:saturate(0.4); }
+.course-card.comp-on { opacity:1 !important; transform:none !important; pointer-events:auto !important; }
+.course-card.comp-on.lvl-B { box-shadow:inset 0 0 0 1px #3D8C82; }
+.course-card.comp-on.lvl-I { box-shadow:inset 0 0 0 1.5px #7174B2; }
+.course-card.comp-on.lvl-A { box-shadow:inset 0 0 0 2px #E88B6E; }
+.course-card.comp-on.lvl-E { box-shadow:inset 0 0 0 2px var(--accent); }
+.comp-badge {
+  position:absolute; top:5px; right:5px; z-index:4;
+  font-family:'JetBrains Mono',monospace; font-size:0.6rem; font-weight:800;
+  min-width:15px; height:15px; padding:0 3px; border-radius:4px;
+  display:flex; align-items:center; justify-content:center; pointer-events:none;
+}
+.comp-badge.lvl-B { background:#3D8C82; color:#fff; }
+.comp-badge.lvl-I { background:#7174B2; color:#fff; }
+.comp-badge.lvl-A { background:#E88B6E; color:#1a1a1a; }
+.comp-badge.lvl-E { background:var(--accent); color:#1a1a1a; }
+.comp-consolida {
+  position:absolute; bottom:4px; right:6px; z-index:4; pointer-events:none;
+  font-size:0.48rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+  color:#E88B6E;
+}
+.course-card.comp-on.lvl-E .comp-consolida { color:var(--accent); }
 .filter-separator {
   width:1px; height:20px; background:var(--border); margin:0 8px;
 }
@@ -327,7 +371,7 @@ body {
   line-height:1;
 }
 .sem-header .sem-cr-label {
-  font-size:0.5rem; font-weight:500;
+  font-size:0.58rem; font-weight:500;
   color:var(--text-tertiary); letter-spacing:0.12em; text-transform:uppercase;
   line-height:1;
 }
@@ -383,7 +427,7 @@ body {
 .card-type.formacion { background:rgba(255,255,255,0.04); color:var(--text-tertiary); }
 
 .card-name {
-  font-family:'Raleway',sans-serif; font-size:0.82rem; font-weight:600;
+  font-family:'Raleway',sans-serif; font-size:0.9rem; font-weight:600;
   line-height:1.3; color:var(--text);
   margin-bottom:2px;
   flex:1;
@@ -393,18 +437,18 @@ body {
 }
 .card-credits {
   font-family:'JetBrains Mono',monospace;
-  font-size:0.7rem; font-weight:600;
-  color:var(--text-tertiary);
+  font-size:0.74rem; font-weight:600;
+  color:var(--text-secondary);
 }
 /* Competency badges on cards */
 .card-comp-badges {
   display:flex; flex-wrap:wrap; gap:2px; margin-bottom:3px;
 }
 .ccb {
-  font-family:'JetBrains Mono',monospace; font-size:0.48rem; font-weight:600;
+  font-family:'JetBrains Mono',monospace; font-size:0.56rem; font-weight:600;
   padding:1px 3px; border-radius:2px; line-height:1.2;
 }
-.ccb sup { font-size:0.38rem; }
+.ccb sup { font-size:0.44rem; }
 .ccb-I { background:rgba(61,140,130,0.2); color:#3D8C82; }
 .ccb-D { background:rgba(113,116,178,0.2); color:#7174B2; }
 .ccb-M { background:rgba(255,245,0,0.15); color:var(--accent); }
@@ -1563,7 +1607,18 @@ body.role-admin #modalBadge { display:none; }
       <button class="filter-pill" data-type="sinergia">Sinergia</button>
       <button class="filter-pill" data-type="certificado">Concentración</button>
     </div>
+    <div class="filter-separator"></div>
+    <span class="filter-label">Competencias</span>
+    <div class="filter-group" id="compFilterGroup">
+      <button class="filter-pill comp-pill" data-slo="SLO1" title="Dirección estratégica de proyectos de diseño">SLO1</button>
+      <button class="filter-pill comp-pill" data-slo="SLO2" title="Desarrollo de sistemas de comunicación visual">SLO2</button>
+      <button class="filter-pill comp-pill" data-slo="SLO3" title="Gestión de procesos creativos e innovación">SLO3</button>
+      <button class="filter-pill comp-pill" data-slo="SLO4" title="Integración tecnológica para el diseño digital">SLO4</button>
+      <button class="filter-pill comp-pill" data-slo="SLO5" title="Vinculación del diseño con modelos de negocio">SLO5</button>
+      <button class="filter-pill comp-pill" data-slo="SLO6" title="Evaluación del impacto social y cultural del diseño">SLO6</button>
+    </div>
   </div>
+  <div class="comp-caption" id="compCaption"></div>
 </div>
 
 <!-- ===== PROGRAMA VIEW ===== -->
@@ -2501,7 +2556,7 @@ TYPE_LANES.forEach(lane => {
 const TOTAL_ROWS = _gridRow - 1;
 
 function applyReticula() {
-  const CARD_H = 68;
+  const CARD_H = 112;
   const rowTemplate = ['auto'];
   for (let r = 2; r <= TOTAL_ROWS; r++) rowTemplate.push(CARD_H + 'px');
   const templateStr = rowTemplate.join(' ');
@@ -3239,11 +3294,13 @@ Object.entries(COURSE_DATA).forEach(([k,v]) => { COURSE_OBJECTIVES[k] = v.obj; }
 const SUGGESTED_COMPS = {
   // ═══ SEM 1 — BÁSICO (solo SLO2 y SLO4) ═══
   'diseño-visual-i-principios-y-composición':{SLO2:'B'},
+  'estudio-de-principios-y-composición-visual':{SLO2:'B'},
   'visualización-y-pensamiento-de-diseño':{SLO2:'B',SLO3:'B'},
   'contexto-cultural-del-diseño':{SLO2:'B'},
   'herramientas-digitales-para-el-diseño':{SLO4:'B'},
   // ═══ SEM 2 — BÁSICO ═══
   'diseño-visual-ii-forma-color-y-estructura':{SLO2:'B',SLO3:'B'},
+  'estudio-de-forma-color-y-estructura':{SLO2:'B',SLO3:'B'},
   'tipografía-i-fundamentos':{SLO2:'B'},
   'ilustración-aplicada':{SLO2:'B',SLO3:'B'},
   'lenguaje-y-significado-en-el-diseño':{SLO2:'B'},
@@ -3422,11 +3479,12 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
 
 // ===== EJE FILTERS =====
 document.querySelectorAll('.filter-pill[data-filter]').forEach(btn => {
-  btn.addEventListener('click', () => { btn.classList.toggle('active'); applyFilters(); });
+  btn.addEventListener('click', () => { exitCompetencyMode(); btn.classList.toggle('active'); applyFilters(); });
 });
 const typeFilters = document.querySelectorAll('.filter-pill[data-type]');
 typeFilters.forEach(btn => {
   btn.addEventListener('click', () => {
+    exitCompetencyMode();
     typeFilters.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     applyFilters();
@@ -3445,6 +3503,77 @@ function applyFilters() {
     card.style.pointerEvents = matchEje && matchType ? 'auto' : 'none';
   });
 }
+
+// ===== COMPETENCY TRACER (malla) =====
+let activeSlo = null;
+function compSlugFromName(name){
+  return (name||'').toLowerCase().replace(/[^a-záéíóúñü0-9]+/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+}
+function cardCompetencias(card){
+  const nameSlug = compSlugFromName(card.querySelector('.card-name')?.textContent.trim());
+  const slugId = (card.dataset.origId || card.dataset.id || '').replace(/--s\d+p\d+$/,'');
+  return SUGGESTED_COMPS[nameSlug] || SUGGESTED_COMPS[slugId] || null;
+}
+function clearCompetencyVisuals(){
+  document.querySelectorAll('#semGrid .course-card').forEach(c => {
+    c.classList.remove('comp-on','comp-dim','lvl-B','lvl-I','lvl-A','lvl-E');
+    c.querySelectorAll('.comp-badge,.comp-consolida').forEach(e => e.remove());
+    c.style.opacity=''; c.style.transform=''; c.style.pointerEvents='';
+  });
+}
+function exitCompetencyMode(){
+  if(!activeSlo) return;
+  activeSlo = null;
+  document.querySelectorAll('.comp-pill[data-slo]').forEach(b => b.classList.remove('active'));
+  document.getElementById('compCaption')?.classList.remove('show');
+  clearCompetencyVisuals();
+}
+function applyCompetency(slo){
+  const order = {'B':1,'I':2,'A':3,'E':4};
+  clearCompetencyVisuals();
+  const cards = [...document.querySelectorAll('#semGrid .course-card')];
+  cards.forEach(c => {
+    const comps = cardCompetencias(c);
+    const lvl = comps && comps[slo];
+    if(lvl){
+      c.classList.add('comp-on','lvl-'+lvl);
+      const b = document.createElement('div');
+      b.className = 'comp-badge lvl-'+lvl; b.textContent = lvl;
+      c.appendChild(b);
+      if((order[lvl]||0) >= 3){
+        const cs = document.createElement('div');
+        cs.className = 'comp-consolida';
+        cs.textContent = lvl === 'E' ? 'evalúa' : 'consolida';
+        c.appendChild(cs);
+      }
+    } else {
+      c.classList.add('comp-dim');
+    }
+  });
+  const comp = COMPETENCIAS.find(x => x.id === slo);
+  const cap = document.getElementById('compCaption');
+  if(cap && comp){
+    cap.innerHTML =
+      `<span class="cc-name"><span>${comp.id}</span>${comp.label}</span>` +
+      `<span class="cc-legend"><b class="cl-B">Básico</b><span class="cc-arrow">→</span>` +
+      `<b class="cl-I">Intermedio</b><span class="cc-arrow">→</span>` +
+      `<b class="cl-A">Avanzado</b><span class="cc-arrow">→</span>` +
+      `<b class="cl-E">Consolida</b></span>`;
+    cap.classList.add('show');
+  }
+}
+document.querySelectorAll('.comp-pill[data-slo]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const slo = btn.dataset.slo;
+    if(activeSlo === slo){ exitCompetencyMode(); return; }
+    activeSlo = slo;
+    document.querySelectorAll('.comp-pill[data-slo]').forEach(b => b.classList.toggle('active', b === btn));
+    // modo exclusivo: reset visual de filtros eje/tipo
+    document.querySelectorAll('.filter-pill[data-filter]').forEach(b => b.classList.add('active'));
+    typeFilters.forEach(b => b.classList.toggle('active', b.dataset.type === 'all'));
+    applyCompetency(slo);
+  });
+});
 
 // ===== MODAL / PLAN ANALÍTICO =====
 const overlay = document.getElementById('modalOverlay');
