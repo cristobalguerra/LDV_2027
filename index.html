@@ -5420,6 +5420,20 @@ const RESPALDO = {
         'Miembro de ico-D y del Consejo Asesor del Hoffmitz Milken Center for Typography · ArtCenter',
       ],
     },
+    {
+      nombre: 'Iliana Moreno',
+      foto: 'fotos/iliana-moreno.jpg',
+      cargo: 'Profesora de planta',
+      bio: 'El diseño como estrategia: administración de diseño y emprendimiento creativo aplicados a productos, servicios y experiencias.',
+      credenciales: [
+        'MA en Administración de Diseño · University of Southampton, UK (con Distinción)',
+        'Lic. en Diseño de Información · UDLAP (Magna Cum Laude)',
+        'Especialidad en Diseño Estratégico, Emprendimiento Creativo, Branding y Tipografía',
+        'Docencia en pregrado y posgrado: Design Thinking, Diseño Estratégico e Innovación, Emprendimiento, Incubación de Negocios y Liderazgo',
+        'Consejera de universidades privadas en México: calidad educativa y vinculación con el mercado y las agencias de diseño',
+        'Conferencista y tallerista: Storytelling, Pitch, Emprendimiento, Liderazgo y Coaching transformacional',
+      ],
+    },
   ],
 };
 
@@ -5428,7 +5442,7 @@ function renderRespaldo() {
   const card = p => `
     <div class="resp-card">
       ${p.foto
-        ? `<img class="resp-photo" src="${p.foto}" alt="${congrEsc(p.nombre)}" loading="lazy">`
+        ? `<img class="resp-photo" src="${p.foto}" alt="${congrEsc(p.nombre)}">`
         : `<div class="resp-photo initials" aria-hidden="true">${iniciales(p.nombre)}</div>`}
       <div class="resp-nombre">${congrEsc(p.nombre)}</div>
       <div class="resp-cargo">${congrEsc(p.cargo || '')}</div>
