@@ -1581,6 +1581,48 @@ body.role-admin #modalBadge { display:none; }
 .claim-foot { font-size:1.02rem; color:var(--text-secondary); max-width:620px; margin:18px auto 0; line-height:1.65; }
 .claim-foot strong { color:var(--text); }
 
+/* Respaldo: consejo y claustro */
+.resp-group { margin-top:34px; }
+.resp-group-title {
+  font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:700;
+  letter-spacing:0.12em; text-transform:uppercase; color:var(--text-tertiary);
+  margin-bottom:22px;
+}
+.resp-grid { display:flex; justify-content:center; gap:26px; flex-wrap:wrap; }
+.resp-card {
+  width:230px; text-align:center;
+  padding:24px 18px 20px; border-radius:18px;
+  background:var(--surface); border:1px solid var(--border);
+  transition:border-color 0.2s, transform 0.2s;
+}
+.resp-card:hover { border-color:var(--border-hover); transform:translateY(-2px); }
+.resp-photo {
+  width:96px; height:96px; border-radius:50%; margin:0 auto 14px;
+  object-fit:cover; display:block;
+  border:2px solid var(--border-hover);
+}
+.resp-photo.initials {
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg, rgba(211,244,43,0.25), rgba(122,59,232,0.35));
+  font-family:'Raleway',sans-serif; font-size:1.6rem; font-weight:800; color:var(--text);
+}
+.resp-nombre { font-family:'Raleway',sans-serif; font-size:1.02rem; font-weight:800; line-height:1.25; }
+.resp-cargo { font-size:0.78rem; color:var(--nc); font-weight:600; margin-top:3px; }
+.resp-cargo .rc-dv { color:var(--dv); }
+.resp-bio { font-size:0.8rem; color:var(--text-secondary); line-height:1.5; margin-top:8px; }
+.resp-creds { list-style:none; margin:12px 0 0; padding:0; text-align:left; }
+.resp-creds li {
+  font-size:0.76rem; color:var(--text-secondary); line-height:1.45;
+  padding:3px 0 3px 14px; position:relative;
+}
+.resp-creds li::before {
+  content:''; position:absolute; left:0; top:10px;
+  width:7px; height:2px; border-radius:2px; background:var(--dv);
+}
+.resp-creds li.pendiente { color:var(--text-tertiary); font-style:italic; }
+.resp-creds li.pendiente::before { background:var(--border-hover); }
+@media (max-width:700px) { .resp-card { width:100%; max-width:300px; } }
+
 /* Fundamentación disciplinar */
 .claim-texto { text-align:left; max-width:760px; }
 .claim-texto .claim-title, .claim-texto .claim-sub { text-align:center; }
@@ -2529,6 +2571,19 @@ body.is-loading .app-loading-badge { display:flex; }
         <div class="fund-nota">
           <strong>Sobre la conducción de estas asignaturas:</strong> requiere docentes con experiencia en procesos de diseño, desarrollo de proyectos y toma de decisiones estratégicas. Los especialistas de Negocios pueden colaborar en contenidos específicos, pero el conocimiento administrativo no sustituye la experiencia necesaria para orientar proyectos desde la disciplina del diseño.
         </div>
+      </div>
+    </div>
+
+    <div class="claim">
+      <h2 class="claim-title">Quiénes respaldan la denominación</h2>
+      <p class="claim-sub">Perfiles con trayectoria real en ambos dominios: consejo consultivo que apoyó el cambio de nombre y claustro con experiencia de negocio.</p>
+      <div class="resp-group" id="respConsejoWrap">
+        <h3 class="resp-group-title">Consejo consultivo · respaldo al cambio de denominación</h3>
+        <div class="resp-grid" id="respConsejo"></div>
+      </div>
+      <div class="resp-group" id="respDocentesWrap" style="display:none;">
+        <h3 class="resp-group-title">Claustro · perfiles de negocio</h3>
+        <div class="resp-grid" id="respDocentes"></div>
       </div>
     </div>
 
@@ -5326,6 +5381,62 @@ async function initApp() {
 // ═══════════════════════════════════════════════════════════════
 const SLO_MODEL = {"slos":[{"id":"SLO1","n":"Dirección estratégica","pDV":42.6},{"id":"SLO2","n":"Comunicación visual","pDV":76.0},{"id":"SLO3","n":"Procesos creativos","pDV":54.9},{"id":"SLO4","n":"Integración tecnológica","pDV":58.6},{"id":"SLO5","n":"Modelos de negocio","pDV":25.0},{"id":"SLO6","n":"Impacto social y cultural","pDV":50.0}],"crit":["No aparece en objetivos, contenidos ni evidencias.","Introduce conceptos, referencias o herramientas básicas.","Aplica la dimensión dentro de ejercicios o proyectos.","La dimensión constituye un resultado central y evaluable."],"dimsDV":[{"c":"DV1","n":"Lenguaje visual","d":"Uso intencional de forma, color, contraste, escala, ritmo y jerarquía."},{"c":"DV2","n":"Composición y estructura","d":"Organización espacial y estructural de elementos visuales."},{"c":"DV3","n":"Tipografía","d":"Selección, composición, diseño y aplicación de sistemas tipográficos."},{"c":"DV4","n":"Imagen e ilustración","d":"Creación y tratamiento de fotografía, ilustración e imagen."},{"c":"DV5","n":"Conceptualización","d":"Construcción de conceptos que articulan intención, forma y contenido."},{"c":"DV6","n":"Comunicación visual","d":"Formulación de mensajes visuales para públicos y contextos específicos."},{"c":"DV7","n":"Identidad visual y marca","d":"Construcción de identidades, marcas y lenguajes de reconocimiento."},{"c":"DV8","n":"Diseño editorial","d":"Organización secuencial de textos e imágenes en medios editoriales."},{"c":"DV9","n":"Información y visualización","d":"Síntesis y representación visual de datos, contenidos y sistemas."},{"c":"DV10","n":"Diseño digital e interacción","d":"Diseño de interfaces, comportamientos y experiencias digitales."},{"c":"DV11","n":"Sistemas visuales","d":"Creación de reglas visuales consistentes, adaptables y escalables."},{"c":"DV12","n":"Investigación y proceso de diseño","d":"Obtención de evidencia y desarrollo iterativo del proceso de diseño."},{"c":"DV13","n":"Producción y prototipado","d":"Materialización técnica, pruebas, maquetas y prototipos."},{"c":"DV14","n":"Dirección de arte","d":"Definición y supervisión del lenguaje visual de un proyecto."},{"c":"DV15","n":"Argumentación y evaluación","d":"Justificación, crítica y evaluación de decisiones de diseño."}],"dimsNC":[{"c":"NC1","n":"Comprensión de audiencias","d":"Comprensión de necesidades, hábitos, motivaciones y contextos de públicos."},{"c":"NC2","n":"Identificación de oportunidades","d":"Detección de problemas o espacios donde el diseño puede producir valor."},{"c":"NC3","n":"Propuesta de valor","d":"Definición del beneficio y pertinencia de una oferta creativa."},{"c":"NC4","n":"Posicionamiento y diferenciación","d":"Lugar que una propuesta ocupa frente a alternativas y competidores."},{"c":"NC5","n":"Validación con usuarios","d":"Comprobación de pertinencia, deseabilidad, adopción o funcionamiento."},{"c":"NC6","n":"Productos, servicios y experiencias","d":"Transformación de una idea en una oferta implementable."},{"c":"NC7","n":"Modelo de negocio creativo","d":"Forma mediante la cual una iniciativa crea, entrega y captura valor."},{"c":"NC8","n":"Propiedad intelectual","d":"Protección y aprovechamiento de marcas, obras, diseños y contenidos."},{"c":"NC9","n":"Producción e implementación","d":"Organización de recursos, proveedores, tiempos y procesos de ejecución."},{"c":"NC10","n":"Comercialización y distribución","d":"Acceso a públicos mediante canales, promoción, venta o distribución."},{"c":"NC11","n":"Viabilidad y sostenibilidad","d":"Capacidad de operar, sostenerse y mantener pertinencia bajo condiciones reales."},{"c":"NC12","n":"Gestión de proyectos y clientes","d":"Coordinación de alcance, recursos, equipos, clientes, riesgos y entregables."}],"pesos":{"DV1":[0,3,1,0,0,1],"DV2":[0,3,1,0,0,0],"DV3":[0,3,1,1,0,0],"DV4":[0,3,2,1,0,1],"DV5":[2,2,3,0,1,1],"DV6":[1,3,1,1,1,2],"DV7":[2,3,2,1,2,1],"DV8":[0,3,1,1,1,1],"DV9":[1,3,2,2,0,2],"DV10":[1,2,2,3,1,1],"DV11":[2,3,2,1,1,0],"DV12":[3,1,3,1,1,2],"DV13":[2,1,3,3,1,1],"DV14":[3,3,2,1,1,1],"DV15":[3,2,2,1,1,3],"NC1":[2,1,2,1,3,2],"NC2":[3,0,2,1,3,1],"NC3":[2,1,1,0,3,1],"NC4":[2,2,1,0,3,1],"NC5":[2,1,3,2,2,2],"NC6":[3,2,3,2,3,2],"NC7":[2,0,1,1,3,1],"NC8":[1,1,1,0,3,1],"NC9":[3,1,3,2,2,1],"NC10":[1,2,1,1,3,1],"NC11":[3,0,2,1,3,3],"NC12":[3,1,3,1,2,1]},"materias":[{"n":"Estudio de Diseño Visual","sem":1,"cert":false,"pDV":44.4,"pNC":0.0,"lec":"DV","dv":[3,3,0,2,2,3,0,0,0,0,0,2,2,0,3],"nc":[0,0,0,0,0,0,0,0,0,0,0,0],"ali":[18.4,31.3,24.2,18.4,9.1,27.5],"niv":["B","B","B","B","B","B"],"con":[0.5,0.8,0.6,0.5,0.2,0.7]},{"n":"Visualización y Pensamiento de Diseño","sem":1,"cert":false,"pDV":40.0,"pNC":2.8,"lec":"DV","dv":[2,2,0,1,3,2,0,0,2,0,0,3,0,0,3],"nc":[0,1,0,0,0,0,0,0,0,0,0,0],"ali":[22.0,28.0,24.8,16.1,10.6,29.4],"niv":["B","B","B","B","B","B"],"con":[0.5,0.8,0.6,0.4,0.3,0.7]},{"n":"Contexto Cultural del Diseño","sem":1,"cert":false,"pDV":20.0,"pNC":11.1,"lec":"MIX","dv":[1,0,0,0,1,1,1,0,0,0,0,2,0,0,3],"nc":[1,1,0,0,0,0,0,1,0,0,0,1],"ali":[20.6,14.7,17.6,11.5,15.2,22.5],"niv":["B","B","B","B","B","B"],"con":[0.5,0.4,0.4,0.3,0.4,0.6]},{"n":"Estudio de Forma, Color y Estructura","sem":2,"cert":false,"pDV":40.0,"pNC":0.0,"lec":"DV","dv":[3,3,0,0,1,2,0,0,0,0,3,2,2,0,2],"nc":[0,0,0,0,0,0,0,0,0,0,0,0],"ali":[18.4,28.7,21.6,17.2,9.1,19.6],"niv":["B","B","B","B","B","B"],"con":[0.5,0.8,0.5,0.5,0.2,0.5]},{"n":"Principios de la Tipografía","sem":2,"cert":false,"pDV":37.8,"pNC":5.6,"lec":"DV","dv":[2,3,3,0,2,2,0,0,0,0,1,2,0,0,2],"nc":[0,0,0,0,0,0,0,1,0,0,1,0],"ali":[17.0,29.3,20.3,12.6,11.4,21.6],"niv":["B","B","B","B","B","B"],"con":[0.4,0.8,0.5,0.3,0.3,0.5]},{"n":"Ilustración Aplicada","sem":2,"cert":false,"pDV":66.7,"pNC":16.7,"lec":"DV","dv":[3,2,0,3,3,3,2,2,0,1,3,2,3,1,2],"nc":[1,0,0,0,0,2,0,2,1,0,0,0],"ali":[38.3,54.7,46.4,42.5,31.1,42.2],"niv":["B","B","B","B","B","B"],"con":[0.9,1.5,1.1,1.1,0.9,1.0]},{"n":"Lenguaje y Significado en el Diseño","sem":2,"cert":false,"pDV":53.3,"pNC":13.9,"lec":"DV","dv":[2,2,0,1,3,3,2,0,1,0,2,3,1,1,3],"nc":[2,2,0,0,0,1,0,0,0,0,0,0],"ali":[38.3,41.3,38.6,29.9,26.5,40.2],"niv":["B","B","B","B","B","B"],"con":[0.9,1.1,1.0,0.8,0.7,1.0]},{"n":"Estudio de Identidad, Forma y Significado","sem":3,"cert":false,"pDV":68.9,"pNC":13.9,"lec":"DV","dv":[3,3,2,0,3,3,3,0,2,0,3,3,2,1,3],"nc":[2,1,0,1,0,0,0,0,0,0,0,1],"ali":[42.6,54.7,45.1,36.8,28.8,43.1],"niv":["B","B","B","B","B","B"],"con":[1.0,1.5,1.1,1.0,0.8,1.1]},{"n":"Fundamentos de Diseño de Información","sem":3,"cert":false,"pDV":35.6,"pNC":2.8,"lec":"DV","dv":[2,3,0,0,0,2,0,0,3,0,0,2,2,0,2],"nc":[1,0,0,0,0,0,0,0,0,0,0,0],"ali":[16.3,26.0,20.3,21.8,8.3,25.5],"niv":["I","B","B","B","I","B"],"con":[0.8,1.4,1.0,1.2,0.5,1.2]},{"n":"Fotografía para Diseño","sem":3,"cert":false,"pDV":48.9,"pNC":11.1,"lec":"DV","dv":[2,3,0,3,3,2,0,0,0,0,0,2,3,2,2],"nc":[0,0,0,0,0,0,0,1,2,0,0,1],"ali":[29.8,36.7,35.9,28.7,17.4,30.4],"niv":["B","B","B","B","I","B"],"con":[1.4,2.0,1.8,1.5,1.0,1.5]},{"n":"Tipografía Aplicada","sem":3,"cert":false,"pDV":55.6,"pNC":2.8,"lec":"DV","dv":[2,3,3,0,0,3,0,3,0,2,3,2,2,0,2],"nc":[0,0,0,0,0,0,0,1,0,0,0,0],"ali":[19.9,42.7,26.8,32.2,15.2,25.5],"niv":["I","I","B","B","I","B"],"con":[1.0,2.3,1.3,1.7,0.8,1.2]},{"n":"Estudio de Información y Visualización","sem":4,"cert":false,"pDV":48.9,"pNC":13.9,"lec":"DV","dv":[2,3,0,0,2,3,0,1,3,2,2,2,0,0,2],"nc":[2,0,0,0,2,0,0,0,0,0,0,1],"ali":[27.7,40.7,34.0,33.3,19.7,37.3],"niv":["B","I","B","B","I","B"],"con":[1.3,2.2,1.7,1.8,1.1,1.8]},{"n":"Producción de Diseño y Prototipos","sem":4,"cert":false,"pDV":37.8,"pNC":22.2,"lec":"DV","dv":[1,2,2,2,0,0,0,2,0,1,0,2,3,0,2],"nc":[0,0,0,0,0,0,0,1,3,0,2,2],"ali":[29.1,29.3,34.0,36.8,22.0,30.4],"niv":["B","B","B","B","B","B"],"con":[1.4,1.6,1.7,2.0,1.2,1.5]},{"n":"Diseño de Empaque","sem":4,"cert":false,"pDV":57.8,"pNC":47.2,"lec":"MIX","dv":[3,3,0,0,2,3,3,0,2,0,3,2,3,0,2],"nc":[2,2,0,2,0,2,0,1,2,2,2,2],"ali":[56.7,55.3,55.6,50.6,51.5,54.9],"niv":["I","I","I","I","I","I"],"con":[2.8,3.0,2.8,2.7,2.9,2.7]},{"n":"Estudio de Marca y Sistemas Visuales","sem":5,"cert":false,"pDV":73.3,"pNC":50.0,"lec":"DV","dv":[3,2,2,2,3,3,3,2,0,1,3,3,1,2,3],"nc":[3,2,2,3,2,0,1,1,0,1,1,2],"ali":[61.7,68.0,60.8,49.4,58.3,61.8],"niv":["A","A","A","I","I","A"],"con":[4.5,5.6,4.5,4.0,4.9,4.5]},{"n":"Portafolio Profesional","sem":5,"cert":false,"pDV":75.6,"pNC":61.1,"lec":"MIX","dv":[2,2,2,3,2,3,2,3,0,3,2,2,3,2,3],"nc":[2,2,2,3,2,0,2,2,2,2,1,2],"ali":[65.2,70.7,66.7,67.8,65.9,65.7],"niv":["I","I","I","I","I","I"],"con":[3.2,3.9,3.3,3.6,3.7,3.2]},{"n":"Estudio de Diseño de Interacción","sem":6,"cert":false,"pDV":60.0,"pNC":47.2,"lec":"MIX","dv":[2,2,1,0,3,2,0,0,3,3,2,3,3,0,3],"nc":[3,2,2,0,3,3,0,0,0,0,2,2],"ali":[60.3,50.7,62.7,64.4,49.2,64.7],"niv":["A","I","A","A","I","A"],"con":[4.4,4.1,4.7,5.2,4.1,4.7]},{"n":"Diseño de Experiencia","sem":6,"cert":false,"pDV":62.2,"pNC":50.0,"lec":"MIX","dv":[2,2,0,0,2,3,2,0,3,2,3,3,2,1,3],"nc":[3,3,2,0,3,3,1,0,0,0,1,2],"ali":[65.2,55.3,63.4,63.2,54.5,65.7],"niv":["I","I","I","I","I","I"],"con":[3.2,3.0,3.1,3.4,3.0,3.2]},{"n":"Diseño de Interfaz","sem":6,"cert":false,"pDV":71.1,"pNC":38.9,"lec":"DV","dv":[3,3,2,2,1,2,0,0,2,3,3,3,3,2,3],"nc":[2,2,0,0,3,2,1,0,1,0,1,2],"ali":[57.4,59.3,62.7,67.8,42.4,58.8],"niv":["I","I","A","A","I","I"],"con":[4.2,4.8,4.7,5.4,3.5,4.3]},{"n":"Estudio de Estrategia y de Servicios","sem":7,"cert":false,"pDV":33.3,"pNC":66.7,"lec":"NC","dv":[0,0,0,0,2,1,0,0,2,2,0,3,3,0,2],"nc":[3,3,3,1,2,3,2,0,2,1,2,2],"ali":[63.1,32.7,56.9,59.8,59.8,59.8],"niv":["A","B","I","I","I","I"],"con":[4.6,2.7,4.2,4.8,5.0,4.4]},{"n":"Prácticas Profesionales","sem":7,"cert":false,"pDV":71.1,"pNC":88.9,"lec":"NC","dv":[2,2,2,2,2,3,2,1,1,2,2,3,3,2,3],"nc":[2,3,3,3,2,3,2,2,3,3,3,3],"ali":[86.5,73.3,81.0,79.3,85.6,82.4],"niv":["E","A","E","A","E","E"],"con":[8.4,8.0,8.0,8.5,9.5,8.0]},{"n":"Estudio Integral de Diseño Visual y Negocios Creativos","sem":8,"cert":false,"pDV":71.1,"pNC":77.8,"lec":"MIX","dv":[2,2,2,0,3,3,3,2,0,1,3,3,3,2,3],"nc":[2,2,3,3,3,3,2,2,2,2,1,3],"ali":[81.6,72.0,76.5,70.1,79.5,73.5],"niv":["A","A","A","A","A","A"],"con":[5.9,5.9,5.7,5.6,6.6,5.4]},{"n":"Programa de Evaluación Final I","sem":8,"cert":false,"pDV":28.9,"pNC":47.2,"lec":"NC","dv":[0,0,0,0,3,2,0,0,0,0,0,3,2,0,3],"nc":[2,3,2,2,2,0,1,0,1,0,2,2],"ali":[51.1,24.0,43.1,34.5,44.7,48.0],"niv":["I","B","I","B","I","I"],"con":[5.0,2.6,4.3,3.7,5.0,4.7]},{"n":"Programa de Evaluación Final II","sem":9,"cert":false,"pDV":42.2,"pNC":44.4,"lec":"MIX","dv":[2,2,0,0,3,2,0,0,0,0,1,3,3,0,3],"nc":[2,0,2,2,2,0,1,0,2,1,2,2],"ali":[50.4,36.7,47.7,39.1,43.2,50.0],"niv":["I","B","I","B","I","I"],"con":[4.9,4.0,4.7,4.2,4.8,4.9]},{"n":"Herramientas Digitales para el Diseño","sem":1,"cert":false,"pDV":51.1,"pNC":5.6,"lec":"DV","dv":[2,2,2,3,1,0,0,3,0,1,2,2,3,0,2],"nc":[0,0,0,0,0,0,0,0,2,0,0,0],"ali":[22.0,38.0,32.0,34.5,13.6,24.5],"niv":["B","B","B","B","B","B"],"con":[0.5,1.0,0.8,0.9,0.4,0.6]},{"n":"Estrategia de Negocios para Arte y Diseño","sem":6,"cert":false,"pDV":4.4,"pNC":75.0,"lec":"NC","dv":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,2],"nc":[2,3,3,3,0,2,3,1,2,3,3,2],"ali":[48.2,20.0,33.3,29.9,59.8,42.2],"niv":["I","B","B","B","I","I"],"con":[2.3,1.1,1.6,1.6,3.3,2.1]},{"n":"Diseño Participativo","sem":8,"cert":false,"pDV":31.1,"pNC":50.0,"lec":"NC","dv":[0,0,0,0,3,2,0,0,2,0,1,3,0,0,3],"nc":[3,3,2,0,3,3,0,0,0,0,2,2],"ali":[53.9,30.7,48.4,40.2,46.2,55.9],"niv":["I","B","I","I","I","I"],"con":[3.9,2.5,3.6,3.2,3.9,4.1]},{"n":"Materiales Experimentales","sem":5,"cert":false,"pDV":48.9,"pNC":13.9,"lec":"DV","dv":[3,3,0,2,3,2,0,1,0,0,0,3,3,0,2],"nc":[0,1,0,0,0,1,0,0,1,0,2,0],"ali":[31.2,34.7,36.6,29.9,21.2,37.3],"niv":["B","B","B","B","B","B"],"con":[1.5,1.9,1.8,1.6,1.2,1.8]},{"n":"Metodología de Investigación y Creación para el Arte y Diseño","sem":7,"cert":false,"pDV":11.1,"pNC":13.9,"lec":"MIX","dv":[0,0,0,0,0,0,0,0,0,0,0,3,0,0,2],"nc":[1,1,0,0,2,0,0,0,0,0,1,0],"ali":[19.1,6.7,16.3,13.8,13.6,21.6],"niv":["A","A","A","A","A","B"],"con":[1.4,0.6,1.2,1.1,1.1,1.6]},{"n":"Dirección de Arte para Medios Audiovisuales e Interactivos","sem":3,"cert":false,"pDV":80.0,"pNC":27.8,"lec":"DV","dv":[3,3,2,3,3,3,2,0,1,2,2,3,3,3,3],"nc":[2,0,0,0,0,2,0,0,2,2,0,2],"ali":[54.6,68.0,61.4,59.8,39.4,54.9],"niv":["I","A","A","I","B","I"],"con":[4.0,5.6,4.6,4.8,3.3,4.0]},{"n":"Dirección de Arte y Fotografía de Producto","sem":4,"cert":true,"pDV":68.9,"pNC":41.7,"lec":"DV","dv":[3,3,0,3,3,3,2,0,0,0,2,3,3,3,3],"nc":[2,0,2,2,0,2,0,0,3,1,0,3],"ali":[61.7,63.3,62.1,50.6,47.7,55.9],"niv":["A","A","A","I","I","I"],"con":[4.5,5.2,4.6,4.0,4.0,4.1]},{"n":"Gestión de Proyectos Creativos","sem":4,"cert":true,"pDV":20.0,"pNC":47.2,"lec":"NC","dv":[0,0,0,0,0,0,0,2,0,0,0,2,2,0,3],"nc":[0,2,2,0,1,1,2,0,3,1,2,3],"ali":[44.7,19.3,37.3,37.9,40.2,39.2],"niv":["I","A","B","B","I","B"],"con":[3.2,1.6,2.8,3.0,3.4,2.9]},{"n":"Dirección Visual de Marca","sem":5,"cert":true,"pDV":68.9,"pNC":55.6,"lec":"MIX","dv":[2,2,2,1,2,2,3,2,1,1,3,2,2,3,3],"nc":[2,2,2,3,0,0,2,1,2,2,2,2],"ali":[66.0,65.3,60.1,55.2,62.1,59.8],"niv":["A","A","A","I","A","I"],"con":[4.8,5.3,4.5,4.4,5.2,4.4]},{"n":"Animación Gráfica y Contenido Digital","sem":6,"cert":true,"pDV":68.9,"pNC":36.1,"lec":"DV","dv":[3,2,2,2,3,3,2,0,0,1,3,2,3,2,3],"nc":[2,0,0,2,0,2,1,0,2,2,1,1],"ali":[54.6,62.0,56.2,52.9,45.5,52.9],"niv":["I","A","I","I","I","I"],"con":[4.0,5.1,4.2,4.2,3.8,3.9]},{"n":"Inteligencia Artificial Aplicada al Diseño Visual","sem":7,"cert":true,"pDV":44.4,"pNC":41.7,"lec":"MIX","dv":[2,0,0,3,2,0,0,0,0,0,2,3,2,3,3],"nc":[2,2,0,0,0,2,1,2,1,1,2,2],"ali":[53.2,38.7,49.7,41.4,43.2,49.0],"niv":["I","B","I","I","I","I"],"con":[3.9,3.2,3.7,3.3,3.6,3.6]},{"n":"De la Idea Gráfica al Mercado","sem":8,"cert":true,"pDV":15.6,"pNC":77.8,"lec":"NC","dv":[0,0,0,0,0,2,1,0,0,0,0,2,2,0,0],"nc":[3,3,3,3,3,3,3,1,1,2,3,0],"ali":[54.6,26.7,43.8,44.8,66.7,52.9],"niv":["I","B","I","I","A","I"],"con":[4.0,2.2,3.3,3.6,5.6,3.9]}],"rangos":[{"rango":"0–19.9","nivel":"Sin asignación","condicion":"No alcanza contribución suficiente."},{"rango":"20–39.9","nivel":"B","condicion":"Introducción o aplicación con guía."},{"rango":"40–59.9","nivel":"I","condicion":"Aplicación en problemas delimitados."},{"rango":"60–79.9","nivel":"A","condicion":"Integración con autonomía."},{"rango":"80–100","nivel":"E","condicion":"Demostración integral en contexto profesional o final."}],"comp":[{"n":"Puntaje curso–dimensión (Cij)","d":"0 = ausente; 1 = introduce; 2 = aplica; 3 = resultado central y evaluable."},{"n":"Peso dimensión–SLO (Rjk)","d":"0 = sin relación; 1 = complementaria; 2 = directa; 3 = nuclear."},{"n":"Alineación curso–SLO","d":"100 × Σ(Cij × Rjk) ÷ [3 × Σ(Rjk)]. Produce un porcentaje entre 0 y 100."},{"n":"Factor de nivel curricular","d":"B = 0.25; I = 0.50; A = 0.75; E = 1.00."},{"n":"Factor de evidencia","d":"Directa = 1.00; indirecta = 0.50; sin evidencia = 0."},{"n":"Valor efectivo","d":"Créditos × (alineación ÷ 100) × factor de nivel × factor de evidencia."},{"n":"Contribución porcentual","d":"Valor efectivo del curso ÷ suma de valores efectivos del SLO."},{"n":"Valor normalizado de dimensión","d":"Peso de la dimensión ÷ suma de pesos de todas las dimensiones vinculadas al SLO."}],"reglas":["El porcentaje no sustituye el juicio académico; documenta cómo se obtuvo.","El tope curricular impide que una materia inicial alcance nivel avanzado por una alta afinidad temática.","Una materia sin evidencia evaluable no aporta valor efectivo, aunque mencione el tema.","Los créditos ponderan la exposición curricular, pero no convierten una materia extensa en evidencia de dominio.","La suma de contribuciones de cada SLO equivale a 100 %, lo cual permite identificar cursos centrales y vacíos.","Los pesos de Vinculación SLO deben aprobarse mediante criterio colegiado y conservar una justificación documental."]};
 
+// ═══ RESPALDO — consejo consultivo y claustro ═══
+// Editar aquí: agregar/completar personas. foto: URL o ruta relativa (círculo);
+// si queda vacía se muestran las iniciales. credenciales: bullets (empresa, cargo,
+// trayectoria de negocio). Los marcados "por completar" están pendientes de info real.
+const RESPALDO = {
+  consejo: [
+    {
+      nombre: 'Vicky',
+      foto: '',
+      cargo: 'Miembro del Consejo Consultivo',
+      bio: 'Perfil enfocado en negocios creativos.',
+      credenciales: ['— credenciales por completar —'],
+      pendiente: true,
+    },
+    {
+      nombre: 'Alex López',
+      foto: '',
+      cargo: 'Miembro del Consejo Consultivo',
+      bio: 'Perfil enfocado en negocios creativos.',
+      credenciales: ['— credenciales por completar —'],
+      pendiente: true,
+    },
+    // + 3 miembros por agregar
+  ],
+  docentes: [
+    // { nombre:'', foto:'', cargo:'', bio:'', credenciales:['Empresa / cargo', 'Credencial'] },
+  ],
+};
+
+function renderRespaldo() {
+  const iniciales = n => n.split(/\s+/).slice(0, 2).map(p => p[0] || '').join('').toUpperCase();
+  const card = p => `
+    <div class="resp-card">
+      ${p.foto
+        ? `<img class="resp-photo" src="${p.foto}" alt="${congrEsc(p.nombre)}" loading="lazy">`
+        : `<div class="resp-photo initials" aria-hidden="true">${iniciales(p.nombre)}</div>`}
+      <div class="resp-nombre">${congrEsc(p.nombre)}</div>
+      <div class="resp-cargo">${congrEsc(p.cargo || '')}</div>
+      ${p.bio ? `<div class="resp-bio">${congrEsc(p.bio)}</div>` : ''}
+      ${(p.credenciales || []).length
+        ? `<ul class="resp-creds">${p.credenciales.map(c =>
+            `<li class="${p.pendiente ? 'pendiente' : ''}">${congrEsc(c)}</li>`).join('')}</ul>`
+        : ''}
+    </div>`;
+  const cw = document.getElementById('respConsejo');
+  const dw = document.getElementById('respDocentes');
+  if (cw) {
+    cw.innerHTML = RESPALDO.consejo.map(card).join('');
+    document.getElementById('respConsejoWrap').style.display = RESPALDO.consejo.length ? '' : 'none';
+  }
+  if (dw) {
+    dw.innerHTML = RESPALDO.docentes.map(card).join('');
+    document.getElementById('respDocentesWrap').style.display = RESPALDO.docentes.length ? '' : 'none';
+  }
+}
+
 let _congrBuilt = false;
 let _bflyFilter = 'all';
 let _bflySort = 'balance';
@@ -5337,6 +5448,7 @@ function buildCongruencia() {
   if (_congrBuilt) return;
   _congrBuilt = true;
   const M = SLO_MODEL;
+  renderRespaldo();
 
   // ── Hero: animar split bar + contadores ──
   const target = { dv: 59.0, nc: 41.0 };
