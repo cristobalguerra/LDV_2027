@@ -1,0 +1,137 @@
+
+DENOMINACIÓN DE LA ASIGNATURA O UNIDAD DE APRENDIZAJE
+
+Diseño de experiencia
+
+
+5° Semestre
+Eje de formación profesional 
+Asignatura Obligatoria 
+CICLO
+
+CLAVE DE LA ASIGNATURA
+
+FINES DE APRENDIZAJE O FORMACIÓN
+
+Al finalizar la asignatura, el alumno será capaz de gestionar proyectos con base etnográfica, diagnosticando problemas de legibilidad espacial mediante la psicología cognitiva mediante la proyección de sistemas complejos de orientación espacial (diseño de sistemas de orientación), gráfica ambiental y ecosistemas de servicios que articulen flujos eficientes tanto en entornos públicos como privados, con la finalidad de aplicar los fundamentos del diseño de experiencias.
+
+
+
+CONTENIDO TEMÁTICO
+
+
+	•	Usuario y experiencia emocional
+	•	Introducción al diseño de experiencia
+	•	 Definiciones y evolución del campo
+	•	 Dimensiones de la experiencia
+	•	Física
+	•	Digital
+	•	Ambiental
+	•	De servicios
+	•	Investigación etnográfica y modelado de usuario
+	•	 El usuario y su información como base del diseño
+	•	 Herramientas cualitativas de investigación
+	•	Observación en contexto
+	•	Diarios de campo
+	•	Psicología de la emoción en la experiencia de usuario
+	•	Relación entre usuario, experiencia y respuesta emocional
+	•	Niveles del diseño emocional
+	•	 Visceral
+	•	 Conductual
+	•	 Reflexivo
+	•	Gestión de expectativas
+	•	 Mapeo de puntos de fricción
+	•	 Diseño de momentos de deleite
+	•	 Métricas de impacto emocional
+	•	Síntesis estratégica
+	•	 Traducción de hallazgos abstractos y etnográficos
+	•	 Definición de requerimientos tangibles de diseño
+	•	Psicología de la navegación y legibilidad espacial
+	•	Procesamiento de información y carga cognitiva
+	•	 Teorías del tratamiento de la información aplicadas al espacio
+	•	 Fatiga cognitiva ambiental
+	•	 Sobrecarga visual y saturación de estímulos
+	•	Comunicación e interacción con el espacio
+	•	 El entorno físico como interfaz interactiva
+	•	 Semiótica del espacio
+	•	 Decodificación de mensajes visuales arquitectónicos
+	•	Cognición, percepción y psicología del espacio
+	•	 Modelos mentales espaciales
+	•	 Mapas cognitivos de legibilidad
+	•	 Leyes de la psicología de la forma aplicadas al entorno
+	•	Factores humanos y antropometría
+	•	 Ergonomía de la percepción visual
+	•	 Ángulos de visión y distancias de lectura
+	•	 Condiciones lumínicas y contraste en el espacio
+	•	Sistemas de orientación y guiado espacial
+	•	Fundamentos de los sistemas de guiado
+	•	 Señalización simple frente a sistemas de orientación sistémicos
+	•	 Identidad del espacio y códigos cromáticos
+	•	 Relación entre la función del espacio y el diseño gráfico
+	•	Planificación de flujos y circulación
+	•	 Análisis de rutas y trayectorias peatonales
+	•	 Tipologías de usuarios
+	•	Visitante recurrente
+	•	Usuario nuevo
+	•	 Nodos de decisión y flujos en contextos físicos cambiantes
+	•	Sistemas interactivos y tecnologías híbridas
+	•	 Integración de interfaces digitales en el entorno
+	•	 Pantallas de consulta adaptativas y tótems interactivos
+	•	 Señalética digital dinámica y actualización de datos en tiempo real
+	•	Prácticas emergentes y capas virtuales
+	•	 Uso de Realidad Aumentada para navegación espacial
+	•	 Sistemas de geolocalización en interiores
+	•	 Interfaces táctiles y hápticas de retroalimentación
+	•	Ecosistemas de servicio, contexto y entorno
+	•	Diseño de servicios
+	•	 Principios de servicios centrados en la experiencia
+	•	 Mapeo de puntos de contacto
+	•	 Diseño del mapa de ruta del servicio
+	•	4.2. Gráfica ambiental estratégica
+	•	 Integración de la identidad visual de marca con el espacio
+	•	 Comunicación visual corporativa y comercial
+	•	 Interiorismo estratégico y ambientación
+	•	Diseño gráfico espacial y omnicanalidad
+	•	 Coordinación de elementos gráficos y espaciales
+	•	 Sincronización entre el entorno físico y la experiencia digital
+	•	 Coherencia de marca en sistemas unificados
+	•	Accesibilidad universal y diseño inclusivo
+	•	 Normativas de accesibilidad física y sensorial
+	•	 Diseño para la diversidad funcional
+	•	 Criterios éticos y mitigación de la exclusión espacial
+
+ACTIVIDADES DE APRENDIZAJE 
+BAJO CONDUCCIÓN DE UN ACADÉMICO
+
+	•	Realizar ejercicios guiados de observación etnográfica y levantamiento de requerimientos en puntos de contacto reales.
+	•	Debatir casos de estudio sobre fallas críticas de legibilidad espacial y sus consecuencias en la experiencia del usuario.
+	•	Realizar talleres de co-creación y mapeo de diagramas de flujo de servicios bajo la supervisión del docente.
+	•	Implementar talleres prácticos para la zonificación, trazo de flujos de circulación y desarrollo de matrices de sistemas de guiado/orientación.
+	•	Ejecutar simulaciones de accesibilidad física y sensorial en espacios del campus universitario para evaluar la inclusión espacial.
+	•	Realizar críticas grupales iterativas de proyectos, evaluando la viabilidad metodológica, el rigor constructivo y su vinculación con el contexto de negocio.
+
+ACTIVIDADES DE APRENDIZAJE 
+INDEPENDIENTES
+
+
+	•	Planificar y ejecutar protocolos de investigación cualitativa (entrevistas, observación, mapeos emocionales) aplicados a un contexto de servicio real.
+	•	Desarrollar un proyecto integral de sistema de guiado y gráfica ambiental para un espacio físico complejo, documentando la jerarquía de información y los flujos tipificados.
+	•	Realizar auditorías técnico-cognitivas de legibilidad espacial y accesibilidad universal en entornos públicos del mercado local.
+	•	Diseñar prototipos interactivos o simulaciones virtuales para evaluación de sistemas de navegación.
+	•	Investigar tendencias emergentes en el campo de las interfaces espaciales (como señalética inteligente o ecosistemas de servicios automatizados con inteligencia artificial) y aportar al foro de discusión semanal.
+	•	Sintetizar los hallazgos de campo individuales en entregables profesionales del diseño de experiencia (perfiles de usuario, mapas de viaje del cliente y documentos técnicos de requerimientos).
+
+CRITERIOS DE EVALUACIÓN
+
+
+Ejercicios de evaluación de mercado y aplicación en sistemas de navegación……… 40%
+Primer proyecto parcial …………………………………………….…………………20%
+Segundo proyecto parcial ……………………………………………………………20%
+Tercer proyecto parcial ……………………………………………………………… 20%
+Total ……………………………………………………………………………….. 100%
+
+
+MODALIDADES TECNOLÓGICAS E INFORMÁTICAS
+
+NO MOVER
+ 

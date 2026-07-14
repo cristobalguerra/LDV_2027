@@ -1,0 +1,138 @@
+
+DENOMINACIÓN DE LA ASIGNATURA O UNIDAD DE APRENDIZAJE
+
+Producción de Diseño y Prototipos
+
+Eje de Formación Profesional
+Asignatura Obligatoriam
+CICLO
+DM-
+CLAVE DE LA ASIGNATURA
+
+FINES DE APRENDIZAJE O FORMACIÓN
+
+Al finalizar la asignatura, el alumno será capaz de producir piezas de diseño visual optimizadas para medios tradicionales y digitales a través de los archivos digitales de preprensa correctos para su reproducción en sistemas de impresión comercial, con la finalidad de aplicar los estándares universales de las artes gráficas para construir también los prototipos físicos en papel, cartón y otros materiales que certifiquen la viabilidad de producción masiva en la técnica de producción correcta.
+
+CONTENIDO TEMÁTICO
+
+	•	Componentes de los Archivos Digitales
+	•	Mapa de bits vs. vectores
+	•	Pixeles
+	•	Resolución en ppi/dpi
+	•	Software profesional
+	•	Formatos de archivos digitales para impresión y para web
+	•	Errores comunes
+	•	Gestión del color
+	•	Colores primarios, secundarios, terciarios
+	•	Color, escala de grises, monotono, duotono, tritono y cuatricromía
+	•	Modelos de color: RGB, CMYK, HEX, Pantone.
+	•	Perfil de color ICC en Adobe
+	•	Separación vs Selección de Color
+	•	Elaboración de Archivos para Empaques en impresión comercial (Offset Digital y Tradicional)
+	•	Tipos de empaques rígidos
+	•	Estándar de preprensa de empaques: capas, color, configuración
+	•	Suaje y su función
+	•	Cuatricromía y hexacromía en la industria de la transformación
+	•	Lineaje o lineatura de fotografías
+	•	Capacidad de tinta en superficie
+	•	Marcas de corte, registro, color, sangrado
+	•	Acabados y tintas especiales
+	•	Preparación de Archivos para Empaques Flexibles para Flexografía y Rotograbado
+	•	Calidad de impresión entre Flexografía y Rotograbado
+	•	Usanzas en el mundo del envase
+	•	Configuraciones de archivos
+	•	Identificación de huella de impresión
+	•	Construcción de Archivos para impresión digital y prototipado
+	•	Impresión digital ink jet y gran formato
+	•	Rips
+	•	Sublimación
+	•	DTF textil y UV
+	•	Errores comunes
+	•	Elaboración de Archivos de Diseño Editorial
+	•	Configuración de documento: sangrado, slug y marcas
+	•	Gestión de vínculos
+	•	Paleta de colores: tintas globales y spot colors
+	•	Tipografía: licencias, uso correctos e indebidos, tipos de archivos y errores comunes de kerning y tracking
+	•	Compaginación
+	•	Chequeo final (preflight)
+	•	Generación de archivos PDF para impresión en prensa
+	•	Empaquetado (package)
+	•	Imposición (formación)
+	•	Ficha técnica y recomendaciones para impresión
+	•	Elaboración de publicaciones digitales (EPUB)
+	•	Tintas y Acabados
+	•	Tintas Procesadas (CMYK) vs. Tintas Especiales (Spot) o Directas (Pantone, fluorescentes, metálicas)
+	•	Barnices: mate, brillo, UV, barniz a registro
+	•	Acabados
+	•	Prototipos
+	•	Sustratos
+	•	Estructuras de caja y planos de troquel
+	•	Gramaje y tipos de cartón para prototipos
+	•	Partes de una caja (tapa, fondo, solapas, lenguetas y ventanas)
+	•	Lectura e interpretación de planos de troquel
+	•	Tolerancias de ensamble en cartón
+	•	Sustratos higiénicos
+	•	Partes de un libro (tapas, lomo, guardas, faja, solapa o funda, tripa, cabezada, canto, 2da de forros y 3era de forros)
+	•	Prototipos en otros materiales
+	•	Selección de impresión correcta
+	•	Emulación de efectos de tintas con vinil o varios tipos de impresión 
+	•	Cotizaciones ajustadas al proyecto
+	•	Recomendaciones en la producción
+	•	Sostenibilidad
+	•	Sustratos ecológicos vs reciclados
+	•	Procesos amigables con el medio ambiente
+	•	Certificaciones y sellos
+
+
+ACTIVIDADES DE APRENDIZAJE 
+BAJO CONDUCCIÓN DE UN ACADÉMICO
+
+
+	•	Resolver problemas y casos específico de producción digital del diseño en general. 
+	•	Elaborar archivos digitales para empaque y proyectos editoriales.
+	•	Aplicar estrategias para mejorar su aprendizaje en el área de las Artes Gráficas mediante una serie de proyectos seleccionados y con un grado de dificultad, aplicando diversas formas de producción, valiéndose de los recursos tecnológicos tradicionales y de los proveedores de servicios de vanguardia en impresión a su alcance.
+	•	Construir prototipos para empaque adecuados al producto, al proyecto editorial o a la pieza de diseño según la técnica de impresión recomendada.
+
+
+
+ACTIVIDADES DE APRENDIZAJE 
+INDEPENDIENTES
+
+
+	•	Realizar lecturas para fomentar su capacidad lectora y de expresión verbal al generar sus propias conclusiones y enriquecer su conocimiento en la producción del diseño gráfico digital y en relación a la elaboración de prototipos, a través de textos específicos asignados para las actividades. 
+	•	Generar investigaciones de campo sobre las técnicas de producción comercial que se utilizan en la actualidad para la producción del diseño y la elaboración de prototipos.
+	•	Crear correctamente de documentos digitales necesarios para la producción de proyectos sencillos y complejos de empaque, diseño editorial y prototipado.
+	•	Construir prototipos de papel, cartulina, cartón y otros materiales propios del área para la elaboración física final de los proyectos.
+	•	Preparar cotizaciones de las piezas gráficas a imprimir o prototipar con el fin de ajustarse a los presupuestos reales y viables de proyecto.
+
+CRITERIOS DE EVALUACIÓN
+
+
+Participación en clase en análisis, discusiones e investigaciones y presentaciones elaboradas fuera de clase:                                                                                           10%
+Ejercicios resueltos en sesión ordinaria:                                                                     10%
+Generación de archivos digitales para proyectos:                                                       30%
+Construcción de prototipos:                                                                                        25%
+Producto Integrador o Evidencia Final de Aprendizaje:                                             25%
+Total:                                                                                                                          100%
+
+
+
+MODALIDADES TECNOLÓGICAS E INFORMÁTICAS
+
+
+
+
+NO MOVER
+
+
+
+Instrucciones de llenado:
+APARTADO
+DESCRIPCIÓN
+Criterios de evaluación
+Enlistar las actividades o productos que considerarán para valorar los aprendizajes logrados por los estudiantes, señalar el porcentaje para cada uno, de tal manera que sumen el 100%. Éstos deberán ser acordes con las actividades de aprendizaje.
+Modalidades tecnológicas e informáticas
+Describir los recursos tecnológicos y de comunicación que emplearán para el desarrollo del proceso de enseñanza-aprendizaje de la asignatura.
+NOTA: Para las modalidades no escolarizada y mixta, es un elemento obligatorio, toda vez que dará sustento a la modalidad elegida.
+
+NOTA: Favor de no modificar la presentación de los formatos, en virtud que se encuentra diseñado para facilitar el llenado de cada uno de los apartados. 

@@ -1,0 +1,2312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Código de uso de IA — LDV 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #0A0908;
+  color: #F5F0E6;
+  cursor: none;
+}
+button { font-family: inherit; cursor: none; border: none; background: none; color: inherit; }
+a { color: inherit; text-decoration: none; cursor: none; }
+
+/* ===== TOKENS ===== */
+:root {
+  --black: #0A0908;
+  --black-2: #14110F;
+  --black-3: #1C1916;
+  --cream: #F5F0E6;
+  --cream-2: #EBE3D4;
+  --yellow: #FFD84B;
+  --yellow-soft: #F4E4A8;
+  --verde: #84A98C;
+  --ambar: #E9B872;
+  --gris: #7D7A77;
+  --line: rgba(245, 240, 230, 0.08);
+  --line-strong: rgba(245, 240, 230, 0.18);
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --ease-fast: cubic-bezier(.32, .72, 0, 1);
+}
+
+/* ===== TYPOGRAPHY ===== */
+.display-xxl { font-family:'Raleway',sans-serif; font-weight:800; font-size:clamp(3rem,9vw,9rem); line-height:.92; letter-spacing:-.04em; }
+.display-xl { font-family:'Raleway',sans-serif; font-weight:800; font-size:clamp(2.5rem,6vw,6rem); line-height:.98; letter-spacing:-.035em; }
+.display-l { font-family:'Raleway',sans-serif; font-weight:700; font-size:clamp(2rem,4vw,3.5rem); line-height:1.05; letter-spacing:-.025em; }
+.display-m { font-family:'Raleway',sans-serif; font-weight:700; font-size:clamp(1.4rem,2.5vw,2.25rem); line-height:1.15; letter-spacing:-.015em; }
+.body-l { font-size:clamp(1.05rem,1.4vw,1.3rem); line-height:1.55; font-weight:400; }
+.body { font-size:1rem; line-height:1.6; font-weight:400; }
+.eyebrow { font-family:'JetBrains Mono',monospace; font-size:.7rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; }
+.mono { font-family:'JetBrains Mono',monospace; }
+
+/* ===== CUSTOM CURSOR ===== */
+#cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--yellow);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s var(--ease), opacity 0.2s;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+#cursor.hover {
+  width: 56px;
+  height: 56px;
+  mix-blend-mode: normal;
+  background: var(--yellow);
+}
+#cursor.text {
+  width: 80px;
+  height: 80px;
+  background: var(--yellow);
+  mix-blend-mode: normal;
+}
+#cursor-label {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--black);
+  transition: opacity 0.3s var(--ease);
+  will-change: transform;
+}
+#cursor-label.visible { opacity: 1; }
+
+@media (hover: none) {
+  body, button, a { cursor: auto; }
+  #cursor, #cursor-label { display: none; }
+}
+
+/* ===== APP / SCENES ===== */
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  opacity: 0;
+}
+.scene.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* ===== TEXTURE TAGLINE ===== */
+.tagline-texture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  user-select: none;
+  z-index: 0;
+}
+.tagline-texture-line {
+  white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  color: rgba(245, 240, 230, 0.04);
+  padding: 12px 0;
+}
+
+/* ===== ENTRY SCENE ===== */
+#scene-entry {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6vw;
+  background: var(--black);
+}
+.entry-content {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+.entry-eyebrow {
+  color: var(--yellow);
+  margin-bottom: 3vh;
+}
+.entry-title {
+  margin-bottom: 6vh;
+}
+.entry-buttons {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 8vh;
+  flex-wrap: wrap;
+}
+.entry-button {
+  background: transparent;
+  border: 1px solid rgba(245, 240, 230, 0.25);
+  border-radius: 100px;
+  padding: 22px 40px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream);
+  transition: all 0.4s var(--ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.entry-button:hover {
+  border-color: var(--yellow);
+  color: var(--yellow);
+  transform: translateY(-2px);
+}
+.entry-button.primary {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--black);
+}
+.entry-button.primary:hover {
+  background: transparent;
+  color: var(--yellow);
+}
+.entry-meta-top {
+  position: absolute;
+  top: 4vh;
+  left: 6vw;
+  color: rgba(245, 240, 230, 0.4);
+  z-index: 2;
+}
+.entry-meta-top-r {
+  position: absolute;
+  top: 4vh;
+  right: 6vw;
+  color: rgba(245, 240, 230, 0.4);
+  z-index: 2;
+}
+
+/* ===== HUB SCENE (ESPIRAL ORBITAL) ===== */
+#scene-hub {
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Anillos concéntricos decorativos */
+.hub-rings {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.hub-ring {
+  position: absolute;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  animation: ringPulse 6s ease-in-out infinite;
+}
+.hub-ring.r1 { width: 30vmin; height: 30vmin; animation-delay: 0s; }
+.hub-ring.r2 { width: 55vmin; height: 55vmin; animation-delay: 1.5s; opacity: 0.5; }
+.hub-ring.r3 { width: 90vmin; height: 90vmin; animation-delay: 3s; opacity: 0.3; }
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* Orbita - contenedor cuadrado con rotación parallax */
+.hub-orbit {
+  position: relative;
+  width: min(86vmin, 800px);
+  height: min(86vmin, 800px);
+  z-index: 5;
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease);
+  will-change: transform;
+}
+
+/* Centro: pregunta + indicador */
+.hub-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+  width: min(45vmin, 380px);
+}
+.hub-center .eyebrow {
+  color: rgba(245, 240, 230, 0.45);
+  margin-bottom: 1.2rem;
+  display: block;
+}
+.hub-center h2 {
+  color: var(--cream);
+  font-family: 'Raleway', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+.hub-center-pulse {
+  width: 8px;
+  height: 8px;
+  background: var(--yellow);
+  border-radius: 50%;
+  margin: 1.4rem auto 0;
+  box-shadow: 0 0 14px var(--yellow);
+  animation: corePulse 2.4s ease-in-out infinite;
+}
+@keyframes corePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.6; }
+}
+
+/* Cards orbitales: 5 posicionadas en el círculo */
+.hub-orbit-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  margin: -90px 0 0 -90px;
+  background: var(--black-2);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 22px;
+  transition: all 0.6s var(--ease);
+  will-change: transform, opacity;
+  cursor: none;
+}
+.hub-orbit-card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(245, 240, 230, 0.4);
+  margin-bottom: 10px;
+  transition: color 0.4s var(--ease);
+}
+.hub-orbit-card-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--cream);
+  transition: color 0.4s var(--ease);
+}
+.hub-orbit-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(255, 216, 75, 0.3), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  z-index: -1;
+}
+.hub-orbit-card:hover {
+  border-color: var(--yellow);
+  background: rgba(255, 216, 75, 0.06);
+  transform: var(--card-transform) scale(1.18);
+  z-index: 20;
+}
+.hub-orbit-card:hover .hub-orbit-card-num { color: var(--yellow); }
+.hub-orbit-card:hover .hub-orbit-card-title { color: var(--yellow); }
+.hub-orbit-card:hover::before { opacity: 1; }
+
+/* Dimming when not hovering this one */
+.hub-orbit:has(.hub-orbit-card:hover) .hub-orbit-card:not(:hover) {
+  opacity: 0.3;
+  transform: var(--card-transform) scale(0.92);
+}
+
+/* Línea conectora del centro a cada card cuando se hace hover */
+.hub-orbit-card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: var(--yellow);
+  transform-origin: left center;
+  opacity: 0;
+  z-index: -1;
+}
+
+/* Footer del hub */
+.hub-footer {
+  position: absolute;
+  bottom: 4vh;
+  width: 100%;
+  text-align: center;
+  z-index: 30;
+}
+.hub-footer-line {
+  color: rgba(245, 240, 230, 0.35);
+  margin-bottom: 1rem;
+}
+.sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 230, 0.5);
+  transition: color 0.3s var(--ease);
+  padding: 8px 16px;
+}
+.sound-toggle:hover { color: var(--yellow); }
+.sound-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(245, 240, 230, 0.3);
+  transition: all 0.3s var(--ease);
+}
+.sound-dot.on {
+  background: var(--yellow);
+  box-shadow: 0 0 14px var(--yellow);
+  animation: corePulse 2s ease-in-out infinite;
+}
+
+/* Vista alterna lista */
+.hub-view-toggle {
+  position: absolute;
+  top: 4vh;
+  right: 6vw;
+  z-index: 30;
+  display: flex;
+  gap: 4px;
+  background: var(--black-2);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 4px;
+}
+.hub-view-btn {
+  padding: 8px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 230, 0.4);
+  border-radius: 100px;
+  transition: all 0.3s var(--ease);
+}
+.hub-view-btn.active {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+@media (max-width: 768px) {
+  .hub-orbit { width: 92vmin; height: 92vmin; }
+  .hub-orbit-card { width: 130px; height: 130px; margin: -65px 0 0 -65px; padding: 16px; }
+  .hub-orbit-card-title { font-size: 0.8rem; }
+  .hub-view-toggle { display: none; }
+}
+
+/* ===== PATH SHARED ===== */
+.path {
+  flex-direction: column;
+  padding: 100px 6vw 60px;
+  overflow-y: auto;
+}
+.path-back {
+  position: fixed;
+  top: 3vh;
+  left: 3vh;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 230, 0.55);
+  background: rgba(10, 9, 8, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 12px 18px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  transition: all 0.3s var(--ease);
+  opacity: 0;
+}
+.path.shown .path-back { opacity: 1; }
+.path-back:hover {
+  color: var(--yellow);
+  border-color: var(--yellow);
+}
+
+.path-side-tabs {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  background: rgba(10, 9, 8, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0 8px 8px 0;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+}
+.path.shown .path-side-tabs { opacity: 1; }
+.side-tab {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(245, 240, 230, 0.4);
+  transition: all 0.3s var(--ease);
+  position: relative;
+  white-space: nowrap;
+}
+.side-tab .side-tab-num {
+  display: inline-block;
+  width: 22px;
+}
+.side-tab .side-tab-name {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 0.4s var(--ease), opacity 0.3s var(--ease);
+}
+.side-tab:hover .side-tab-name {
+  max-width: 280px;
+  opacity: 1;
+  margin-left: 10px;
+}
+.side-tab:hover {
+  color: var(--yellow);
+  background: rgba(255, 216, 75, 0.08);
+}
+.side-tab.active {
+  color: var(--yellow);
+  border-left: 2px solid var(--yellow);
+}
+
+/* ===== PATH 01 · DECLARAR ===== */
+#scene-path-01 { background: var(--black); }
+.p01-head {
+  text-align: center;
+  margin-bottom: 6vh;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.p01-head .eyebrow { color: var(--yellow); margin-bottom: 1.5rem; }
+.p01-head h2 { color: var(--cream); }
+.p01-head p { margin-top: 1.5rem; color: rgba(245, 240, 230, 0.65); max-width: 56ch; margin-left: auto; margin-right: auto; }
+
+.p01-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--black-2);
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.p01-form { padding: 44px; border-right: 1px solid var(--line); }
+.p01-preview { padding: 44px; display: flex; flex-direction: column; background: var(--black-3); }
+
+.p01-label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 230, 0.4);
+  margin-bottom: 10px;
+  margin-top: 26px;
+}
+.p01-label:first-child { margin-top: 0; }
+.p01-input, .p01-textarea {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--cream);
+  transition: border-color 0.3s var(--ease);
+}
+.p01-input:focus, .p01-textarea:focus {
+  outline: none;
+  border-color: var(--yellow);
+}
+.p01-input::placeholder, .p01-textarea::placeholder {
+  color: rgba(245, 240, 230, 0.3);
+}
+.p01-textarea { resize: vertical; min-height: 70px; }
+
+.p01-preview-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 230, 0.4);
+  margin-bottom: 20px;
+}
+.p01-preview-text {
+  flex: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: rgba(245, 240, 230, 0.9);
+  white-space: pre-wrap;
+}
+.p01-preview-text .placeholder {
+  color: rgba(245, 240, 230, 0.3);
+  font-style: italic;
+}
+.p01-copy {
+  margin-top: 24px;
+  background: var(--yellow);
+  color: var(--black);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 16px 28px;
+  border-radius: 100px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s var(--ease);
+}
+.p01-copy:hover { transform: scale(1.03); box-shadow: 0 8px 32px rgba(255, 216, 75, 0.3); }
+.p01-copy.copied { background: var(--verde); color: var(--cream); }
+
+/* ===== PATH 03 · MANIFIESTO ===== */
+#scene-path-03 {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6vw;
+  background: var(--black-2);
+  position: relative;
+}
+.p03-stage {
+  width: 100%;
+  max-width: 1100px;
+  text-align: center;
+  position: relative;
+  min-height: 40vh;
+  z-index: 2;
+}
+.p03-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.8s var(--ease);
+  pointer-events: none;
+}
+.p03-frame.active {
+  opacity: 1;
+}
+.p03-frame .accent { color: var(--yellow); }
+.p03-frame .display-xl {
+  display: block;
+  margin: 0.3em 0;
+}
+
+.p03-progress {
+  position: absolute;
+  left: 6vw;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 3;
+}
+.p03-progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(245, 240, 230, 0.2);
+  transition: all 0.5s var(--ease);
+}
+.p03-progress-dot.active {
+  background: var(--yellow);
+  transform: scale(1.8);
+}
+.p03-controls {
+  position: absolute;
+  right: 6vw;
+  bottom: 5vh;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.p03-control-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--black);
+  border: 1px solid var(--line-strong);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s var(--ease);
+}
+.p03-control-btn:hover {
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+/* ===== PATH 02 · WIZARD ===== */
+#scene-path-02 {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 6vw 60px;
+  background: var(--black);
+  position: relative;
+}
+.p02-stage {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  z-index: 2;
+}
+.p02-frame {
+  display: none;
+}
+.p02-frame.active { display: block; }
+.p02-step-indicator {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(245, 240, 230, 0.4);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.p02-step-current { color: var(--yellow); font-size: 1.5rem; }
+.p02-step-divider { margin: 0 8px; color: rgba(245, 240, 230, 0.25); }
+.p02-question {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  color: var(--cream);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.p02-options {
+  display: grid;
+  gap: 14px;
+}
+.p02-option {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  background: var(--black-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px 28px;
+  text-align: left;
+  transition: all 0.3s var(--ease);
+}
+.p02-option:hover {
+  border-color: var(--yellow);
+  background: rgba(255, 216, 75, 0.05);
+  transform: translateX(6px);
+}
+.p02-option-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(245, 240, 230, 0.35);
+  transition: color 0.3s var(--ease);
+}
+.p02-option:hover .p02-option-num { color: var(--yellow); }
+.p02-option-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+.p02-option-arrow {
+  color: rgba(245, 240, 230, 0.3);
+  font-size: 1.2rem;
+  transition: all 0.3s var(--ease);
+}
+.p02-option:hover .p02-option-arrow {
+  color: var(--yellow);
+  transform: translateX(4px);
+}
+
+/* Result with stamp */
+.p02-result-frame { text-align: center; }
+.p02-stamp-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2.5rem;
+}
+.p02-stamp {
+  display: inline-block;
+  padding: 18px 36px;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  border: 2px solid;
+  position: relative;
+  z-index: 2;
+  transform: scale(0) rotate(-15deg);
+  opacity: 0;
+}
+.p02-stamp.show {
+  animation: stampIn 0.7s cubic-bezier(.36, 1.6, .5, 1) forwards;
+}
+@keyframes stampIn {
+  to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.p02-stamp.libre { color: var(--verde); border-color: var(--verde); background: rgba(132, 169, 140, 0.08); }
+.p02-stamp.declara { color: var(--ambar); border-color: var(--ambar); background: rgba(233, 184, 114, 0.08); }
+.p02-stamp.consulta { color: var(--cream); border-color: var(--gris); background: rgba(125, 122, 119, 0.15); }
+
+.p02-stamp-flash {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: rgba(255, 216, 75, 0);
+  z-index: 1;
+  pointer-events: none;
+}
+.p02-stamp-flash.flash {
+  animation: stampFlash 0.8s ease-out forwards;
+}
+@keyframes stampFlash {
+  0% { background: rgba(255, 216, 75, 0.5); transform: scale(0.3); opacity: 1; }
+  100% { background: rgba(255, 216, 75, 0); transform: scale(2.5); opacity: 0; }
+}
+
+.p02-result-title {
+  color: var(--cream);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.p02-result-title.show { animation: fadeUp 0.6s ease-out 0.3s forwards; }
+
+.p02-result-body {
+  color: rgba(245, 240, 230, 0.7);
+  max-width: 60ch;
+  margin: 0 auto 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.p02-result-body.show { animation: fadeUp 0.6s ease-out 0.5s forwards; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.p02-result-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+}
+.p02-result-actions.show { animation: fadeUp 0.6s ease-out 0.7s forwards; }
+
+.p02-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 16px 30px;
+  border-radius: 100px;
+  border: 1px solid var(--line-strong);
+  color: rgba(245, 240, 230, 0.7);
+  transition: all 0.3s var(--ease);
+}
+.p02-action:hover {
+  border-color: var(--cream);
+  color: var(--cream);
+}
+.p02-action-primary {
+  background: var(--yellow);
+  color: var(--black);
+  border-color: var(--yellow);
+}
+.p02-action-primary:hover {
+  background: transparent;
+  color: var(--yellow);
+}
+
+/* ===== PATH 04 · PROFESORES ===== */
+#scene-path-04 {
+  flex-direction: column;
+  padding: 100px 6vw 60px;
+  background: var(--black-2);
+  overflow-y: auto;
+}
+.p04-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.p04-head { text-align: center; margin-bottom: 8vh; }
+.p04-head .eyebrow { color: var(--yellow); margin-bottom: 1.5rem; }
+.p04-head h2 { color: var(--cream); }
+.p04-head p { margin-top: 1.5rem; color: rgba(245, 240, 230, 0.6); max-width: 60ch; margin-left: auto; margin-right: auto; }
+
+.p04-section { margin-bottom: 8vh; }
+.p04-section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.p04-principles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.p04-principle {
+  padding: 24px 28px;
+  background: var(--black-3);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.p04-principle-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--yellow);
+  margin-bottom: 12px;
+}
+.p04-principle-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.p04-principle-text {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(245, 240, 230, 0.65);
+}
+
+.p04-criteria { list-style: none; }
+.p04-criteria li {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 20px;
+  align-items: baseline;
+}
+.p04-criteria li:last-child { border-bottom: none; }
+.p04-criteria-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--yellow);
+}
+.p04-criteria-text {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: rgba(245, 240, 230, 0.85);
+}
+
+.p04-cases { display: grid; gap: 14px; }
+.p04-case {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--black-3);
+  transition: border-color 0.3s var(--ease);
+}
+.p04-case:hover { border-color: var(--line-strong); }
+.p04-case-header {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 28px;
+  text-align: left;
+  width: 100%;
+}
+.p04-case-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--yellow);
+}
+.p04-case-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+.p04-case-icon {
+  color: rgba(245, 240, 230, 0.4);
+  font-size: 1.5rem;
+  transition: transform 0.4s var(--ease);
+}
+.p04-case.open .p04-case-icon { transform: rotate(45deg); color: var(--yellow); }
+
+.p04-case-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s var(--ease);
+}
+.p04-case.open .p04-case-body { max-height: 500px; }
+.p04-case-content {
+  padding: 0 28px 26px 92px;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(245, 240, 230, 0.7);
+}
+.p04-case-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 12px;
+}
+.p04-case-tag.libre { background: rgba(132, 169, 140, 0.15); color: var(--verde); }
+.p04-case-tag.declara { background: rgba(233, 184, 114, 0.15); color: var(--ambar); }
+.p04-case-tag.consulta { background: rgba(125, 122, 119, 0.2); color: var(--cream); }
+.p04-case-tag.falta { background: rgba(232, 71, 71, 0.15); color: #E84747; }
+
+/* ===== PATH 05 placeholder ===== */
+.placeholder-path {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--black);
+}
+.placeholder-path h3 {
+  color: var(--yellow);
+  margin-bottom: 1rem;
+}
+.placeholder-path p {
+  color: rgba(245, 240, 230, 0.5);
+  max-width: 50ch;
+  margin: 0 auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .p01-grid { grid-template-columns: 1fr; }
+  .p01-form { border-right: none; border-bottom: 1px solid var(--line); }
+  .hub-card { grid-template-columns: 60px 1fr auto; padding: 22px 0; }
+  .p03-progress { left: 3vw; }
+  .p03-controls { right: 3vw; bottom: 3vh; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== CUSTOM CURSOR ===== -->
+<div id="cursor"></div>
+<div id="cursor-label"></div>
+
+<!-- ===== APP ===== -->
+<main id="app">
+
+  <!-- ===== ENTRY ===== -->
+  <section class="scene" id="scene-entry">
+    <div class="tagline-texture" id="entryTexture"></div>
+    <div class="entry-meta-top mono eyebrow">LDV 2027 · CRGS · UDEM</div>
+    <div class="entry-meta-top-r mono eyebrow">v 1.0 · Mayo 2026</div>
+    <div class="entry-content">
+      <div class="entry-eyebrow eyebrow">CÓDIGO DE USO DE IA</div>
+      <h1 class="display-xxl entry-title">
+        La IA no diseña.<br>
+        <span style="color: var(--yellow)">El diseñador, sí.</span>
+      </h1>
+      <div class="entry-buttons">
+        <button class="entry-button primary" id="enterSound" data-cursor-text="ENTRAR">
+          Entrar con sonido
+          <span>→</span>
+        </button>
+        <button class="entry-button" id="enterSilent" data-cursor-text="ENTRAR">
+          Sin sonido
+          <span>→</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HUB · ESPIRAL ORBITAL ===== -->
+  <section class="scene" id="scene-hub">
+    <div class="tagline-texture" id="hubTexture"></div>
+
+    <!-- Anillos concéntricos -->
+    <div class="hub-rings">
+      <div class="hub-ring r1"></div>
+      <div class="hub-ring r2"></div>
+      <div class="hub-ring r3"></div>
+    </div>
+
+    <!-- Toggle entre vista órbita / lista -->
+    <div class="hub-view-toggle">
+      <button class="hub-view-btn active" data-view="orbit" data-cursor-text="ÓRBITA">ÓRBITA</button>
+      <button class="hub-view-btn" data-view="list" data-cursor-text="LISTA">LISTA</button>
+    </div>
+
+    <!-- Órbita -->
+    <div class="hub-orbit" id="hubOrbit">
+      <!-- Centro -->
+      <div class="hub-center">
+        <div class="eyebrow">CÓDIGO DE USO DE IA · LDV 2027</div>
+        <h2>¿Por qué viniste?</h2>
+        <div class="hub-center-pulse"></div>
+      </div>
+
+      <!-- 5 cards orbitales -->
+      <button class="hub-orbit-card" data-path="01" data-cursor-text="ENTRAR" data-angle="-90">
+        <span class="hub-orbit-card-num">01</span>
+        <span class="hub-orbit-card-title">Declarar<br>mi uso</span>
+      </button>
+      <button class="hub-orbit-card" data-path="02" data-cursor-text="ENTRAR" data-angle="-18">
+        <span class="hub-orbit-card-num">02</span>
+        <span class="hub-orbit-card-title">Tengo una<br>situación</span>
+      </button>
+      <button class="hub-orbit-card" data-path="03" data-cursor-text="ENTRAR" data-angle="54">
+        <span class="hub-orbit-card-num">03</span>
+        <span class="hub-orbit-card-title">Entender<br>la postura</span>
+      </button>
+      <button class="hub-orbit-card" data-path="04" data-cursor-text="ENTRAR" data-angle="126">
+        <span class="hub-orbit-card-num">04</span>
+        <span class="hub-orbit-card-title">Soy<br>profesor</span>
+      </button>
+      <button class="hub-orbit-card" data-path="05" data-cursor-text="ENTRAR" data-angle="198">
+        <span class="hub-orbit-card-num">05</span>
+        <span class="hub-orbit-card-title">Leer todas<br>las reglas</span>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="hub-footer">
+      <div class="hub-footer-line eyebrow">DECIDE TU CAMINO</div>
+      <button class="sound-toggle" id="soundToggle" data-cursor-text="TOGGLE">
+        <span class="sound-dot" id="soundDot"></span>
+        <span id="soundLabel">SONIDO APAGADO</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== PATH 01 · DECLARAR ===== -->
+  <section class="scene path" id="scene-path-01">
+    <button class="path-back" data-back data-cursor-text="VOLVER">
+      <span>←</span> VOLVER AL INICIO
+    </button>
+    <nav class="path-side-tabs" id="sideTabs01"></nav>
+    <div class="p01-head">
+      <div class="eyebrow">CAMINO 01 · DECLARA EN 30 SEGUNDOS</div>
+      <h2 class="display-l">Cuatro campos.<br>Tu declaración lista.</h2>
+      <p class="body-l">Llena los campos. Copia el bloque. Pégalo al final de tu entrega. Listo.</p>
+    </div>
+    <div class="p01-grid">
+      <div class="p01-form">
+        <label class="p01-label">Herramienta usada</label>
+        <input type="text" class="p01-input" id="genTool" placeholder="Ej. Midjourney v6, ChatGPT 4, Figma AI">
+        <label class="p01-label">Para qué la usaste</label>
+        <input type="text" class="p01-input" id="genUse" placeholder="Ej. Generar referencias visuales del moodboard">
+        <label class="p01-label">Qué hiciste tú</label>
+        <textarea class="p01-textarea" id="genHuman" placeholder="Ej. Curaduría, edición, composición final, decisión de paleta"></textarea>
+        <label class="p01-label">Prompts clave (opcional)</label>
+        <textarea class="p01-textarea" id="genPrompt" placeholder="Ej. isometric brand illustration, pastel palette, flat shadows"></textarea>
+      </div>
+      <div class="p01-preview">
+        <div class="p01-preview-label">TU DECLARACIÓN</div>
+        <pre class="p01-preview-text" id="genPreview"><span class="placeholder">Empieza a llenar los campos…</span></pre>
+        <button class="p01-copy" id="genCopy" data-cursor-text="COPIAR">
+          <span id="genCopyLabel">COPIAR BLOQUE</span>
+          <span id="genCopyIcon">⎘</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PATH 02 · WIZARD ===== -->
+  <section class="scene" id="scene-path-02">
+    <button class="path-back" data-back data-cursor-text="VOLVER">
+      <span>←</span> VOLVER AL INICIO
+    </button>
+    <nav class="path-side-tabs" id="sideTabs02"></nav>
+
+    <div class="p02-stage" id="p02Stage">
+      <!-- Step 1 -->
+      <div class="p02-frame active" data-step="1">
+        <div class="p02-step-indicator">
+          <span class="p02-step-current">01</span>
+          <span class="p02-step-divider">/</span>
+          <span class="p02-step-total">03</span>
+        </div>
+        <h3 class="display-l p02-question">¿Qué quieres hacer con la IA hoy?</h3>
+        <div class="p02-options">
+          <button class="p02-option" data-next="2" data-tag="imagen" data-cursor-text="SIGUIENTE">
+            <span class="p02-option-num">01</span>
+            <span class="p02-option-text">Generar una imagen</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+          <button class="p02-option" data-next="2" data-tag="texto" data-cursor-text="SIGUIENTE">
+            <span class="p02-option-num">02</span>
+            <span class="p02-option-text">Asistir mi redacción</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+          <button class="p02-option" data-next="2" data-tag="ideacion" data-cursor-text="SIGUIENTE">
+            <span class="p02-option-num">03</span>
+            <span class="p02-option-text">Explorar referencias o ideas</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+          <button class="p02-option" data-next="2" data-tag="codigo" data-cursor-text="SIGUIENTE">
+            <span class="p02-option-num">04</span>
+            <span class="p02-option-text">Resolver código o prototipo</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="p02-frame" data-step="2">
+        <div class="p02-step-indicator">
+          <span class="p02-step-current">02</span>
+          <span class="p02-step-divider">/</span>
+          <span class="p02-step-total">03</span>
+        </div>
+        <h3 class="display-l p02-question">¿Para qué tipo de entrega?</h3>
+        <div class="p02-options">
+          <button class="p02-option" data-next="3" data-tag="proceso" data-cursor-text="SIGUIENTE">
+            <span class="p02-option-num">01</span>
+            <span class="p02-option-text">Entrega de proceso (boceto, ideación)</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+          <button class="p02-option" data-next="3" data-tag="pieza" data-cursor-text="SIGUIENTE">
+            <span class="p02-option-num">02</span>
+            <span class="p02-option-text">Pieza final de materia regular</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+          <button class="p02-option" data-next="3" data-tag="pef" data-cursor-text="SIGUIENTE">
+            <span class="p02-option-num">03</span>
+            <span class="p02-option-text">Programa de Evaluación Final (PEF)</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+          <button class="p02-option" data-next="3" data-tag="examen" data-cursor-text="SIGUIENTE">
+            <span class="p02-option-num">04</span>
+            <span class="p02-option-text">Examen o evaluación individual</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="p02-frame" data-step="3">
+        <div class="p02-step-indicator">
+          <span class="p02-step-current">03</span>
+          <span class="p02-step-divider">/</span>
+          <span class="p02-step-total">03</span>
+        </div>
+        <h3 class="display-l p02-question">¿La IA genera la pieza completa o asiste un paso?</h3>
+        <div class="p02-options">
+          <button class="p02-option" data-next="result" data-tag="completa" data-cursor-text="VER VEREDICTO">
+            <span class="p02-option-num">01</span>
+            <span class="p02-option-text">Genera la pieza completa</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+          <button class="p02-option" data-next="result" data-tag="paso" data-cursor-text="VER VEREDICTO">
+            <span class="p02-option-num">02</span>
+            <span class="p02-option-text">Asiste un paso del proceso</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+          <button class="p02-option" data-next="result" data-tag="exploracion" data-cursor-text="VER VEREDICTO">
+            <span class="p02-option-num">03</span>
+            <span class="p02-option-text">Solo explora; no entrego nada de la IA</span>
+            <span class="p02-option-arrow">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="p02-frame p02-result-frame" data-step="result">
+        <div class="p02-stamp-wrap">
+          <div class="p02-stamp-flash"></div>
+          <div class="p02-stamp" id="p02Verdict">DECLARA</div>
+        </div>
+        <h3 class="display-l p02-result-title" id="p02ResultTitle">Sí puedes. Debes declararlo.</h3>
+        <p class="body-l p02-result-body" id="p02ResultBody">
+          Para tu caso, el uso es válido siempre que documentes qué herramienta usaste, para qué la usaste y qué aporte humano hubo en la decisión final.
+        </p>
+        <div class="p02-result-actions">
+          <button class="p02-action p02-action-primary" id="p02ToGenerator" data-cursor-text="GENERAR">
+            <span>GENERAR MI DECLARACIÓN</span>
+            <span>→</span>
+          </button>
+          <button class="p02-action" id="p02Restart" data-cursor-text="DE NUEVO">
+            <span>EMPEZAR DE NUEVO</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PATH 03 · MANIFIESTO ===== -->
+  <section class="scene" id="scene-path-03">
+    <button class="path-back" data-back data-cursor-text="VOLVER">
+      <span>←</span> VOLVER AL INICIO
+    </button>
+    <nav class="path-side-tabs" id="sideTabs03"></nav>
+    <div class="p03-progress">
+      <div class="p03-progress-dot active" data-frame="0"></div>
+      <div class="p03-progress-dot" data-frame="1"></div>
+      <div class="p03-progress-dot" data-frame="2"></div>
+      <div class="p03-progress-dot" data-frame="3"></div>
+    </div>
+    <div class="p03-stage">
+      <div class="p03-frame active" data-frame="0">
+        <span class="display-xl">Generar es trivial.</span>
+        <span class="display-xl accent">Decidir es lo que importa.</span>
+      </div>
+      <div class="p03-frame" data-frame="1">
+        <span class="display-xl">La herramienta se entrega</span>
+        <span class="display-xl accent">a quien sabe qué pedirle.</span>
+      </div>
+      <div class="p03-frame" data-frame="2">
+        <span class="display-xl">Aquí no negamos la IA.</span>
+        <span class="display-xl accent">La usamos con criterio.</span>
+      </div>
+      <div class="p03-frame" data-frame="3">
+        <span class="display-xl">Y eso —el criterio—</span>
+        <span class="display-xl accent">es lo que entrenamos.</span>
+      </div>
+    </div>
+    <div class="p03-controls">
+      <button class="p03-control-btn" id="p03Prev" data-cursor-text="ANTERIOR">↑</button>
+      <button class="p03-control-btn" id="p03Next" data-cursor-text="SIGUIENTE">↓</button>
+    </div>
+  </section>
+
+  <!-- ===== PATH 04 · PROFESORES ===== -->
+  <section class="scene" id="scene-path-04">
+    <button class="path-back" data-back data-cursor-text="VOLVER">
+      <span>←</span> VOLVER AL INICIO
+    </button>
+    <nav class="path-side-tabs" id="sideTabs04"></nav>
+    <div class="p04-container">
+      <div class="p04-head">
+        <div class="eyebrow">CAMINO 04 · VISTA PARA PROFESORES</div>
+        <h2 class="display-xl">Confía. Verifica.<br><span style="color: var(--yellow);">Forma criterio.</span></h2>
+        <p class="body-l">
+          El programa parte de un acto de confianza: el estudiante declara su uso de IA.
+          Tu rol no es vigilar, es formar el criterio profesional con el que decide.
+        </p>
+      </div>
+
+      <!-- Principios -->
+      <div class="p04-section">
+        <div class="p04-section-label">Cuatro principios institucionales</div>
+        <div class="p04-principles">
+          <div class="p04-principle">
+            <div class="p04-principle-num">01</div>
+            <div class="p04-principle-title">Confianza activa</div>
+            <div class="p04-principle-text">El estudiante declara, el docente verifica. La omisión de declaración pesa, no el uso de IA en sí.</div>
+          </div>
+          <div class="p04-principle">
+            <div class="p04-principle-num">02</div>
+            <div class="p04-principle-title">Foco en el criterio</div>
+            <div class="p04-principle-text">Evalúa decisiones, no solo el output. Un buen output sin criterio es trabajo de la máquina.</div>
+          </div>
+          <div class="p04-principle">
+            <div class="p04-principle-num">03</div>
+            <div class="p04-principle-title">Transparencia mutua</div>
+            <div class="p04-principle-text">El docente también declara si usó IA para preparar su clase. La regla aplica para todos.</div>
+          </div>
+          <div class="p04-principle">
+            <div class="p04-principle-num">04</div>
+            <div class="p04-principle-title">Proporcionalidad</div>
+            <div class="p04-principle-text">La consecuencia se ajusta al grado de omisión. No castigamos el uso; sí la opacidad.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Criterios para evaluar declaración -->
+      <div class="p04-section">
+        <div class="p04-section-label">Cómo evaluar una declaración de IA</div>
+        <ol class="p04-criteria">
+          <li>
+            <div class="p04-criteria-num">01</div>
+            <div class="p04-criteria-text">Verifica que herramienta, tarea y aporte humano sean coherentes entre sí. Si la herramienta no calza con la tarea declarada, pregunta.</div>
+          </li>
+          <li>
+            <div class="p04-criteria-num">02</div>
+            <div class="p04-criteria-text">Pide demostración del proceso si hay duda. El estudiante debería poder reproducir parte del razonamiento que dice haber tenido.</div>
+          </li>
+          <li>
+            <div class="p04-criteria-num">03</div>
+            <div class="p04-criteria-text">Examina la calidad del prompt si se declaró. Un prompt sofisticado evidencia criterio; un prompt genérico evidencia dependencia.</div>
+          </li>
+          <li>
+            <div class="p04-criteria-num">04</div>
+            <div class="p04-criteria-text">Distingue entre uso instrumental (la IA acelera un paso) y dependencia (la IA reemplaza el pensamiento). Solo el segundo es problema.</div>
+          </li>
+          <li>
+            <div class="p04-criteria-num">05</div>
+            <div class="p04-criteria-text">No repruebes por usar IA. Reprueba por no declararla, o por entregar trabajo sin curaduría ni argumento propio.</div>
+          </li>
+          <li>
+            <div class="p04-criteria-num">06</div>
+            <div class="p04-criteria-text">Si la declaración omite información clave (prompt, herramienta, aporte), pide complemento antes de calificar.</div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Casos típicos -->
+      <div class="p04-section">
+        <div class="p04-section-label">Casos típicos · Cómo responder</div>
+        <div class="p04-cases" id="p04Cases">
+          <div class="p04-case">
+            <button class="p04-case-header" data-cursor-text="EXPANDIR">
+              <span class="p04-case-num">CASO 01</span>
+              <span class="p04-case-title">El estudiante usó ChatGPT para resumir una lectura asignada</span>
+              <span class="p04-case-icon">+</span>
+            </button>
+            <div class="p04-case-body">
+              <div class="p04-case-content">
+                Uso instrumental para estudio personal. No requiere declaración formal si no entrega el resumen. Si lo entrega como reporte de lectura, la declaración es obligatoria y debe demostrar que leyó (citas, páginas, ejemplos del texto que la IA no podría inferir).
+                <div class="p04-case-tag libre">USO LIBRE / DECLARA SI ENTREGA</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p04-case">
+            <button class="p04-case-header" data-cursor-text="EXPANDIR">
+              <span class="p04-case-num">CASO 02</span>
+              <span class="p04-case-title">Genera imagen final con Midjourney sin declararla</span>
+              <span class="p04-case-icon">+</span>
+            </button>
+            <div class="p04-case-body">
+              <div class="p04-case-content">
+                Omisión de declaración. Solicita al estudiante una declaración complementaria con prompt, criterio de selección y aporte humano (curaduría, edición, composición). Si lo entrega, calificación normal con observación. Si reincide, se levanta expediente según reglamento UDEM.
+                <div class="p04-case-tag falta">FALTA POR OMISIÓN</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p04-case">
+            <button class="p04-case-header" data-cursor-text="EXPANDIR">
+              <span class="p04-case-num">CASO 03</span>
+              <span class="p04-case-title">Usa IA para corregir código en un prototipo</span>
+              <span class="p04-case-icon">+</span>
+            </button>
+            <div class="p04-case-body">
+              <div class="p04-case-content">
+                Uso válido con declaración. Pide que el estudiante explique qué problema resolvió y por qué la solución propuesta era correcta. Si puede explicarlo, demuestra criterio. Si no, hay dependencia y eso amerita conversación pedagógica, no sanción.
+                <div class="p04-case-tag declara">DECLARA + VALIDA CRITERIO</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p04-case">
+            <button class="p04-case-header" data-cursor-text="EXPANDIR">
+              <span class="p04-case-num">CASO 04</span>
+              <span class="p04-case-title">Declara uso pero la pieza es 100% IA sin curaduría</span>
+              <span class="p04-case-icon">+</span>
+            </button>
+            <div class="p04-case-body">
+              <div class="p04-case-content">
+                Declaración cumplida pero la materia evalúa la habilidad de diseño, no de generación. Califica según los criterios de la materia: si el output cumple los objetivos pedagógicos, evalúa lo entregado. Si no, retroalimenta sobre el aporte humano faltante y pide reentrega.
+                <div class="p04-case-tag declara">DECLARA + EVALÚA CRITERIO</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p04-case">
+            <button class="p04-case-header" data-cursor-text="EXPANDIR">
+              <span class="p04-case-num">CASO 05</span>
+              <span class="p04-case-title">Estudiante de PEF usa IA sin autorización del director</span>
+              <span class="p04-case-icon">+</span>
+            </button>
+            <div class="p04-case-body">
+              <div class="p04-case-content">
+                Falta institucional. El PEF requiere autorización explícita y por escrito de la dirección del programa. Notifica al director del programa, retiene la entrega y abre conversación con el estudiante antes de tomar la determinación.
+                <div class="p04-case-tag falta">FALTA INSTITUCIONAL · NOTIFICAR</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p04-case">
+            <button class="p04-case-header" data-cursor-text="EXPANDIR">
+              <span class="p04-case-num">CASO 06</span>
+              <span class="p04-case-title">El estudiante usa IA en un examen individual</span>
+              <span class="p04-case-icon">+</span>
+            </button>
+            <div class="p04-case-body">
+              <div class="p04-case-content">
+                Uso prohibido. Las evaluaciones individuales miden capacidad propia. Si se confirma el uso, se aplica el reglamento UDEM de honestidad académica. Documenta la evidencia y notifica al coordinador del programa.
+                <div class="p04-case-tag consulta">USO PROHIBIDO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recursos -->
+      <div class="p04-section">
+        <div class="p04-section-label">Recursos para tu materia</div>
+        <ol class="p04-criteria">
+          <li>
+            <div class="p04-criteria-num">01</div>
+            <div class="p04-criteria-text">Plantilla de evaluación de declaraciones de IA (próximamente como descargable)</div>
+          </li>
+          <li>
+            <div class="p04-criteria-num">02</div>
+            <div class="p04-criteria-text">Guía de conversación cuando detectas uso no declarado de IA</div>
+          </li>
+          <li>
+            <div class="p04-criteria-num">03</div>
+            <div class="p04-criteria-text">Cláusula estandarizada para incluir en el plan analítico de cada materia</div>
+          </li>
+          <li>
+            <div class="p04-criteria-num">04</div>
+            <div class="p04-criteria-text">Casos resueltos por el comité de honestidad académica (anónimos)</div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PATH 05 · DOCUMENTO COMPLETO (placeholder) ===== -->
+  <section class="scene path placeholder-path" id="scene-path-05">
+    <button class="path-back" data-back data-cursor-text="VOLVER">
+      <span>←</span> VOLVER AL INICIO
+    </button>
+    <nav class="path-side-tabs" id="sideTabs05"></nav>
+    <div>
+      <div class="eyebrow" style="color: var(--yellow); margin-bottom: 1.5rem;">CAMINO 05</div>
+      <h3 class="display-l">Documento completo</h3>
+      <p class="body-l" style="margin-top: 1.5rem;">Disponible en Re-Entrega 3.<br>Lectura editorial del código completo + PDF firmable.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ===== STATE =====
+const state = {
+  currentScene: 'entry',
+  soundOn: false,
+};
+
+const PATHS = [
+  { id: '01', name: 'Declarar mi uso' },
+  { id: '02', name: 'Asistente de situación' },
+  { id: '03', name: 'Manifiesto del programa' },
+  { id: '04', name: 'Vista de profesor' },
+  { id: '05', name: 'Documento completo' },
+];
+
+// ===== CUSTOM CURSOR =====
+const cursor = document.getElementById('cursor');
+const cursorLabel = document.getElementById('cursor-label');
+let cursorX = 0, cursorY = 0;
+let labelX = 0, labelY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  cursorX = e.clientX;
+  cursorY = e.clientY;
+  cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+  cursorLabel.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+});
+
+document.addEventListener('mouseenter', () => cursor.style.opacity = 1);
+document.addEventListener('mouseleave', () => cursor.style.opacity = 0);
+
+// Hover effects on interactive elements
+function bindCursor() {
+  const interactives = document.querySelectorAll('button, a, input, textarea, [data-cursor-text]');
+  interactives.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      const text = el.dataset.cursorText;
+      if (text) {
+        cursor.classList.add('text');
+        cursorLabel.textContent = text;
+        cursorLabel.classList.add('visible');
+      } else {
+        cursor.classList.add('hover');
+      }
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hover', 'text');
+      cursorLabel.classList.remove('visible');
+    });
+  });
+}
+
+// ===== TAGLINE TEXTURE =====
+function buildTagline(containerId) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  const line = 'CÓDIGO DE USO DE IA · LDV 2027 · CRGS · UDEM · ';
+  const repeat = line.repeat(30);
+  for (let i = 0; i < 25; i++) {
+    const div = document.createElement('div');
+    div.className = 'tagline-texture-line';
+    div.textContent = repeat;
+    c.appendChild(div);
+  }
+}
+buildTagline('entryTexture');
+buildTagline('hubTexture');
+
+// ===== SCENE ROUTING =====
+function showScene(id, animate = true) {
+  const prev = document.querySelector('.scene.active');
+  const next = document.getElementById(`scene-${id}`);
+  if (!next || next === prev) return;
+
+  state.currentScene = id;
+
+  if (!animate) {
+    if (prev) prev.classList.remove('active');
+    next.classList.add('active');
+    if (id.startsWith('path-')) next.classList.add('shown');
+    return;
+  }
+
+  // Outro
+  const tl = gsap.timeline();
+  if (prev) {
+    tl.to(prev, {
+      opacity: 0,
+      scale: 0.96,
+      duration: 0.5,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        prev.classList.remove('active');
+        prev.classList.remove('shown');
+        gsap.set(prev, { clearProps: 'transform' });
+      }
+    });
+  }
+  // Intro
+  tl.add(() => {
+    next.classList.add('active');
+    if (id.startsWith('path-')) next.classList.add('shown');
+  })
+    .fromTo(next, { opacity: 0, scale: 1.04 }, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+      ease: 'power3.out',
+    });
+
+  // Side tabs setup if in path
+  if (id.startsWith('path-')) {
+    setupSideTabs(id);
+  }
+}
+
+// ===== SIDE TABS =====
+function setupSideTabs(currentId) {
+  const currentNum = currentId.replace('path-', '');
+  const container = document.getElementById(`sideTabs${currentNum}`);
+  if (!container) return;
+  if (container.children.length > 0) {
+    // Update active
+    container.querySelectorAll('.side-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.path === currentNum);
+    });
+    return;
+  }
+  PATHS.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'side-tab' + (p.id === currentNum ? ' active' : '');
+    btn.dataset.path = p.id;
+    btn.dataset.cursorText = 'IR';
+    btn.innerHTML = `<span class="side-tab-num">${p.id}</span><span class="side-tab-name">${p.name}</span>`;
+    btn.addEventListener('click', () => showScene(`path-${p.id}`));
+    container.appendChild(btn);
+  });
+  bindCursor();
+}
+
+// ===== ENTRY =====
+function enterApp(withSound) {
+  state.soundOn = withSound;
+  updateSoundUI();
+  if (typeof updateAudio === 'function') updateAudio();
+  showScene('hub');
+}
+
+document.getElementById('enterSound').addEventListener('click', () => enterApp(true));
+document.getElementById('enterSilent').addEventListener('click', () => enterApp(false));
+
+// ===== HUB ORBITAL =====
+const orbit = document.getElementById('hubOrbit');
+const orbitCards = document.querySelectorAll('.hub-orbit-card');
+
+// Hide cards initially to avoid stacked flicker
+orbitCards.forEach(c => { c.style.opacity = '0'; });
+
+// Position cards on a circle based on data-angle
+function positionOrbitCards(animate = false) {
+  if (state.listView) return;
+  const rect = orbit.getBoundingClientRect();
+  if (rect.width === 0) return; // not visible yet
+  const radius = Math.min(rect.width, rect.height) * 0.38;
+  orbitCards.forEach((card, i) => {
+    const angle = parseFloat(card.dataset.angle) * (Math.PI / 180);
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+    const t = `translate(${x}px, ${y}px)`;
+    card.style.setProperty('--card-transform', t);
+    if (animate) {
+      gsap.fromTo(card,
+        { x: 0, y: 0, opacity: 0, scale: 0.3 },
+        { x, y, opacity: 1, scale: 1, duration: 0.9, ease: 'power3.out', delay: 0.1 + i * 0.07,
+          onComplete: () => {
+            card.style.transform = t;
+            card.style.opacity = '1';
+          }
+        }
+      );
+    } else {
+      card.style.transform = t;
+      card.style.opacity = '1';
+    }
+  });
+}
+window.addEventListener('resize', () => positionOrbitCards(false));
+
+// Subtle rotation animation of the entire orbit
+let baseRot = 0;
+function tickOrbit() {
+  baseRot += 0.02;
+  applyOrbitTransform();
+  requestAnimationFrame(tickOrbit);
+}
+
+// Mouse parallax: orbit tilts subtly based on mouse position
+let mouseRX = 0, mouseRY = 0;
+let targetRX = 0, targetRY = 0;
+document.addEventListener('mousemove', (e) => {
+  if (state.currentScene !== 'hub') return;
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  targetRY = ((e.clientX - cx) / cx) * 6; // up to 6deg rotation Y
+  targetRX = -((e.clientY - cy) / cy) * 6;
+});
+
+function applyOrbitTransform() {
+  mouseRX += (targetRX - mouseRX) * 0.06;
+  mouseRY += (targetRY - mouseRY) * 0.06;
+  if (orbit) {
+    orbit.style.transform = `perspective(1200px) rotateX(${mouseRX}deg) rotateY(${mouseRY}deg) rotate(${baseRot * 0.05}deg)`;
+  }
+}
+tickOrbit();
+
+// Card hover and click
+orbitCards.forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    if (audio) audio.tick();
+  });
+  card.addEventListener('click', () => {
+    const path = card.dataset.path;
+    showScene(`path-${path}`);
+  });
+});
+
+// View toggle: orbit vs list
+const viewBtns = document.querySelectorAll('.hub-view-btn');
+viewBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    viewBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const view = btn.dataset.view;
+    if (audio) audio.tick();
+    if (view === 'list') {
+      switchToListView();
+    } else {
+      switchToOrbitView();
+    }
+  });
+});
+
+function switchToListView() {
+  const ringsEl = document.querySelector('.hub-rings');
+  if (ringsEl) ringsEl.style.opacity = '0';
+  // Rearrange cards as a vertical list using GSAP
+  gsap.to(orbit, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.4, ease: 'power3.out' });
+  // Hide center, stretch cards into list
+  gsap.to('.hub-center', { opacity: 0, duration: 0.3 });
+  orbitCards.forEach((card, i) => {
+    gsap.to(card, {
+      x: 0,
+      y: (i - 2) * 90,
+      width: 'min(80vw, 600px)',
+      height: 64,
+      borderRadius: 100,
+      duration: 0.7,
+      ease: 'power3.inOut',
+      onUpdate: () => {
+        card.style.setProperty('--card-transform', `translate(${gsap.getProperty(card,'x')}px, ${gsap.getProperty(card,'y')}px)`);
+      },
+    });
+  });
+  // Disable mouse parallax in list view
+  state.listView = true;
+}
+
+function switchToOrbitView() {
+  const ringsEl = document.querySelector('.hub-rings');
+  if (ringsEl) ringsEl.style.opacity = '';
+  gsap.to('.hub-center', { opacity: 1, duration: 0.5, delay: 0.3 });
+  // Restore positions
+  orbitCards.forEach(card => {
+    const angle = parseFloat(card.dataset.angle) * (Math.PI / 180);
+    const radius = Math.min(orbit.offsetWidth, orbit.offsetHeight) * 0.38;
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+    gsap.to(card, {
+      x, y, width: 180, height: 180, borderRadius: '50%',
+      duration: 0.7, ease: 'power3.inOut',
+      onUpdate: () => {
+        card.style.setProperty('--card-transform', `translate(${x}px, ${y}px)`);
+      },
+    });
+  });
+  state.listView = false;
+}
+
+document.getElementById('soundToggle').addEventListener('click', () => {
+  state.soundOn = !state.soundOn;
+  updateSoundUI();
+});
+
+function updateSoundUI() {
+  const dot = document.getElementById('soundDot');
+  const label = document.getElementById('soundLabel');
+  if (state.soundOn) {
+    dot.classList.add('on');
+    label.textContent = 'SONIDO ACTIVADO';
+  } else {
+    dot.classList.remove('on');
+    label.textContent = 'SONIDO APAGADO';
+  }
+}
+
+// ===== BACK BUTTONS =====
+document.querySelectorAll('[data-back]').forEach(btn => {
+  btn.addEventListener('click', () => showScene('hub'));
+});
+
+// ===== PATH 01 — GENERATOR =====
+const tool = document.getElementById('genTool');
+const use = document.getElementById('genUse');
+const human = document.getElementById('genHuman');
+const prompt = document.getElementById('genPrompt');
+const preview = document.getElementById('genPreview');
+const copyBtn = document.getElementById('genCopy');
+
+function buildDeclaration() {
+  const t = tool.value.trim();
+  const u = use.value.trim();
+  const h = human.value.trim();
+  const p = prompt.value.trim();
+  if (!t && !u && !h) {
+    preview.innerHTML = '<span class="placeholder">Empieza a llenar los campos…</span>';
+    return '';
+  }
+  let text = `Declaración de uso de IA · LDV 2027\n\n`;
+  text += `Esta entrega utiliza ${t || '[herramienta]'} para ${u || '[tarea]'}. `;
+  text += `El aporte humano fue: ${h || '[describir aporte humano]'}. `;
+  if (p) text += `Prompt clave: "${p}". `;
+  text += `\n\nConforme al Código de Uso de IA del programa LDV 2027.`;
+  preview.textContent = text;
+  return text;
+}
+[tool, use, human, prompt].forEach(el => el.addEventListener('input', buildDeclaration));
+
+copyBtn.addEventListener('click', async () => {
+  const text = buildDeclaration();
+  if (!text) return;
+  try {
+    await navigator.clipboard.writeText(text);
+    copyBtn.classList.add('copied');
+    document.getElementById('genCopyIcon').textContent = '✓';
+    document.getElementById('genCopyLabel').textContent = 'COPIADO';
+    setTimeout(() => {
+      copyBtn.classList.remove('copied');
+      document.getElementById('genCopyLabel').textContent = 'COPIAR BLOQUE';
+      document.getElementById('genCopyIcon').textContent = '⎘';
+    }, 2000);
+  } catch (e) {
+    alert('No se pudo copiar al portapapeles');
+  }
+});
+
+// ===== PATH 03 — MANIFIESTO =====
+const p03Frames = document.querySelectorAll('.p03-frame');
+const p03Dots = document.querySelectorAll('.p03-progress-dot');
+let p03Index = 0;
+
+function setManifestoFrame(idx) {
+  if (idx < 0 || idx >= p03Frames.length) return;
+  p03Index = idx;
+  p03Frames.forEach((f, i) => f.classList.toggle('active', i === idx));
+  p03Dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+document.getElementById('p03Prev').addEventListener('click', () => setManifestoFrame(p03Index - 1));
+document.getElementById('p03Next').addEventListener('click', () => setManifestoFrame((p03Index + 1) % p03Frames.length));
+
+// Keyboard navigation in manifesto
+document.addEventListener('keydown', (e) => {
+  if (state.currentScene !== 'path-03') return;
+  if (e.key === 'ArrowDown' || e.key === ' ') {
+    e.preventDefault();
+    setManifestoFrame((p03Index + 1) % p03Frames.length);
+  }
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    setManifestoFrame(p03Index - 1);
+  }
+});
+
+// Click dots
+p03Dots.forEach((dot, i) => {
+  dot.addEventListener('click', () => setManifestoFrame(i));
+});
+
+// ESC = back to hub
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && state.currentScene !== 'hub' && state.currentScene !== 'entry') {
+    showScene('hub');
+  }
+});
+
+// ===== PATH 02 — WIZARD =====
+const p02State = { steps: {}, decision: null };
+
+document.querySelectorAll('.p02-option').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const step = btn.closest('.p02-frame').dataset.step;
+    const tag = btn.dataset.tag;
+    const next = btn.dataset.next;
+    p02State.steps[step] = tag;
+
+    if (audio) audio.tick();
+
+    document.querySelectorAll('#scene-path-02 .p02-frame').forEach(f => f.classList.remove('active'));
+    const nextFrame = document.querySelector(`#scene-path-02 .p02-frame[data-step="${next}"]`);
+    nextFrame.classList.add('active');
+
+    if (next === 'result') {
+      resolveWizard();
+    }
+  });
+});
+
+function resolveWizard() {
+  const stamp = document.getElementById('p02Verdict');
+  const flash = document.querySelector('.p02-stamp-flash');
+  const titleEl = document.getElementById('p02ResultTitle');
+  const bodyEl = document.getElementById('p02ResultBody');
+  const actionsEl = document.querySelector('.p02-result-actions');
+
+  const s2 = p02State.steps['2'];
+  const s3 = p02State.steps['3'];
+
+  let verdict, title, body, klass;
+
+  if (s2 === 'examen') {
+    verdict = 'CONSULTA'; klass = 'consulta';
+    title = 'No uses IA en exámenes individuales.';
+    body = 'Las evaluaciones individuales miden tu capacidad, no la de un sistema. Si la materia requiere uso explícito de IA como objeto de evaluación, el docente lo indicará por escrito.';
+  } else if (s2 === 'pef') {
+    verdict = 'CONSULTA'; klass = 'consulta';
+    title = 'Para PEF necesitas autorización.';
+    body = 'El Programa de Evaluación Final demuestra tu capacidad de dirigir un proyecto integral. El uso de IA requiere autorización por escrito de la dirección del programa y declaración detallada en la bitácora del proyecto.';
+  } else if (s3 === 'exploracion') {
+    verdict = 'LIBRE'; klass = 'libre';
+    title = 'Adelante. Sin declaración.';
+    body = 'Si la IA es exploración y no entregas nada generado por ella, su uso es libre. Aprovecha para investigar referencias, validar conceptos y abrir caminos. Lo que entregas debe ser tuyo.';
+  } else if (s3 === 'completa') {
+    verdict = 'DECLARA'; klass = 'declara';
+    title = 'Sí puedes. Declaración obligatoria.';
+    body = 'Cuando la IA genera la pieza completa, debes declararlo en detalle: herramienta, prompts, criterio de curaduría y aporte humano. Si la materia se enfoca en demostrar tu habilidad técnica, consulta con el docente antes.';
+  } else if (s3 === 'paso') {
+    verdict = 'DECLARA'; klass = 'declara';
+    title = 'Sí puedes. Declara qué paso.';
+    body = 'Cuando la IA asiste un paso del proceso, el resto del trabajo es tuyo. Declara qué paso fue asistido y qué herramienta usaste. La decisión final sigue siendo tu responsabilidad.';
+  } else {
+    verdict = 'DECLARA'; klass = 'declara';
+    title = 'Sí puedes. Debes declararlo.';
+    body = 'Para tu caso, el uso es válido siempre que documentes qué herramienta usaste, para qué la usaste y qué aporte humano hubo en la decisión final.';
+  }
+
+  // Reset animations
+  stamp.className = 'p02-stamp';
+  flash.className = 'p02-stamp-flash';
+  titleEl.classList.remove('show');
+  bodyEl.classList.remove('show');
+  actionsEl.classList.remove('show');
+
+  stamp.textContent = verdict;
+  stamp.classList.add(klass);
+  titleEl.textContent = title;
+  bodyEl.textContent = body;
+
+  // Trigger animations on next frame
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      stamp.classList.add('show');
+      flash.classList.add('flash');
+      titleEl.classList.add('show');
+      bodyEl.classList.add('show');
+      actionsEl.classList.add('show');
+      if (audio) audio.stamp();
+    });
+  });
+
+  p02State.decision = { verdict, klass };
+}
+
+document.getElementById('p02Restart').addEventListener('click', () => {
+  if (audio) audio.tick();
+  document.querySelectorAll('#scene-path-02 .p02-frame').forEach(f => f.classList.remove('active'));
+  document.querySelector('#scene-path-02 .p02-frame[data-step="1"]').classList.add('active');
+  p02State.steps = {};
+});
+
+document.getElementById('p02ToGenerator').addEventListener('click', () => {
+  // Pre-fill suggestion in Path 01 based on wizard answers
+  const s1 = p02State.steps['1'];
+  const tagToTool = {
+    imagen: 'Midjourney v6',
+    texto: 'ChatGPT 4',
+    ideacion: '',
+    codigo: 'GitHub Copilot',
+  };
+  const tagToUse = {
+    imagen: 'Generar imagen para la entrega',
+    texto: 'Asistir en la redacción del documento',
+    ideacion: 'Explorar referencias e ideas iniciales',
+    codigo: 'Asistir en código del prototipo',
+  };
+  if (s1 && tagToTool[s1] !== undefined) {
+    document.getElementById('genTool').value = tagToTool[s1];
+    document.getElementById('genUse').value = tagToUse[s1] || '';
+    buildDeclaration();
+  }
+  showScene('path-01');
+});
+
+// ===== PATH 04 — CASE EXPANDER =====
+document.querySelectorAll('.p04-case-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const card = header.closest('.p04-case');
+    card.classList.toggle('open');
+    if (audio) audio.tick();
+  });
+});
+
+// ===== AUDIO ENGINE =====
+class AudioEngine {
+  constructor() {
+    this.ctx = null;
+    this.masterGain = null;
+    this.droneOsc = null;
+    this.droneGain = null;
+    this.lfo = null;
+    this.enabled = false;
+    this.initialized = false;
+  }
+
+  init() {
+    if (this.initialized) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    this.ctx = new AC();
+    this.masterGain = this.ctx.createGain();
+    this.masterGain.gain.value = 0;
+    this.masterGain.connect(this.ctx.destination);
+
+    // Sub drone (boosted)
+    this.droneOsc = this.ctx.createOscillator();
+    this.droneOsc.type = 'sine';
+    this.droneOsc.frequency.value = 80;
+
+    this.droneGain = this.ctx.createGain();
+    this.droneGain.gain.value = 0.18;
+
+    // LFO for slight movement
+    this.lfo = this.ctx.createOscillator();
+    this.lfo.frequency.value = 0.08;
+    const lfoGain = this.ctx.createGain();
+    lfoGain.gain.value = 6;
+    this.lfo.connect(lfoGain);
+    lfoGain.connect(this.droneOsc.frequency);
+
+    // Higher harmonic (boosted)
+    const harmonic = this.ctx.createOscillator();
+    harmonic.type = 'sine';
+    harmonic.frequency.value = 160;
+    const harmonicGain = this.ctx.createGain();
+    harmonicGain.gain.value = 0.05;
+
+    // Mid pad (warm sustain)
+    const pad = this.ctx.createOscillator();
+    pad.type = 'triangle';
+    pad.frequency.value = 240;
+    const padGain = this.ctx.createGain();
+    padGain.gain.value = 0.025;
+
+    this.droneOsc.connect(this.droneGain);
+    harmonic.connect(harmonicGain);
+    pad.connect(padGain);
+    this.droneGain.connect(this.masterGain);
+    harmonicGain.connect(this.masterGain);
+    padGain.connect(this.masterGain);
+
+    this.droneOsc.start();
+    harmonic.start();
+    pad.start();
+    this.lfo.start();
+
+    this.initialized = true;
+  }
+
+  async enable() {
+    this.init();
+    if (!this.ctx) return;
+    if (this.ctx.state === 'suspended') {
+      try { await this.ctx.resume(); } catch (e) {}
+    }
+    this.enabled = true;
+    this.masterGain.gain.cancelScheduledValues(this.ctx.currentTime);
+    this.masterGain.gain.linearRampToValueAtTime(1, this.ctx.currentTime + 1.0);
+  }
+
+  disable() {
+    if (!this.ctx) return;
+    this.enabled = false;
+    this.masterGain.gain.cancelScheduledValues(this.ctx.currentTime);
+    this.masterGain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.5);
+  }
+
+  tick() {
+    if (!this.enabled || !this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = 1320;
+    const g = this.ctx.createGain();
+    g.gain.value = 0;
+    const now = this.ctx.currentTime;
+    g.gain.linearRampToValueAtTime(0.12, now + 0.003);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+    osc.connect(g);
+    g.connect(this.masterGain);
+    osc.start(now);
+    osc.stop(now + 0.12);
+  }
+
+  whoosh() {
+    if (!this.enabled || !this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    osc.type = 'sawtooth';
+    const g = this.ctx.createGain();
+    g.gain.value = 0;
+    const now = this.ctx.currentTime;
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.exponentialRampToValueAtTime(540, now + 0.5);
+    // Lowpass filter for smoother whoosh
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 1200;
+    filter.Q.value = 5;
+    g.gain.linearRampToValueAtTime(0.14, now + 0.06);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+    osc.connect(filter);
+    filter.connect(g);
+    g.connect(this.masterGain);
+    osc.start(now);
+    osc.stop(now + 0.6);
+  }
+
+  stamp() {
+    if (!this.enabled || !this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.value = 100;
+    const g = this.ctx.createGain();
+    g.gain.value = 0;
+    const now = this.ctx.currentTime;
+    g.gain.linearRampToValueAtTime(0.32, now + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+    osc.frequency.exponentialRampToValueAtTime(55, now + 0.5);
+    osc.connect(g);
+    g.connect(this.masterGain);
+    osc.start(now);
+    osc.stop(now + 0.75);
+    // Add a higher chord component for richness
+    [220, 330].forEach((f, i) => {
+      const o = this.ctx.createOscillator();
+      o.type = 'sine';
+      o.frequency.value = f;
+      const og = this.ctx.createGain();
+      og.gain.value = 0;
+      og.gain.linearRampToValueAtTime(0.08, now + 0.02 + i * 0.04);
+      og.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+      o.connect(og);
+      og.connect(this.masterGain);
+      o.start(now);
+      o.stop(now + 0.65);
+    });
+  }
+}
+
+const audio = new AudioEngine();
+
+// Wire audio to state and toggle
+function updateAudio() {
+  if (state.soundOn) audio.enable();
+  else audio.disable();
+}
+
+// Re-hook sound toggle & entry buttons to also control audio
+const originalSoundToggle = document.getElementById('soundToggle');
+originalSoundToggle.addEventListener('click', updateAudio);
+document.getElementById('enterSound').addEventListener('click', updateAudio);
+document.getElementById('enterSilent').addEventListener('click', updateAudio);
+
+// Tick on scene transitions
+const _origShowScene = showScene;
+showScene = function(id, animate = true) {
+  if (audio && state.currentScene !== id) audio.whoosh();
+  _origShowScene(id, animate);
+  // Position orbit cards after the scene becomes active (after outro+intro start)
+  if (id === 'hub') {
+    setTimeout(() => positionOrbitCards(true), animate ? 650 : 50);
+  }
+};
+
+// ===== INITIAL ENTRY ANIMATION =====
+function bootEntry() {
+  // Reset all scenes to clean state
+  document.querySelectorAll('.scene').forEach(s => {
+    s.classList.remove('active', 'shown');
+    gsap.set(s, { clearProps: 'all' });
+  });
+  const entry = document.getElementById('scene-entry');
+  entry.classList.add('active');
+  state.currentScene = 'entry';
+  // Pre-set hidden state
+  gsap.set(['.entry-meta-top', '.entry-meta-top-r', '.entry-eyebrow', '.entry-title', '.entry-button'], { opacity: 0 });
+  gsap.set('.entry-title', { y: 40 });
+  // Animate in
+  const tl = gsap.timeline();
+  tl.to('.entry-meta-top, .entry-meta-top-r', { opacity: 1, duration: 0.6, ease: 'power3.out', stagger: 0.1, delay: 0.2 })
+    .to('.entry-eyebrow', { opacity: 1, duration: 0.8, ease: 'power3.out' }, 0.4)
+    .to('.entry-title', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, 0.6)
+    .to('.entry-button', { opacity: 1, duration: 0.6, ease: 'power3.out', stagger: 0.1 }, 1.4);
+}
+
+// Boot
+bindCursor();
+bootEntry();
+</script>
+</body>
+</html>

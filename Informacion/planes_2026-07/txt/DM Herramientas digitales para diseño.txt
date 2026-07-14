@@ -1,0 +1,78 @@
+
+DENOMINACIÓN DE LA ASIGNATURA O UNIDAD DE APRENDIZAJE
+
+Herramientas digitales para el diseño
+
+Eje de Formación Interdisciplinaria - Asignaturas Optativas
+CICLO
+DM
+CLAVE DE LA ASIGNATURA
+
+FINES DE APRENDIZAJE O FORMACIÓN
+
+Al finalizar la asignatura, el alumno será capaz de desarrollar piezas gráficas destinadas a medios impresos y digitales con la finalidad de emplear con destreza las principales herramientas digitales utilizadas en la producción gráfica profesional, integrando el manejo de software especializado en gráfica vectorial, edición de imagen digital y maquetación editorial. 
+
+CONTENIDO TEMÁTICO
+
+	•	Gráfica vectorial 
+	•	Panorama general de la gráfica vectorial y aplicaciones en diseño
+	•	Conceptos fundamentales: anclas, nodos y direcciones
+	•	Relleno, contorno y sistemas de color
+	•	Operaciones booleanas y construcción de trazados
+	•	Degradados, máscaras y modos de fusión
+	•	Elementos repetitivos: símbolos y transformaciones
+	•	Patrones y trazados compuestos
+	•	Del vector al volumen: extrusión, revolución y geometría básica
+	•	Espacio tridimensional: ejes, vista y perspectiva
+	•	Materiales e iluminación 
+	•	Escala, rotación y simetría en el espacio
+
+	•	Edición de imagen digital 
+	•	Panorama general de la edición de imagen digital y flujo de trabajo 
+	•	Resolución y modos de color (RGB, CMYK, HEX, HSL, PMS) 
+	•	Selecciones, recortes y transformaciones 
+	•	Capas, carpetas y edición no destructiva 
+	•	Retoque y corrección de imagen 
+	•	Máscaras, filtros y efectos 
+	•	Capas de ajuste, objetos inteligentes y exportación 
+	•	Introducción a la animación: fotogramas, línea de tiempo y exportación para medios digitales 
+	•	Producción y composición para medios impresos y digitales 
+	•	Panorama general de la producción editorial y los medios digitales
+	•	Configuración del documento: formato, márgenes y sangrados
+	•	Sistemas de retículas y páginas maestras
+	•	Estilos de carácter y párrafo
+	•	Jerarquía tipográfica, hifenación y justificación
+	•	Importación y gestión de recursos gráficos y textuales
+	•	Integración de renders 3D en piezas de diseño digital
+	•	Composición y tratamiento de imagen en contexto editorial
+	•	Verificación preliminar y exportación a formatos impresos y digitales
+
+ACTIVIDADES DE APRENDIZAJE 
+BAJO CONDUCCIÓN DE UN ACADÉMICO
+
+	•	Identificar los conceptos teóricos y el panorama de cada unidad temática a través de presentaciones y ejemplos de la industria gráfica.
+	•	Observar la demostración práctica de herramientas digitales y flujos de trabajo mediante sesiones en pantalla conducidas por el académico.
+	•	Aplicar las herramientas y técnicas revisadas mediante ejercicios guiados paso a paso bajo supervisión directa.
+	•	Evaluar los avances de los proyectos en sesiones de crítica grupal, identificando áreas de mejora técnica y estética.
+	•	Verificar la correcta organización de capas, vínculos y entregables mediante la revisión colectiva de archivos conforme a estándares de la industria.
+
+ACTIVIDADES DE APRENDIZAJE 
+INDEPENDIENTES
+
+	•	Practicar de manera autónoma las herramientas revisadas en clase, reproduciendo y variando ejercicios fuera del horario escolar. 
+	•	Investigar y recopilar referentes visuales para sustentar el desarrollo conceptual y estético de cada proyecto. 
+	•	Crear los proyectos integradores por unidad: composición de gráfica vectorial, edición de imagen digital y maquetación editorial multipágina. 
+	•	Organizar y preparar los archivos de entrega en los formatos requeridos, aplicando criterios de nomenclatura de capas y gestión de vínculos. 
+
+CRITERIOS DE EVALUACIÓN
+
+Ejercicios prácticos en clase                                                                                           40%
+Primer parcial                                                                                                                 20%
+Segundo parcial                                                                                                              20%
+Proyecto final                                                                                                                 20%
+Total                                                                                                                              100%
+
+MODALIDADES TECNOLÓGICAS E INFORMÁTICAS
+
+NO MOVER
+ 

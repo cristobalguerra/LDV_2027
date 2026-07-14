@@ -1,0 +1,99 @@
+
+DENOMINACIÓN DE LA ASIGNATURA O UNIDAD DE APRENDIZAJE
+
+Animación gráfica y contenido digital
+
+Eje de Formación Interdisciplinaria - Asignaturas Optativas (Certificado: Diseño Estratégico y Dirección Creativa)
+CICLO
+
+CLAVE DE LA ASIGNATURA
+
+FINES DE APRENDIZAJE O FORMACIÓN
+
+Al finalizar la asignatura, el alumno será capaz de conceptualizar y producir piezas de contenido visual en movimiento para la comunicación de marcas en ecosistemas digitales, mediante la aplicación de principios de animación, narrativa visual y producción audiovisual digital. Esto con el fin de generar piezas adaptadas a distintas plataformas y formatos, con criterio estético, técnico y estratégico.
+
+
+
+CONTENIDO TEMÁTICO
+
+	•	Fundamentos de animación gráfica y contenido en movimiento
+	•	Qué es la animación gráfica: definiciones, alcances y aplicaciones en diseño
+	•	Principios básicos de animación aplicados al diseño visual: timing, easing, anticipación, énfasis y peso
+	•	Diferencia entre motion graphics, animación 2D, video y contenido digital interactivo
+	•	El rol del contenido en movimiento dentro de las estrategias de comunicación de marca
+	•	Narrativa visual y guion para piezas breves
+	•	Estructura narrativa para piezas cortas: apertura, desarrollo y cierre
+	•	Storyboard, animatic y planeación visual previa a la producción
+	•	Tipografía cinética, jerarquías visuales y composición en movimiento
+	•	Ritmo, audio y sincronía entre imagen, texto y sonido
+	•	Producción técnica y herramientas digitales
+	•	Flujo de trabajo de producción: idea, boceto, animación, render y exportación
+	•	Herramientas estándar de animación y motion: After Effects, Figma con motion, herramientas web y de IA aplicadas a video
+	•	Formatos y especificaciones por plataforma: vertical, cuadrado, horizontal, reels, stories, web y broadcast
+	•	Optimización de archivos, calidad de exportación y entregables profesionales
+	•	Contenido para ecosistemas digitales y marca
+	•	Adaptación de piezas a múltiples plataformas y proporciones
+	•	Sistemas de motion para marcas: animación de logotipo, transiciones, intros y outros
+	•	Consistencia visual y narrativa entre piezas, campañas y formatos
+	•	Tendencias actuales de motion en redes sociales, plataformas digitales y comunicación de marca
+	•	Práctica integradora y dirección de pieza
+	•	Conceptualización de una pieza de motion para marca a partir de un brief
+	•	Producción técnica desde guion y storyboard hasta render final
+	•	Iteración y refinamiento con base en retroalimentación del docente y los pares
+	•	Defensa y presentación de la pieza con argumentos estratégicos, narrativos y técnicos
+
+
+
+
+ACTIVIDADES DE APRENDIZAJE 
+BAJO CONDUCCIÓN DE UN ACADÉMICO
+
+Participar en exposiciones dialogadas sobre los fundamentos de animación gráfica, motion design y contenido digital, partiendo de conceptos accesibles para estudiantes sin experiencia previa.
+Analizar piezas de motion design de marcas nacionales e internacionales identificando narrativa, técnica, ritmo y adaptación por plataforma.
+Realizar ejercicios prácticos de animación aplicando los principios básicos: timing, easing, anticipación, énfasis y peso.
+Desarrollar storyboards y animatics para piezas de marca, traduciendo un brief en planeación visual.
+Producir piezas de motion en software estándar (After Effects, Figma con motion u otras herramientas), siguiendo el flujo de trabajo profesional.
+Presentar avances y defender decisiones técnicas, narrativas y estratégicas frente al docente y los pares.
+Discutir tendencias y aplicaciones del contenido digital en ecosistemas de marca, incluyendo formatos emergentes en redes sociales y plataformas.
+
+ACTIVIDADES DE APRENDIZAJE 
+INDEPENDIENTES
+
+Investigar y documentar referentes de motion design y contenido digital de marcas nacionales e internacionales.
+Practicar ejercicios técnicos en herramientas de animación, registrando avances, errores e iteraciones.
+Desarrollar storyboards y animatics personales fuera del aula, listos para producción.
+Producir piezas finales conforme a las especificaciones de cada plataforma y formato definidos en clase.
+Mantener un libro de proceso con bocetos, referencias, decisiones narrativas y registros técnicos de la producción.
+Documentar archivos, especificaciones de exportación y entregables por plataforma siguiendo estándares profesionales.
+
+
+CRITERIOS DE EVALUACIÓN
+
+
+Participación argumentada en discusiones y análisis de referentes de motion design — 15%
+Ejercicios técnicos y prácticas de animación aplicando principios básicos — 20%
+Storyboard y animatic documentados para la pieza final — 20%
+Pieza final de motion con producción, adaptación a plataformas y defensa narrativo-técnica — 45%
+
+
+
+
+
+MODALIDADES TECNOLÓGICAS E INFORMÁTICAS
+
+
+
+NO MOVER
+
+
+
+Instrucciones de llenado:
+APARTADO
+DESCRIPCIÓN
+Criterios de evaluación
+Enlistar las actividades o productos que considerarán para valorar los aprendizajes logrados por los estudiantes, señalar el porcentaje para cada uno, de tal manera que sumen el 100%. Éstos deberán ser acordes con las actividades de aprendizaje.
+Modalidades tecnológicas e informáticas
+Describir los recursos tecnológicos y de comunicación que emplearán para el desarrollo del proceso de enseñanza-aprendizaje de la asignatura.
+NOTA: Para las modalidades no escolarizada y mixta, es un elemento obligatorio, toda vez que dará sustento a la modalidad elegida.
+
+NOTA: Favor de no modificar la presentación de los formatos, en virtud que se encuentra diseñado para facilitar el llenado de cada uno de los apartados. 

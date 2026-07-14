@@ -1,0 +1,90 @@
+
+DENOMINACIÓN DE LA ASIGNATURA O UNIDAD DE APRENDIZAJE
+
+Inteligencia artificial aplicada al diseño visual
+
+Eje de Formación Profesional - Asignaturas Obligatorias
+CICLO
+
+CLAVE DE LA ASIGNATURA
+
+FINES DE APRENDIZAJE O FORMACIÓN
+
+Al finalizar la asignatura, el alumno será caaz de integrar herramientas de inteligencia artificial generativa en procesos de diseño visual, mediante la aplicación del criterio creativo y técnico para la generación, transofmración y dirección de propuestas visuales. Esto con el fin de analizar criticamente los resultados y toma de decisiones fandamentadas sobre cuándo, cómo y por qué emplearlas, con atención a la calidad e implicaciones éticas y de autorias propias del flujo de trabajo profesional. 
+
+
+
+CONTENIDO TEMÁTICO
+
+	•	Fundamentos de la integligencia artificial generativa
+	•	Qué es la inteligencia artificial generativa: nociones de funcionamiento, posibilidades y alcances
+	•	Tipos de sistemas generativos: imagen, texto, audio, video y 3D
+	•	Impacto en la industria creativa y el rol del diseñador
+
+	•	Ética, autoría y panorama profesional 
+	•	Derechos de autor, propiedad intelectual y origen de los datos 
+	•	Transparencia, responsabilidad y sostenbilidad en el uso profesional
+	•	Detección de errores, sesgos y limitantes
+	•	Tendencias emergentes, actualidad y futuro de la industria. 
+
+	•	Dirección de sistemas generativos
+	•	La instrucción como lenguaje: articular la intención y evitar supuestos al comunicarse con los sistemas
+	•	Iteración, refinamineto y control de resultados
+
+	•	Generación e integración en el fiseño visual
+	•	Generación y transformación de la imagen y recursos visuales
+	•	Integración de la inteligencia artificial en las etapas del proceso de diseño
+	•	Aplicación de la inteligencia artificial en el desarrollo de sistemas visuales
+
+
+
+
+ACTIVIDADES DE APRENDIZAJE 
+BAJO CONDUCCIÓN DE UN ACADÉMICO
+
+	•	Participar en discusiones guiadas sobre los conceptos, fundamentos y referentes de la inteligencia artificial aplicada en el diseño visual.
+	•	Analizar y discutir casos de estudio que muesten el uso, alcances y limitantes en proyectos de diseño visual, asi como de las implicaciones éticas, de autoria y sostebilidad asociadas a dichas herramientas. 
+	•	Desarrollar talleres prácticos de generación, dirección y refinamiento de propuestas visuales con heramientas de inteligrancia artificial, aplicando criterios técnicos y creativos. 
+	•	Realizar ejercicios de formilaciójn y mejora de isntrucciones, rtrabajando con la articulación de la intención de resultados. 
+	•	Presentar avances y resultados para el intercambio de retroalimentación entre el docente y los pares sobre los reusltados obtenidos.
+
+ACTIVIDADES DE APRENDIZAJE 
+INDEPENDIENTES
+
+	•	Investigar referentes, casos actuales sobre la inteligencia artificial, su relación con la industria creativa sustentando la discución y análisis en clase. 
+	•	Explorar y experimentar con herramientas de inteligenciar artificial generativa, aplicandolas a distintos retos de diseño visual y registrando los hallazgos, avances e iteraciones. 
+	•	Desarrollar ejercicios y proyectos tomando en cuenta la retroalimentación del profesor y pares. 
+	•	Documentar el proceso de trabajo, las decisiones de diseño, las insutrcciones empleadas y criterios considerados para avanzar con las propuestas finales desarrolladas.
+	•	Preparar y desarrollar la propuesta final que integre los resultados, proceso y reflexiones respecto al uso en el proceso creativo. 
+
+
+CRITERIOS DE EVALUACIÓN
+
+
+Participación en tallerees prácticos – 20%
+Ejercicios de flujo de trabajo y documentación del proceso – 30%
+Discusiones visuales y escritas - 20% 
+Proyecto integrador y presentaciones – 30%
+
+
+
+
+
+MODALIDADES TECNOLÓGICAS E INFORMÁTICAS
+
+
+
+NO MOVER
+
+
+
+Instrucciones de llenado:
+APARTADO
+DESCRIPCIÓN
+Criterios de evaluación
+Enlistar las actividades o productos que considerarán para valorar los aprendizajes logrados por los estudiantes, señalar el porcentaje para cada uno, de tal manera que sumen el 100%. Éstos deberán ser acordes con las actividades de aprendizaje.
+Modalidades tecnológicas e informáticas
+Describir los recursos tecnológicos y de comunicación que emplearán para el desarrollo del proceso de enseñanza-aprendizaje de la asignatura.
+NOTA: Para las modalidades no escolarizada y mixta, es un elemento obligatorio, toda vez que dará sustento a la modalidad elegida.
+
+NOTA: Favor de no modificar la presentación de los formatos, en virtud que se encuentra diseñado para facilitar el llenado de cada uno de los apartados. 

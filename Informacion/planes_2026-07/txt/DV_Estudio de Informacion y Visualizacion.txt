@@ -1,0 +1,87 @@
+d
+DENOMINACIÓN DE LA ASIGNATURA O UNIDAD DE APRENDIZAJE
+
+Estudio de Información y Visualización
+
+EJE DE FORMACIÓN PROFESIONAL
+CICLO
+PENDIENTE
+CLAVE DE LA ASIGNATURA
+
+FINES DE APRENDIZAJE O FORMACIÓN
+
+Al finalizar la asignatura, el alumno será capaz de desarrollar propuestas de diseño de información aplicadas mediante principios de organización, jerarquización y representación visual de datos para comunicar información de manera clara, estructurada y pertinente en distintos medios y soportes.
+
+CONTENIDO TEMÁTICO
+
+
+	•	Diseño de información
+	•	Definición, naturaleza y evolución del diseño de información como lenguaje visual
+	•	Tipologías y clasificaciones
+	•	Tipos de datos y estrategias para presentar información en función de su contenido
+	•	Proceso de práctica del trabajo con datos
+	•	Aprendiendo las directrices básicas para la creación de visualizaciones
+	•	Estructura informativo
+	•	Estructuras jerárquicas: árboles
+	•	Estructuras relacionales: redes 
+	•	Estructuras temporales: diagramas y flujos 
+	•	Estructuras espaciales: mapas
+	•	Estructuras espacio-temporales
+	•	Estructuras textuales
+
+	•	Medios y soportes
+	•	Medio impreso, digital y ambiental
+	•	Medios e información
+	•	Diseño para medios impresos y formatos
+	•	Diseño para medios digitales y formatos
+	•	Diseño de exposiciones y ambiental
+	•	Diseño interactivo
+	•	Diseño integral
+
+
+ACTIVIDADES DE APRENDIZAJE 
+BAJO CONDUCCIÓN DE UN ACADÉMICO
+
+Analizar de referentes de diseño de información y visualización de datos
+Realizar ejercicios de jerarquización y organización visual de información
+Desarrollar de diagramas, mapas y estructuras visuales
+Realizar ejercicios de representación gráfica de datos e información
+Desarrollar guiado de proyectos de diseño de información
+Presentar y retroalimentar de propuestas visuales
+
+
+ACTIVIDADES DE APRENDIZAJE 
+INDEPENDIENTES
+
+Investigar de referentes contemporáneos de diseño de información
+Analizar y organización de datos e información
+Desarrollar de ejercicios de esquematización y representación visual
+Construir de propuestas visuales para distintos medios y soportes
+Desarrollar iterativo de proyectos de visualización y diseño de información
+
+
+CRITERIOS DE EVALUACIÓN
+
+Actividades de lectura previa                                                                                          10%
+Elaboración de propuestas compositivas                                                                        10%
+Primer proyecto parcial                                                                                                   20%
+Segundo proyecto parcial                                                                                                20%
+Proyecto final                                                                                                                  40%
+Total                                                                                                                              100%
+
+
+
+
+MODALIDADES TECNOLÓGICAS E INFORMÁTICAS
+
+NO MOVER
+Instrucciones de llenado:
+APARTADO
+DESCRIPCIÓN
+Criterios de evaluación
+Enlistar las actividades o productos que considerarán para valorar los aprendizajes logrados por los estudiantes, señalar el porcentaje para cada uno, de tal manera que sumen el 100%. Éstos deberán ser acordes con las actividades de aprendizaje.
+Modalidades tecnológicas e informáticas
+Describir los recursos tecnológicos y de comunicación que emplearán para el desarrollo del proceso de enseñanza-aprendizaje de la asignatura
+NOTA: Para las modalidades no escolarizada y mixta, es un elemento obligatorio, toda vez que dará sustento a la modalidad elegida.
+
+NOTA: Favor de no modificar la presentación de los formatos, en virtud que se encuentra diseñado para facilitar el llenado de cada uno de los apartados. 

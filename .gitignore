@@ -7,3 +7,6 @@
 .claude/
 backups/
 node_modules/
+
+# Backups de trabajo
+*.bak

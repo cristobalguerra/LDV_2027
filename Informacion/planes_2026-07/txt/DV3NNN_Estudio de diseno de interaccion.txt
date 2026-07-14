@@ -1,0 +1,103 @@
+
+DENOMINACIÓN DE LA ASIGNATURA O UNIDAD DE APRENDIZAJE
+
+ESTUDIO DE DISEÑO DE INTERACCIÓN
+
+Sexto semestre
+CICLO ESCOLAR
+DV3NNN
+CLAVE DE LA ASIGNATURA
+
+
+
+FINES DE APRENDIZAJE O FORMACIÓN
+Al concluir la asignatura, el alumno será capaz de diseñar y validar productos digitales interactivos, a través de la investigación de usuarios, la conceptualización de experiencias con criterios de accesibilidad e inclusión, la construcción de prototipos navegables y la validación iterativa con métricas de uso, con el fin de generar soluciones viables, accesibles y vinculadas a contextos de negocio, considerando el diseño de experiencias con sistemas inteligentes.
+
+CONTENIDO TEMÁTICO
+	•	Diseño de interacción
+	•	Definiciones, historia y evolución del campo
+	•	Principios del diseño de interacción
+	•	Diferencias entre UX, UI, IxD y diseño de servicios
+	•	Tendencias actuales: voz, gestos, espacios inmersivos, IA conversacional
+
+	•	Investigación de usuarios y diseño centrado en la persona
+	•	Estrategia e investigación de usuarios
+	•	Usabilidad y heurísticas
+	•	Datos cualitativos vs. cuantitativos
+	•	Entrevistas y observación contextual
+	•	Modelos mentales y modelos de implementación
+	•	Construcción de personas
+	•	Imaginando escenarios de uso
+	•	Mapas de viaje del usuario
+	•	Aplicación de la arquitectura de información (vista en Diseño de Información I y II) a productos digitales interactivos: navegación, búsqueda, filtrado y categorización
+
+	•	Prototipado interactivo y sistemas de diseño
+	•	Prototipos de baja, media y alta fidelidad
+	•	Herramientas digitales colaborativas de prototipado
+	•	Sistemas de diseño y bibliotecas de componentes
+	•	Micro-interacciones y estados de la interfaz
+	•	Animación funcional como herramienta de comunicación
+
+	•	Accesibilidad e inclusión en diseño de interacción
+	•	Marco WCAG 2.2 y principios de accesibilidad
+	•	Diseño inclusivo: capacidades, contextos y diversidad
+	•	Contraste, jerarquía visual y legibilidad
+	•	Lectores de pantalla y navegación por teclado
+	•	Casos de exclusión y ética del diseño
+
+	•	Diseño de interacción con sistemas inteligentes
+	•	Interfaces conversacionales y por voz
+	•	Patrones de interacción ante sistemas de recomendación y personalización
+	•	Comportamiento del usuario ante respuestas no deterministas de sistemas inteligentes
+	•	Transparencia, sesgo y confianza en interfaces con IA
+	•	Antecedente al curso Inteligencia Artificial Aplicada al Diseño Visual (Certificado, sem 7)
+
+	•	Validación, métricas y testing de interacciones
+	•	Pruebas y validaciones con usuarios
+	•	Métricas de usabilidad: tasa de éxito, tiempo, errores, satisfacción
+	•	Testing remoto, moderado y no moderado
+	•	Análisis de comportamiento con analítica digital
+	•	Iteración basada en evidencia
+
+
+
+
+ACTIVIDADES DE APRENDIZAJE BAJO CONDUCCIÓN DE UN ACADÉMICO
+
+	•	Practicar la investigación colaborativa en tópicos específicos.
+	•	Discutir acerca de los temas vistos en clase.
+	•	Generar un diálogo acerca de proyectos profesionales del campo y revisados en el material en línea.
+	•	Realizar workshops de prototipado en herramientas digitales colaborativas bajo supervisión del docente.
+	•	Aplicar pruebas de usabilidad con usuarios reales y documentar hallazgos en sesiones de retroalimentación.
+	•	Realizar críticas grupales con criterios de accesibilidad, inclusión y vinculación con contextos de negocio.
+
+
+ACTIVIDADES DE APRENDIZAJE INDEPENDIENTES
+
+	•	Analizar problemáticas y conceptualizar soluciones de interacción.
+	•	Realizar proyectos de diseño de interacción durante el semestre, llevando a cabo la investigación, conceptualización, prototipado y validación de cada uno.
+	•	Completar actividades semanales diseñadas para practicar los temas vistos en clase.
+	•	Realizar tests heurísticos a productos digitales del mercado y documentar hallazgos con criterios de accesibilidad.
+	•	Construir prototipos navegables con feedback iterativo de usuarios reales o pares.
+	•	Investigar tendencias actuales del campo (IA en interacción, voz, gestos, interfaces inmersivas) y aportar al debate semanal.
+
+
+CRITERIOS DE EVALUACIÓN
+
+Reportes de lectura y análisis crítico
+10%
+Investigación de usuarios y arquitectura de información
+15%
+Primer proyecto: diseño de interacción con prototipado
+20%
+Segundo proyecto: validación con usuarios y métricas
+20%
+Proyecto final integrador con criterios de accesibilidad
+30%
+Participación, críticas grupales y bitácora reflexiva
+5%
+TOTAL
+100%
+
+
+

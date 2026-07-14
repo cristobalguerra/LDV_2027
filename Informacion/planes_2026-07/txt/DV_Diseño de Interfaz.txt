@@ -1,0 +1,99 @@
+
+DENOMINACIÓN DE LA ASIGNATURA O UNIDAD DE APRENDIZAJE
+
+DISEÑO DE INTERFAZ
+
+Sexto semestre
+CICLO ESCOLAR
+________
+CLAVE DE LA ASIGNATURA
+
+FINES DE APRENDIZAJE O FORMACIÓN
+
+Al finalizar la asignatura, el alumno será capaz de diseñar interfaces responsivas para satisfacer las necesidades de una diversidad de usuarios web aplicando elementos, herramientas, técnicas y principios de diseño basados en componentes mediante la usabilidad y la alineación visual se sustentarán en un proceso moderno de wireframing, prototipado interactivo y validación colaborativa. Esta validación se realiza con equipos de diseño, desarrolladores y clientes antes del lanzamiento.
+
+CONTENIDO TEMÁTICO
+
+	•	Derechos y Necesidades de los Usuarios
+	•	Sitemap
+	•	Taxonomías
+	•	Color
+	•	Iconografía
+	•	Navegación
+	•	Estructura de la información 
+	•	La funcionalidad para desarrolladores
+	•	Heurísticas de usabilidad y derechos del usuario
+	•	Técnicas de wireframing
+	•	Comunicar funcionalidades a desarrolladores
+	•	Empoderar a los usuarios con más opciones y agencia 
+	•	Sistemas de Diseño Flexibles
+	•	Direcciones visuales 
+	•	Componentes
+	•	Tipografía
+	•	Iconografía
+	•	Tratamientos de imagen 
+	•	Campos de formulario
+	•	Animación
+	•	Sistemas de diseño para ventanas de visión responsivas
+	•	Diseñadores
+	•	Clientes
+	•	Desarrolladores
+	•	Buscar aprobaciones 
+	•	Componente
+	•	Funcionalidad
+	•	Plantilla 
+	•	Prototipos Responsivos de Plantillas Clave
+	•	Componentes responsivos 
+	•	Retículas responsivas 
+	•	Tipografía responsiva 
+	•	Especifica reglas en un sistema de diseño digital para desarrolladores 
+	•	Accesibilidad Digital y Retroalimentación de Usabilidad
+	•	Desarrollar habilidades de empatía 
+	•	Estrategias holísticas de accesibilidad web
+	•	Obtener retroalimentación de usuarios
+	•	Rastrear y priorizar cambios 
+	•	Implementar cambios a partir de pruebas de usuario 
+	•	Prototipado Digital Interactivo con Documentación de Portafolio
+	•	Comunicar propuestas refinadas a los equipos mediante prototipos visuales coherentes e interactivos con animación
+	•	Dirigir artísticamente y documentar prototipos digitales en tu portafolio
+	•	Presentación ante la clase 
+
+
+
+ACTIVIDADES DE APRENDIZAJE 
+BAJO CONDUCCIÓN DE UN ACADÉMICO
+
+
+	•	Refinar tus técnicas de prototipado de diseño responsivo con el feedback de los usuarios y la cohesión visual. 
+	•	Diseñar prototipos responsivos con sistemas de diseño basados en componentes flexibles.
+	•	Adoptar un enfoque holístico de accesibilidad y de heurísticas de usabilidad a lo largo de todo el proyecto.
+	•	Aplicar principios y teorías del prototipado interactivo para evaluar la usabilidad en interfaces responsivas.
+	•	Cuestionar supuestos mediante la priorización y validación de retroalimentación de diseño según las necesidades reales de los usuarios.
+	•	Comunicar propuestas al equipo mediante prototipos visuales e interactivos coherentes, con animación.
+
+ACTIVIDADES DE APRENDIZAJE 
+INDEPENDIENTES
+
+	•	Practicar la técnicas colaborativa en tópicos específicos.
+	•	Mostrar adaptabilidad frente al cambio tecnológico.
+	•	Desarrolla la inteligencia emocional (empatía, dignidad, respeto) en la discusión en clase a partir de los puntos de dolor mediante diagramas de flujo de usuario.
+	•	Colaborar en procesos de diseño y pensamiento crítico.
+	•	Integrar metodologías de diseño estratégico y pensamiento sistémico.
+	•	Implementar procesos de experiencia de usuario e interacción digital.
+	•	Desarrollar soluciones usando tecnologías digitales y prototipado interactivo.
+
+CRITERIOS DE EVALUACIÓN
+
+Reportes de lectura y análisis crítico, participación 10%
+Ejercicios de evaluación de responsividad, accesibilidad  y coherencia visual 30%
+Primer proyecto parcial 20%
+Segundo proyecto parcial 20%
+Tercer proyecto parcial 20%
+Total 100%
+
+MODALIDADES TECNOLÓGICAS E INFORMÁTICAS
+
+
+NO MOVER
+
+
