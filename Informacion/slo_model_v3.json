@@ -1,0 +1,3181 @@
+{
+ "slos": [
+  "SLO 1 · Dirección estratégica",
+  "SLO 2 · Comunicación visual",
+  "SLO 3 · Procesos creativos",
+  "SLO 4 · Integración tecnológica",
+  "SLO 5 · Modelos de negocio",
+  "SLO 6 · Impacto social y cultural"
+ ],
+ "niveles": [
+  {
+   "nivel": 0,
+   "criterio": "No aparece en objetivos, contenidos ni evidencias."
+  },
+  {
+   "nivel": 1,
+   "criterio": "Introduce conceptos, referencias o herramientas básicas."
+  },
+  {
+   "nivel": 2,
+   "criterio": "Aplica la dimensión dentro de ejercicios o proyectos."
+  },
+  {
+   "nivel": 3,
+   "criterio": "La dimensión constituye un resultado central y evaluable."
+  }
+ ],
+ "dimensionesDV": [
+  {
+   "codigo": "DV1",
+   "nombre": "Lenguaje visual",
+   "definicion": "Uso intencional de forma, color, contraste, escala, ritmo y jerarquía."
+  },
+  {
+   "codigo": "DV2",
+   "nombre": "Composición y estructura",
+   "definicion": "Organización espacial y estructural de elementos visuales."
+  },
+  {
+   "codigo": "DV3",
+   "nombre": "Tipografía",
+   "definicion": "Selección, composición, diseño y aplicación de sistemas tipográficos."
+  },
+  {
+   "codigo": "DV4",
+   "nombre": "Imagen e ilustración",
+   "definicion": "Creación y tratamiento de fotografía, ilustración e imagen."
+  },
+  {
+   "codigo": "DV5",
+   "nombre": "Conceptualización",
+   "definicion": "Construcción de conceptos que articulan intención, forma y contenido."
+  },
+  {
+   "codigo": "DV6",
+   "nombre": "Comunicación visual",
+   "definicion": "Formulación de mensajes visuales para públicos y contextos específicos."
+  },
+  {
+   "codigo": "DV7",
+   "nombre": "Identidad visual y marca",
+   "definicion": "Construcción de identidades, marcas y lenguajes de reconocimiento."
+  },
+  {
+   "codigo": "DV8",
+   "nombre": "Diseño editorial",
+   "definicion": "Organización secuencial de textos e imágenes en medios editoriales."
+  },
+  {
+   "codigo": "DV9",
+   "nombre": "Información y visualización",
+   "definicion": "Síntesis y representación visual de datos, contenidos y sistemas."
+  },
+  {
+   "codigo": "DV10",
+   "nombre": "Diseño digital e interacción",
+   "definicion": "Diseño de interfaces, comportamientos y experiencias digitales."
+  },
+  {
+   "codigo": "DV11",
+   "nombre": "Sistemas visuales",
+   "definicion": "Creación de reglas visuales consistentes, adaptables y escalables."
+  },
+  {
+   "codigo": "DV12",
+   "nombre": "Investigación y proceso de diseño",
+   "definicion": "Obtención de evidencia y desarrollo iterativo del proceso de diseño."
+  },
+  {
+   "codigo": "DV13",
+   "nombre": "Producción y prototipado",
+   "definicion": "Materialización técnica, pruebas, maquetas y prototipos."
+  },
+  {
+   "codigo": "DV14",
+   "nombre": "Dirección de arte",
+   "definicion": "Definición y supervisión del lenguaje visual de un proyecto."
+  },
+  {
+   "codigo": "DV15",
+   "nombre": "Argumentación y evaluación",
+   "definicion": "Justificación, crítica y evaluación de decisiones de diseño."
+  }
+ ],
+ "dimensionesNC": [
+  {
+   "codigo": "NC1",
+   "nombre": "Comprensión de audiencias",
+   "definicion": "Comprensión de necesidades, hábitos, motivaciones y contextos de públicos."
+  },
+  {
+   "codigo": "NC2",
+   "nombre": "Identificación de oportunidades",
+   "definicion": "Detección de problemas o espacios donde el diseño puede producir valor."
+  },
+  {
+   "codigo": "NC3",
+   "nombre": "Propuesta de valor",
+   "definicion": "Definición del beneficio y pertinencia de una oferta creativa."
+  },
+  {
+   "codigo": "NC4",
+   "nombre": "Posicionamiento y diferenciación",
+   "definicion": "Lugar que una propuesta ocupa frente a alternativas y competidores."
+  },
+  {
+   "codigo": "NC5",
+   "nombre": "Validación con usuarios",
+   "definicion": "Comprobación de pertinencia, deseabilidad, adopción o funcionamiento."
+  },
+  {
+   "codigo": "NC6",
+   "nombre": "Productos, servicios y experiencias",
+   "definicion": "Transformación de una idea en una oferta implementable."
+  },
+  {
+   "codigo": "NC7",
+   "nombre": "Modelo de negocio creativo",
+   "definicion": "Forma mediante la cual una iniciativa crea, entrega y captura valor."
+  },
+  {
+   "codigo": "NC8",
+   "nombre": "Propiedad intelectual",
+   "definicion": "Protección y aprovechamiento de marcas, obras, diseños y contenidos."
+  },
+  {
+   "codigo": "NC9",
+   "nombre": "Producción e implementación",
+   "definicion": "Organización de recursos, proveedores, tiempos y procesos de ejecución."
+  },
+  {
+   "codigo": "NC10",
+   "nombre": "Comercialización y distribución",
+   "definicion": "Acceso a públicos mediante canales, promoción, venta o distribución."
+  },
+  {
+   "codigo": "NC11",
+   "nombre": "Viabilidad y sostenibilidad",
+   "definicion": "Capacidad de operar, sostenerse y mantener pertinencia bajo condiciones reales."
+  },
+  {
+   "codigo": "NC12",
+   "nombre": "Gestión de proyectos y clientes",
+   "definicion": "Coordinación de alcance, recursos, equipos, clientes, riesgos y entregables."
+  }
+ ],
+ "matrizDV": {
+  "Estudio de Diseño Visual": [
+   3,
+   3,
+   0,
+   2,
+   2,
+   3,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   2,
+   0,
+   3
+  ],
+  "Visualización y Pensamiento de Diseño": [
+   2,
+   2,
+   0,
+   1,
+   3,
+   2,
+   0,
+   0,
+   2,
+   0,
+   0,
+   3,
+   0,
+   0,
+   3
+  ],
+  "Contexto Cultural del Diseño": [
+   1,
+   0,
+   0,
+   0,
+   1,
+   1,
+   1,
+   0,
+   0,
+   0,
+   0,
+   2,
+   0,
+   0,
+   3
+  ],
+  "Estudio de Forma, Color y Estructura": [
+   3,
+   3,
+   0,
+   0,
+   1,
+   2,
+   0,
+   0,
+   0,
+   0,
+   3,
+   2,
+   2,
+   0,
+   2
+  ],
+  "Principios de la Tipografía": [
+   2,
+   3,
+   3,
+   0,
+   2,
+   2,
+   0,
+   0,
+   0,
+   0,
+   1,
+   2,
+   0,
+   0,
+   2
+  ],
+  "Ilustración Aplicada": [
+   3,
+   2,
+   0,
+   3,
+   3,
+   3,
+   2,
+   2,
+   0,
+   1,
+   3,
+   2,
+   3,
+   1,
+   2
+  ],
+  "Lenguaje y Significado en el Diseño": [
+   2,
+   2,
+   0,
+   1,
+   3,
+   3,
+   2,
+   0,
+   1,
+   0,
+   2,
+   3,
+   1,
+   1,
+   3
+  ],
+  "Estudio de Identidad, Forma y Significado": [
+   3,
+   3,
+   2,
+   0,
+   3,
+   3,
+   3,
+   0,
+   2,
+   0,
+   3,
+   3,
+   2,
+   1,
+   3
+  ],
+  "Fundamentos de Diseño de Información": [
+   2,
+   3,
+   0,
+   0,
+   0,
+   2,
+   0,
+   0,
+   3,
+   0,
+   0,
+   2,
+   2,
+   0,
+   2
+  ],
+  "Fotografía para Diseño": [
+   2,
+   3,
+   0,
+   3,
+   3,
+   2,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   3,
+   2,
+   2
+  ],
+  "Tipografía Aplicada": [
+   2,
+   3,
+   3,
+   0,
+   0,
+   3,
+   0,
+   3,
+   0,
+   2,
+   3,
+   2,
+   2,
+   0,
+   2
+  ],
+  "Estudio de Información y Visualización": [
+   2,
+   3,
+   0,
+   0,
+   2,
+   3,
+   0,
+   1,
+   3,
+   2,
+   2,
+   2,
+   0,
+   0,
+   2
+  ],
+  "Producción de Diseño y Prototipos": [
+   1,
+   2,
+   2,
+   2,
+   0,
+   0,
+   0,
+   2,
+   0,
+   1,
+   0,
+   2,
+   3,
+   0,
+   2
+  ],
+  "Diseño de Empaque": [
+   3,
+   3,
+   0,
+   0,
+   2,
+   3,
+   3,
+   0,
+   2,
+   0,
+   3,
+   2,
+   3,
+   0,
+   2
+  ],
+  "Estudio de Marca y Sistemas Visuales": [
+   3,
+   2,
+   2,
+   2,
+   3,
+   3,
+   3,
+   2,
+   0,
+   1,
+   3,
+   3,
+   1,
+   2,
+   3
+  ],
+  "Portafolio Profesional": [
+   2,
+   2,
+   2,
+   3,
+   2,
+   3,
+   2,
+   3,
+   0,
+   3,
+   2,
+   2,
+   3,
+   2,
+   3
+  ],
+  "Estudio de Diseño de Interacción": [
+   2,
+   2,
+   1,
+   0,
+   3,
+   2,
+   0,
+   0,
+   3,
+   3,
+   2,
+   3,
+   3,
+   0,
+   3
+  ],
+  "Diseño de Experiencia": [
+   2,
+   2,
+   0,
+   0,
+   2,
+   3,
+   2,
+   0,
+   3,
+   2,
+   3,
+   3,
+   2,
+   1,
+   3
+  ],
+  "Diseño de Interfaz": [
+   3,
+   3,
+   2,
+   2,
+   1,
+   2,
+   0,
+   0,
+   2,
+   3,
+   3,
+   3,
+   3,
+   2,
+   3
+  ],
+  "Estudio de Estrategia y de Servicios": [
+   0,
+   0,
+   0,
+   0,
+   2,
+   1,
+   0,
+   0,
+   2,
+   2,
+   0,
+   3,
+   3,
+   0,
+   2
+  ],
+  "Estudio Integral de Diseño Visual y Negocios Creativos": [
+   2,
+   2,
+   2,
+   0,
+   3,
+   3,
+   3,
+   2,
+   0,
+   1,
+   3,
+   3,
+   3,
+   2,
+   3
+  ],
+  "Programa de Evaluación Final I": [
+   0,
+   0,
+   0,
+   0,
+   3,
+   2,
+   0,
+   0,
+   0,
+   0,
+   0,
+   3,
+   2,
+   0,
+   3
+  ],
+  "Programa de Evaluación Final II": [
+   2,
+   2,
+   0,
+   0,
+   3,
+   2,
+   0,
+   0,
+   0,
+   0,
+   1,
+   3,
+   3,
+   0,
+   3
+  ],
+  "Herramientas Digitales para el Diseño": [
+   2,
+   2,
+   2,
+   3,
+   1,
+   0,
+   0,
+   3,
+   0,
+   1,
+   2,
+   2,
+   3,
+   0,
+   2
+  ],
+  "Estrategia de Negocios para Arte y Diseño": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2
+  ],
+  "Diseño Participativo": [
+   0,
+   0,
+   0,
+   0,
+   3,
+   2,
+   0,
+   0,
+   2,
+   0,
+   1,
+   3,
+   0,
+   0,
+   3
+  ],
+  "Materiales Experimentales": [
+   3,
+   3,
+   0,
+   2,
+   3,
+   2,
+   0,
+   1,
+   0,
+   0,
+   0,
+   3,
+   3,
+   0,
+   2
+  ],
+  "Metodología de Investigación y Creación para el Arte y Diseño": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   3,
+   0,
+   0,
+   2
+  ],
+  "Dirección de Arte para Medios Audiovisuales e Interactivos": [
+   3,
+   3,
+   2,
+   3,
+   3,
+   3,
+   2,
+   0,
+   1,
+   2,
+   2,
+   3,
+   3,
+   3,
+   3
+  ],
+  "Dirección de Arte y Fotografía de Producto": [
+   3,
+   3,
+   0,
+   3,
+   3,
+   3,
+   2,
+   0,
+   0,
+   0,
+   2,
+   3,
+   3,
+   3,
+   3
+  ],
+  "Gestión de Proyectos Creativos": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   0,
+   0,
+   0,
+   2,
+   2,
+   0,
+   3
+  ],
+  "Dirección Visual de Marca": [
+   2,
+   2,
+   2,
+   1,
+   2,
+   2,
+   3,
+   2,
+   1,
+   1,
+   3,
+   2,
+   2,
+   3,
+   3
+  ],
+  "Animación Gráfica y Contenido Digital": [
+   3,
+   2,
+   2,
+   2,
+   3,
+   3,
+   2,
+   0,
+   0,
+   1,
+   3,
+   2,
+   3,
+   2,
+   3
+  ],
+  "Inteligencia Artificial Aplicada al Diseño Visual": [
+   2,
+   0,
+   0,
+   3,
+   2,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   3,
+   2,
+   3,
+   3
+  ],
+  "De la Idea Gráfica al Mercado": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   1,
+   0,
+   0,
+   0,
+   0,
+   2,
+   2,
+   0,
+   0
+  ],
+  "Prácticas Profesionales": [
+   2,
+   2,
+   2,
+   2,
+   2,
+   3,
+   2,
+   1,
+   1,
+   2,
+   2,
+   3,
+   3,
+   2,
+   3
+  ]
+ },
+ "matrizNC": {
+  "Estudio de Diseño Visual": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "Visualización y Pensamiento de Diseño": [
+   0,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "Contexto Cultural del Diseño": [
+   1,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0,
+   0,
+   1
+  ],
+  "Estudio de Forma, Color y Estructura": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "Principios de la Tipografía": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0,
+   1,
+   0
+  ],
+  "Ilustración Aplicada": [
+   1,
+   0,
+   0,
+   0,
+   0,
+   2,
+   0,
+   2,
+   1,
+   0,
+   0,
+   0
+  ],
+  "Lenguaje y Significado en el Diseño": [
+   2,
+   2,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "Estudio de Identidad, Forma y Significado": [
+   2,
+   1,
+   0,
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1
+  ],
+  "Fundamentos de Diseño de Información": [
+   1,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "Fotografía para Diseño": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   2,
+   0,
+   0,
+   1
+  ],
+  "Tipografía Aplicada": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0,
+   0,
+   0
+  ],
+  "Estudio de Información y Visualización": [
+   2,
+   0,
+   0,
+   0,
+   2,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1
+  ],
+  "Producción de Diseño y Prototipos": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   3,
+   0,
+   2,
+   2
+  ],
+  "Diseño de Empaque": [
+   2,
+   2,
+   0,
+   2,
+   0,
+   2,
+   0,
+   1,
+   2,
+   2,
+   2,
+   2
+  ],
+  "Estudio de Marca y Sistemas Visuales": [
+   3,
+   2,
+   2,
+   3,
+   2,
+   0,
+   1,
+   1,
+   0,
+   1,
+   1,
+   2
+  ],
+  "Portafolio Profesional": [
+   2,
+   2,
+   2,
+   3,
+   2,
+   0,
+   2,
+   2,
+   2,
+   2,
+   1,
+   2
+  ],
+  "Estudio de Diseño de Interacción": [
+   3,
+   2,
+   2,
+   0,
+   3,
+   3,
+   0,
+   0,
+   0,
+   0,
+   2,
+   2
+  ],
+  "Diseño de Experiencia": [
+   3,
+   3,
+   2,
+   0,
+   3,
+   3,
+   1,
+   0,
+   0,
+   0,
+   1,
+   2
+  ],
+  "Diseño de Interfaz": [
+   2,
+   2,
+   0,
+   0,
+   3,
+   2,
+   1,
+   0,
+   1,
+   0,
+   1,
+   2
+  ],
+  "Estudio de Estrategia y de Servicios": [
+   3,
+   3,
+   3,
+   1,
+   2,
+   3,
+   2,
+   0,
+   2,
+   1,
+   2,
+   2
+  ],
+  "Estudio Integral de Diseño Visual y Negocios Creativos": [
+   2,
+   2,
+   3,
+   3,
+   3,
+   3,
+   2,
+   2,
+   2,
+   2,
+   1,
+   3
+  ],
+  "Programa de Evaluación Final I": [
+   2,
+   3,
+   2,
+   2,
+   2,
+   0,
+   1,
+   0,
+   1,
+   0,
+   2,
+   2
+  ],
+  "Programa de Evaluación Final II": [
+   2,
+   0,
+   2,
+   2,
+   2,
+   0,
+   1,
+   0,
+   2,
+   1,
+   2,
+   2
+  ],
+  "Herramientas Digitales para el Diseño": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   2,
+   0,
+   0,
+   0
+  ],
+  "Estrategia de Negocios para Arte y Diseño": [
+   2,
+   3,
+   3,
+   3,
+   0,
+   2,
+   3,
+   1,
+   2,
+   3,
+   3,
+   2
+  ],
+  "Diseño Participativo": [
+   3,
+   3,
+   2,
+   0,
+   3,
+   3,
+   0,
+   0,
+   0,
+   0,
+   2,
+   2
+  ],
+  "Materiales Experimentales": [
+   0,
+   1,
+   0,
+   0,
+   0,
+   1,
+   0,
+   0,
+   1,
+   0,
+   2,
+   0
+  ],
+  "Metodología de Investigación y Creación para el Arte y Diseño": [
+   1,
+   1,
+   0,
+   0,
+   2,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   0
+  ],
+  "Dirección de Arte para Medios Audiovisuales e Interactivos": [
+   2,
+   0,
+   0,
+   0,
+   0,
+   2,
+   0,
+   0,
+   2,
+   2,
+   0,
+   2
+  ],
+  "Dirección de Arte y Fotografía de Producto": [
+   2,
+   0,
+   2,
+   2,
+   0,
+   2,
+   0,
+   0,
+   3,
+   1,
+   0,
+   3
+  ],
+  "Gestión de Proyectos Creativos": [
+   0,
+   2,
+   2,
+   0,
+   1,
+   1,
+   2,
+   0,
+   3,
+   1,
+   2,
+   3
+  ],
+  "Dirección Visual de Marca": [
+   2,
+   2,
+   2,
+   3,
+   0,
+   0,
+   2,
+   1,
+   2,
+   2,
+   2,
+   2
+  ],
+  "Animación Gráfica y Contenido Digital": [
+   2,
+   0,
+   0,
+   2,
+   0,
+   2,
+   1,
+   0,
+   2,
+   2,
+   1,
+   1
+  ],
+  "Inteligencia Artificial Aplicada al Diseño Visual": [
+   2,
+   2,
+   0,
+   0,
+   0,
+   2,
+   1,
+   2,
+   1,
+   1,
+   2,
+   2
+  ],
+  "De la Idea Gráfica al Mercado": [
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   1,
+   1,
+   2,
+   3,
+   0
+  ],
+  "Prácticas Profesionales": [
+   2,
+   3,
+   3,
+   3,
+   2,
+   3,
+   2,
+   2,
+   3,
+   3,
+   3,
+   3
+  ]
+ },
+ "vinculacionSLO": {
+  "DV1": {
+   "dimension": "Lenguaje visual",
+   "pesos": [
+    0,
+    3,
+    1,
+    0,
+    0,
+    1
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV2": {
+   "dimension": "Composición y estructura",
+   "pesos": [
+    0,
+    3,
+    1,
+    0,
+    0,
+    0
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV3": {
+   "dimension": "Tipografía",
+   "pesos": [
+    0,
+    3,
+    1,
+    1,
+    0,
+    0
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV4": {
+   "dimension": "Imagen e ilustración",
+   "pesos": [
+    0,
+    3,
+    2,
+    1,
+    0,
+    1
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV5": {
+   "dimension": "Conceptualización",
+   "pesos": [
+    2,
+    2,
+    3,
+    0,
+    1,
+    1
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV6": {
+   "dimension": "Comunicación visual",
+   "pesos": [
+    1,
+    3,
+    1,
+    1,
+    1,
+    2
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV7": {
+   "dimension": "Identidad visual y marca",
+   "pesos": [
+    2,
+    3,
+    2,
+    1,
+    2,
+    1
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV8": {
+   "dimension": "Diseño editorial",
+   "pesos": [
+    0,
+    3,
+    1,
+    1,
+    1,
+    1
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV9": {
+   "dimension": "Información y visualización",
+   "pesos": [
+    1,
+    3,
+    2,
+    2,
+    0,
+    2
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV10": {
+   "dimension": "Diseño digital e interacción",
+   "pesos": [
+    1,
+    2,
+    2,
+    3,
+    1,
+    1
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV11": {
+   "dimension": "Sistemas visuales",
+   "pesos": [
+    2,
+    3,
+    2,
+    1,
+    1,
+    0
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV12": {
+   "dimension": "Investigación y proceso de diseño",
+   "pesos": [
+    3,
+    1,
+    3,
+    1,
+    1,
+    2
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV13": {
+   "dimension": "Producción y prototipado",
+   "pesos": [
+    2,
+    1,
+    3,
+    3,
+    1,
+    1
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV14": {
+   "dimension": "Dirección de arte",
+   "pesos": [
+    3,
+    3,
+    2,
+    1,
+    1,
+    1
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "DV15": {
+   "dimension": "Argumentación y evaluación",
+   "pesos": [
+    3,
+    2,
+    2,
+    1,
+    1,
+    3
+   ],
+   "dominio": "Diseño Visual"
+  },
+  "NC1": {
+   "dimension": "Comprensión de audiencias",
+   "pesos": [
+    2,
+    1,
+    2,
+    1,
+    3,
+    2
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC2": {
+   "dimension": "Identificación de oportunidades",
+   "pesos": [
+    3,
+    0,
+    2,
+    1,
+    3,
+    1
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC3": {
+   "dimension": "Propuesta de valor",
+   "pesos": [
+    2,
+    1,
+    1,
+    0,
+    3,
+    1
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC4": {
+   "dimension": "Posicionamiento y diferenciación",
+   "pesos": [
+    2,
+    2,
+    1,
+    0,
+    3,
+    1
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC5": {
+   "dimension": "Validación con usuarios",
+   "pesos": [
+    2,
+    1,
+    3,
+    2,
+    2,
+    2
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC6": {
+   "dimension": "Productos, servicios y experiencias",
+   "pesos": [
+    3,
+    2,
+    3,
+    2,
+    3,
+    2
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC7": {
+   "dimension": "Modelo de negocio creativo",
+   "pesos": [
+    2,
+    0,
+    1,
+    1,
+    3,
+    1
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC8": {
+   "dimension": "Propiedad intelectual",
+   "pesos": [
+    1,
+    1,
+    1,
+    0,
+    3,
+    1
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC9": {
+   "dimension": "Producción e implementación",
+   "pesos": [
+    3,
+    1,
+    3,
+    2,
+    2,
+    1
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC10": {
+   "dimension": "Comercialización y distribución",
+   "pesos": [
+    1,
+    2,
+    1,
+    1,
+    3,
+    1
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC11": {
+   "dimension": "Viabilidad y sostenibilidad",
+   "pesos": [
+    3,
+    0,
+    2,
+    1,
+    3,
+    3
+   ],
+   "dominio": "Negocios Creativos"
+  },
+  "NC12": {
+   "dimension": "Gestión de proyectos y clientes",
+   "pesos": [
+    3,
+    1,
+    3,
+    1,
+    2,
+    1
+   ],
+   "dominio": "Negocios Creativos"
+  }
+ },
+ "cursosSLO": [
+  {
+   "materia": "Estudio de Diseño Visual",
+   "creditos": 3,
+   "tope": "B",
+   "factorNivel": 0.25,
+   "evidencia": "Directa",
+   "alineacion": [
+    18.4,
+    31.3,
+    24.2,
+    18.4,
+    9.1,
+    27.5
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    0.45,
+    0.85,
+    0.6,
+    0.49,
+    0.25,
+    0.67
+   ]
+  },
+  {
+   "materia": "Visualización y Pensamiento de Diseño",
+   "creditos": 3,
+   "tope": "B",
+   "factorNivel": 0.25,
+   "evidencia": "Directa",
+   "alineacion": [
+    22.0,
+    28.0,
+    24.8,
+    16.1,
+    10.6,
+    29.4
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    0.53,
+    0.76,
+    0.61,
+    0.43,
+    0.29,
+    0.72
+   ]
+  },
+  {
+   "materia": "Contexto Cultural del Diseño",
+   "creditos": 3,
+   "tope": "B",
+   "factorNivel": 0.25,
+   "evidencia": "Directa",
+   "alineacion": [
+    20.6,
+    14.7,
+    17.6,
+    11.5,
+    15.2,
+    22.5
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    0.5,
+    0.4,
+    0.44,
+    0.31,
+    0.42,
+    0.55
+   ]
+  },
+  {
+   "materia": "Estudio de Forma, Color y Estructura",
+   "creditos": 3,
+   "tope": "B",
+   "factorNivel": 0.25,
+   "evidencia": "Directa",
+   "alineacion": [
+    18.4,
+    28.7,
+    21.6,
+    17.2,
+    9.1,
+    19.6
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    0.45,
+    0.78,
+    0.54,
+    0.46,
+    0.25,
+    0.48
+   ]
+  },
+  {
+   "materia": "Principios de la Tipografía",
+   "creditos": 3,
+   "tope": "B",
+   "factorNivel": 0.25,
+   "evidencia": "Directa",
+   "alineacion": [
+    17.0,
+    29.3,
+    20.3,
+    12.6,
+    11.4,
+    21.6
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    0.41,
+    0.8,
+    0.5,
+    0.34,
+    0.32,
+    0.53
+   ]
+  },
+  {
+   "materia": "Ilustración Aplicada",
+   "creditos": 3,
+   "tope": "B",
+   "factorNivel": 0.25,
+   "evidencia": "Directa",
+   "alineacion": [
+    38.3,
+    54.7,
+    46.4,
+    42.5,
+    31.1,
+    42.2
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    0.93,
+    1.49,
+    1.15,
+    1.14,
+    0.86,
+    1.03
+   ]
+  },
+  {
+   "materia": "Lenguaje y Significado en el Diseño",
+   "creditos": 3,
+   "tope": "B",
+   "factorNivel": 0.25,
+   "evidencia": "Directa",
+   "alineacion": [
+    38.3,
+    41.3,
+    38.6,
+    29.9,
+    26.5,
+    40.2
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    0.93,
+    1.13,
+    0.96,
+    0.8,
+    0.74,
+    0.98
+   ]
+  },
+  {
+   "materia": "Estudio de Identidad, Forma y Significado",
+   "creditos": 3,
+   "tope": "B",
+   "factorNivel": 0.25,
+   "evidencia": "Directa",
+   "alineacion": [
+    42.6,
+    54.7,
+    45.1,
+    36.8,
+    28.8,
+    43.1
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    1.03,
+    1.49,
+    1.12,
+    0.98,
+    0.8,
+    1.05
+   ]
+  },
+  {
+   "materia": "Fundamentos de Diseño de Información",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    16.3,
+    26.0,
+    20.3,
+    21.8,
+    8.3,
+    25.5
+   ],
+   "nivel": [
+    "I",
+    "B",
+    "B",
+    "B",
+    "I",
+    "B"
+   ],
+   "contrib": [
+    0.79,
+    1.42,
+    1.01,
+    1.16,
+    0.46,
+    1.24
+   ]
+  },
+  {
+   "materia": "Fotografía para Diseño",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    29.8,
+    36.7,
+    35.9,
+    28.7,
+    17.4,
+    30.4
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "I",
+    "B"
+   ],
+   "contrib": [
+    1.44,
+    2.0,
+    1.78,
+    1.53,
+    0.97,
+    1.48
+   ]
+  },
+  {
+   "materia": "Tipografía Aplicada",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    19.9,
+    42.7,
+    26.8,
+    32.2,
+    15.2,
+    25.5
+   ],
+   "nivel": [
+    "I",
+    "I",
+    "B",
+    "B",
+    "I",
+    "B"
+   ],
+   "contrib": [
+    0.96,
+    2.33,
+    1.33,
+    1.72,
+    0.84,
+    1.24
+   ]
+  },
+  {
+   "materia": "Estudio de Información y Visualización",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    27.7,
+    40.7,
+    34.0,
+    33.3,
+    19.7,
+    37.3
+   ],
+   "nivel": [
+    "B",
+    "I",
+    "B",
+    "B",
+    "I",
+    "B"
+   ],
+   "contrib": [
+    1.34,
+    2.22,
+    1.68,
+    1.78,
+    1.09,
+    1.82
+   ]
+  },
+  {
+   "materia": "Producción de Diseño y Prototipos",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    29.1,
+    29.3,
+    34.0,
+    36.8,
+    22.0,
+    30.4
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    1.41,
+    1.6,
+    1.68,
+    1.97,
+    1.22,
+    1.48
+   ]
+  },
+  {
+   "materia": "Diseño de Empaque",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    56.7,
+    55.3,
+    55.6,
+    50.6,
+    51.5,
+    54.9
+   ],
+   "nivel": [
+    "I",
+    "I",
+    "I",
+    "I",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    2.75,
+    3.01,
+    2.76,
+    2.7,
+    2.86,
+    2.68
+   ]
+  },
+  {
+   "materia": "Estudio de Marca y Sistemas Visuales",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    61.7,
+    68.0,
+    60.8,
+    49.4,
+    58.3,
+    61.8
+   ],
+   "nivel": [
+    "A",
+    "A",
+    "A",
+    "I",
+    "I",
+    "A"
+   ],
+   "contrib": [
+    4.48,
+    5.56,
+    4.52,
+    3.96,
+    4.86,
+    4.52
+   ]
+  },
+  {
+   "materia": "Portafolio Profesional",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    65.2,
+    70.7,
+    66.7,
+    67.8,
+    65.9,
+    65.7
+   ],
+   "nivel": [
+    "I",
+    "I",
+    "I",
+    "I",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    3.16,
+    3.85,
+    3.31,
+    3.62,
+    3.66,
+    3.2
+   ]
+  },
+  {
+   "materia": "Estudio de Diseño de Interacción",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    60.3,
+    50.7,
+    62.7,
+    64.4,
+    49.2,
+    64.7
+   ],
+   "nivel": [
+    "A",
+    "I",
+    "A",
+    "A",
+    "I",
+    "A"
+   ],
+   "contrib": [
+    4.38,
+    4.14,
+    4.66,
+    5.16,
+    4.1,
+    4.73
+   ]
+  },
+  {
+   "materia": "Diseño de Experiencia",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    65.2,
+    55.3,
+    63.4,
+    63.2,
+    54.5,
+    65.7
+   ],
+   "nivel": [
+    "I",
+    "I",
+    "I",
+    "I",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    3.16,
+    3.01,
+    3.14,
+    3.38,
+    3.03,
+    3.2
+   ]
+  },
+  {
+   "materia": "Diseño de Interfaz",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    57.4,
+    59.3,
+    62.7,
+    67.8,
+    42.4,
+    58.8
+   ],
+   "nivel": [
+    "I",
+    "I",
+    "A",
+    "A",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    4.17,
+    4.85,
+    4.66,
+    5.43,
+    3.53,
+    4.3
+   ]
+  },
+  {
+   "materia": "Estudio de Estrategia y de Servicios",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    63.1,
+    32.7,
+    56.9,
+    59.8,
+    59.8,
+    59.8
+   ],
+   "nivel": [
+    "A",
+    "B",
+    "I",
+    "I",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    4.59,
+    2.67,
+    4.23,
+    4.79,
+    4.98,
+    4.37
+   ]
+  },
+  {
+   "materia": "Prácticas Profesionales",
+   "creditos": 3,
+   "tope": "E",
+   "factorNivel": 1,
+   "evidencia": "Directa",
+   "alineacion": [
+    86.5,
+    73.3,
+    81.0,
+    79.3,
+    85.6,
+    82.4
+   ],
+   "nivel": [
+    "E",
+    "A",
+    "E",
+    "A",
+    "E",
+    "E"
+   ],
+   "contrib": [
+    8.38,
+    7.99,
+    8.03,
+    8.47,
+    9.51,
+    8.03
+   ]
+  },
+  {
+   "materia": "Estudio Integral de Diseño Visual y Negocios Creativos",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    81.6,
+    72.0,
+    76.5,
+    70.1,
+    79.5,
+    73.5
+   ],
+   "nivel": [
+    "A",
+    "A",
+    "A",
+    "A",
+    "A",
+    "A"
+   ],
+   "contrib": [
+    5.93,
+    5.89,
+    5.69,
+    5.62,
+    6.62,
+    5.37
+   ]
+  },
+  {
+   "materia": "Programa de Evaluación Final I",
+   "creditos": 3,
+   "tope": "E",
+   "factorNivel": 1,
+   "evidencia": "Directa",
+   "alineacion": [
+    51.1,
+    24.0,
+    43.1,
+    34.5,
+    44.7,
+    48.0
+   ],
+   "nivel": [
+    "I",
+    "B",
+    "I",
+    "B",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    4.95,
+    2.62,
+    4.27,
+    3.69,
+    4.96,
+    4.68
+   ]
+  },
+  {
+   "materia": "Programa de Evaluación Final II",
+   "creditos": 3,
+   "tope": "E",
+   "factorNivel": 1,
+   "evidencia": "Directa",
+   "alineacion": [
+    50.4,
+    36.7,
+    47.7,
+    39.1,
+    43.2,
+    50.0
+   ],
+   "nivel": [
+    "I",
+    "B",
+    "I",
+    "B",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    4.88,
+    4.0,
+    4.73,
+    4.18,
+    4.8,
+    4.87
+   ]
+  },
+  {
+   "materia": "Herramientas Digitales para el Diseño",
+   "creditos": 3,
+   "tope": "B",
+   "factorNivel": 0.25,
+   "evidencia": "Directa",
+   "alineacion": [
+    22.0,
+    38.0,
+    32.0,
+    34.5,
+    13.6,
+    24.5
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    0.53,
+    1.04,
+    0.79,
+    0.92,
+    0.38,
+    0.6
+   ]
+  },
+  {
+   "materia": "Estrategia de Negocios para Arte y Diseño",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    48.2,
+    20.0,
+    33.3,
+    29.9,
+    59.8,
+    42.2
+   ],
+   "nivel": [
+    "I",
+    "B",
+    "B",
+    "B",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    2.34,
+    1.09,
+    1.65,
+    1.6,
+    3.32,
+    2.06
+   ]
+  },
+  {
+   "materia": "Diseño Participativo",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    53.9,
+    30.7,
+    48.4,
+    40.2,
+    46.2,
+    55.9
+   ],
+   "nivel": [
+    "I",
+    "B",
+    "I",
+    "I",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    3.92,
+    2.51,
+    3.6,
+    3.22,
+    3.85,
+    4.09
+   ]
+  },
+  {
+   "materia": "Materiales Experimentales",
+   "creditos": 3,
+   "tope": "I",
+   "factorNivel": 0.5,
+   "evidencia": "Directa",
+   "alineacion": [
+    31.2,
+    34.7,
+    36.6,
+    29.9,
+    21.2,
+    37.3
+   ],
+   "nivel": [
+    "B",
+    "B",
+    "B",
+    "B",
+    "B",
+    "B"
+   ],
+   "contrib": [
+    1.51,
+    1.89,
+    1.81,
+    1.6,
+    1.18,
+    1.82
+   ]
+  },
+  {
+   "materia": "Metodología de Investigación y Creación para el Arte y Diseño",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    19.1,
+    6.7,
+    16.3,
+    13.8,
+    13.6,
+    21.6
+   ],
+   "nivel": [
+    "A",
+    "A",
+    "A",
+    "A",
+    "A",
+    "B"
+   ],
+   "contrib": [
+    1.39,
+    0.55,
+    1.21,
+    1.11,
+    1.13,
+    1.58
+   ]
+  },
+  {
+   "materia": "Dirección de Arte para Medios Audiovisuales e Interactivos",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    54.6,
+    68.0,
+    61.4,
+    59.8,
+    39.4,
+    54.9
+   ],
+   "nivel": [
+    "I",
+    "A",
+    "A",
+    "I",
+    "B",
+    "I"
+   ],
+   "contrib": [
+    3.97,
+    5.56,
+    4.56,
+    4.79,
+    3.28,
+    4.01
+   ]
+  },
+  {
+   "materia": "Dirección de Arte y Fotografía de Producto",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    61.7,
+    63.3,
+    62.1,
+    50.6,
+    47.7,
+    55.9
+   ],
+   "nivel": [
+    "A",
+    "A",
+    "A",
+    "I",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    4.48,
+    5.17,
+    4.62,
+    4.05,
+    3.97,
+    4.09
+   ]
+  },
+  {
+   "materia": "Gestión de Proyectos Creativos",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    44.7,
+    19.3,
+    37.3,
+    37.9,
+    40.2,
+    39.2
+   ],
+   "nivel": [
+    "I",
+    "A",
+    "B",
+    "B",
+    "I",
+    "B"
+   ],
+   "contrib": [
+    3.25,
+    1.58,
+    2.77,
+    3.04,
+    3.35,
+    2.87
+   ]
+  },
+  {
+   "materia": "Dirección Visual de Marca",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    66.0,
+    65.3,
+    60.1,
+    55.2,
+    62.1,
+    59.8
+   ],
+   "nivel": [
+    "A",
+    "A",
+    "A",
+    "I",
+    "A",
+    "I"
+   ],
+   "contrib": [
+    4.8,
+    5.34,
+    4.47,
+    4.42,
+    5.17,
+    4.37
+   ]
+  },
+  {
+   "materia": "Animación Gráfica y Contenido Digital",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    54.6,
+    62.0,
+    56.2,
+    52.9,
+    45.5,
+    52.9
+   ],
+   "nivel": [
+    "I",
+    "A",
+    "I",
+    "I",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    3.97,
+    5.07,
+    4.18,
+    4.24,
+    3.79,
+    3.87
+   ]
+  },
+  {
+   "materia": "Inteligencia Artificial Aplicada al Diseño Visual",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    53.2,
+    38.7,
+    49.7,
+    41.4,
+    43.2,
+    49.0
+   ],
+   "nivel": [
+    "I",
+    "B",
+    "I",
+    "I",
+    "I",
+    "I"
+   ],
+   "contrib": [
+    3.87,
+    3.16,
+    3.69,
+    3.32,
+    3.6,
+    3.58
+   ]
+  },
+  {
+   "materia": "De la Idea Gráfica al Mercado",
+   "creditos": 3,
+   "tope": "A",
+   "factorNivel": 0.75,
+   "evidencia": "Directa",
+   "alineacion": [
+    54.6,
+    26.7,
+    43.8,
+    44.8,
+    66.7,
+    52.9
+   ],
+   "nivel": [
+    "I",
+    "B",
+    "I",
+    "I",
+    "A",
+    "I"
+   ],
+   "contrib": [
+    3.97,
+    2.18,
+    3.26,
+    3.59,
+    5.56,
+    3.87
+   ]
+  }
+ ],
+ "resumen": [
+  {
+   "materia": "Estudio de Diseño Visual",
+   "puntosDV": 20,
+   "pctDV": 44.4,
+   "dv2": 8,
+   "puntosNC": 0,
+   "pctNC": 0.0,
+   "nc2": 0,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Visualización y Pensamiento de Diseño",
+   "puntosDV": 18,
+   "pctDV": 40.0,
+   "dv2": 7,
+   "puntosNC": 1,
+   "pctNC": 2.8,
+   "nc2": 0,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Contexto Cultural del Diseño",
+   "puntosDV": 9,
+   "pctDV": 20.0,
+   "dv2": 2,
+   "puntosNC": 4,
+   "pctNC": 11.1,
+   "nc2": 0,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "Estudio de Forma, Color y Estructura",
+   "puntosDV": 18,
+   "pctDV": 40.0,
+   "dv2": 7,
+   "puntosNC": 0,
+   "pctNC": 0.0,
+   "nc2": 0,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Principios de la Tipografía",
+   "puntosDV": 17,
+   "pctDV": 37.8,
+   "dv2": 7,
+   "puntosNC": 2,
+   "pctNC": 5.6,
+   "nc2": 0,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Ilustración Aplicada",
+   "puntosDV": 30,
+   "pctDV": 66.7,
+   "dv2": 11,
+   "puntosNC": 6,
+   "pctNC": 16.7,
+   "nc2": 2,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Lenguaje y Significado en el Diseño",
+   "puntosDV": 24,
+   "pctDV": 53.3,
+   "dv2": 8,
+   "puntosNC": 5,
+   "pctNC": 13.9,
+   "nc2": 2,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Estudio de Identidad, Forma y Significado",
+   "puntosDV": 31,
+   "pctDV": 68.9,
+   "dv2": 11,
+   "puntosNC": 5,
+   "pctNC": 13.9,
+   "nc2": 1,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Fundamentos de Diseño de Información",
+   "puntosDV": 16,
+   "pctDV": 35.6,
+   "dv2": 7,
+   "puntosNC": 1,
+   "pctNC": 2.8,
+   "nc2": 0,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Fotografía para Diseño",
+   "puntosDV": 22,
+   "pctDV": 48.9,
+   "dv2": 9,
+   "puntosNC": 4,
+   "pctNC": 11.1,
+   "nc2": 1,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Tipografía Aplicada",
+   "puntosDV": 25,
+   "pctDV": 55.6,
+   "dv2": 10,
+   "puntosNC": 1,
+   "pctNC": 2.8,
+   "nc2": 0,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Estudio de Información y Visualización",
+   "puntosDV": 22,
+   "pctDV": 48.9,
+   "dv2": 9,
+   "puntosNC": 5,
+   "pctNC": 13.9,
+   "nc2": 2,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Producción de Diseño y Prototipos",
+   "puntosDV": 17,
+   "pctDV": 37.8,
+   "dv2": 7,
+   "puntosNC": 8,
+   "pctNC": 22.2,
+   "nc2": 3,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Diseño de Empaque",
+   "puntosDV": 26,
+   "pctDV": 57.8,
+   "dv2": 10,
+   "puntosNC": 17,
+   "pctNC": 47.2,
+   "nc2": 8,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "Estudio de Marca y Sistemas Visuales",
+   "puntosDV": 33,
+   "pctDV": 73.3,
+   "dv2": 12,
+   "puntosNC": 18,
+   "pctNC": 50.0,
+   "nc2": 6,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Portafolio Profesional",
+   "puntosDV": 34,
+   "pctDV": 75.6,
+   "dv2": 14,
+   "puntosNC": 22,
+   "pctNC": 61.1,
+   "nc2": 10,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "Estudio de Diseño de Interacción",
+   "puntosDV": 27,
+   "pctDV": 60.0,
+   "dv2": 10,
+   "puntosNC": 17,
+   "pctNC": 47.2,
+   "nc2": 7,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "Diseño de Experiencia",
+   "puntosDV": 28,
+   "pctDV": 62.2,
+   "dv2": 11,
+   "puntosNC": 18,
+   "pctNC": 50.0,
+   "nc2": 6,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "Diseño de Interfaz",
+   "puntosDV": 32,
+   "pctDV": 71.1,
+   "dv2": 12,
+   "puntosNC": 14,
+   "pctNC": 38.9,
+   "nc2": 5,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Estudio de Estrategia y de Servicios",
+   "puntosDV": 15,
+   "pctDV": 33.3,
+   "dv2": 6,
+   "puntosNC": 24,
+   "pctNC": 66.7,
+   "nc2": 9,
+   "lectura": "Predominio Negocios Creativos"
+  },
+  {
+   "materia": "Prácticas Profesionales",
+   "puntosDV": 32,
+   "pctDV": 71.1,
+   "dv2": 13,
+   "puntosNC": 32,
+   "pctNC": 88.9,
+   "nc2": 12,
+   "lectura": "Predominio Negocios Creativos"
+  },
+  {
+   "materia": "Estudio Integral de Diseño Visual y Negocios Creativos",
+   "puntosDV": 32,
+   "pctDV": 71.1,
+   "dv2": 12,
+   "puntosNC": 28,
+   "pctNC": 77.8,
+   "nc2": 11,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "Programa de Evaluación Final I",
+   "puntosDV": 13,
+   "pctDV": 28.9,
+   "dv2": 5,
+   "puntosNC": 17,
+   "pctNC": 47.2,
+   "nc2": 7,
+   "lectura": "Predominio Negocios Creativos"
+  },
+  {
+   "materia": "Programa de Evaluación Final II",
+   "puntosDV": 19,
+   "pctDV": 42.2,
+   "dv2": 7,
+   "puntosNC": 16,
+   "pctNC": 44.4,
+   "nc2": 7,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "Herramientas Digitales para el Diseño",
+   "puntosDV": 23,
+   "pctDV": 51.1,
+   "dv2": 9,
+   "puntosNC": 2,
+   "pctNC": 5.6,
+   "nc2": 1,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Estrategia de Negocios para Arte y Diseño",
+   "puntosDV": 2,
+   "pctDV": 4.4,
+   "dv2": 1,
+   "puntosNC": 27,
+   "pctNC": 75.0,
+   "nc2": 10,
+   "lectura": "Predominio Negocios Creativos"
+  },
+  {
+   "materia": "Diseño Participativo",
+   "puntosDV": 14,
+   "pctDV": 31.1,
+   "dv2": 5,
+   "puntosNC": 18,
+   "pctNC": 50.0,
+   "nc2": 7,
+   "lectura": "Predominio Negocios Creativos"
+  },
+  {
+   "materia": "Materiales Experimentales",
+   "puntosDV": 22,
+   "pctDV": 48.9,
+   "dv2": 8,
+   "puntosNC": 5,
+   "pctNC": 13.9,
+   "nc2": 1,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Metodología de Investigación y Creación para el Arte y Diseño",
+   "puntosDV": 5,
+   "pctDV": 11.1,
+   "dv2": 2,
+   "puntosNC": 5,
+   "pctNC": 13.9,
+   "nc2": 1,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "Dirección de Arte para Medios Audiovisuales e Interactivos",
+   "puntosDV": 36,
+   "pctDV": 80.0,
+   "dv2": 13,
+   "puntosNC": 10,
+   "pctNC": 27.8,
+   "nc2": 5,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Dirección de Arte y Fotografía de Producto",
+   "puntosDV": 31,
+   "pctDV": 68.9,
+   "dv2": 11,
+   "puntosNC": 15,
+   "pctNC": 41.7,
+   "nc2": 6,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Gestión de Proyectos Creativos",
+   "puntosDV": 9,
+   "pctDV": 20.0,
+   "dv2": 4,
+   "puntosNC": 17,
+   "pctNC": 47.2,
+   "nc2": 6,
+   "lectura": "Predominio Negocios Creativos"
+  },
+  {
+   "materia": "Dirección Visual de Marca",
+   "puntosDV": 31,
+   "pctDV": 68.9,
+   "dv2": 12,
+   "puntosNC": 20,
+   "pctNC": 55.6,
+   "nc2": 9,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "Animación Gráfica y Contenido Digital",
+   "puntosDV": 31,
+   "pctDV": 68.9,
+   "dv2": 12,
+   "puntosNC": 13,
+   "pctNC": 36.1,
+   "nc2": 5,
+   "lectura": "Predominio Diseño Visual"
+  },
+  {
+   "materia": "Inteligencia Artificial Aplicada al Diseño Visual",
+   "puntosDV": 20,
+   "pctDV": 44.4,
+   "dv2": 8,
+   "puntosNC": 15,
+   "pctNC": 41.7,
+   "nc2": 6,
+   "lectura": "Integración DV–NC"
+  },
+  {
+   "materia": "De la Idea Gráfica al Mercado",
+   "puntosDV": 7,
+   "pctDV": 15.6,
+   "dv2": 3,
+   "puntosNC": 28,
+   "pctNC": 77.8,
+   "nc2": 9,
+   "lectura": "Predominio Negocios Creativos"
+  }
+ ],
+ "metodologia": {
+  "componentes": [
+   {
+    "nombre": "Puntaje curso–dimensión (Cij)",
+    "def": "0 = ausente; 1 = introduce; 2 = aplica; 3 = resultado central y evaluable."
+   },
+   {
+    "nombre": "Peso dimensión–SLO (Rjk)",
+    "def": "0 = sin relación; 1 = complementaria; 2 = directa; 3 = nuclear."
+   },
+   {
+    "nombre": "Alineación curso–SLO",
+    "def": "100 × Σ(Cij × Rjk) ÷ [3 × Σ(Rjk)]. Produce un porcentaje entre 0 y 100."
+   },
+   {
+    "nombre": "Factor de nivel curricular",
+    "def": "B = 0.25; I = 0.50; A = 0.75; E = 1.00."
+   },
+   {
+    "nombre": "Factor de evidencia",
+    "def": "Directa = 1.00; indirecta = 0.50; sin evidencia = 0."
+   },
+   {
+    "nombre": "Valor efectivo",
+    "def": "Créditos × (alineación ÷ 100) × factor de nivel × factor de evidencia."
+   },
+   {
+    "nombre": "Contribución porcentual",
+    "def": "Valor efectivo del curso ÷ suma de valores efectivos del SLO."
+   },
+   {
+    "nombre": "Valor normalizado de dimensión",
+    "def": "Peso de la dimensión ÷ suma de pesos de todas las dimensiones vinculadas al SLO."
+   },
+   {
+    "nombre": "1.",
+    "def": "El porcentaje no sustituye el juicio académico; documenta cómo se obtuvo."
+   },
+   {
+    "nombre": "2.",
+    "def": "El tope curricular impide que una materia inicial alcance nivel avanzado por una alta afinidad temática."
+   },
+   {
+    "nombre": "3.",
+    "def": "Una materia sin evidencia evaluable no aporta valor efectivo, aunque mencione el tema."
+   },
+   {
+    "nombre": "4.",
+    "def": "Los créditos ponderan la exposición curricular, pero no convierten una materia extensa en evidencia de dominio."
+   },
+   {
+    "nombre": "5.",
+    "def": "La suma de contribuciones de cada SLO equivale a 100 %, lo cual permite identificar cursos centrales y vacíos."
+   },
+   {
+    "nombre": "6.",
+    "def": "Los pesos de Vinculación SLO deben aprobarse mediante criterio colegiado y conservar una justificación documental."
+   }
+  ],
+  "rangos": [
+   {
+    "rango": "0–19.9",
+    "nivel": "Sin asignación",
+    "condicion": "No alcanza contribución suficiente."
+   },
+   {
+    "rango": "20–39.9",
+    "nivel": "B",
+    "condicion": "Introducción o aplicación con guía."
+   },
+   {
+    "rango": "40–59.9",
+    "nivel": "I",
+    "condicion": "Aplicación en problemas delimitados."
+   },
+   {
+    "rango": "60–79.9",
+    "nivel": "A",
+    "condicion": "Integración con autonomía."
+   },
+   {
+    "rango": "80–100",
+    "nivel": "E",
+    "condicion": "Demostración integral en contexto profesional o final."
+   }
+  ],
+  "reglas": []
+ }
+}
