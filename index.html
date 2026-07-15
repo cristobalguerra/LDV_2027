@@ -1583,8 +1583,8 @@ body.role-admin #modalBadge { display:none; }
 
 /* Benchmark institucional */
 .bench-grid {
-  display:grid; grid-template-columns:repeat(2, 1fr); gap:14px;
-  max-width:840px; margin:28px auto 0; text-align:left;
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:14px;
+  max-width:960px; margin:28px auto 0; text-align:left;
 }
 .bench-card {
   padding:22px 24px; border-radius:16px;
@@ -1602,7 +1602,7 @@ body.role-admin #modalBadge { display:none; }
   font-family:'Raleway',sans-serif; font-size:1.3rem; font-weight:800;
   letter-spacing:-0.01em; color:#fff; line-height:1.2; margin-top:2px;
 }
-.bench-wordmark img { max-height:34px; width:auto; display:block; filter:brightness(0) invert(1); }
+.bench-wordmark img { max-height:42px; max-width:100%; width:auto; display:block; margin-top:6px; filter:brightness(0) invert(1); }
 .bench-city { font-size:0.76rem; color:var(--text-tertiary); }
 .bench-prog { font-size:0.95rem; font-weight:600; color:var(--dv); margin-top:10px; line-height:1.35; }
 .bench-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
@@ -5530,16 +5530,13 @@ const RESPALDO = {
 // ═══ BENCHMARK — diseño+negocio bajo escuelas de diseño ═══
 // logo: ruta a imagen (se muestra en blanco); si está vacío se usa el wordmark tipográfico.
 const BENCHMARK = [
-  { region: 'Internacional · Nueva York', nombre: 'Parsons School of Design', logo: '',
+  { region: 'Internacional · Nueva York', nombre: 'Parsons School of Design', logo: 'fotos/logo-parsons.png',
     programa: 'BBA Strategic Design and Management',
     tags: ['Escuela de diseño · The New School'] },
-  { region: 'Internacional · Londres', nombre: 'University of the Arts London', logo: '',
+  { region: 'Internacional · Londres', nombre: 'University of the Arts London', logo: 'fotos/logo-ual.png',
     programa: 'BA (Hons) Design Management',
     tags: ['London College of Communication'] },
-  { region: 'Internacional · Savannah', nombre: 'SCAD', logo: '',
-    programa: 'De Sole School of Business Innovation',
-    tags: ['Universidad de arte y diseño'] },
-  { region: 'México · Ciudad de México', nombre: 'CENTRO', logo: '', destacado: true,
+  { region: 'México · Ciudad de México', nombre: 'CENTRO', logo: 'fotos/logo-centro.png', destacado: true,
     programa: 'Lic. en Negocios e Industrias Creativas',
     tags: ['Institución de diseño y creatividad'], rvoe: 'RVOE SEP Federal 20254146' },
 ];
