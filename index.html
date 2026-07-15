@@ -1581,6 +1581,45 @@ body.role-admin #modalBadge { display:none; }
 .claim-foot { font-size:1.02rem; color:var(--text-secondary); max-width:620px; margin:18px auto 0; line-height:1.65; }
 .claim-foot strong { color:var(--text); }
 
+/* Certificado — callout de evidencia */
+.cert-callout {
+  max-width:840px; margin:28px auto 0; text-align:left;
+  border:1px solid rgba(122,59,232,0.45); border-radius:18px;
+  background:linear-gradient(180deg, rgba(122,59,232,0.06), transparent 60%), var(--surface);
+  padding:26px 28px;
+}
+.cert-callout-badge {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:700;
+  letter-spacing:0.14em; text-transform:uppercase; color:#a58cf0;
+}
+.cert-callout-title {
+  font-family:'Raleway',sans-serif; font-size:1.5rem; font-weight:800;
+  letter-spacing:-0.01em; margin:4px 0 2px; color:#fff;
+}
+.cert-callout-sub { font-size:0.9rem; color:var(--text-secondary); margin-bottom:18px; }
+.cert-stats { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px; }
+.cert-stat {
+  flex:1; min-width:130px; padding:14px 16px; border-radius:12px;
+  background:var(--surface-2); border:1px solid var(--border); text-align:center;
+}
+.cert-stat b { display:block; font-family:'Raleway',sans-serif; font-size:1.7rem; font-weight:900; line-height:1; }
+.cert-stat.nc b { color:var(--nc); }
+.cert-stat span { font-size:0.68rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.06em; display:block; margin-top:6px; line-height:1.3; }
+.cert-mats { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.cert-mat {
+  display:flex; align-items:center; gap:12px;
+  padding:11px 14px; border-radius:10px;
+  background:var(--surface-2); border:1px solid var(--border);
+}
+.cert-mat-code {
+  font-family:'JetBrains Mono',monospace; font-size:0.68rem; font-weight:700;
+  padding:4px 9px; border-radius:6px; flex-shrink:0;
+  background:rgba(122,59,232,0.2); color:#a58cf0;
+}
+.cert-mat-name { font-size:0.86rem; font-weight:500; color:var(--text); flex:1; line-height:1.3; }
+.cert-mat-nc { font-family:'JetBrains Mono',monospace; font-size:0.66rem; color:var(--nc); font-weight:700; flex-shrink:0; }
+@media (max-width:700px) { .cert-mats { grid-template-columns:1fr; } }
+
 /* Benchmark institucional */
 .bench-grid {
   display:grid; grid-template-columns:repeat(3, 1fr); gap:14px;
@@ -2612,6 +2651,13 @@ body.is-loading .app-loading-badge { display:flex; }
       <p class="claim-sub">Referentes internacionales y el precedente regulatorio mexicano: la formación empresarial aplicada al diseño se imparte bajo conducción académica de escuelas de arte y diseño, no de administración.</p>
       <div class="bench-grid" id="benchGrid"></div>
       <p class="claim-foot">En todos los casos, los contenidos empresariales —estrategia, emprendimiento, marca, producción, comercialización— se enseñan <strong>mediante métodos propios del diseño</strong>: investigación, pensamiento sistémico, trabajo de estudio y prototipado.</p>
+    </div>
+
+    <div class="claim">
+      <h2 class="claim-title">El componente de negocio ya está formalizado en un Certificado</h2>
+      <p class="claim-sub">La dimensión estratégica no está dispersa en el plan: se cristaliza en una credencial con nombre propio.</p>
+      <div class="cert-callout" id="certCallout"></div>
+      <p class="claim-foot">Estas seis materias promedian <strong>50% de intensidad en Negocios Creativos</strong> — el bloque más denso del plan en la dimensión de negocio, y la prueba de que el nombre responde a una estructura curricular real.</p>
     </div>
 
     <div class="claim">
@@ -5541,6 +5587,30 @@ const BENCHMARK = [
     tags: ['Institución de diseño y creatividad'], rvoe: 'RVOE SEP Federal 20254146' },
 ];
 
+function renderCertificado() {
+  const wrap = document.getElementById('certCallout');
+  if (!wrap) return;
+  const mats = SLO_MODEL.materias.filter(m => m.cert).sort((a, b) => a.sem - b.sem);
+  const avgNC = Math.round(mats.reduce((s, m) => s + m.pNC, 0) / (mats.length || 1));
+  const creditos = mats.length * 6;
+  const sems = mats.map(m => m.sem);
+  wrap.innerHTML = `
+    <div class="cert-callout-badge">Certificado · Eje de Formación Interdisciplinaria</div>
+    <div class="cert-callout-title">Diseño Estratégico y Dirección Creativa</div>
+    <div class="cert-callout-sub">Dirección visual avanzada · Estrategia y negocio · IA aplicada</div>
+    <div class="cert-stats">
+      <div class="cert-stat"><b>${mats.length}</b><span>materias · ${creditos} créditos</span></div>
+      <div class="cert-stat nc"><b>${avgNC}%</b><span>intensidad promedio en Negocios Creativos</span></div>
+      <div class="cert-stat"><b>${Math.min(...sems)}–${Math.max(...sems)}</b><span>semestres</span></div>
+    </div>
+    <div class="cert-mats">${mats.map((m, i) => `
+      <div class="cert-mat">
+        <span class="cert-mat-code">C${i + 1}</span>
+        <span class="cert-mat-name">${congrEsc(m.n)}</span>
+        <span class="cert-mat-nc">${m.pNC}% NC</span>
+      </div>`).join('')}</div>`;
+}
+
 function renderBenchmark() {
   const grid = document.getElementById('benchGrid');
   if (!grid) return;
@@ -5596,6 +5666,7 @@ function buildCongruencia() {
   const M = SLO_MODEL;
   renderRespaldo();
   renderBenchmark();
+  renderCertificado();
 
   // ── Hero: animar split bar + contadores ──
   const target = { dv: 59.0, nc: 41.0 };
