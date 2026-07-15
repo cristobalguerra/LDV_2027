@@ -1581,6 +1581,39 @@ body.role-admin #modalBadge { display:none; }
 .claim-foot { font-size:1.02rem; color:var(--text-secondary); max-width:620px; margin:18px auto 0; line-height:1.65; }
 .claim-foot strong { color:var(--text); }
 
+/* Benchmark institucional */
+.bench-grid {
+  display:grid; grid-template-columns:repeat(2, 1fr); gap:14px;
+  max-width:840px; margin:28px auto 0; text-align:left;
+}
+.bench-card {
+  padding:22px 24px; border-radius:16px;
+  background:var(--surface); border:1px solid var(--border);
+  transition:border-color 0.2s, transform 0.2s;
+  display:flex; flex-direction:column; gap:4px;
+}
+.bench-card:hover { border-color:var(--border-hover); transform:translateY(-2px); }
+.bench-card.destacado { border-color:rgba(122,59,232,0.5); }
+.bench-region {
+  font-family:'JetBrains Mono',monospace; font-size:0.62rem; font-weight:700;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--text-tertiary);
+}
+.bench-wordmark {
+  font-family:'Raleway',sans-serif; font-size:1.3rem; font-weight:800;
+  letter-spacing:-0.01em; color:#fff; line-height:1.2; margin-top:2px;
+}
+.bench-wordmark img { max-height:34px; width:auto; display:block; filter:brightness(0) invert(1); }
+.bench-city { font-size:0.76rem; color:var(--text-tertiary); }
+.bench-prog { font-size:0.95rem; font-weight:600; color:var(--dv); margin-top:10px; line-height:1.35; }
+.bench-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+.bench-tag {
+  font-family:'JetBrains Mono',monospace; font-size:0.64rem; font-weight:600;
+  padding:4px 10px; border-radius:100px;
+  border:1px solid var(--border); color:var(--text-secondary);
+}
+.bench-tag.rvoe { border-color:rgba(122,59,232,0.6); color:#a58cf0; font-weight:700; }
+@media (max-width:700px) { .bench-grid { grid-template-columns:1fr; } }
+
 /* Respaldo: consejo y claustro */
 .resp-group { margin-top:34px; }
 .resp-group-title {
@@ -2572,6 +2605,13 @@ body.is-loading .app-loading-badge { display:flex; }
           <strong>Sobre la conducción de estas asignaturas:</strong> requiere docentes con experiencia en procesos de diseño, desarrollo de proyectos y toma de decisiones estratégicas. Los especialistas de Negocios pueden colaborar en contenidos específicos, pero el conocimiento administrativo no sustituye la experiencia necesaria para orientar proyectos desde la disciplina del diseño.
         </div>
       </div>
+    </div>
+
+    <div class="claim">
+      <h2 class="claim-title">El modelo ya existe — y vive en escuelas de diseño</h2>
+      <p class="claim-sub">Referentes internacionales y el precedente regulatorio mexicano: la formación empresarial aplicada al diseño se imparte bajo conducción académica de escuelas de arte y diseño, no de administración.</p>
+      <div class="bench-grid" id="benchGrid"></div>
+      <p class="claim-foot">En todos los casos, los contenidos empresariales —estrategia, emprendimiento, marca, producción, comercialización— se enseñan <strong>mediante métodos propios del diseño</strong>: investigación, pensamiento sistémico, trabajo de estudio y prototipado.</p>
     </div>
 
     <div class="claim">
@@ -5487,6 +5527,38 @@ const RESPALDO = {
   ],
 };
 
+// ═══ BENCHMARK — diseño+negocio bajo escuelas de diseño ═══
+// logo: ruta a imagen (se muestra en blanco); si está vacío se usa el wordmark tipográfico.
+const BENCHMARK = [
+  { region: 'Internacional · Nueva York', nombre: 'Parsons School of Design', logo: '',
+    programa: 'BBA Strategic Design and Management',
+    tags: ['Escuela de diseño · The New School'] },
+  { region: 'Internacional · Londres', nombre: 'University of the Arts London', logo: '',
+    programa: 'BA (Hons) Design Management',
+    tags: ['London College of Communication'] },
+  { region: 'Internacional · Savannah', nombre: 'SCAD', logo: '',
+    programa: 'De Sole School of Business Innovation',
+    tags: ['Universidad de arte y diseño'] },
+  { region: 'México · Ciudad de México', nombre: 'CENTRO', logo: '', destacado: true,
+    programa: 'Lic. en Negocios e Industrias Creativas',
+    tags: ['Institución de diseño y creatividad'], rvoe: 'RVOE SEP Federal 20254146' },
+];
+
+function renderBenchmark() {
+  const grid = document.getElementById('benchGrid');
+  if (!grid) return;
+  grid.innerHTML = BENCHMARK.map(b => `
+    <div class="bench-card${b.destacado ? ' destacado' : ''}">
+      <span class="bench-region">${congrEsc(b.region)}</span>
+      <span class="bench-wordmark">${b.logo ? `<img src="${b.logo}" alt="${congrEsc(b.nombre)}">` : congrEsc(b.nombre)}</span>
+      <span class="bench-prog">${congrEsc(b.programa)}</span>
+      <span class="bench-tags">${
+        (b.tags || []).map(t => `<span class="bench-tag">${congrEsc(t)}</span>`).join('') +
+        (b.rvoe ? `<span class="bench-tag rvoe">${congrEsc(b.rvoe)}</span>` : '')
+      }</span>
+    </div>`).join('');
+}
+
 function renderRespaldo() {
   const iniciales = n => n.split(/\s+/).slice(0, 2).map(p => p[0] || '').join('').toUpperCase();
   const card = p => `
@@ -5526,6 +5598,7 @@ function buildCongruencia() {
   _congrBuilt = true;
   const M = SLO_MODEL;
   renderRespaldo();
+  renderBenchmark();
 
   // ── Hero: animar split bar + contadores ──
   const target = { dv: 59.0, nc: 41.0 };
